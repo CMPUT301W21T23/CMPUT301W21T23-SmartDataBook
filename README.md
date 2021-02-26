@@ -13,3 +13,7 @@ junhyeon
 bosco2
 
 kksoni
+
+## Story Board
+
+![alt text](https://github.com/bosco4/CMPUT301W21T23-SmartDataBook/blob/main/image.jpg?raw=true)
