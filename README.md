@@ -16,4 +16,5 @@ kksoni
 
 ## Story Board
 
+![preview1](images/UML.pdf)
 ![UMLDiagram](https://github.com/bosco4/CMPUT301W21T23-SmartDataBook/blob/main/ProjectPreparation/UMLDiagram/UML.pdf)
