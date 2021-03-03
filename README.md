@@ -1,4 +1,4 @@
-# CMPUT301W21T23-AndroidApp
+# CMPUT301W21T23-SmartDataBook
 
 ## Team Members
 
