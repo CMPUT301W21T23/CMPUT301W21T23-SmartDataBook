@@ -1,18 +1,22 @@
 package com.example.cmput301w21t23_smartdatabook;
 
+import android.location.Location;
+
 public class Trial {
     private boolean geoLocationSettingOn;
     private String trialValue;
-    private float longitude;
-    private float latitude;
+    // TODO to_be_deleted
+    // private float longitude;
+    // private float latitude;
+    private Location location;
 
-    public float getLongitude() {
+    /*public float getLongitude() {
         return longitude;
     }
 
     public float getLatitude() {
         return latitude;
-    }
+    }*/
 
     public String getTrialValue() {
         return trialValue;
@@ -22,11 +26,11 @@ public class Trial {
         this.trialValue = trialValue;
     }
 
-    public void setLongitude(float longitude) {
+    /*public void setLongitude(float longitude) {
         this.longitude = longitude;
     }
 
     public void setLatitude(float latitude) {
         this.latitude = latitude;
-    }
+    }*/
 }

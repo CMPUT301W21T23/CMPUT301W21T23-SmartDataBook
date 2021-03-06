@@ -1,5 +1,7 @@
 package com.example.cmput301w21t23_smartdatabook;
 
+import android.location.Location;
+
 /**
  * main Experiment class
  */
@@ -15,6 +17,7 @@ public class Experiment {
     private boolean isPublic;
     // private Trial Array<Trial>;
     private String date;
+    private Location location;
 
     public Experiment(String expName, String ownerUserID, String trialType, String description, boolean regionOn, int minTrials, int maxTrials, boolean isPublic) {
         this.expName = expName;
