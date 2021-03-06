@@ -1,9 +1,11 @@
 package com.example.cmput301w21t23_smartdatabook;
 
+import java.util.ArrayList;
+
 abstract class User{
     String userName;
     String userContact;
-    String uniqueID;
+    String userUniqueID;
 
     ArrayList<Experiment> ownedExperimentList;
     ArrayList<Experiment> followedExperimentList;
@@ -24,6 +26,18 @@ abstract class User{
         this.userContact = userContact;
     }
 
+    public String getUniqueID () {
+        return uniqueID;
+    }
 
+    public void setUniqueID (String uniqueID) {
+        this.uniqueID = uniqueID;
+    }
+
+    public Comment creaComment(String text){
+        Comment comment = new Comment();
+
+        return comment;
+    }
 
 }
