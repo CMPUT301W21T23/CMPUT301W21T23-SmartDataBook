@@ -8,7 +8,31 @@ abstract class User{
     String userUniqueID;
 
     ArrayList<Experiment> ownedExperimentList;
-    ArrayList<Experiment> followedExperimentList;
+    ArrayList<Experiment> favoriteExperimentList;
+
+    public String getUserUniqueID() {
+        return userUniqueID;
+    }
+
+    public void setUserUniqueID(String userUniqueID) {
+        this.userUniqueID = userUniqueID;
+    }
+
+    public ArrayList<Experiment> getOwnedExperimentList() {
+        return ownedExperimentList;
+    }
+
+    public void setOwnedExperimentList(ArrayList<Experiment> ownedExperimentList) {
+        this.ownedExperimentList = ownedExperimentList;
+    }
+
+    public ArrayList<Experiment> getFavoriteExperimentList() {
+        return favoriteExperimentList;
+    }
+
+    public void setFavoriteExperimentList(ArrayList<Experiment> favoriteExperimentList) {
+        this.favoriteExperimentList = favoriteExperimentList;
+    }
 
     public String getUserName () {
         return userName;
@@ -26,18 +50,15 @@ abstract class User{
         this.userContact = userContact;
     }
 
-    public String getUniqueID () {
-        return uniqueID;
-    }
 
-    public void setUniqueID (String uniqueID) {
-        this.uniqueID = uniqueID;
-    }
-
-    public Comment creaComment(String text){
-        Comment comment = new Comment();
-
-        return comment;
-    }
+    /**
+     * Creates a new comment object given the text string, userUniqeID string, 
+     * and commentID int
+     * @return gives a new comment object. 
+     */
+//    public Comment createComment(String text, String userUniqueID, int commentID){
+//        Comment newComment = Comment(text, userUniqueID, commentID);
+//        return newComment;
+//    }
 
 }
