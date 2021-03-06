@@ -6,15 +6,15 @@ class Comment extends User{
 
     String text;
     int commentID;
-    int useruniqueID;
+    String userUniqueID;
 
     //Contains a list of comment objects that are replying to the 
     //parent comment object.
     ArrayList<Comment> replyList;
 
-    public Comment(String text, int userUniqueID, int commentID){
+    public Comment(String text, String userUniqueID, int commentID){
         this.text = text;
-        this.useruniqueID = userUniqueID;
+        this.userUniqueID = userUniqueID;
         this.commentID = commentID;
     }
 
