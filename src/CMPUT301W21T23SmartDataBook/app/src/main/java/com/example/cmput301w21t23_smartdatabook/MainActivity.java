@@ -19,6 +19,16 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
 
         experimentList = findViewById(R.id.experimentList);
+        experimentDataList.add(new Experiment("first", "123",
+                "Binomial", "testtrial", false, 30,60, true, "03/05/2021"));
+        experimentDataList.add(new Experiment("second", "123",
+                "Binomial", "testtrial", false, 30,60, true, "03/05/2021"));
+        experimentDataList.add(new Experiment("third", "123",
+                "Binomial", "testtrial", false, 30,60, true, "03/05/2021"));
+
+        experimentAdapter = new CardList(this, experimentDataList);
+
+        experimentList.setAdapter(experimentAdapter);
 
     }
 }

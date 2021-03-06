@@ -16,7 +16,7 @@ public class Experiment {
     // private Trial Array<Trial>;
     private String date;
 
-    public Experiment(String expName, String ownerUserID, String trialType, String description, boolean regionOn, int minTrials, int maxTrials, boolean isPublic) {
+    public Experiment(String expName, String ownerUserID, String trialType, String description, boolean regionOn, int minTrials, int maxTrials, boolean isPublic, String date) {
         this.expName = expName;
         this.ownerUserID = ownerUserID;
         this.trialType = trialType;
@@ -25,6 +25,7 @@ public class Experiment {
         this.minTrials = minTrials;
         this.maxTrials = maxTrials;
         this.isPublic = isPublic;
+        this.date = date;
     }
 
     public String getDate() {
