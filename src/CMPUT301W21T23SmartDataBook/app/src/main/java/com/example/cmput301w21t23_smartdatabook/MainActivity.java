@@ -2,7 +2,10 @@ package com.example.cmput301w21t23_smartdatabook;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.content.Intent;
 import android.os.Bundle;
+import android.view.View;
+import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
 
@@ -31,6 +34,14 @@ public class MainActivity extends AppCompatActivity {
         experimentAdapter = new CardList(this, experimentDataList);
 
         experimentList.setAdapter(experimentAdapter);
+
+        experimentList.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+                @Override
+                public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                    Intent intent = new Intent(MainActivity.this, com.example.cmput301w21t23_smartdatabook.CommentSection.class);
+                    startActivity(intent);
+                }
+            });
 
     }
 }

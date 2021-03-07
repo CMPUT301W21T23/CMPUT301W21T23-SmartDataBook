@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical">
+
+    <TextView
+        android:id="@+id/experimentName"
+        android:layout_width="339dp"
+        android:layout_height="92dp"
+        android:padding="20dp"
+        android:text="experimentName"
+        android:textSize="30sp"></TextView>
+
+    <TextView
+        android:id="@+id/dateCreated"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="dateCreated" />
+
+    <TextView
+        android:id="@+id/Owner"
+        android:layout_width="wrap_content"
+        android:layout_height="56dp"
+        android:layout_marginLeft="20dp"
+        android:text="Owner Name"
+        android:textSize="30sp"></TextView>
+
+    <TextView
+        android:id="@+id/Experiment_descr"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Experiment Description" />
+
+    <TextView
+        android:id="@+id/Region"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Region" />
+
+
+</LinearLayout>

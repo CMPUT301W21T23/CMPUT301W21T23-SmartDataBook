@@ -6,7 +6,7 @@ class Comment extends User{
 
     String text;
     int commentID;
-    int useruniqueID;
+    String useruniqueID;
 
     //Contains a list of comment objects that are replying to the 
     //parent comment object.
