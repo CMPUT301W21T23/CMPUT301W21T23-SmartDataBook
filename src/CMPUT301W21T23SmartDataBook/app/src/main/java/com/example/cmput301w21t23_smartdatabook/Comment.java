@@ -1,3 +1,4 @@
+
 package com.example.cmput301w21t23_smartdatabook;
 
 import java.util.ArrayList;
@@ -33,7 +34,5 @@ class Comment extends User{
     public int getID () {
         return commentID;
     }
-
-
-
 }
+

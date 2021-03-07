@@ -1,3 +1,4 @@
+
 package com.example.cmput301w21t23_smartdatabook;
 
 import java.util.ArrayList;
@@ -60,5 +61,5 @@ abstract class User{
         return new Comment(text, userUniqueID, commentID);
         
     }
-
 }
+
