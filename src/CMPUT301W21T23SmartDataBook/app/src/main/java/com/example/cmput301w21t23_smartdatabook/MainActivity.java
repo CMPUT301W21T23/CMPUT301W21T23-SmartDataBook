@@ -41,8 +41,8 @@ public class MainActivity extends AppCompatActivity {
 
         experimentList.setAdapter(experimentAdapter);
 
-        FusedLocationProviderClient client =
-                LocationServices.getFusedLocationProviderClient(this);
+
+        fusedLocationClient = LocationServices.getFusedLocationProviderClient(this);
 
         // Get the last known location. In some rare situations, this can be null.
         if (ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
@@ -55,7 +55,7 @@ public class MainActivity extends AppCompatActivity {
             // for ActivityCompat#requestPermissions for more details.
             ActivityCompat.requestPermissions(this, new String[]{Manifest.permission.ACCESS_FINE_LOCATION}, 78);
         }
-        client.getLastLocation()
+        fusedLocationClient.getLastLocation()
                 .addOnSuccessListener(this, location -> {
                     if (location != null) {
                         System.out.println(location.toString());
@@ -63,5 +63,7 @@ public class MainActivity extends AppCompatActivity {
                         System.out.println("Location do not exist yet. Maybe something wrong?");
                     }
                 });
+
+
     }
 }
