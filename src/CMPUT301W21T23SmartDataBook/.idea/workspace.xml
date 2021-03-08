@@ -33,9 +33,18 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="4115ae75-2a46-43f7-b84e-4d7057f87742" name="Default Changelist" comment="">
+<<<<<<< Updated upstream
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/app/src/main/java/com/example/cmput301w21t23_smartdatabook/MainActivity.java" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/com/example/cmput301w21t23_smartdatabook/MainActivity.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/app/src/main/res/layout/settings.xml" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/res/layout/settings.xml" afterDir="false" />
+=======
+      <change beforePath="$PROJECT_DIR$/.idea/assetWizardSettings.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/assetWizardSettings.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/caches/build_file_checksums.ser" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/caches/build_file_checksums.ser" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/misc.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/src/main/res/values/colors.xml" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/res/values/colors.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/local.properties" beforeDir="false" afterPath="$PROJECT_DIR$/local.properties" afterDir="false" />
+>>>>>>> Stashed changes
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -83,11 +92,14 @@
     <property name="ASKED_SHARE_PROJECT_CONFIGURATION_FILES" value="true" />
     <property name="RunOnceActivity.OpenProjectViewOnStart" value="true" />
     <property name="RunOnceActivity.ShowReadmeOnStart" value="true" />
+    <property name="SHARE_PROJECT_CONFIGURATION_FILES" value="true" />
     <property name="last_directory_selection" value="$PROJECT_DIR$/app/src/main/res/drawable-mdpi" />
     <property name="last_opened_file_path" value="$PROJECT_DIR$" />
+    <property name="settings.editor.selected.configurable" value="preferences.pluginManager" />
   </component>
   <component name="RecentsManager">
     <key name="MoveFile.RECENT_KEYS">
+      <recent name="C:\Users\sonik\OneDrive\Desktop\GitHub\CMPUT301W21T23-SmartDataBook\src\CMPUT301W21T23SmartDataBook\app\src\main\res\xml" />
       <recent name="D:\Users\Old PC\Documents\Natnail School Stuff\CMPUT301W21T23-SmartDataBook\src\CMPUT301W21T23SmartDataBook\app\src\main\res\font" />
     </key>
   </component>
@@ -183,11 +195,16 @@
     <option name="oldMeFiltersMigrated" value="true" />
   </component>
   <component name="WindowStateProjectService">
-    <state x="690" y="267" key="#com.intellij.refactoring.safeDelete.UnsafeUsagesDialog" timestamp="1615007398887">
-      <screen x="0" y="0" width="1920" height="1040" />
+    <state x="690" y="300" key="#com.intellij.refactoring.safeDelete.UnsafeUsagesDialog" timestamp="1615169074208">
+      <screen x="0" y="30" width="1920" height="1050" />
     </state>
     <state x="690" y="267" key="#com.intellij.refactoring.safeDelete.UnsafeUsagesDialog/0.0.1920.1040@0.0.1920.1040" timestamp="1615007398887" />
+<<<<<<< Updated upstream
     <state x="540" y="275" key="AndroidCreateResourceFileDialog" timestamp="1615168159518">
+=======
+    <state x="690" y="300" key="#com.intellij.refactoring.safeDelete.UnsafeUsagesDialog/0.30.1920.1050/-1920.30.1920.1050@0.30.1920.1050" timestamp="1615169074208" />
+    <state x="540" y="275" key="AndroidCreateResourceFileDialog" timestamp="1615005615272">
+>>>>>>> Stashed changes
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
     <state x="540" y="275" key="AndroidCreateResourceFileDialog/0.0.1920.1040@0.0.1920.1040" timestamp="1615168159518" />
@@ -195,6 +212,10 @@
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
     <state x="805" y="327" key="AndroidCreateXmlResourceDialog/0.0.1920.1040@0.0.1920.1040" timestamp="1615005742299" />
+    <state x="461" y="200" key="SettingsEditor" timestamp="1615169274999">
+      <screen x="0" y="30" width="1920" height="1050" />
+    </state>
+    <state x="461" y="200" key="SettingsEditor/0.30.1920.1050/-1920.30.1920.1050@0.30.1920.1050" timestamp="1615169274999" />
     <state x="776" y="298" key="chooseDestDirectoryDialog" timestamp="1615005386532">
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
