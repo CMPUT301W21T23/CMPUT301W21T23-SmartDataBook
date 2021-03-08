@@ -38,7 +38,7 @@ public class MainActivity extends AppCompatActivity {
         experimentList.setOnItemClickListener(new AdapterView.OnItemClickListener() {
                 @Override
                 public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                    Intent intent = new Intent(MainActivity.this, com.example.cmput301w21t23_smartdatabook.CommentSection.class);
+                    Intent intent = new Intent(MainActivity.this, CommentActivity.class);
                     startActivity(intent);
                 }
             });
