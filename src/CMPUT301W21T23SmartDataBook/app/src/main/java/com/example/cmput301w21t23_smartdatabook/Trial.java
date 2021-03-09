@@ -10,7 +10,14 @@ public class Trial {
     // private float latitude;
     private Location location;
 
-    /*public float getLongitude() {
+    public Location getLocation() {
+        return location;
+    }
+
+    public void setLocation(Location location) {
+        this.location = location;
+    }
+/*public float getLongitude() {
         return longitude;
     }
 

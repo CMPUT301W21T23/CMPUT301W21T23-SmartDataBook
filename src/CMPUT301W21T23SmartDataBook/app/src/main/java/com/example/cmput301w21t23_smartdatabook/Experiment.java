@@ -17,6 +17,7 @@ public class Experiment {
     private boolean isPublic;
     // private Trial Array<Trial>;
     private String date;
+    private boolean requireLocation = false;
     private Location location;
 
     public Experiment(String expName, String ownerUserID, String trialType, String description, boolean regionOn, int minTrials, int maxTrials, boolean isPublic, String date) {
@@ -29,6 +30,20 @@ public class Experiment {
         this.maxTrials = maxTrials;
         this.isPublic = isPublic;
         this.date = date;
+    }
+
+    public Experiment(String expName, String ownerUserID, String trialType, String description, boolean regionOn, int minTrials, int maxTrials, boolean isPublic, String date, boolean requireLocation, Location location) {
+        this.expName = expName;
+        this.ownerUserID = ownerUserID;
+        this.trialType = trialType;
+        this.description = description;
+        this.regionOn = regionOn;
+        this.minTrials = minTrials;
+        this.maxTrials = maxTrials;
+        this.isPublic = isPublic;
+        this.date = date;
+        this.requireLocation = requireLocation;
+        this.location = location;
     }
 
     public String getDate() {
@@ -101,5 +116,21 @@ public class Experiment {
 
     public void setPublic(boolean aPublic) {
         isPublic = aPublic;
+    }
+
+    public boolean requiresLocation() {
+        return requireLocation;
+    }
+
+    public void toggleRequireLocation() {
+        this.requireLocation = !this.requireLocation;
+    }
+
+    public Location getLocation() {
+        return location;
+    }
+
+    public void setLocation(Location location) {
+        this.location = location;
     }
 }
