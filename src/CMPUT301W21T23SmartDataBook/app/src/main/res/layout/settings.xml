@@ -10,12 +10,11 @@
         android:layout_width="match_parent"
         android:layout_height="60dp"
         android:layout_marginBottom="50dp">
+
         <com.google.android.material.appbar.AppBarLayout
             android:layout_width="match_parent"
             android:layout_height="60dp"
-            tools:ignore="MissingConstraints"
-            android:background="#d11c0f"
-            />
+            tools:ignore="MissingConstraints" />
         <TextView
             android:id="@+id/settingsTxtView"
             android:layout_width="wrap_content"
@@ -68,7 +67,7 @@
             android:layout_centerHorizontal="true"
             android:text="EDIT"
             app:backgroundTint="@null"
-            android:background="#d11c0f">
+            android:background="@color/purple_500">
         </com.google.android.material.button.MaterialButton>
 
 
@@ -87,7 +86,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             app:menu="@menu/bottom_navigation_menu"
-            android:background="#d11c0f"/>
+            android:background="@color/purple_500"/>
 
     </LinearLayout>
 
