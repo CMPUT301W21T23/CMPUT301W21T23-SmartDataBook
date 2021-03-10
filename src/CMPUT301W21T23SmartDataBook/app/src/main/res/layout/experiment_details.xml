@@ -1,0 +1,238 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:layout_marginBottom="10dp">
+        <com.google.android.material.appbar.AppBarLayout
+            android:layout_width="match_parent"
+            android:layout_height="60dp"
+            tools:ignore="MissingConstraints"
+            android:background="#d11c0f"
+            />
+        <androidx.appcompat.widget.AppCompatImageButton
+            android:layout_width="60dp"
+            android:layout_height="match_parent"
+            android:background="@color/theme_default"
+            android:src="@drawable/ic_back_button" />
+    </RelativeLayout>
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="fill_parent">
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textSize="17sp"
+            android:text="EXPERIMENT NAME"
+            android:id="@+id/ClickedExpName"
+            android:layout_centerHorizontal="true"
+            android:textColor="@color/theme_default"
+            android:layout_marginBottom="10dp">
+        </TextView>
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textSize="17sp"
+            android:text="REGION"
+            android:id="@+id/ClickedExpRegion"
+            android:layout_centerHorizontal="true"
+            android:textColor="@color/theme_default"
+            android:layout_below="@id/ClickedExpName"
+            android:layout_marginBottom="10dp">
+        </TextView>
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textSize="17sp"
+            android:text="MINIMUM # OF TRIALS:"
+            android:id="@+id/MinTrials"
+            android:layout_centerHorizontal="true"
+            android:textColor="@color/theme_default"
+            android:layout_below="@id/ClickedExpRegion"
+            android:layout_marginBottom="10dp">
+        </TextView>
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/ClickedExpRegion"
+            android:layout_marginStart="300dp"
+            android:text="0"
+            android:layout_marginTop="1dp"
+            android:textSize="17sp"
+            android:textColor="@color/theme_default"
+            android:id="@+id/MinTrialsNumber">
+        </TextView>
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textSize="17sp"
+            android:text="TYPE OF EXPERIMENT"
+            android:id="@+id/ExpType"
+            android:layout_centerHorizontal="true"
+            android:textColor="@color/theme_default"
+            android:layout_below="@id/MinTrials"
+            android:layout_marginBottom="10dp">
+        </TextView>
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textSize="17sp"
+            android:text="DESCRIPTION PARAGRAPH"
+            android:id="@+id/ClickedExpDesc"
+            android:layout_centerHorizontal="true"
+            android:textColor="@color/theme_default"
+            android:layout_below="@id/ExpType"
+            android:layout_marginBottom="10dp">
+        </TextView>
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textSize="17sp"
+            android:text="PUBLISH"
+            android:id="@+id/Publish"
+            android:layout_centerHorizontal="true"
+            android:textColor="@color/theme_default"
+            android:layout_below="@id/ClickedExpDesc"
+            android:layout_marginBottom="35dp">
+        </TextView>
+
+        <CheckBox
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="245dp"
+            android:layout_below="@id/ClickedExpDesc"
+            android:layout_marginTop="-12dp"
+            android:layout_marginBottom="10dp">
+        </CheckBox>
+        <Button
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="VIEW STATS"
+            app:backgroundTint="@null"
+            android:background="@color/theme_default"
+            android:layout_below="@id/Publish"
+            android:layout_centerHorizontal="true"
+            android:id="@+id/ViewStatsBTN"
+            android:layout_marginBottom="30dp">
+        </Button>
+
+        <Button
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="UPLOAD TRIALS"
+            app:backgroundTint="@null"
+            android:background="@color/theme_default"
+            android:layout_below="@id/ViewStatsBTN"
+            android:layout_centerHorizontal="true"
+            android:id="@+id/UploadTrialsBTN"
+            android:layout_marginBottom="40dp">
+        </Button>
+        <androidx.appcompat.widget.AppCompatImageButton
+            android:layout_width="25dp"
+            android:layout_height="25dp"
+            android:background="@color/white"
+            android:src="@drawable/ic_map_button_foreground"
+            app:backgroundTint="@null"
+            android:layout_below="@id/UploadTrialsBTN"
+            android:layout_marginLeft="40dp"
+            android:id="@+id/mapButton"
+            android:layout_marginBottom="10dp"
+            />
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="SHOW MAP"
+            android:textColor="@color/theme_default"
+            android:layout_below="@id/UploadTrialsBTN"
+            android:layout_toRightOf="@id/mapButton"
+            android:layout_marginLeft="10dp"
+            android:id="@+id/ShowMap"
+            android:layout_marginBottom="10dp"
+            >
+        </TextView>
+
+        <androidx.appcompat.widget.AppCompatImageButton
+            android:layout_width="25dp"
+            android:layout_height="25dp"
+            android:background="@color/white"
+            android:src="@drawable/ic_generate_code_foreground"
+            app:backgroundTint="@null"
+            android:layout_below="@id/mapButton"
+            android:layout_marginLeft="40dp"
+            android:id="@+id/generateCodeBTN"
+            android:layout_marginBottom="10dp"
+            />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="GENERATE/REGISTER CODE"
+            android:textColor="@color/theme_default"
+            android:layout_below="@id/ShowMap"
+            android:layout_toRightOf="@id/generateCodeBTN"
+            android:layout_marginLeft="10dp"
+            android:layout_marginTop="8dp"
+            android:id="@+id/generateCodeTextView"
+            >
+        </TextView>
+
+        <androidx.appcompat.widget.AppCompatImageButton
+            android:layout_width="25dp"
+            android:layout_height="25dp"
+            android:background="@color/white"
+            android:src="@drawable/ic_ask_question"
+            app:backgroundTint="@null"
+            android:layout_below="@id/generateCodeBTN"
+            android:layout_marginLeft="40dp"
+            android:id="@+id/askQuestionsBTN"
+            android:layout_marginBottom="15dp"
+            />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="ASK QUESTIONS"
+            android:textColor="@color/theme_default"
+            android:layout_below="@id/generateCodeTextView"
+            android:layout_toRightOf="@id/askQuestionsBTN"
+            android:layout_marginLeft="10dp"
+            android:layout_marginTop="15dp"
+            android:id="@+id/askQuestionsTextView"
+            >
+        </TextView>
+
+        <Button
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textColor="@color/white"
+            android:text="END EXPERIMENT"
+            app:backgroundTint="@null"
+            android:background="@color/theme_default"
+            android:layout_below="@id/askQuestionsBTN"
+            android:layout_marginLeft="40dp"
+
+            >
+
+        </Button>
+
+
+
+
+
+
+
+    </RelativeLayout>
+
+
+</LinearLayout>
