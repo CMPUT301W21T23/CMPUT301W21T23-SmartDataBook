@@ -32,7 +32,7 @@ public class MainActivity extends AppCompatActivity {
     ListView experimentList;
     ArrayAdapter<Experiment> experimentAdapter;
     ArrayList<Experiment> experimentDataList;
-    
+
     private FirebaseFirestore db;
     private FirebaseAuth mAuth;
 
@@ -41,9 +41,10 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-
+        //anonymous authentication testing
         mAuth = FirebaseAuth.getInstance();
 
+        //experimentList testing
         experimentList = findViewById(R.id.experimentList);
         experimentDataList = new ArrayList<>();
 
@@ -85,9 +86,51 @@ public class MainActivity extends AppCompatActivity {
                     @Override
                     public void onComplete(@NonNull Task<AuthResult> task) {
                         if (task.isSuccessful()) {
+
                             // Sign in success, update UI with the signed-in user's information
                             Log.d("UserAuthSuccessful", "Login Successful.");
                             Toast.makeText(MainActivity.this, "Authentication successful.", Toast.LENGTH_SHORT).show();
+
+                            FirebaseUser currentUser = mAuth.getCurrentUser();
+
+                            db = FirebaseFirestore.getInstance();
+                            // Get a top level reference to the collection
+                            final CollectionReference allUsersCollection = db.collection("Users");
+                            HashMap<String, String> data = new HashMap<>();
+
+                            //Source: Firebase, firebase.google.com
+                            //License: Creative Commons Attribution 4.0 License, Apache 2.0 License
+                            //Code: https://firebase.google.com/docs/firestore/query-data/get-data#java_
+                            assert currentUser != null;
+                            DocumentReference userDoc = allUsersCollection.document(currentUser.getUid());
+                            userDoc.get().addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
+                                @Override
+                                public void onComplete(@NonNull Task<DocumentSnapshot> task) {
+                                    if(task.isSuccessful()){
+                                        DocumentSnapshot document = task.getResult();
+                                        assert document != null;
+                                        if(!document.exists()){
+                                            data.put("UserName", "");
+                                            data.put("Contact", "");
+                                            allUsersCollection
+                                                    .document(currentUser.getUid())
+                                                    .set(data)
+                                                    .addOnSuccessListener(new OnSuccessListener<Void>() {
+                                                        @Override
+                                                        public void onSuccess(Void aVoid) {
+                                                            Log.d("UsernameSaveSuccessful", "Username saved successfully.");
+                                                        }
+                                                    })
+                                                    .addOnFailureListener(new OnFailureListener() {
+                                                        @Override
+                                                        public void onFailure(@NonNull Exception e) {
+                                                            Log.d("UsernameSaveFailed", "Username saving failed.");
+                                                        }
+                                                    });
+                                        }
+                                    }
+                                }
+                            });
 
                         }else{
                             Log.w("UserAuthFailed", "Login Failed.");
@@ -96,44 +139,6 @@ public class MainActivity extends AppCompatActivity {
 
                     }
                 });
-
-        db = FirebaseFirestore.getInstance();
-        // Get a top level reference to the collection
-        final CollectionReference allUsersCollection = db.collection("Users");
-        HashMap<String, String> data = new HashMap<>();
-
-        //Source: Firebase, firebase.google.com
-        //License: Creative Commons Attribution 4.0 License, Apache 2.0 License
-        //Code: https://firebase.google.com/docs/firestore/query-data/get-data#java_2
-        DocumentReference userDoc = allUsersCollection.document(currentUser.getUid());
-        userDoc.get().addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
-            @Override
-            public void onComplete(@NonNull Task<DocumentSnapshot> task) {
-                if(task.isSuccessful()){
-                    DocumentSnapshot document = task.getResult();
-                    if(!document.exists()){
-                        data.put("UserName", "");
-                        data.put("Contact", "");
-                        allUsersCollection
-                                .document(currentUser.getUid())
-                                .set(data)
-                                .addOnSuccessListener(new OnSuccessListener<Void>() {
-                                    @Override
-                                    public void onSuccess(Void aVoid) {
-                                        Log.d("UsernameSaveSuccessful", "Username saved successfully.");
-                                    }
-                                })
-                                .addOnFailureListener(new OnFailureListener() {
-                                    @Override
-                                    public void onFailure(@NonNull Exception e) {
-                                        Log.d("UsernameSaveFailed", "Username saving failed.");
-                                    }
-                                });
-                    }
-                }
-            }
-        });
-
 
     }//onStart
 }

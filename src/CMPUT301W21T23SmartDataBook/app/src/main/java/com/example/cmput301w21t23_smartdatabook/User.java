@@ -11,6 +11,12 @@ abstract class User{
     ArrayList<Experiment> ownedExperimentList;
     ArrayList<Experiment> favoriteExperimentList;
 
+    public User(String userName, String userContact, String userUniqueID) {
+        this.userName = userName;
+        this.userContact = userContact;
+        this.userUniqueID = userUniqueID;
+    }
+
     public String getUserUniqueID() {
         return userUniqueID;
     }

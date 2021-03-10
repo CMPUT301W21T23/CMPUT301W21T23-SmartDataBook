@@ -13,6 +13,7 @@ class Comment extends User{
     ArrayList<Comment> replyList;
 
     public Comment(String text, String userUniqueID, int commentID){
+        super(null, null, userUniqueID);
         this.text = text;
         this.userUniqueID = userUniqueID;
         this.commentID = commentID;
