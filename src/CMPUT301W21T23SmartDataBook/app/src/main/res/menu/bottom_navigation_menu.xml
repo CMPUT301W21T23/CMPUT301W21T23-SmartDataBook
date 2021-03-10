@@ -5,11 +5,6 @@
         android:icon="@drawable/ic_home_nav"
         android:title="Home"/>
     <item
-        android:id="@+id/followed_nav"
-        android:enabled="true"
-        android:icon="@drawable/ic_star_nav"
-        android:title="Followed"/>
-    <item
         android:id="@+id/fav_nav"
         android:enabled="true"
         android:icon="@drawable/ic_heart_nav"
