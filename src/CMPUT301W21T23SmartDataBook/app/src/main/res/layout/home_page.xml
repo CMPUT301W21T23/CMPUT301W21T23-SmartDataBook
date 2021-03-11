@@ -25,15 +25,15 @@
         android:clickable="true"
         android:focusable="true"
         app:srcCompat="@android:drawable/ic_input_add"
-        android:layout_marginHorizontal="15dp"/>
+        android:layout_marginHorizontal="15dp" />
 
-    <com.google.android.material.bottomnavigation.BottomNavigationView
-        android:id="@+id/bottom_navigation"
-        style="@style/Widget.MaterialComponents.BottomNavigationView.Colored"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="670dp"
-        android:background="@color/purple_500"
-        app:menu="@menu/bottom_navigation_menu" />
+<!--    <com.google.android.material.bottomnavigation.BottomNavigationView-->
+<!--        android:id="@+id/bottom_navigation"-->
+<!--        style="@style/Widget.MaterialComponents.BottomNavigationView.Colored"-->
+<!--        android:layout_width="match_parent"-->
+<!--        android:layout_height="wrap_content"-->
+<!--        android:layout_marginTop="670dp"-->
+<!--        android:background="@color/purple_500"-->
+<!--        app:menu="@menu/bottom_navigation_menu" />-->
 
 </FrameLayout>

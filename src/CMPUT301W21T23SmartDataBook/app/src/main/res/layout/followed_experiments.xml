@@ -6,33 +6,15 @@
     android:layout_height="match_parent"
     tools:context=".MainActivity"
     android:orientation="vertical">
+
     <RelativeLayout
         android:layout_width="match_parent"
-        android:layout_height="60dp"
-        >
-        <com.google.android.material.appbar.AppBarLayout
-            android:layout_width="match_parent"
-            android:layout_height="60dp"
-            tools:ignore="MissingConstraints"
-            android:background="#d11c0f"
-            />
-        <TextView
-            android:id="@+id/followedExpTxtView"
-            android:layout_width="wrap_content"
-            android:layout_height="70dp"
-            android:text="Followed Experiments"
-            android:textSize="40dp"
-            android:layout_centerHorizontal="true"
-            android:textColor="@color/white"
+        android:layout_height="60dp" />
 
-            >
-        </TextView>
-    </RelativeLayout>
     <ListView
             android:id="@+id/followedExpListView"
             android:layout_width="match_parent"
             android:layout_height="614dp"
-
         />
 
     <LinearLayout
