@@ -47,8 +47,12 @@ class Comment extends User{
         return question;
     }
 
-    public void setQuestion(ArrayList <Comment> replyList){
-        this.question=replyList.get(0);
+     public void setQuestion(ArrayList <Comment> replyList){
+        // only set the question if the list is not empty
+        if (!replyList.isEmpty()){
+            this.question=replyList.get(0);
+        }
+
     }
 
 }
