@@ -12,15 +12,29 @@
         android:id="@+id/experimentList"
         android:layout_width="match_parent"
         android:layout_height="match_parent">
+
+
+
     </ListView>
 
     <com.google.android.material.floatingactionbutton.FloatingActionButton
         android:id="@+id/add_experiment_button"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_gravity="bottom|end"
+        android:layout_marginBottom="70dp"
         android:clickable="true"
         android:focusable="true"
-        android:layout_gravity="bottom|end"
-        app:srcCompat="@android:drawable/ic_input_add" />
+        app:srcCompat="@android:drawable/ic_input_add"
+        android:layout_marginHorizontal="15dp"/>
+
+    <com.google.android.material.bottomnavigation.BottomNavigationView
+        android:id="@+id/bottom_navigation"
+        style="@style/Widget.MaterialComponents.BottomNavigationView.Colored"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/purple_500"
+        app:menu="@menu/bottom_navigation_menu"
+        android:layout_marginTop="680dp"/>
 
 </FrameLayout>
