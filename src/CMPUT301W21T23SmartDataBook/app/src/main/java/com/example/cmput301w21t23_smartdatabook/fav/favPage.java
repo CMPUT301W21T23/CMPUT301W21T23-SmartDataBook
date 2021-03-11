@@ -12,8 +12,8 @@ import com.example.cmput301w21t23_smartdatabook.R;
 public class favPage extends Fragment {
     private static final String AP1 = "AP1";
     private static final String AP2 = "AP2";
-    public favPage(){
 
+    public favPage(){
     }
 
     public static favPage newInstance(String p1, String p2){
