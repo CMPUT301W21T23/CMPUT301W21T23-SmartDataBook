@@ -66,6 +66,4 @@
         android:clickable="true"
         app:srcCompat="@drawable/ic_star_nav" />
 
-
-
 </LinearLayout>

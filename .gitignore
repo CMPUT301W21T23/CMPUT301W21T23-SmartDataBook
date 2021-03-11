@@ -72,7 +72,8 @@ obj/
 /out/
 
 # User-specific configurations
-.idea/
+/*/*/.idea
+
 .idea/caches/
 .idea/libraries/
 .idea/shelf/
@@ -133,6 +134,7 @@ atlassian-ide-plugin.xml
 
 # Mongo Explorer plugin
 .idea/mongoSettings.xml
+.idea
 
 # Crashlytics plugin (for Android Studio and IntelliJ)
 com_crashlytics_export_strings.xml
