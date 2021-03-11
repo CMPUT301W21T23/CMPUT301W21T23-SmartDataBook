@@ -13,9 +13,8 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
-
-
     </ListView>
+
 
     <com.google.android.material.floatingactionbutton.FloatingActionButton
         android:id="@+id/add_experiment_button"
@@ -33,8 +32,8 @@
         style="@style/Widget.MaterialComponents.BottomNavigationView.Colored"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_marginTop="670dp"
         android:background="@color/purple_500"
-        app:menu="@menu/bottom_navigation_menu"
-        android:layout_marginTop="680dp"/>
+        app:menu="@menu/bottom_navigation_menu" />
 
 </FrameLayout>
