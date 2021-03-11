@@ -27,6 +27,7 @@
     <list default="true" id="090c9a38-156c-49f4-98ee-30abce2f705f" name="Default Changelist" comment="">
       <change afterPath="$PROJECT_DIR$/app/src/main/res/layout/activity_main.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+
       <change beforePath="$PROJECT_DIR$/app/src/main/java/com/example/cmput301w21t23_smartdatabook/MainActivity.java" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/com/example/cmput301w21t23_smartdatabook/MainActivity.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/app/src/main/java/com/example/cmput301w21t23_smartdatabook/favPage.java" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/com/example/cmput301w21t23_smartdatabook/favPage.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/app/src/main/java/com/example/cmput301w21t23_smartdatabook/homePage.java" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/com/example/cmput301w21t23_smartdatabook/homePage.java" afterDir="false" />
@@ -34,6 +35,10 @@
       <change beforePath="$PROJECT_DIR$/app/src/main/res/layout/followed_experiments.xml" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/res/layout/followed_experiments.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/app/src/main/res/layout/home_page.xml" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/res/layout/home_page.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/app/src/main/res/layout/settings.xml" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/res/layout/settings.xml" afterDir="false" />
+
+      <change beforePath="$PROJECT_DIR$/app/src/main/res/layout/generate_qr_binaomial.xml" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/res/layout/generate_qr_binaomial.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/src/main/res/values/colors.xml" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/res/values/colors.xml" afterDir="false" />
+
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -171,6 +176,7 @@
     <option name="oldMeFiltersMigrated" value="true" />
   </component>
   <component name="WindowStateProjectService">
+
     <state x="338" y="221" key="AndroidCreateResourceFileDialog" timestamp="1615486164574">
       <screen x="58" y="25" width="1382" height="875" />
     </state>
@@ -195,5 +201,11 @@
     </state>
     <state width="1336" height="240" key="GridCell.Tab.0.right/58.25.1382.875/1440.25.1116.795@58.25.1382.875" timestamp="1615489877100" />
     <state width="1336" height="719" key="GridCell.Tab.0.right/58.25.1382.875@58.25.1382.875" timestamp="1615480173685" />
+
+    <state x="776" y="333" key="chooseDestDirectoryDialog" timestamp="1615433020743">
+      <screen x="0" y="30" width="1920" height="1050" />
+    </state>
+    <state x="776" y="333" key="chooseDestDirectoryDialog/0.30.1920.1050/-1920.30.1920.1050@0.30.1920.1050" timestamp="1615433020743" />
+
   </component>
 </project>
