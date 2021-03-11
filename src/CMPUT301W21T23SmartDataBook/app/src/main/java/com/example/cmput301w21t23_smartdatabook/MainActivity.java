@@ -6,20 +6,19 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentTransaction;
 
-import android.content.Intent;
 import android.os.Bundle;
 import android.view.MenuItem;
-import android.view.View;
-import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
 
+import com.example.cmput301w21t23_smartdatabook.fav.favPage;
+import com.example.cmput301w21t23_smartdatabook.settings.settingsPage;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.firestore.FirebaseFirestore;
 import java.util.ArrayList;
 
-import com.example.cmput301w21t23_smartdatabook.homePage;
+import com.example.cmput301w21t23_smartdatabook.home.homePage;
 
 //https://androidwave.com/bottom-navigation-bar-android-example/ -> bottom tab navigation
 public class MainActivity extends AppCompatActivity {
