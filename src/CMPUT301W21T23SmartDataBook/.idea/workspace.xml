@@ -25,8 +25,10 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="090c9a38-156c-49f4-98ee-30abce2f705f" name="Default Changelist" comment="">
-      <change beforePath="$PROJECT_DIR$/app/src/main/java/com/example/cmput301w21t23_smartdatabook/MainActivity.java" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/com/example/cmput301w21t23_smartdatabook/MainActivity.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/src/main/java/com/example/cmput301w21t23_smartdatabook/homePage.java" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/com/example/cmput301w21t23_smartdatabook/home/homePage.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/src/main/res/layout/followed_experiments.xml" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/res/layout/followed_experiments.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/src/main/res/layout/home_page.xml" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/res/layout/home_page.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/src/main/res/layout/settings.xml" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/res/layout/settings.xml" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
