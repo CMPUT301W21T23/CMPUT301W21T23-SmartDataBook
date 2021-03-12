@@ -41,9 +41,10 @@
             android:layout_centerHorizontal="true"
             android:layout_marginBottom="25dp"
             android:textSize="30dp">
-
         </TextView>
+
         <com.google.android.material.button.MaterialButton
+            android:id="@+id/editButtonSettings"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_below="@id/emailTxtView"
