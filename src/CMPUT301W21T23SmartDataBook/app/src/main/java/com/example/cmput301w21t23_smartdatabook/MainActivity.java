@@ -31,7 +31,9 @@ import java.util.ArrayList;
 import java.util.HashMap;
 
 import com.example.cmput301w21t23_smartdatabook.home.homePage;
+/*
 
+ */
 //https://androidwave.com/bottom-navigation-bar-android-example/ -> bottom tab navigation
 public class MainActivity extends AppCompatActivity {
 
@@ -156,4 +158,4 @@ public class MainActivity extends AppCompatActivity {
         }
     };
 
-}
+}//mainActivity

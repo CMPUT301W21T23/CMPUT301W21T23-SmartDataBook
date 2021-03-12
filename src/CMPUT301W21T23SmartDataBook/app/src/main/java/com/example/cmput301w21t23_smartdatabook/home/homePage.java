@@ -15,6 +15,7 @@ import com.example.cmput301w21t23_smartdatabook.CardList;
 import com.example.cmput301w21t23_smartdatabook.CommentActivity;
 import com.example.cmput301w21t23_smartdatabook.Experiment;
 import com.example.cmput301w21t23_smartdatabook.R;
+import com.example.cmput301w21t23_smartdatabook.experimentDetails;
 
 import java.util.ArrayList;
 
@@ -68,7 +69,7 @@ public class homePage extends Fragment {
         experimentList.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                Intent intent = new Intent(getActivity(), CommentActivity.class);
+                Intent intent = new Intent(getActivity(), experimentDetails.class);
                 startActivity(intent);
             }
         });
