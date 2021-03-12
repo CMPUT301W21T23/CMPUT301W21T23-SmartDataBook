@@ -17,7 +17,9 @@ import com.example.cmput301w21t23_smartdatabook.home.homePage;
 import com.example.cmput301w21t23_smartdatabook.settings.settingsPage;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.firestore.Source;
 
 
 public class SettingsActivity extends AppCompatActivity {
@@ -31,11 +33,14 @@ public class SettingsActivity extends AppCompatActivity {
     TextView usernameTxtView;
     TextView emailTxtView;
     Button editButtonSettings;
+    FirebaseUser currentUser;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.settings);
+
+        db = FirebaseFirestore.getInstance();
 
         toolbar = getSupportActionBar();
 
@@ -45,9 +50,10 @@ public class SettingsActivity extends AppCompatActivity {
         usernameTxtView = findViewById(R.id.usernameTxtView);
         emailTxtView = findViewById(R.id.emailTxtView);
         editButtonSettings = findViewById(R.id.editButtonSettings);
+        currentUser = mAuth.getCurrentUser();
 
-        usernameTxtView.setText();
-        emailTxtView.setText();
+
+
 
 
     }
