@@ -19,6 +19,18 @@ import com.example.cmput301w21t23_smartdatabook.experimentDetails;
 
 import java.util.ArrayList;
 
+/**
+ * Class: homePage
+ * This is a class that composes the home-page of the app
+ * The home page initialize and displays the list of experiments
+ * It inflate the layout for the experiment's fragment
+ * It allows user to add a new experiment by clicking a floating button
+ * 
+ * @author Afaq Nabi, Bosco Chan 
+ * @see Fragment, Firebase
+ * @version
+ */
+
 public class homePage extends Fragment {
 
     private static final String AP1 = "AP1";
@@ -74,7 +86,104 @@ public class homePage extends Fragment {
             }
         });
 
+        addExperimentButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(getActivity(), addExpActivity.class);
+                startActivity(intent);
+                // new ExperimentFragment().show(getSupportFragmentManager(), "ADD_EXPERIMENT");
+                
+                
+            }
+        });
+
         return view;
     }
+
+
+    /**
+     * Add an experiment by clicking the floating button
+     * if there is something on the edittext field, a key value pair is added to the FireStore.
+     * @param view
+     */
+    public void addExperiment(View view) {
+
+        //addCommentBtn testing - add comments via btn to database
+        final FloatingActionButton addCommentBtn = findViewById(R.id.addCommentBtn);
+
+        EditText commentText = findViewById(R.id.editCommentText);
+        EditText userNameText = findViewById(R.id.editUserNameText);
+
+        addCommentBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+                if(commentText.getText().toString().length() != 0 || userNameText.getText().toString().length() !=0 ) {
+                    Comment newComment = new Comment(commentText.getText().toString(), userNameText.getText().toString(), commentDataList.size() + 1);
+                    commentDataList.add(newComment);
+                    commentAdapter.notifyDataSetChanged();
+
+                    //Add into a Comments collection with a comment document containing
+                    //a Pies collection with a pie document
+                    db = FirebaseFirestore.getInstance();
+                    final CollectionReference allCommentsCollection = db.collection("Comments");
+                    HashMap<String, String> data = new HashMap<>();
+
+                    if(commentText.length()>0 && userNameText.length()>0){
+                        // If there’s some data in the EditText field, then we create a new key-value pair.
+                        data.put("Username", userNameText.getText().toString());
+                        data.put("Comment", commentText.getText().toString());
+
+                        allCommentsCollection
+                                .document("" + newComment.getCommentID())
+                                .set(data)
+                                .addOnSuccessListener(new OnSuccessListener<Void>() {
+                                    @Override
+                                    public void onSuccess(Void aVoid) {
+                                        Log.d("Success", "Data has been added successfully");
+                                    }
+                                })
+                                .addOnFailureListener(new OnFailureListener() {
+                                    @Override
+                                    public void onFailure(@NonNull Exception e) {
+                                        Log.d("Failure", "Data storing failed");
+                                    }
+                                });
+
+                        data.clear();
+                        data.put("Pie Type", "Chocolate");
+                        allCommentsCollection
+                                .document("" + newComment.getCommentID())
+                                .collection("Pies")
+                                .document("ChocoPie")
+                                .set(data)
+                                .addOnSuccessListener(new OnSuccessListener<Void>() {
+                                    @Override
+                                    public void onSuccess(Void aVoid) {
+                                        Log.d("Success", "Data has been added successfully");
+                                    }
+                                })
+                                .addOnFailureListener(new OnFailureListener() {
+                                    @Override
+                                    public void onFailure(@NonNull Exception e) {
+                                        Log.d("Failure", "Data storing failed");
+                                    }
+                                });
+
+                        // Setting the fields to null so that user can add a new city
+                        commentText.setText("");
+                        userNameText.setText("");
+                    }else{
+                        Toast.makeText(MainActivity.this, "Failed to add comment", Toast.LENGTH_SHORT).show();
+                    }//if-else
+
+
+                }//if
+
+            }//onClick
+
+        });
+
+    }//addExperiment
 
 }

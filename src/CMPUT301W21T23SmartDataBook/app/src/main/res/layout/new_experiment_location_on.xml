@@ -29,7 +29,6 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_centerHorizontal="true"
-            android:layout_marginBottom="40dp"
             android:text="New Experiment"
             android:textColor="@color/white"
             android:textSize="40dp" />
@@ -177,6 +176,7 @@
         </androidx.constraintlayout.widget.ConstraintLayout>
 
         <com.google.android.material.switchmaterial.SwitchMaterial
+            android:id="@+id/ExperimentLocationToggleSwitch"
             android:layout_width="144dp"
             android:layout_height="42dp"
             android:layout_marginTop="4dp"
@@ -186,8 +186,20 @@
             android:textStyle="bold"
             app:thumbTint="@color/theme_default"
             app:trackTint="@color/theme_opaque"
+            tools:ignore="MissingConstraints" />
+
+        <com.google.android.material.switchmaterial.SwitchMaterial
+            android:layout_width="144dp"
+            android:layout_height="42dp"
+            android:layout_marginTop="4dp"
+            android:checked="true"
+            android:text="Public"
+            android:textColor="@color/theme_default"
+            android:textStyle="bold"
+            app:thumbTint="@color/theme_default"
+            app:trackTint="@color/theme_opaque"
             tools:ignore="MissingConstraints"
-            android:id="@+id/newExperimentLocationToggleSwitch"/>
+            android:id="@+id/ExperimentLocationPublicPrivateToggleSwitch"/>
 
         <LinearLayout
             android:layout_width="wrap_content"
@@ -197,19 +209,18 @@
             android:layout_marginTop="18dp">
 
             <com.google.android.material.button.MaterialButton
+                android:id="@+id/newExperimentLocationOnCreateButtonView"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Create"
+                android:layout_marginStart="16dp"
+                android:layout_marginLeft="16dp"
                 android:layout_marginRight="30dp"
                 android:backgroundTint="@color/theme_default"
-                android:id="@+id/newExperimentLocationOnCreateButtonView"/>
+                android:text="Create"
+                app:layout_constraintStart_toStartOf="parent" />
 
-            <com.google.android.material.button.MaterialButton
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="publish"
-                android:backgroundTint="@color/theme_default"
-                android:id="@+id/newExperimentLocationOnPublishButtonView"/>
         </LinearLayout>
+
     </LinearLayout>
+
 </LinearLayout>

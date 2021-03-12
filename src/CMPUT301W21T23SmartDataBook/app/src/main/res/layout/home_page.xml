@@ -26,6 +26,7 @@
         android:focusable="true"
         android:backgroundTint="@color/theme_default"
         app:srcCompat="@android:drawable/ic_input_add"
-        android:layout_marginHorizontal="15dp" />
+        android:layout_marginHorizontal="15dp"
+        android:onClick="addExperiment"/>
 
 </FrameLayout>

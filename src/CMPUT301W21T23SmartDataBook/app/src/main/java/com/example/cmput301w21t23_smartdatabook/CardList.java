@@ -11,6 +11,12 @@ import java.util.ArrayList;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 
+/**
+ * This classs is simply to display the information from the experiment list adapters onto the screen
+ * @Author Afaq
+ * @return view the view of the card which contains a couple buttons and breif information about the experiment
+ */
+
 public class CardList extends ArrayAdapter<Experiment> {
 
     private final ArrayList<Experiment> experiments;

@@ -31,10 +31,15 @@ import java.util.ArrayList;
 import java.util.HashMap;
 
 import com.example.cmput301w21t23_smartdatabook.home.homePage;
-/*
 
+/**
+ * the Purpose of this class is to register the user in the database and initialize the bottom tab navigation
+ * functionality of the app
+ * the bottom tab should get covered if a new acitivity is opened
+ * @Author Afaq
+ * @Refrences https://androidwave.com/bottom-navigation-bar-android-example/
  */
-//https://androidwave.com/bottom-navigation-bar-android-example/ -> bottom tab navigation
+
 public class MainActivity extends AppCompatActivity {
 
     ListView experimentList;
@@ -64,69 +69,10 @@ public class MainActivity extends AppCompatActivity {
         //anonymous authentication testing
         mAuth = FirebaseAuth.getInstance();
 
-        mAuth.signInAnonymously()
-                .addOnCompleteListener(this, new OnCompleteListener<AuthResult>() {
-                    @Override
-                    public void onComplete(@NonNull Task<AuthResult> task) {
-                        if (task.isSuccessful()) {
-                            // Sign in success, update UI with the signed-in user's information
-                            Log.d("Authentication Success", "signInAnonymously:success");
-                            FirebaseUser currentUser = mAuth.getCurrentUser();
-
-                            Toast.makeText(MainActivity.this, "User Authenticated.", Toast.LENGTH_SHORT).show();
-
-                            db = FirebaseFirestore.getInstance();
-                            // Get a top level reference to the collection
-                            final CollectionReference allUsersCollection = db.collection("Users");
-                            HashMap<String, String> data = new HashMap<>();
-
-                            //Source: Firebase, firebase.google.com
-                            //License: Creative Commons Attribution 4.0 License, Apache 2.0 License
-                            //Code: https://firebase.google.com/docs/firestore/query-data/get-data#java_
-                            assert currentUser != null;
-                            DocumentReference userDoc = allUsersCollection.document(currentUser.getUid());
-                            userDoc.get().addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
-                                @Override
-                                public void onComplete(@NonNull Task<DocumentSnapshot> task) {
-                                    if(task.isSuccessful()){
-                                        DocumentSnapshot document = task.getResult();
-                                        assert document != null;
-                                        if(!document.exists()){
-                                            data.put("UserName", "");
-                                            data.put("Contact", "");
-                                            allUsersCollection
-                                                    .document(currentUser.getUid())
-                                                    .set(data)
-                                                    .addOnSuccessListener(new OnSuccessListener<Void>() {
-                                                        @Override
-                                                        public void onSuccess(Void aVoid) {
-                                                            Log.d("UsernameSaveSuccessful", "Username saved successfully.");
-                                                        }
-                                                    })
-                                                    .addOnFailureListener(new OnFailureListener() {
-                                                        @Override
-                                                        public void onFailure(@NonNull Exception e) {
-                                                            Log.d("UsernameSaveFailed", "Username saving failed.");
-                                                        }
-                                                    });
-                                        }
-                                    }
-                                }
-                            });
-
-
-                        } else {
-                            // If sign in fails, display a message to the user.
-                            Log.w("Authentication Failed", "signInAnonymously:failure", task.getException());
-                            Toast.makeText(MainActivity.this, "Authentication failed.",
-                                    Toast.LENGTH_SHORT).show();
-                        }
-
-
-                    }
-                });
+        authenticateAnon();
 
     }//onCreate
+
     public void openFragment(Fragment fragment) {
         FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
         transaction.replace(R.id.container, fragment);
@@ -157,5 +103,71 @@ public class MainActivity extends AppCompatActivity {
             return false;
         }
     };
+
+    /**
+     * Authenticates a new app user anonymously and generates a "User document" for the user
+     * containing their respective "username and contact".
+     */
+    public void authenticateAnon() {
+        mAuth.signInAnonymously()
+                .addOnCompleteListener(this, new OnCompleteListener<AuthResult>() {
+                    @Override
+                    public void onComplete(@NonNull Task<AuthResult> task) {
+                        if (task.isSuccessful()) {
+                            // Sign in success, update UI with the signed-in user's information
+                            Log.d("Authentication Success", "signInAnonymously:success");
+                            FirebaseUser currentUser = mAuth.getCurrentUser();
+
+                            db = FirebaseFirestore.getInstance();
+                            // Get a top level reference to the collection
+                            final CollectionReference allUsersCollection = db.collection("Users");
+                            HashMap<String, String> data = new HashMap<>();
+
+                            //Source: Firebase, firebase.google.com
+                            //License: Creative Commons Attribution 4.0 License, Apache 2.0 License
+                            //Code: https://firebase.google.com/docs/firestore/query-data/get-data#java_
+                            assert currentUser != null;
+                            DocumentReference userDoc = allUsersCollection.document(currentUser.getUid());
+                            userDoc.get().addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
+                                @Override
+                                public void onComplete(@NonNull Task<DocumentSnapshot> task) {
+                                    if(task.isSuccessful()){
+                                        DocumentSnapshot document = task.getResult();
+                                        assert document != null;
+                                        if(!document.exists()){
+                                            data.put("UserName", "");
+                                            data.put("Contact", "");
+                                            allUsersCollection
+                                                    .document(currentUser.getUid())
+                                                    .set(data)
+                                                    .addOnSuccessListener(new OnSuccessListener<Void>() {
+                                                        @Override
+                                                        public void onSuccess(Void aVoid) {
+                                                            Log.d("UsernameSaveSuccessful", "Username saved successfully: "+ mAuth.getUid());
+                                                        }
+                                                    })
+                                                    .addOnFailureListener(new OnFailureListener() {
+                                                        @Override
+                                                        public void onFailure(@NonNull Exception e) {
+                                                            Log.d("UsernameSaveFailed", "Username saving failed.");
+                                                        }
+                                                    });
+                                        }
+                                    }
+                                }
+                            });
+
+
+                        } else {
+                            // If sign in fails, display a message to the user.
+                            Log.w("Authentication Failed", "signInAnonymously:failure", task.getException());
+                            Toast.makeText(MainActivity.this, "Authentication failed.",
+                                    Toast.LENGTH_SHORT).show();
+                        }
+
+
+                    }
+                });
+    }//authenticationAnon
 
 }//mainActivity
