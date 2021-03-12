@@ -1,5 +1,15 @@
 package com.example.cmput301w21t23_smartdatabook;
 
+/**
+ * Class: Binomial Trial
+ * This class consists the binomial trial, it mainly uses the attributes: numPass, numFail
+ * It has methods to increment and decrement numPass and numFail
+ * It also has getter and setters for numPass and numFail, in case the experiment's owner need to ignore results
+ * It also has methods to calculate statisitics explicitly for binomial trials such as total number of pass and fails, and the percentage of pass
+ * @author Alex Mak 
+ * @see Trial, Experiment
+ */
+
 public class BinomialTrial extends Trial{
 
     public float passPercentage;
