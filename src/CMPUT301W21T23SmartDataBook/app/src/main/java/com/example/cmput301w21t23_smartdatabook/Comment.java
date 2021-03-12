@@ -7,15 +7,18 @@ class Comment extends User{
 
     String text;
     int commentID;
+    Comment question;
 
     //Contains a list of comment objects that are replying to the 
     //parent comment object.
     ArrayList<Comment> replyList;
 
-    public Comment(String text, String userUniqueID, int commentID){
+    public Comment(String text, String userUniqueID, int commentID, Comment question){
         this.text = text;
         this.userUniqueID = userUniqueID;
         this.commentID = commentID;
+        this.question=question;
+
     }
 
     public String getText() {
@@ -40,5 +43,17 @@ class Comment extends User{
         this.replyList = replyList;
     }
 
-}
+    public Comment getQuestion(){
+        return question;
+    }
 
+    public void setQuestion(ArrayList <Comment> replyList){
+        // only set the question if the list is not empty
+        if (!replyList.isEmpty()){
+            this.question=replyList.get(0);
+        }
+
+    }
+
+
+}
