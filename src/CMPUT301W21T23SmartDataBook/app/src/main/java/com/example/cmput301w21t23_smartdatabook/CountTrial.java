@@ -1,5 +1,14 @@
 package com.example.cmput301w21t23_smartdatabook;
 
+ /**
+ * Class: Count Trial
+ * This class consists the count trial, it mainly uses the attributes: count, 
+ * It has methods to increment and decrement count
+ * It also has getter and setters for numPass and numFail, in case the experiment's owner need to ignore results
+ * @author Alex Mak 
+ * @see Trial, Experiment
+ */
+
 public class CountTrial extends Trial{
 
     // might need to be fixed in future, change to local attributes if necessary
