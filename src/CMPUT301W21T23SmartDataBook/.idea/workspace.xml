@@ -26,16 +26,16 @@
   <component name="ChangeListManager">
     <list default="true" id="090c9a38-156c-49f4-98ee-30abce2f705f" name="Default Changelist" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/src/main/res/layout/followed_experiments.xml" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/res/layout/followed_experiments.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/src/main/java/com/example/cmput301w21t23_smartdatabook/MainActivity.java" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/com/example/cmput301w21t23_smartdatabook/MainActivity.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/src/main/res/layout/edit_profile.xml" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/res/layout/edit_profile.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/app/src/main/res/layout/home_page.xml" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/res/layout/home_page.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/src/main/res/layout/settings.xml" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/res/layout/settings.xml" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
     <option name="LAST_RESOLUTION" value="IGNORE" />
   </component>
-  <component name="ExecutionTargetManager" SELECTED_TARGET="device_and_snapshot_combo_box_target[]" />
+  <component name="ExecutionTargetManager" SELECTED_TARGET="device_and_snapshot_combo_box_target[Pixel_3a_API_30_x86]" />
   <component name="ExternalProjectsData">
     <projectState path="$PROJECT_DIR$">
       <ProjectState />
@@ -170,27 +170,31 @@
       <screen x="58" y="25" width="1382" height="875" />
     </state>
     <state x="338" y="221" key="AndroidCreateResourceFileDialog/58.25.1382.875/1440.25.1116.795@58.25.1382.875" timestamp="1615486164574" />
-    <state width="1336" height="240" key="GridCell.Tab.0.bottom" timestamp="1615490753522">
-      <screen x="60" y="25" width="1380" height="875" />
+    <state width="1877" height="278" key="GridCell.Tab.0.bottom" timestamp="1615514672477">
+      <screen x="0" y="30" width="1920" height="1050" />
     </state>
+    <state width="1877" height="278" key="GridCell.Tab.0.bottom/0.30.1920.1050/-1920.30.1920.1050@0.30.1920.1050" timestamp="1615514672477" />
     <state width="1336" height="240" key="GridCell.Tab.0.bottom/58.25.1382.875/1440.25.1116.795@58.25.1382.875" timestamp="1615489877100" />
     <state width="1336" height="719" key="GridCell.Tab.0.bottom/58.25.1382.875@58.25.1382.875" timestamp="1615480173685" />
     <state width="1336" height="240" key="GridCell.Tab.0.bottom/60.25.1380.875/1440.25.1116.795@60.25.1380.875" timestamp="1615490753522" />
-    <state width="1336" height="240" key="GridCell.Tab.0.center" timestamp="1615490753520">
-      <screen x="60" y="25" width="1380" height="875" />
+    <state width="1877" height="278" key="GridCell.Tab.0.center" timestamp="1615514672477">
+      <screen x="0" y="30" width="1920" height="1050" />
     </state>
+    <state width="1877" height="278" key="GridCell.Tab.0.center/0.30.1920.1050/-1920.30.1920.1050@0.30.1920.1050" timestamp="1615514672477" />
     <state width="1336" height="240" key="GridCell.Tab.0.center/58.25.1382.875/1440.25.1116.795@58.25.1382.875" timestamp="1615489877099" />
     <state width="1336" height="719" key="GridCell.Tab.0.center/58.25.1382.875@58.25.1382.875" timestamp="1615480173684" />
     <state width="1336" height="240" key="GridCell.Tab.0.center/60.25.1380.875/1440.25.1116.795@60.25.1380.875" timestamp="1615490753520" />
-    <state width="1336" height="240" key="GridCell.Tab.0.left" timestamp="1615490753520">
-      <screen x="60" y="25" width="1380" height="875" />
+    <state width="1877" height="278" key="GridCell.Tab.0.left" timestamp="1615514672477">
+      <screen x="0" y="30" width="1920" height="1050" />
     </state>
+    <state width="1877" height="278" key="GridCell.Tab.0.left/0.30.1920.1050/-1920.30.1920.1050@0.30.1920.1050" timestamp="1615514672477" />
     <state width="1336" height="240" key="GridCell.Tab.0.left/58.25.1382.875/1440.25.1116.795@58.25.1382.875" timestamp="1615489877097" />
     <state width="1336" height="719" key="GridCell.Tab.0.left/58.25.1382.875@58.25.1382.875" timestamp="1615480173684" />
     <state width="1336" height="240" key="GridCell.Tab.0.left/60.25.1380.875/1440.25.1116.795@60.25.1380.875" timestamp="1615490753520" />
-    <state width="1336" height="240" key="GridCell.Tab.0.right" timestamp="1615490753522">
-      <screen x="60" y="25" width="1380" height="875" />
+    <state width="1877" height="278" key="GridCell.Tab.0.right" timestamp="1615514672477">
+      <screen x="0" y="30" width="1920" height="1050" />
     </state>
+    <state width="1877" height="278" key="GridCell.Tab.0.right/0.30.1920.1050/-1920.30.1920.1050@0.30.1920.1050" timestamp="1615514672477" />
     <state width="1336" height="240" key="GridCell.Tab.0.right/58.25.1382.875/1440.25.1116.795@58.25.1382.875" timestamp="1615489877100" />
     <state width="1336" height="719" key="GridCell.Tab.0.right/58.25.1382.875@58.25.1382.875" timestamp="1615480173685" />
     <state width="1336" height="240" key="GridCell.Tab.0.right/60.25.1380.875/1440.25.1116.795@60.25.1380.875" timestamp="1615490753522" />

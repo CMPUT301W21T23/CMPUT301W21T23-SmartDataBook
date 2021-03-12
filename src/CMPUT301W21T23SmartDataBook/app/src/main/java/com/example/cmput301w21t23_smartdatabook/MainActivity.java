@@ -44,7 +44,7 @@ public class MainActivity extends AppCompatActivity {
         bottomNavigation = findViewById(R.id.bottom_navigation);
         bottomNavigation.setOnNavigationItemSelectedListener(mOnNavigationItemSelectedListener);
 
-//        toolbar.setTtile("Home");
+        toolbar.setTitle("Home");
         openFragment(homePage.newInstance("",""));
 
         //anonymous authentication testing
