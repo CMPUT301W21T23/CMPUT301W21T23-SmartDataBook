@@ -5,8 +5,10 @@ package com.example.cmput301w21t23_smartdatabook;
  * This class consists the count trial, it mainly uses the attributes: count, 
  * It has methods to increment and decrement count
  * It also has getter and setters for numPass and numFail, in case the experiment's owner need to ignore results
+ * It also has a method to check whether the count is non-negative or not
  * @author Alex Mak 
  * @see Trial, Experiment
+ * @version 1
  */
 
 public class CountTrial extends Trial{
@@ -35,7 +37,14 @@ public class CountTrial extends Trial{
 //    public Trial addNewTrial(){...}
 //    public Trial deleteTrial(){...}
 
-
+     /**
+     * This method serves to check whether the type of trial is non-negative count, or just regular count
+     * @return boolean value whether the trial has the type of non-negative count or not
+     * @author Alex Mak
+     * @see Experiment
+     * @version 1
+     */
+ 
     // determine whether count type is regular, or non-negative: unfinished method since not sure how to interact with other classes
 //    public boolean isNonNegative(){}
 
