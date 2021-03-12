@@ -98,7 +98,7 @@ public class MainActivity extends AppCompatActivity {
                                                     .addOnSuccessListener(new OnSuccessListener<Void>() {
                                                         @Override
                                                         public void onSuccess(Void aVoid) {
-                                                            Log.d("UsernameSaveSuccessful", "Username saved successfully.");
+                                                            Log.d("UsernameSaveSuccessful", "Username saved successfully: "+ mAuth.getUid());
                                                         }
                                                     })
                                                     .addOnFailureListener(new OnFailureListener() {
@@ -155,5 +155,6 @@ public class MainActivity extends AppCompatActivity {
             return false;
         }
     };
+
 
 }
