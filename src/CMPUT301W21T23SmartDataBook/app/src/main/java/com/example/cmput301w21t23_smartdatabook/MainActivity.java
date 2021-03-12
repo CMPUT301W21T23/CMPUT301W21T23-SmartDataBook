@@ -68,7 +68,6 @@ public class MainActivity extends AppCompatActivity {
 
         //anonymous authentication testing
         mAuth = FirebaseAuth.getInstance();
-
         authenticateAnon();
 
     }//onCreate
@@ -136,7 +135,9 @@ public class MainActivity extends AppCompatActivity {
                                         assert document != null;
                                         if(!document.exists()){
                                             data.put("UserName", "");
-                                            data.put("Contact", "");
+                                            data.put("Email", "");
+                                            data.put("UUID", currentUser.getUid());
+
                                             allUsersCollection
                                                     .document(currentUser.getUid())
                                                     .set(data)
@@ -169,5 +170,6 @@ public class MainActivity extends AppCompatActivity {
                     }
                 });
     }//authenticationAnon
+
 
 }//mainActivity
