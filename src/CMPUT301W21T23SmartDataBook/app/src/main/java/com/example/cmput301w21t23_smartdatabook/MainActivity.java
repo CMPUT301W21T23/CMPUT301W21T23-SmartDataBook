@@ -6,16 +6,29 @@ import androidx.appcompat.app.AppCompatActivity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
+<<<<<<< Updated upstream
 import android.view.View;
 import android.widget.AdapterView;
+=======
+import android.view.MenuItem;
+>>>>>>> Stashed changes
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
 import android.widget.Toast;
 
+<<<<<<< Updated upstream
+=======
+import com.example.cmput301w21t23_smartdatabook.fav.favPage;
+import com.example.cmput301w21t23_smartdatabook.settings.settingsPage;
+>>>>>>> Stashed changes
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
+<<<<<<< Updated upstream
+=======
+import com.google.android.material.bottomnavigation.BottomNavigationView;
+>>>>>>> Stashed changes
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
@@ -23,6 +36,11 @@ import com.google.firebase.firestore.CollectionReference;
 import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
+<<<<<<< Updated upstream
+=======
+import java.util.ArrayList;
+import java.util.HashMap;
+>>>>>>> Stashed changes
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -48,6 +66,7 @@ public class MainActivity extends AppCompatActivity {
         experimentList = findViewById(R.id.experimentList);
         experimentDataList = new ArrayList<>();
 
+<<<<<<< Updated upstream
         experimentDataList.add(new Experiment("first", "123",
                 "Binomial", "testtrial", false, 30,60, true, "03/05/2021"));
         experimentDataList.add(new Experiment("second", "123",
@@ -66,9 +85,20 @@ public class MainActivity extends AppCompatActivity {
                     startActivity(intent);
                 }
             });
+=======
+        openFragment(homePage.newInstance("",""));
+
+        //anonymous authentication testing
+        mAuth = FirebaseAuth.getInstance();
+        //Toast.makeText(MainActivity.this, "Passed", Toast.LENGTH_SHORT).show();
+        if (mAuth.getCurrentUser() == null){
+            signInNewAnon();
+        }
+>>>>>>> Stashed changes
 
     }//onCreate
 
+<<<<<<< Updated upstream
     //Temporarily sign in user as an anonymous user on first sign in
     //Source: firebase guides, https://firebase.google.com
     //License: Creative Commons Attribution 4.0 License, Apache 2.0 License
@@ -78,6 +108,16 @@ public class MainActivity extends AppCompatActivity {
         super.onStart();
 
         FirebaseUser currentUser = mAuth.getCurrentUser();
+=======
+    /**
+     * Sign in new anonymous user depending iff the user doesn't exist in the database
+     */
+    public void signInNewAnon() {
+        //Temporarily sign in user as an anonymous user on first sign in
+        //Source: firebase guides, https://firebase.google.com
+        //License: Creative Commons Attribution 4.0 License, Apache 2.0 License
+        //Code: https://firebase.google.com/docs/auth/android/anonymous-auth?authuser=0
+>>>>>>> Stashed changes
 
         //Anonymously generated UUID is only persistent with each app instance, after app is uninstalled.
         //A new UUID is generated to the user on first launch of the app
@@ -140,5 +180,10 @@ public class MainActivity extends AppCompatActivity {
                     }
                 });
 
+<<<<<<< Updated upstream
     }//onStart
+=======
+    }//signInNewAnon
+
+>>>>>>> Stashed changes
 }
