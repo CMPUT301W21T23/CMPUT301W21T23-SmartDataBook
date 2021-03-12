@@ -22,9 +22,6 @@ public class CommentActivity extends AppCompatActivity {
 
         commentDataList = new ArrayList<>();
 
-        commentDataList.add( new Comment ("Applecomment", "Apple", 1) );
-        commentDataList.add( new Comment ("BlueBerrycomment", "BlueBerry", 2) );
-        commentDataList.add( new Comment ("Potatocomment", "Potato", 3) );
 
         commentAdapter = new CommentList(this, commentDataList);
         commentList.setAdapter(commentAdapter);

@@ -57,9 +57,9 @@ abstract class User{
      * and commentID int
      * @return gives a new comment object. 
      */
-    public Comment createComment(String text, String userUniqueID, int commentID){
-        return new Comment(text, userUniqueID, commentID);
-        
-    }
+//    public Comment createComment(String text, String userUniqueID, int commentID){
+//       return new Comment(text, userUniqueID, commentID);
+//
+//    }
 }
 
