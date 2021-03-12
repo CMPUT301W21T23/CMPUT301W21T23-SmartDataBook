@@ -7,6 +7,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
+import android.widget.EditText;
 import android.widget.ListView;
 
 import androidx.fragment.app.Fragment;
@@ -16,6 +17,7 @@ import com.example.cmput301w21t23_smartdatabook.CommentActivity;
 import com.example.cmput301w21t23_smartdatabook.Experiment;
 import com.example.cmput301w21t23_smartdatabook.R;
 import com.example.cmput301w21t23_smartdatabook.experimentDetails;
+import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
 import java.util.ArrayList;
 
@@ -63,6 +65,8 @@ public class homePage extends Fragment {
         ListView experimentList;
         ArrayAdapter<Experiment> experimentAdapter;
         ArrayList<Experiment> experimentDataList;
+
+        FloatingActionButton addExperimentButton = view.findViewById(R.id.add_experiment_button);
 
         experimentList = view.findViewById(R.id.experimentList);
         experimentDataList = new ArrayList<>();
