@@ -6,3 +6,9 @@ There are 4 kinds of crowd-sourced tests for each user: counts (how many did you
 
 The Team Wiki is found [here](https://github.com/CMPUT301W21T23/CMPUT301W21T23-SmartDataBook/wiki)
 
+Signing Up:
+  - Upon installing and opening up the app, a unique user ID will be generated for said user
+  - No username, contact, or password inputs are required, but username and contact info may be filled in later.
+
+Editing Profile:
+  - 
