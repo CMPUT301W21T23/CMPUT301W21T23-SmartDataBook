@@ -21,7 +21,13 @@ public class Trial {
     // attributes measurement trials
     public Float input;
 
-    // constructor:
+    /**
+     * Public constructor for the Trial class
+     * @param count
+     * @param numPass
+     * @param numFail
+     * @param input
+     */
     public Trial(int count, int numPass, int numFail, Float input) {
         this.count = count;
         this.numPass = numPass;
@@ -29,11 +35,18 @@ public class Trial {
         this.input = input;
     }
 
-
+    /**
+     * Getter for the location attribute of the trial
+     * @return Location object
+     */
     public Location getLocation() {
         return location;
     }
 
+    /**
+     * Setter for the location attribute of the trial
+     * @param location
+     */
     public void setLocation(Location location) {
         this.location = location;
     }
@@ -47,10 +60,18 @@ public class Trial {
         return latitude;
     }*/
 
+    /**
+     * Getter for the trialValue attribute
+     * @return String
+     */
     public String getTrialValue() {
         return trialValue;
     }
 
+    /**
+     * Setter for the trialValue attribute
+     * @param trialValue
+     */
     public void setTrialValue(String trialValue) {
         this.trialValue = trialValue;
     }

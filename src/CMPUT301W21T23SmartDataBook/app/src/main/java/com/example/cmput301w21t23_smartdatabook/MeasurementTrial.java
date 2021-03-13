@@ -10,11 +10,28 @@ package com.example.cmput301w21t23_smartdatabook;
 
 public class MeasurementTrial extends Trial{
 
+    /**
+     * Public constructor for the MeasurementTrial class
+     * @param count
+     * @param numPass
+     * @param numFail
+     * @param input
+     */
     public MeasurementTrial(int count, int numPass, int numFail, float input) {
         super(count, numPass, numFail, input);
     }
 
-    // setter and getter for input (incase the experiment's owner want to ignore some experiment
+    // setter and getter for input (in case the experiment's owner want to ignore some experiment
+
+    /**
+     * Setter for the input attribute of the MeasurementTrial class
+     * @param input
+     */
     public void setInput(float input){super.input=input;}
+
+    /**
+     * Getter for the input attribute of the MeasurementTrial class
+     * @return float
+     */
     public float getInput(){return super.input;}
 }

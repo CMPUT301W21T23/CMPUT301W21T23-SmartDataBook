@@ -24,6 +24,7 @@ import com.google.android.material.textfield.TextInputEditText;
 public class experimentDetails extends AppCompatActivity {
     public int position;
 
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);

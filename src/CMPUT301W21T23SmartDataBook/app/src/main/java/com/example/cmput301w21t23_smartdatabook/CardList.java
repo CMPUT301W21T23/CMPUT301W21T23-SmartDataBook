@@ -22,13 +22,24 @@ public class CardList extends ArrayAdapter<Experiment> {
     private final ArrayList<Experiment> experiments;
     private final Context context;
 
+    /**
+     * Public Constructor for the CardList class
+     * @param context
+     * @param experiments
+     */
     public CardList(Context context, ArrayList<Experiment> experiments) {
         super(context,0, experiments);
         this.experiments = experiments;
         this.context = context;
     }
 
-    // set the attributes of each item in the list
+    /**
+     * Set attributes of the name, date, ownerName, experimentDescription and region in the list
+     * @param position
+     * @param convertView
+     * @param parent
+     * @return
+     */
     public View getView(int position, @Nullable View convertView, @NonNull ViewGroup parent) {
         View view = convertView;
 
