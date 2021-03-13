@@ -2,10 +2,12 @@ package com.example.cmput301w21t23_smartdatabook;
 
 import android.location.Location;
 
+import java.io.Serializable;
+
 /**
  * main Experiment class
  */
-public class Experiment {
+public class Experiment implements Serializable {
     private String expName;
     private String ownerUserID;
     private String trialType;

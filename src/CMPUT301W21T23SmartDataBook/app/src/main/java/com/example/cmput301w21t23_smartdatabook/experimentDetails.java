@@ -1,8 +1,14 @@
 package com.example.cmput301w21t23_smartdatabook;
 
+import android.content.Intent;
 import android.os.Bundle;
+import android.widget.NumberPicker;
+import android.widget.RadioButton;
 
 import androidx.appcompat.app.AppCompatActivity;
+
+import com.google.android.material.switchmaterial.SwitchMaterial;
+import com.google.android.material.textfield.TextInputEditText;
 
 /**
  * Class:experimentDetails
@@ -18,27 +24,13 @@ import androidx.appcompat.app.AppCompatActivity;
 public class experimentDetails extends AppCompatActivity {
     public int position;
 
-    public experimentDetails(int pos) {
-        this.position = pos;
-    }
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.experiment_details);
-
-        NumberPicker maxTrials = R.findViewById(maxTrialsNumberPicker);
-        NumberPicker minTrials = R.findViewById(minTrialsNumberPicker);
-        TextInputEditText name = R.findViewById(newExperimentLocationOnExperimentNameEditText);
-        TextInputEditText description = R.findViewById(newExperimentLocationOnExperimentDescriptionEditText);
-        RadioButton binomialRadioButton = R.findViewById(binomialRadioButton);
-        RadioButton countRadioButton = R.findViewById(countRadioButton);
-        RadioButton nonNegativeRadioButton = R.findViewById(nonNegativeRadioButton);
-        RadioButton measurmentRadioButton = R.findViewById(measurmentRadioButton);
-        SwitchMaterial LocationToggle = R.findViewById(ExperimentLocationToggleSwitch);
-        SwitchMaterial PublicPrivateToggle = R.findViewById(ExperimentLocationPublicPrivateToggleSwitch);
-        
-        
+        Intent intent = getIntent();
+        Experiment experiment = (Experiment) intent.getSerializableExtra("experiment"); // get the experiment object
+//        TODO: prints out the details of the experiment on the screen here
     }
 
 }

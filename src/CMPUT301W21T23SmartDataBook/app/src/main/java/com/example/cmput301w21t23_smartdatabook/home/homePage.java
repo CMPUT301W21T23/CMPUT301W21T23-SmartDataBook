@@ -85,7 +85,10 @@ public class homePage extends Fragment {
         experimentList.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                Experiment exp = experimentDataList.get(position); // get the experiment from list
                 Intent intent = new Intent(getActivity(), experimentDetails.class);
+                intent.putExtra("position", position); // pass position to experimentDetails class
+                intent.putExtra("experiment", exp); // pass experiment object
                 startActivity(intent);
             }
         });
@@ -95,9 +98,8 @@ public class homePage extends Fragment {
             public void onClick(View view) {
                 Intent intent = new Intent(getActivity(), addExpActivity.class);
                 startActivity(intent);
+
                 // new ExperimentFragment().show(getSupportFragmentManager(), "ADD_EXPERIMENT");
-                
-                
             }
         });
 
