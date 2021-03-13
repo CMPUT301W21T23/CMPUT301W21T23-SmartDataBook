@@ -25,3 +25,5 @@ Add An Experiment:
   - It will present you with a new "Experiment Details" screen 
   - Input values into the presented empty fields that describe the experiment
   - Select "Create&Publish" to publish the experiment so other users may, and you, may see it
+
+...More to be added...
