@@ -43,7 +43,8 @@ public class addExpActivity extends AppCompatActivity {
         AppCompatImageButton back_btn = findViewById(R.id.newExperimentLocationOnBackButtonView);
 
         String expName = name.getText().toString();
-        // TODO: 
+        // TODO: grab the input in the text fields and add to the firebase
+        // TODO: also need to pass the user id to this class
 
 
 
