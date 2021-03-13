@@ -1,18 +1,4 @@
 # CMPUT301W21T23-SmartDataBook
 
-## Team Members:
+This is a mobile application that allows crowd-sourced testing of phenomona. There are 4 kinds of crowd-sourced tests for each user: counts (how many did you see), binomial trials (pass fail), non-negative integer counts (each trial has 0 or more), measurement trials (like the temperature).
 
-nabi1 <br/>
-natnail <br/>
-amak <br/>
-junhyeon <br/>
-bosco2 <br/>
-kksoni <br/>
-
-## Project Part 2:
-
-[User Interface Mockups](https://github.com/CMPUT301W21T23/CMPUT301W21T23-SmartDataBook/tree/main/ProjectPreparation/StoryBoard) <br/>
-[Scrum Board](https://github.com/CMPUT301W21T23/CMPUT301W21T23-SmartDataBook/projects/1) <br/>
-[Product Back Log (Issues)](https://github.com/bosco4/CMPUT301W21T23-SmartDataBook/issues) <br/>
-[UML Diagram](https://github.com/CMPUT301W21T23/CMPUT301W21T23-SmartDataBook/blob/main/ProjectPreparation/UMLDiagram/UML.pdf) </br>
-![UMLDiagram](https://github.com/bosco4/CMPUT301W21T23-SmartDataBook/blob/main/ProjectPreparation/UMLDiagram/UML_Prep.png)
