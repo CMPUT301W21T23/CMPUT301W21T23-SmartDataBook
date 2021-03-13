@@ -22,5 +22,6 @@ Editing Profile:
 Add An Experiment:
   - Select the "Home" tab on the nagivation bar on the bottom of the app
   - Click the Red-circle-plus sign to add a new experiment
-  - It will present you with a new "Experiment Details" screen such that you input values into the presented empty fields
-  - Select "Create&Publish" to publish the experiment so other users may, and you, may see it.
+  - It will present you with a new "Experiment Details" screen 
+  - Input values into the presented empty fields that describe the experiment
+  - Select "Create&Publish" to publish the experiment so other users may, and you, may see it
