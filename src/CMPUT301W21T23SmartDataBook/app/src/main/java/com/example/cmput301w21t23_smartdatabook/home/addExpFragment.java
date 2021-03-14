@@ -20,6 +20,7 @@ import androidx.appcompat.widget.AppCompatImageButton;
 import androidx.fragment.app.Fragment;
 
 import com.example.cmput301w21t23_smartdatabook.Experiment;
+import com.example.cmput301w21t23_smartdatabook.GetDate;
 import com.example.cmput301w21t23_smartdatabook.MainActivity;
 import com.example.cmput301w21t23_smartdatabook.R;
 import com.google.android.material.switchmaterial.SwitchMaterial;
@@ -28,6 +29,7 @@ import com.google.android.material.textfield.TextInputLayout;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.firestore.FirebaseFirestore;
 
+import java.util.Date;
 import java.util.Objects;
 
 /**
@@ -101,12 +103,18 @@ public class addExpFragment extends Fragment {
             @Override
             public void onClick(View v) {
 
+                //Instantiate currentDate object to get the current date
+                GetDate currentDate = new GetDate();
+
                 String expName = name.getEditText().getText().toString();
                 String expDescription = description.getEditText().getText().toString();
                 String trialType = findTrialType(trialChoice.getCheckedRadioButtonId());
+                mAuth = FirebaseAuth.getInstance();
 
-                Experiment newExperiment = new Experiment(expName, "123", trialType, expDescription, true, minTrials.getValue(), maxTrials.getValue(), true, "03/05/2021");
+                Experiment newExperiment = new Experiment(expName, Objects.requireNonNull(mAuth.getCurrentUser()).getUid(), trialType, expDescription, true, minTrials.getValue(), maxTrials.getValue(), true, currentDate.getFormattedDate());
 
+                Log.d("Date", "Date: " + currentDate.getFormattedDate());
+                System.exit(0);
                 //Source: Shweta Chauhan; https://stackoverflow.com/users/6021469/shweta-chauhan
                 //Code: https://stackoverflow.com/questions/40085608/how-to-pass-data-from-one-fragment-to-previous-fragment
                 Intent intent = new Intent(getActivity(), homePage.class);
@@ -120,7 +128,7 @@ public class addExpFragment extends Fragment {
         return view;
 
     }//onCreateView
-    
+
 
     /**
      * Gets the integer value "i" from the RadioGroup and determines what the trial type of the
