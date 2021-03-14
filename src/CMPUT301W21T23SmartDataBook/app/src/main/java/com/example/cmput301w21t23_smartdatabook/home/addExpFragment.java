@@ -138,10 +138,6 @@ public class addExpFragment extends Fragment {
 
                 Experiment newExperiment = new Experiment(expName, Objects.requireNonNull(mAuth.getCurrentUser()).getUid(), trialType, expDescription, checkLocationOn, minTrials.getValue(), maxTrials.getValue(), checkPublicOn, currentDate.getFormattedDate());
 
-                Log.d("LocationOn", "Location: " + checkLocationOn);
-                Log.d("PublicOn", "Region: " + checkPublicOn);
-                System.exit(0);
-
                 //Source: Shweta Chauhan; https://stackoverflow.com/users/6021469/shweta-chauhan
                 //Code: https://stackoverflow.com/questions/40085608/how-to-pass-data-from-one-fragment-to-previous-fragment
                 Intent intent = new Intent(getActivity(), homePage.class);
