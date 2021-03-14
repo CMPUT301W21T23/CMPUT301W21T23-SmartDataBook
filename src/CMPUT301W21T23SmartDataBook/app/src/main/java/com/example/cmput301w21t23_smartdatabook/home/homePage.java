@@ -80,7 +80,7 @@ public class homePage extends Fragment {
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.home_page, container, false);
 
-        FloatingActionButton addExperimentButton = view.findViewById(R.id.add_experiment_button);
+
 
         experimentList = view.findViewById(R.id.experimentList);
         experimentDataList = new ArrayList<>();
@@ -109,6 +109,7 @@ public class homePage extends Fragment {
             }
         });
 
+        final FloatingActionButton addExperimentButton = view.findViewById(R.id.add_experiment_button);
         addExperimentButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -122,7 +123,6 @@ public class homePage extends Fragment {
                         .replace(R.id.container, addExpFrag, "addExpFragment")
                         .addToBackStack("addExpFragment")
                         .commit();
-
 
             }
         });
@@ -200,6 +200,6 @@ public class homePage extends Fragment {
                 });
 
 
-    }
+    }//addExperimentToDB
 
 }

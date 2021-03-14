@@ -22,8 +22,8 @@ import com.google.android.material.textfield.TextInputEditText;
  * @see Experiment, 
  */
 public class experimentDetails extends AppCompatActivity {
-    public int position;
 
+    public int position;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -32,6 +32,8 @@ public class experimentDetails extends AppCompatActivity {
         Intent intent = getIntent();
         Experiment experiment = (Experiment) intent.getSerializableExtra("experiment"); // get the experiment object
 //        TODO: prints out the details of the experiment on the screen here
+
+
     }
 
 }
