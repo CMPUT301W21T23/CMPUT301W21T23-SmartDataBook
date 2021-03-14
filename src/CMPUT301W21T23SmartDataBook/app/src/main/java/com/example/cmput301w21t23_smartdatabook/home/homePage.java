@@ -1,25 +1,36 @@
 package com.example.cmput301w21t23_smartdatabook.home;
 
+import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
-import android.widget.EditText;
 import android.widget.ListView;
+import android.widget.Toast;
 
+import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentTransaction;
 
 import com.example.cmput301w21t23_smartdatabook.CardList;
-import com.example.cmput301w21t23_smartdatabook.CommentActivity;
 import com.example.cmput301w21t23_smartdatabook.Experiment;
 import com.example.cmput301w21t23_smartdatabook.R;
 import com.example.cmput301w21t23_smartdatabook.experimentDetails;
+import com.google.android.gms.tasks.OnFailureListener;
+import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.firestore.CollectionReference;
+import com.google.firebase.firestore.FirebaseFirestore;
 
 import java.util.ArrayList;
+import java.util.HashMap;
+
+import static android.app.Activity.RESULT_OK;
 
 /**
  * Class: homePage
@@ -37,6 +48,13 @@ public class homePage extends Fragment {
 
     private static final String AP1 = "AP1";
     private static final String AP2 = "AP2";
+
+    private FirebaseFirestore db;
+    private FirebaseAuth mAuth;
+
+    ListView experimentList;
+    ArrayAdapter<Experiment> experimentAdapter;
+    ArrayList<Experiment> experimentDataList;
 
     public homePage(){
     }
@@ -62,10 +80,6 @@ public class homePage extends Fragment {
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.home_page, container, false);
 
-        ListView experimentList;
-        ArrayAdapter<Experiment> experimentAdapter;
-        ArrayList<Experiment> experimentDataList;
-
         FloatingActionButton addExperimentButton = view.findViewById(R.id.add_experiment_button);
 
         experimentList = view.findViewById(R.id.experimentList);
@@ -76,6 +90,8 @@ public class homePage extends Fragment {
         experimentDataList.add(new Experiment("second", "123",
                 "Binomial", "testtrial", false, 30,60, true, "03/05/2021"));
         experimentDataList.add(new Experiment("third", "123",
+                "Binomial", "testtrial", false, 30,60, true, "03/05/2021"));
+        experimentDataList.add(new Experiment("6", "123",
                 "Binomial", "testtrial", false, 30,60, true, "03/05/2021"));
 
         experimentAdapter = new CardList(getContext(), experimentDataList);
@@ -96,100 +112,94 @@ public class homePage extends Fragment {
         addExperimentButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent intent = new Intent(getActivity(), addExpActivity.class);
-                startActivity(intent);
 
-                // new ExperimentFragment().show(getSupportFragmentManager(), "ADD_EXPERIMENT");
+                //Source: Shweta Chauhan; https://stackoverflow.com/users/6021469/shweta-chauhan
+                //Code: https://stackoverflow.com/questions/40085608/how-to-pass-data-from-one-fragment-to-previous-fragment
+                addExpFragment addExpFrag = new addExpFragment();
+                addExpFrag.setTargetFragment(homePage.this, 0);
+                getActivity().getSupportFragmentManager()
+                        .beginTransaction()
+                        .replace(R.id.container, addExpFrag, "addExpFragment")
+                        .addToBackStack("addExpFragment")
+                        .commit();
+
+
             }
         });
 
         return view;
     }
 
+    //Source: Shweta Chauhan; https://stackoverflow.com/users/6021469/shweta-chauhan
+    //Code: https://stackoverflow.com/questions/40085608/how-to-pass-data-from-one-fragment-to-previous-fragment
+    public void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+
+        if (resultCode == 1) {
+            if (requestCode == 0){
+                Experiment newExperiment = (Experiment) data.getSerializableExtra("newExp");
+                Toast.makeText(getActivity(), newExperiment.getExpName() + " " + newExperiment.getDescription() , Toast.LENGTH_SHORT).show();
+                experimentDataList.add(newExperiment);
+                addExperimentToDB(newExperiment);
+                experimentAdapter.notifyDataSetChanged();
+
+            }
+        }
+    }
+
 
     /**
-     * Add an experiment by clicking the floating button
-     * if there is something on the edittext field, a key value pair is added to the FireStore.
-     * @param view
+     * Add an experiment to the database
      */
-    public void addExperiment(View view) {
+    public void addExperimentToDB(Experiment newExperiment) {
 
-        //addCommentBtn testing - add comments via btn to database
-        final FloatingActionButton addCommentBtn = findViewById(R.id.addCommentBtn);
+        //Add into a Comments collection with a comment document containing
+        //a Pies collection with a pie document
+        db = FirebaseFirestore.getInstance();
+        final CollectionReference allCommentsCollection = db.collection("Experiments");
+        HashMap<String, String> data = new HashMap<>();
 
-        EditText commentText = findViewById(R.id.editCommentText);
-        EditText userNameText = findViewById(R.id.editUserNameText);
+        // If there’s some data in the EditText field, then we create a new key-value pair.
+        data.put("Name", newExperiment.getExpName());
+        data.put("Description", newExperiment.getDescription());
 
-        addCommentBtn.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
+        allCommentsCollection
+                .document("" + newExperiment.getExpName())
+                .set(data)
+                .addOnSuccessListener(new OnSuccessListener<Void>() {
+                    @Override
+                    public void onSuccess(Void aVoid) {
+                        Log.d("Success", "Data has been added successfully");
+                    }
+                })
+                .addOnFailureListener(new OnFailureListener() {
+                    @Override
+                    public void onFailure(@NonNull Exception e) {
+                        Log.d("Failure", "Data storing failed");
+                    }
+                });
 
-                if(commentText.getText().toString().length() != 0 || userNameText.getText().toString().length() !=0 ) {
-                    Comment newComment = new Comment(commentText.getText().toString(), userNameText.getText().toString(), commentDataList.size() + 1);
-                    commentDataList.add(newComment);
-                    commentAdapter.notifyDataSetChanged();
-
-                    //Add into a Comments collection with a comment document containing
-                    //a Pies collection with a pie document
-                    db = FirebaseFirestore.getInstance();
-                    final CollectionReference allCommentsCollection = db.collection("Comments");
-                    HashMap<String, String> data = new HashMap<>();
-
-                    if(commentText.length()>0 && userNameText.length()>0){
-                        // If there’s some data in the EditText field, then we create a new key-value pair.
-                        data.put("Username", userNameText.getText().toString());
-                        data.put("Comment", commentText.getText().toString());
-
-                        allCommentsCollection
-                                .document("" + newComment.getCommentID())
-                                .set(data)
-                                .addOnSuccessListener(new OnSuccessListener<Void>() {
-                                    @Override
-                                    public void onSuccess(Void aVoid) {
-                                        Log.d("Success", "Data has been added successfully");
-                                    }
-                                })
-                                .addOnFailureListener(new OnFailureListener() {
-                                    @Override
-                                    public void onFailure(@NonNull Exception e) {
-                                        Log.d("Failure", "Data storing failed");
-                                    }
-                                });
-
-                        data.clear();
-                        data.put("Pie Type", "Chocolate");
-                        allCommentsCollection
-                                .document("" + newComment.getCommentID())
-                                .collection("Pies")
-                                .document("ChocoPie")
-                                .set(data)
-                                .addOnSuccessListener(new OnSuccessListener<Void>() {
-                                    @Override
-                                    public void onSuccess(Void aVoid) {
-                                        Log.d("Success", "Data has been added successfully");
-                                    }
-                                })
-                                .addOnFailureListener(new OnFailureListener() {
-                                    @Override
-                                    public void onFailure(@NonNull Exception e) {
-                                        Log.d("Failure", "Data storing failed");
-                                    }
-                                });
-
-                        // Setting the fields to null so that user can add a new city
-                        commentText.setText("");
-                        userNameText.setText("");
-                    }else{
-                        Toast.makeText(MainActivity.this, "Failed to add comment", Toast.LENGTH_SHORT).show();
-                    }//if-else
+        data.clear();
+        data.put("Trial Type", newExperiment.getTrialType());
+        allCommentsCollection
+                .document("" + newExperiment.getExpName())
+                .collection("Trials")
+                .document("Trial#1")
+                .set(data)
+                .addOnSuccessListener(new OnSuccessListener<Void>() {
+                    @Override
+                    public void onSuccess(Void aVoid) {
+                        Log.d("Success", "Data has been added successfully");
+                    }
+                })
+                .addOnFailureListener(new OnFailureListener() {
+                    @Override
+                    public void onFailure(@NonNull Exception e) {
+                        Log.d("Failure", "Data storing failed");
+                    }
+                });
 
 
-                }//if
-
-            }//onClick
-
-        });
-
-    }//addExperiment
+    }
 
 }
