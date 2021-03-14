@@ -2,6 +2,7 @@ package com.example.cmput301w21t23_smartdatabook;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.widget.NumberPicker;
 import android.widget.RadioButton;
 
@@ -32,6 +33,7 @@ public class experimentDetails extends AppCompatActivity {
         Intent intent = getIntent();
         Experiment experiment = (Experiment) intent.getSerializableExtra("experiment"); // get the experiment object
 //        TODO: prints out the details of the experiment on the screen here
+        Log.d("Name: ",experiment.getExpName());
     }
 
 }

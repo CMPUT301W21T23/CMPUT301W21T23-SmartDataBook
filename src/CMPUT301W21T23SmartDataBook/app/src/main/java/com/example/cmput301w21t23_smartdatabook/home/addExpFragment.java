@@ -64,7 +64,6 @@ public class addExpFragment extends Fragment {
         minTrials.setMinValue(1);
         minTrials.setMaxValue(25);
 
-        //String expName = name.getText().toString();
         // TODO: grab the input in the text fields and add to the firebase
         // TODO: also need to pass the user id to this class
 
@@ -107,12 +106,12 @@ public class addExpFragment extends Fragment {
             @Override
             public void onClick(View v) {
 
-                Log.d("MaxTrials", "Max:" + newExperiment.getMaxTrials() + "|");
-                Log.d("MinTrials", "Min:" + newExperiment.getMinTrials() + "|");
-                Log.d("EXPERIMENT NAME", "Name:" + newExperiment.getExpName() + "|");
-                Log.d("TrialType", "TrialType:" + newExperiment.getTrialType() + "|");
-                Log.d("RegionOn", "RegionOn:" + newExperiment.getRegionOn() + "|");
-                System.exit(0);
+//                Log.d("MaxTrials", "Max:" + newExperiment.getMaxTrials() + "|");
+//                Log.d("MinTrials", "Min:" + newExperiment.getMinTrials() + "|");
+//                Log.d("EXPERIMENT NAME", "Name:" + newExperiment.getExpName() + "|");
+//                Log.d("TrialType", "TrialType:" + newExperiment.getTrialType() + "|");
+//                Log.d("RegionOn", "RegionOn:" + newExperiment.getRegionOn() + "|");
+//                System.exit(0);
 
                 //Source: Shweta Chauhan; https://stackoverflow.com/users/6021469/shweta-chauhan
                 //Code: https://stackoverflow.com/questions/40085608/how-to-pass-data-from-one-fragment-to-previous-fragment
