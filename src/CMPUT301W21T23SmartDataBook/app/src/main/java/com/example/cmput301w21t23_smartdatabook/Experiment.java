@@ -19,6 +19,7 @@ public class Experiment implements Serializable {
     private boolean requireLocation = false;
     private Location location;
 
+
     /**
      * Public constructor for Experiment without location settings
      * @param expName
@@ -155,9 +156,10 @@ public class Experiment implements Serializable {
      * Returns if the regionOn is True/False for the expeiment
      * @return Boolean to represent True/False for regionOn attrubute
      */
-    public boolean isRegionOn() {
+    public boolean getRegionOn() {
         return regionOn;
     }
+
 
     /**
      * Set the regionOn attribute of experiment to True/False
