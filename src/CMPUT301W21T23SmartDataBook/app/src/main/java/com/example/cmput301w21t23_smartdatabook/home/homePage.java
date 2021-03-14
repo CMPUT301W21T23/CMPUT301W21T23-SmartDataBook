@@ -173,6 +173,10 @@ public class homePage extends Fragment {
         // If there’s some data in the EditText field, then we create a new key-value pair.
         data.put("Name", newExperiment.getExpName());
         data.put("Description", newExperiment.getDescription());
+        data.put("Trial Type", newExperiment.getTrialType());
+        data.put("LocationStatus", ""+ newExperiment.getRegionOn());
+        data.put("PublicStatus", ""+ newExperiment.isPublic());
+        data.put("UUID", newExperiment.getOwnerUserID());
 
         allCommentsCollection
                 .document("" + newExperiment.getExpName())
@@ -180,7 +184,7 @@ public class homePage extends Fragment {
                 .addOnSuccessListener(new OnSuccessListener<Void>() {
                     @Override
                     public void onSuccess(Void aVoid) {
-                        Log.d("Success", "Data has been added successfully");
+                        Log.d("Success", "Experiment has been added successfully");
                     }
                 })
                 .addOnFailureListener(new OnFailureListener() {
@@ -200,7 +204,7 @@ public class homePage extends Fragment {
                 .addOnSuccessListener(new OnSuccessListener<Void>() {
                     @Override
                     public void onSuccess(Void aVoid) {
-                        Log.d("Success", "Data has been added successfully");
+                        Log.d("Success", "Trial has been added successfully");
                     }
                 })
                 .addOnFailureListener(new OnFailureListener() {

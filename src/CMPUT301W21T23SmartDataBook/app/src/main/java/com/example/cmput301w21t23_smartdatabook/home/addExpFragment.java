@@ -12,6 +12,7 @@ import android.widget.EditText;
 import android.widget.NumberPicker;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
+import android.widget.Switch;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -54,6 +55,9 @@ public class addExpFragment extends Fragment {
     private static final int nonNegativeID = 12;
     private static final int measurementID = 13;
 
+    private boolean checkLocationOn;
+    private boolean checkPublicOn;
+
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         // Inflate the layout for this fragment
@@ -90,6 +94,27 @@ public class addExpFragment extends Fragment {
         minTrials.setMinValue(1);
         minTrials.setMaxValue(25);
 
+        LocationToggle.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+                if (isChecked) {
+                    checkLocationOn = true;
+                }else{
+                    checkLocationOn = false;
+                }
+            }
+        });
+        PublicPrivateToggle.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+                if (isChecked) {
+                    checkPublicOn = true;
+                }else{
+                    checkPublicOn = false;
+                }
+            }
+        });
+
         final AppCompatImageButton back_btn = view.findViewById(R.id.newExperimentLocationOnBackButtonView);
         back_btn.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -111,8 +136,12 @@ public class addExpFragment extends Fragment {
                 String trialType = findTrialType(trialChoice.getCheckedRadioButtonId());
                 mAuth = FirebaseAuth.getInstance();
 
-                Experiment newExperiment = new Experiment(expName, Objects.requireNonNull(mAuth.getCurrentUser()).getUid(), trialType, expDescription, true, minTrials.getValue(), maxTrials.getValue(), true, currentDate.getFormattedDate());
-                
+                Experiment newExperiment = new Experiment(expName, Objects.requireNonNull(mAuth.getCurrentUser()).getUid(), trialType, expDescription, checkLocationOn, minTrials.getValue(), maxTrials.getValue(), checkPublicOn, currentDate.getFormattedDate());
+
+                Log.d("LocationOn", "Location: " + checkLocationOn);
+                Log.d("PublicOn", "Region: " + checkPublicOn);
+                System.exit(0);
+
                 //Source: Shweta Chauhan; https://stackoverflow.com/users/6021469/shweta-chauhan
                 //Code: https://stackoverflow.com/questions/40085608/how-to-pass-data-from-one-fragment-to-previous-fragment
                 Intent intent = new Intent(getActivity(), homePage.class);
@@ -126,6 +155,7 @@ public class addExpFragment extends Fragment {
         return view;
 
     }//onCreateView
+
 
 
     /**
