@@ -14,6 +14,7 @@ import android.widget.Toast;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentTransaction;
 import androidx.loader.app.LoaderManager;
 import androidx.loader.content.Loader;
 
@@ -127,11 +128,15 @@ public class homePage extends Fragment implements LoaderManager.LoaderCallbacks<
                 //Code: https://stackoverflow.com/questions/40085608/how-to-pass-data-from-one-fragment-to-previous-fragment
                 addExpFragment addExpFrag = new addExpFragment();
                 addExpFrag.setTargetFragment(homePage.this, 0);
-                getActivity().getSupportFragmentManager()
-                        .beginTransaction()
-                        .replace(R.id.container, addExpFrag, "addExpFragment")
-                        .addToBackStack("addExpFragment")
-                        .commit();
+                FragmentTransaction ft = getActivity().getSupportFragmentManager().beginTransaction();
+                ft.add(R.id.container, addExpFrag, "addExpFragment");
+                ft.addToBackStack("addExpFragment");
+                ft.commit();
+//                getActivity().getSupportFragmentManager()
+//                        .beginTransaction()
+//                        .replace(R.id.container, addExpFrag, "addExpFragment")
+//                        .addToBackStack("addExpFragment")
+//                        .commit();
 
             }
         });
@@ -175,7 +180,7 @@ public class homePage extends Fragment implements LoaderManager.LoaderCallbacks<
                 Experiment newExperiment = (Experiment) data.getSerializableExtra("newExp");
                 Toast.makeText(getActivity(), newExperiment.getExpName() + " " + newExperiment.getDescription(), Toast.LENGTH_SHORT).show();
                 experimentAdapter.add(newExperiment);
-                addExperimentToDB(newExperiment);
+//                addExperimentToDB(newExperiment);
                 experimentAdapter.notifyDataSetChanged();
             }
         }
