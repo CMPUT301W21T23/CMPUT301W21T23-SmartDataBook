@@ -67,7 +67,6 @@ public class homePage extends Fragment implements LoaderManager.LoaderCallbacks<
     public void onResume() {
         super.onResume();
         experimentAdapter.notifyDataSetChanged();
-        LoaderManager.getInstance(this).restartLoader(0, null, this);
     }
 
     @Override
