@@ -12,11 +12,8 @@ import android.widget.ListView;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentTransaction;
-import androidx.loader.app.LoaderManager;
-import androidx.loader.content.Loader;
 
 import com.example.cmput301w21t23_smartdatabook.CardList;
 import com.example.cmput301w21t23_smartdatabook.Experiment;
@@ -30,7 +27,6 @@ import com.google.firebase.firestore.FirebaseFirestore;
 
 import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.List;
 
 /**
  * Class: homePage
@@ -43,7 +39,7 @@ import java.util.List;
  * @see Fragment, Firebase
  */
 
-public class homePage extends Fragment implements LoaderManager.LoaderCallbacks<List<Experiment>> {
+public class homePage extends Fragment {
 
     private static final String AP1 = "AP1";
     private static final String AP2 = "AP2";
@@ -244,20 +240,4 @@ public class homePage extends Fragment implements LoaderManager.LoaderCallbacks<
                 });
 
     }//addExperimentToDB
-
-    @NonNull
-    @Override
-    public Loader<List<Experiment>> onCreateLoader(int id, @Nullable Bundle args) {
-        return null;
-    }
-
-    @Override
-    public void onLoadFinished(@NonNull Loader<List<Experiment>> loader, List<Experiment> data) {
-
-    }
-
-    @Override
-    public void onLoaderReset(@NonNull Loader<List<Experiment>> loader) {
-
-    }
 }
