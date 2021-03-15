@@ -22,7 +22,7 @@
         <activity android:name=".home.addExpFragment">
 
         </activity>
-        <activity android:name=".home.experimentDetails">
+        <activity android:name=".experimentDetails">
 
         </activity>
 

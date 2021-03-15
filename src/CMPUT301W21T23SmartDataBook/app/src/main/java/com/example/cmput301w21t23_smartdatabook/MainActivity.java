@@ -42,10 +42,6 @@ import com.example.cmput301w21t23_smartdatabook.home.homePage;
 
 public class MainActivity extends AppCompatActivity {
 
-    ListView experimentList;
-    ArrayAdapter<Experiment> experimentAdapter;
-    ArrayList<Experiment> experimentDataList;
-
     BottomNavigationView bottomNavigation;
 
     private FirebaseFirestore db;
@@ -73,7 +69,7 @@ public class MainActivity extends AppCompatActivity {
     } //onCreate
 
     public void openFragment(Fragment fragment) {
-        FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
+        final FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
         transaction.replace(R.id.container, fragment);
         transaction.addToBackStack(null);
         transaction.commit();

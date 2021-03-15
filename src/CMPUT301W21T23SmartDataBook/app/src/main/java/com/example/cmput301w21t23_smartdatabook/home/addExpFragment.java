@@ -49,11 +49,8 @@ public class addExpFragment extends Fragment {
     private boolean checkLocationOn;
     private boolean checkPublicOn;
 
-    @Override
-    public void onDestroy() {
-        super.onDestroy();
-        ((AppCompatActivity) getActivity()).getSupportActionBar().setTitle("Home");
-    }
+    private Experiment newExperiment;
+
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -92,76 +89,26 @@ public class addExpFragment extends Fragment {
         minTrials.setMaxValue(25);
 
         // Commented out for avoiding errors
-//        // TODO: grab the input in the text fields and add to the firebase
-//        // TODO: also need to pass the user id to this class
-//
-//        //Source: Zoftino; https://www.zoftino.com/
-//        //Code: https://www.zoftino.com//android-number-picker-tutorial
-//        maxTrials.setOnValueChangedListener(new NumberPicker.OnValueChangeListener() {
-//            @Override
-//            public void onValueChange(NumberPicker picker, int oldVal, int newVal) {
-//                newExperiment.setMaxTrials(picker.getValue());
-//            }
-//        });
-//        minTrials.setOnValueChangedListener(new NumberPicker.OnValueChangeListener() {
-//            @Override
-//            public void onValueChange(NumberPicker picker, int oldVal, int newVal) {
-//                newExperiment.setMinTrials(picker.getValue());
-//            }
-//        });
-//
-//        newExperiment.setExpName( name.getEditText().getText().toString().trim() );
-//        newExperiment.setDescription( description.getEditText().getText().toString().trim() );
-//
-//        //Set trialType through Experiment Object function
-//        newExperiment.setTrialType( newExperiment.findTrialType( trialChoice.getCheckedRadioButtonId() ) );
-//
-//        newExperiment.setRegionOn(LocationToggle.getShowText());
-//        newExperiment.setPublic(PublicPrivateToggle.getShowText());
-//
-//        //newExperiment = new Experiment("sixth", "123", "Binomial", "unique", false, 30,60, true, "03/05/2021");
+//      TODO: grab the input in the text fields and add to the firebase
+//      TODO: also need to pass the user id to this class
 
         LocationToggle.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
-                if (isChecked) {
-                    checkLocationOn = true;
-                } else {
-                    checkLocationOn = false;
-                }
+                checkLocationOn = isChecked;
             }
         });
         PublicPrivateToggle.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
-                if (isChecked) {
-                    checkPublicOn = true;
-                } else {
-                    checkPublicOn = false;
-                }
+                checkPublicOn = isChecked;
             }
         });
-
-//        final AppCompatImageButton back_btn = view.findViewById(R.id.newExperimentLocationOnBackButtonView);
-//        back_btn.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View v) {
-//                getFragmentManager().popBackStack();
-//            }
-//        });
 
         final Button addExperiment = view.findViewById(R.id.newExperimentLocationOnCreateButtonView);
         addExperiment.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
-
-//                Log.d("MaxTrials", "Max:" + newExperiment.getMaxTrials() + "|");
-//                Log.d("MinTrials", "Min:" + newExperiment.getMinTrials() + "|");
-//                Log.d("EXPERIMENT NAME", "Name:" + newExperiment.getExpName() + "|");
-//                Log.d("TrialType", "TrialType:" + newExperiment.getTrialType() + "|");
-//                Log.d("RegionOn", "RegionOn:" + newExperiment.getRegionOn() + "|");
-//                System.exit(0);
 
                 //Instantiate currentDate object to get the current date
                 GetDate currentDate = new GetDate();
@@ -174,20 +121,24 @@ public class addExpFragment extends Fragment {
 
                 Experiment newExperiment = new Experiment(expName, Objects.requireNonNull(mAuth.getCurrentUser()).getUid(), trialType, expDescription, checkLocationOn, minTrials.getValue(), maxTrials.getValue(), checkPublicOn, currentDate.getFormattedDate());
 
-
                 //Source: Shweta Chauhan; https://stackoverflow.com/users/6021469/shweta-chauhan
                 //Code: https://stackoverflow.com/questions/40085608/how-to-pass-data-from-one-fragment-to-previous-fragment
                 Intent intent = new Intent(getActivity(), homePage.class);
                 intent.putExtra("newExp", newExperiment);
                 getTargetFragment().onActivityResult(getTargetRequestCode(), 1, intent);
-                getParentFragmentManager().popBackStack();
-
+                getActivity().getSupportFragmentManager().popBackStack();
             }
         });
 
         return view;
 
     }//onCreateView
+
+    @Override
+    public void onDestroy() {
+        super.onDestroy();
+        ((AppCompatActivity) getActivity()).getSupportActionBar().setTitle("Home");
+    }
 
 
     /**

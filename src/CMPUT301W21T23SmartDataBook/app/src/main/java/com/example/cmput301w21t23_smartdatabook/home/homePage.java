@@ -90,18 +90,6 @@ public class homePage extends Fragment implements LoaderManager.LoaderCallbacks<
                 "Binomial", "testtrial", false, 30, 60, true, "03/05/2021"));
         experimentDataList.add(new Experiment("second", "123",
                 "Binomial", "testtrial", false, 30, 60, true, "03/05/2021"));
-        experimentDataList.add(new Experiment("third", "123",
-                "Binomial", "testtrial", false, 30, 60, true, "03/05/2021"));
-        experimentDataList.add(new Experiment("fourth", "123",
-                "Binomial", "testtrial", false, 30, 60, true, "03/05/2021"));
-//        experimentDataList.add(new Experiment("fifth", "123","Binomial", "testtrial", false, 30,60, true, "03/05/2021"));
-
-        experimentDataList.add(new Experiment("6", "123",
-                "Binomial", "testtrial", false, 30, 60, true, "03/05/2021"));
-
-        experimentDataList.add(new Experiment("6", "123",
-                "Binomial", "testtrial", false, 30, 60, true, "03/05/2021"));
-
 
         experimentAdapter = new CardList(getContext(), experimentDataList);
 
@@ -132,19 +120,17 @@ public class homePage extends Fragment implements LoaderManager.LoaderCallbacks<
                         .replace(R.id.container, addExpFrag, "addExpFragment")
                         .addToBackStack("addExpFragment")
                         .commit();
-
             }
         });
 
         experimentList.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                Log.d("test", "clicked");
-//                Experiment exp = experimentDataList.get(position); // get the experiment from list
-//                Intent intent = new Intent(getActivity(), experimentDetails.class);
-//                intent.putExtra("position", position); // pass position to experimentDetails class
-//                intent.putExtra("experiment", exp); // pass experiment object
-//                startActivity(intent);
+                Experiment exp = experimentDataList.get(position); // get the experiment from list
+                Intent intent = new Intent(getActivity(), experimentDetails.class);
+                intent.putExtra("position", position); // pass position to experimentDetails class
+                intent.putExtra("experiment", exp); // pass experiment object
+                startActivity(intent);
             }
         });
 
@@ -174,9 +160,11 @@ public class homePage extends Fragment implements LoaderManager.LoaderCallbacks<
             if (requestCode == addExpFragmentRequestCode) {
                 Experiment newExperiment = (Experiment) data.getSerializableExtra("newExp");
                 Toast.makeText(getActivity(), newExperiment.getExpName() + " " + newExperiment.getDescription(), Toast.LENGTH_SHORT).show();
-                experimentAdapter.add(newExperiment);
-                addExperimentToDB(newExperiment);
+                experimentDataList.add(newExperiment);
+//                addExperimentToDB(newExperiment);
                 experimentAdapter.notifyDataSetChanged();
+                System.out.println(data);
+                Log.d("data: ", data.toString());
             }
         }
     }//onActivityResult

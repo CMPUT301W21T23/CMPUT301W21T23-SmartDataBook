@@ -220,19 +220,10 @@
             app:backgroundTint="@null"
             android:background="@color/theme_default"
             android:layout_below="@id/askQuestionsBTN"
-            android:layout_marginLeft="40dp"
-
-            >
+            android:layout_marginLeft="40dp">
 
         </Button>
 
-
-
-
-
-
-
     </RelativeLayout>
-
 
 </LinearLayout>
