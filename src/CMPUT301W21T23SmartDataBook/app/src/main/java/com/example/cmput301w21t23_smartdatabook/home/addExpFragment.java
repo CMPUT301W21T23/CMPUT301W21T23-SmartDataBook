@@ -12,9 +12,7 @@ import android.widget.RadioButton;
 import android.widget.RadioGroup;
 
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.appcompat.widget.AppCompatImageButton;
 import androidx.fragment.app.Fragment;
-import androidx.fragment.app.FragmentActivity;
 
 import com.example.cmput301w21t23_smartdatabook.Experiment;
 import com.example.cmput301w21t23_smartdatabook.GetDate;
@@ -27,6 +25,8 @@ import com.google.firebase.firestore.FirebaseFirestore;
 import java.util.Objects;
 
 /**
+ * @author Afaq Nabi, Bosco Chan
+ * @version 1
  * @Author Afaq
  * This class is the activity of which contains the add experiment, it has:
  * An experiment's minimum and maximum number of trials
@@ -34,9 +34,7 @@ import java.util.Objects;
  * Radio button to choose which type of the trial the experiment has (binomial/ measurement/count/ non-negtaive count trials)
  * switch button that turns on/ off an experiment's trial location.
  * a back button that allows the user to go back
- * @author Afaq Nabi, Bosco Chan
  * @see xml files that is associated with this addExpFragment
- * @version 1
  */
 public class addExpFragment extends Fragment {
 
@@ -52,9 +50,9 @@ public class addExpFragment extends Fragment {
     private boolean checkPublicOn;
 
     @Override
-    public void onDestroy(){
+    public void onDestroy() {
         super.onDestroy();
-        ( (AppCompatActivity) getActivity() ).getSupportActionBar().setTitle("Home");
+        ((AppCompatActivity) getActivity()).getSupportActionBar().setTitle("Home");
     }
 
     @Override
@@ -62,7 +60,7 @@ public class addExpFragment extends Fragment {
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.new_experiment_location_on, container, false);
 
-        ( (AppCompatActivity) getActivity() ).getSupportActionBar().setTitle("Add new experiment");
+        ((AppCompatActivity) getActivity()).getSupportActionBar().setTitle("Add new experiment");
 
         NumberPicker maxTrials = view.findViewById(R.id.maxTrialsNumberPicker);
         NumberPicker minTrials = view.findViewById(R.id.minTrialsNumberPicker);
@@ -93,41 +91,42 @@ public class addExpFragment extends Fragment {
         minTrials.setMinValue(1);
         minTrials.setMaxValue(25);
 
-        // TODO: grab the input in the text fields and add to the firebase
-        // TODO: also need to pass the user id to this class
-
-        //Source: Zoftino; https://www.zoftino.com/
-        //Code: https://www.zoftino.com//android-number-picker-tutorial
-        maxTrials.setOnValueChangedListener(new NumberPicker.OnValueChangeListener() {
-            @Override
-            public void onValueChange(NumberPicker picker, int oldVal, int newVal) {
-                newExperiment.setMaxTrials(picker.getValue());
-            }
-        });
-        minTrials.setOnValueChangedListener(new NumberPicker.OnValueChangeListener() {
-            @Override
-            public void onValueChange(NumberPicker picker, int oldVal, int newVal) {
-                newExperiment.setMinTrials(picker.getValue());
-            }
-        });
-
-        newExperiment.setExpName( name.getEditText().getText().toString().trim() );
-        newExperiment.setDescription( description.getEditText().getText().toString().trim() );
-
-        //Set trialType through Experiment Object function
-        newExperiment.setTrialType( newExperiment.findTrialType( trialChoice.getCheckedRadioButtonId() ) );
-
-        newExperiment.setRegionOn(LocationToggle.getShowText());
-        newExperiment.setPublic(PublicPrivateToggle.getShowText());
-
-        //newExperiment = new Experiment("sixth", "123", "Binomial", "unique", false, 30,60, true, "03/05/2021");
+        // Commented out for avoiding errors
+//        // TODO: grab the input in the text fields and add to the firebase
+//        // TODO: also need to pass the user id to this class
+//
+//        //Source: Zoftino; https://www.zoftino.com/
+//        //Code: https://www.zoftino.com//android-number-picker-tutorial
+//        maxTrials.setOnValueChangedListener(new NumberPicker.OnValueChangeListener() {
+//            @Override
+//            public void onValueChange(NumberPicker picker, int oldVal, int newVal) {
+//                newExperiment.setMaxTrials(picker.getValue());
+//            }
+//        });
+//        minTrials.setOnValueChangedListener(new NumberPicker.OnValueChangeListener() {
+//            @Override
+//            public void onValueChange(NumberPicker picker, int oldVal, int newVal) {
+//                newExperiment.setMinTrials(picker.getValue());
+//            }
+//        });
+//
+//        newExperiment.setExpName( name.getEditText().getText().toString().trim() );
+//        newExperiment.setDescription( description.getEditText().getText().toString().trim() );
+//
+//        //Set trialType through Experiment Object function
+//        newExperiment.setTrialType( newExperiment.findTrialType( trialChoice.getCheckedRadioButtonId() ) );
+//
+//        newExperiment.setRegionOn(LocationToggle.getShowText());
+//        newExperiment.setPublic(PublicPrivateToggle.getShowText());
+//
+//        //newExperiment = new Experiment("sixth", "123", "Binomial", "unique", false, 30,60, true, "03/05/2021");
 
         LocationToggle.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
                 if (isChecked) {
                     checkLocationOn = true;
-                }else{
+                } else {
                     checkLocationOn = false;
                 }
             }
@@ -137,7 +136,7 @@ public class addExpFragment extends Fragment {
             public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
                 if (isChecked) {
                     checkPublicOn = true;
-                }else{
+                } else {
                     checkPublicOn = false;
                 }
             }
@@ -191,16 +190,16 @@ public class addExpFragment extends Fragment {
     }//onCreateView
 
 
-
     /**
      * Gets the integer value "i" from the RadioGroup and determines what the trial type of the
      * experiment is based on the given "i" value.
-     * @author Bosco Chan
+     *
      * @param trialTypeID Holds the int value to determine what String the trialType is.
      * @return trialType
+     * @author Bosco Chan
      */
     public String findTrialType(int trialTypeID) {
-        switch(trialTypeID) {
+        switch (trialTypeID) {
             case binomialID:
                 return "Binomial";
             case countID:
