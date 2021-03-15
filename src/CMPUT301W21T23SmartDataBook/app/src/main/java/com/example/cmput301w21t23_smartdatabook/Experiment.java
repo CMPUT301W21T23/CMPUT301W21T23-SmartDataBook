@@ -4,6 +4,11 @@ import android.location.Location;
 
 import java.io.Serializable;
 
+/**
+ * Class: Experiment
+ * class that constructs the experiment
+ * @author Afaq Nabi, Bosco Chan
+ */
 public class Experiment implements Serializable {
     private String expName;
     private String ownerUserID;

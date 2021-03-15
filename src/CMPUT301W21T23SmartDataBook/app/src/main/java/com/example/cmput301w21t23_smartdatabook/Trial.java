@@ -2,6 +2,10 @@ package com.example.cmput301w21t23_smartdatabook;
 
 import android.location.Location;
 
+/**
+ * Class Trial
+ * The class that constructs the trials
+ */
 public class Trial {
     private boolean geoLocationSettingOn;
     private String trialValue;

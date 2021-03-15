@@ -14,12 +14,19 @@ public class GetDate {
     LocalDateTime currentDate;
     String formattedDate;
 
+    /**
+     * Public Constructor on the GetDate class
+     */
     public GetDate() {
         this.dtf = DateTimeFormatter.ofPattern("yyyy/MM/dd");
         this.currentDate = LocalDateTime.now();
         this.formattedDate = dtf.format(currentDate);
     }
 
+    /**
+     * functions obtains the formattedDate
+     * @return formattedDate: a string that consists the formatted date
+     */
     public String getFormattedDate() {
         return formattedDate;
     }

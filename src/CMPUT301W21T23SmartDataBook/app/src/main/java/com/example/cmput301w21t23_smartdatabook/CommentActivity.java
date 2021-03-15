@@ -8,6 +8,11 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import java.util.ArrayList;
 
+/**
+ * Class: CommentActivity
+ * shows the activity of the comments
+ * @author Bosco Chan
+ */
 public class CommentActivity extends AppCompatActivity {
     ListView commentList;
     ArrayAdapter<Comment> commentAdapter;
