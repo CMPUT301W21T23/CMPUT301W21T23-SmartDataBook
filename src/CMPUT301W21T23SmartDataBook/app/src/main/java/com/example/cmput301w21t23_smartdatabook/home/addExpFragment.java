@@ -12,6 +12,7 @@ import android.widget.EditText;
 import android.widget.NumberPicker;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
+import android.widget.Switch;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -20,6 +21,7 @@ import androidx.appcompat.widget.AppCompatImageButton;
 import androidx.fragment.app.Fragment;
 
 import com.example.cmput301w21t23_smartdatabook.Experiment;
+import com.example.cmput301w21t23_smartdatabook.GetDate;
 import com.example.cmput301w21t23_smartdatabook.MainActivity;
 import com.example.cmput301w21t23_smartdatabook.R;
 import com.google.android.material.switchmaterial.SwitchMaterial;
@@ -28,6 +30,7 @@ import com.google.android.material.textfield.TextInputLayout;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.firestore.FirebaseFirestore;
 
+import java.util.Date;
 import java.util.Objects;
 
 /**
@@ -51,6 +54,9 @@ public class addExpFragment extends Fragment {
     private static final int countID = 11;
     private static final int nonNegativeID = 12;
     private static final int measurementID = 13;
+
+    private boolean checkLocationOn;
+    private boolean checkPublicOn;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -117,6 +123,27 @@ public class addExpFragment extends Fragment {
 
         //newExperiment = new Experiment("sixth", "123", "Binomial", "unique", false, 30,60, true, "03/05/2021");
 
+        LocationToggle.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+                if (isChecked) {
+                    checkLocationOn = true;
+                }else{
+                    checkLocationOn = false;
+                }
+            }
+        });
+        PublicPrivateToggle.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+                if (isChecked) {
+                    checkPublicOn = true;
+                }else{
+                    checkPublicOn = false;
+                }
+            }
+        });
+
         final AppCompatImageButton back_btn = view.findViewById(R.id.newExperimentLocationOnBackButtonView);
         back_btn.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -138,11 +165,16 @@ public class addExpFragment extends Fragment {
 //                Log.d("RegionOn", "RegionOn:" + newExperiment.getRegionOn() + "|");
 //                System.exit(0);
 
+                //Instantiate currentDate object to get the current date
+                GetDate currentDate = new GetDate();
+
+
                 String expName = name.getEditText().getText().toString();
                 String expDescription = description.getEditText().getText().toString();
                 String trialType = findTrialType(trialChoice.getCheckedRadioButtonId());
+                mAuth = FirebaseAuth.getInstance();
 
-                Experiment newExperiment = new Experiment(expName, "123", trialType, expDescription, true, minTrials.getValue(), maxTrials.getValue(), true, "03/05/2021");
+                Experiment newExperiment = new Experiment(expName, Objects.requireNonNull(mAuth.getCurrentUser()).getUid(), trialType, expDescription, checkLocationOn, minTrials.getValue(), maxTrials.getValue(), checkPublicOn, currentDate.getFormattedDate());
 
 
                 //Source: Shweta Chauhan; https://stackoverflow.com/users/6021469/shweta-chauhan
@@ -158,7 +190,8 @@ public class addExpFragment extends Fragment {
         return view;
 
     }//onCreateView
-    
+
+
 
     /**
      * Gets the integer value "i" from the RadioGroup and determines what the trial type of the

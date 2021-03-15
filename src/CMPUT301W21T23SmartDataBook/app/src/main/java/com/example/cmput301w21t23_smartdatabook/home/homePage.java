@@ -44,12 +44,11 @@ public class homePage extends Fragment {
     private static final String AP1 = "AP1";
     private static final String AP2 = "AP2";
 
-    private FirebaseFirestore db;
-    private FirebaseAuth mAuth;
-
     ListView experimentList;
     ArrayAdapter<Experiment> experimentAdapter;
     ArrayList<Experiment> experimentDataList;
+
+    FirebaseFirestore db;
 
     public homePage(){
     }
@@ -147,11 +146,22 @@ public class homePage extends Fragment {
 
     //Source: Shweta Chauhan; https://stackoverflow.com/users/6021469/shweta-chauhan
     //Code: https://stackoverflow.com/questions/40085608/how-to-pass-data-from-one-fragment-to-previous-fragment
+
+    /**
+     * Custom on activity result function that gets an experiment object from the second fragment
+     * that had been started from this fragment (homePage.java).
+     * @param requestCode Determines which object is wanted from a fragment
+     * @param resultCode Determines what the result is when taken
+     * @param data The intent that holds the serialized object
+     */
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
 
-        if (resultCode == 1) {
-            if (requestCode == 0){
+        int addExpFragmentResultCode = 1;
+        int addExpFragmentRequestCode = 0;
+
+        if (resultCode == addExpFragmentResultCode) {
+            if (requestCode == addExpFragmentRequestCode){
                 Experiment newExperiment = (Experiment) data.getSerializableExtra("newExp");
                 Toast.makeText(getActivity(), newExperiment.getExpName() + " " + newExperiment.getDescription() , Toast.LENGTH_SHORT).show();
                 experimentDataList.add(newExperiment);
@@ -164,7 +174,8 @@ public class homePage extends Fragment {
 
 
     /**
-     * Add an experiment to the database
+     * Add a new experiment object to the Firebase database.
+     * @param newExperiment The experiment object that is to be added to the Firebase database.
      */
     public void addExperimentToDB(Experiment newExperiment) {
 
@@ -177,6 +188,10 @@ public class homePage extends Fragment {
         // If there’s some data in the EditText field, then we create a new key-value pair.
         data.put("Name", newExperiment.getExpName());
         data.put("Description", newExperiment.getDescription());
+        data.put("Trial Type", newExperiment.getTrialType());
+        data.put("LocationStatus", ""+ newExperiment.getRegionOn());
+        data.put("PublicStatus", ""+ newExperiment.isPublic());
+        data.put("UUID", newExperiment.getOwnerUserID());
 
         allCommentsCollection
                 .document("" + newExperiment.getExpName())
@@ -184,7 +199,7 @@ public class homePage extends Fragment {
                 .addOnSuccessListener(new OnSuccessListener<Void>() {
                     @Override
                     public void onSuccess(Void aVoid) {
-                        Log.d("Success", "Data has been added successfully");
+                        Log.d("Success", "Experiment has been added successfully");
                     }
                 })
                 .addOnFailureListener(new OnFailureListener() {
@@ -204,7 +219,7 @@ public class homePage extends Fragment {
                 .addOnSuccessListener(new OnSuccessListener<Void>() {
                     @Override
                     public void onSuccess(Void aVoid) {
-                        Log.d("Success", "Data has been added successfully");
+                        Log.d("Success", "Trial has been added successfully");
                     }
                 })
                 .addOnFailureListener(new OnFailureListener() {
