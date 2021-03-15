@@ -6,34 +6,6 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:orientation="vertical">
 
-    <RelativeLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content">
-
-        <com.google.android.material.appbar.AppBarLayout
-            android:layout_width="match_parent"
-            android:layout_height="60dp"
-            android:background="@color/theme_default"
-            tools:ignore="MissingConstraints">
-
-            <androidx.appcompat.widget.AppCompatImageButton
-                android:id="@+id/newExperimentLocationOnBackButtonView"
-                android:layout_width="60dp"
-                android:layout_height="match_parent"
-                android:background="@color/theme_default"
-                android:src="@drawable/ic_back_button" />
-        </com.google.android.material.appbar.AppBarLayout>
-
-        <TextView
-            android:id="@+id/newExperimentLocationOnTxtView"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_centerHorizontal="true"
-            android:text="New Experiment"
-            android:textColor="@color/white"
-            android:textSize="40dp" />
-    </RelativeLayout>
-
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="134dp">

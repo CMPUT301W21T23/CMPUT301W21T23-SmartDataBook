@@ -66,6 +66,13 @@ public class homePage extends Fragment implements LoaderManager.LoaderCallbacks<
     }
 
     @Override
+    public void onResume() {
+        super.onResume();
+        experimentAdapter.notifyDataSetChanged();
+
+    }
+
+    @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         if (getArguments() != null) {
@@ -175,10 +182,9 @@ public class homePage extends Fragment implements LoaderManager.LoaderCallbacks<
             if (requestCode == addExpFragmentRequestCode){
                 Experiment newExperiment = (Experiment) data.getSerializableExtra("newExp");
                 Toast.makeText(getActivity(), newExperiment.getExpName() + " " + newExperiment.getDescription() , Toast.LENGTH_SHORT).show();
-                experimentDataList.add(newExperiment);
+                experimentAdapter.add(newExperiment);
                 addExperimentToDB(newExperiment);
                 experimentAdapter.notifyDataSetChanged();
-
             }
         }
     }//onActivityResult
