@@ -250,31 +250,6 @@ public class Experiment implements Serializable {
         this.location = location;
     }
 
-    /**
-     * Gets the integer value "i" from the RadioGroup and determines what the trial type of the
-     * experiment is based on the given "i" value.
-     * @author Bosco Chan
-     * @param trialTypeID Holds the int value to determine what String the trialType is.
-     * @return trialType
-     */
-    public String findTrialType(int trialTypeID) {
-        switch(trialTypeID) {
-            case 1:
-                trialType = "Binomial";
-                break;
-            case 2:
-                trialType = "Count";
-                break;
-            case 3:
-                trialType = "Non-Negative Count";
-                break;
-            default:
-                trialType = "Measurement";
-        }
-
-        return trialType;
-    }
-
 }//Experiment
 
 

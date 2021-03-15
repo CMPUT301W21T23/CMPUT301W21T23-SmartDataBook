@@ -75,7 +75,7 @@ public class homePage extends Fragment {
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.home_page, container, false);
 
-        FloatingActionButton addExperimentButton = view.findViewById(R.id.add_experiment_button);
+
 
         experimentList = view.findViewById(R.id.experiment_list);
         experimentDataList = new ArrayList<>();
@@ -100,6 +100,18 @@ public class homePage extends Fragment {
 
         experimentList.setAdapter(experimentAdapter);
 
+        experimentList.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                Experiment exp = experimentDataList.get(position); // get the experiment from list
+                Intent intent = new Intent(getActivity(), experimentDetails.class);
+                intent.putExtra("position", position); // pass position to experimentDetails class
+                intent.putExtra("experiment", exp); // pass experiment object
+                startActivity(intent);
+            }
+        });
+
+        final FloatingActionButton addExperimentButton = view.findViewById(R.id.add_experiment_button);
         addExperimentButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -203,6 +215,6 @@ public class homePage extends Fragment {
                 });
 
 
-    }
+    }//addExperimentToDB
 
 }
