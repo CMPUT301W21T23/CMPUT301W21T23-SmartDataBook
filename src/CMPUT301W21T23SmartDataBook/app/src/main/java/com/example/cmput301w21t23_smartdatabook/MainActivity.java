@@ -14,7 +14,7 @@ import android.widget.ListView;
 import android.widget.Toast;
 
 import com.example.cmput301w21t23_smartdatabook.fav.favPage;
-import com.example.cmput301w21t23_smartdatabook.settings.settingsPage;
+import com.example.cmput301w21t23_smartdatabook.settings.SettingsPage;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
@@ -70,7 +70,7 @@ public class MainActivity extends AppCompatActivity {
         mAuth = FirebaseAuth.getInstance();
         authenticateAnon();
 
-    }//onCreate
+    } //onCreate
 
     public void openFragment(Fragment fragment) {
         FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
@@ -96,7 +96,7 @@ public class MainActivity extends AppCompatActivity {
 
                 case R.id.settings_nav:
                     toolbar.setTitle("Settings");
-                    openFragment(settingsPage.newInstance("",""));
+                    openFragment(SettingsPage.newInstance("",""));
                     return true;
             }
             return false;
@@ -114,7 +114,7 @@ public class MainActivity extends AppCompatActivity {
                     public void onComplete(@NonNull Task<AuthResult> task) {
                         if (task.isSuccessful()) {
                             // Sign in success, update UI with the signed-in user's information
-                            Log.d("Authentication Success", "signInAnonymously:success");
+                            Log.d("Authentication Success", "signInAnonymously:success: " + mAuth.getUid());
                             FirebaseUser currentUser = mAuth.getCurrentUser();
 
                             db = FirebaseFirestore.getInstance();
