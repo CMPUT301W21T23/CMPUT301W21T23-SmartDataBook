@@ -49,8 +49,7 @@ public class addExpFragment extends Fragment {
     private boolean checkLocationOn;
     private boolean checkPublicOn;
 
-    private Experiment newExperiment;
-
+    private Experiment returnedExperiment;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -119,13 +118,7 @@ public class addExpFragment extends Fragment {
                 String trialType = findTrialType(trialChoice.getCheckedRadioButtonId());
                 mAuth = FirebaseAuth.getInstance();
 
-                Experiment newExperiment = new Experiment(expName, Objects.requireNonNull(mAuth.getCurrentUser()).getUid(), trialType, expDescription, checkLocationOn, minTrials.getValue(), maxTrials.getValue(), checkPublicOn, currentDate.getFormattedDate());
-
-                //Source: Shweta Chauhan; https://stackoverflow.com/users/6021469/shweta-chauhan
-                //Code: https://stackoverflow.com/questions/40085608/how-to-pass-data-from-one-fragment-to-previous-fragment
-                Intent intent = new Intent(getActivity(), homePage.class);
-                intent.putExtra("newExp", newExperiment);
-                getTargetFragment().onActivityResult(getTargetRequestCode(), 1, intent);
+                returnedExperiment = new Experiment(expName, Objects.requireNonNull(mAuth.getCurrentUser()).getUid(), trialType, expDescription, checkLocationOn, minTrials.getValue(), maxTrials.getValue(), checkPublicOn, currentDate.getFormattedDate());
                 getActivity().getSupportFragmentManager().popBackStack();
             }
         });
@@ -138,6 +131,17 @@ public class addExpFragment extends Fragment {
     public void onDestroy() {
         super.onDestroy();
         ((AppCompatActivity) getActivity()).getSupportActionBar().setTitle("Home");
+    public void onDestroy() {
+        super.onDestroy();
+        ((AppCompatActivity) getActivity()).getSupportActionBar().setTitle("Home");
+
+        //Source: Shweta Chauhan; https://stackoverflow.com/users/6021469/shweta-chauhan
+        //Code: https://stackoverflow.com/questions/40085608/how-to-pass-data-from-one-fragment-to-previous-fragment
+        Intent intent = new Intent(getActivity(), addExpFragment.class);
+        intent.putExtra("newExp", returnedExperiment);
+        getTargetFragment().onActivityResult(getTargetRequestCode(), 1, intent);
+//        getActivity().getSupportFragmentManager().popBackStack();
+
     }
 
 
