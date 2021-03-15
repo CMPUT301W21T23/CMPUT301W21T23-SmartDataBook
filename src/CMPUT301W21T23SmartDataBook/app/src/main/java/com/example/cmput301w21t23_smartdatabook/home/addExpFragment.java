@@ -19,6 +19,7 @@ import android.widget.Toast;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.AppCompatImageButton;
 import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentActivity;
 
 import com.example.cmput301w21t23_smartdatabook.Experiment;
 import com.example.cmput301w21t23_smartdatabook.GetDate;
@@ -152,7 +153,15 @@ public class addExpFragment extends Fragment {
 
     }//onCreateView
 
-
+    /**
+     * Removes the action bar when the fragment is created, but the removal only exists
+     * after the fragment is destroyed.
+     */
+    @Override
+    public void onDestroy(){
+        super.onDestroy();
+        ( (AppCompatActivity) getActivity() ).getSupportActionBar().show();
+    }
 
     /**
      * Gets the integer value "i" from the RadioGroup and determines what the trial type of the

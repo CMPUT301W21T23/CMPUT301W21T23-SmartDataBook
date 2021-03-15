@@ -13,8 +13,11 @@ import android.widget.ListView;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentTransaction;
+import androidx.loader.app.LoaderManager;
+import androidx.loader.content.Loader;
 
 import com.example.cmput301w21t23_smartdatabook.CardList;
 import com.example.cmput301w21t23_smartdatabook.Experiment;
@@ -29,6 +32,7 @@ import com.google.firebase.firestore.FirebaseFirestore;
 
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 
 import static android.app.Activity.RESULT_OK;
 
@@ -44,7 +48,7 @@ import static android.app.Activity.RESULT_OK;
  * @version
  */
 
-public class homePage extends Fragment {
+public class homePage extends Fragment implements LoaderManager.LoaderCallbacks<List<Experiment>> {
 
     private static final String AP1 = "AP1";
     private static final String AP2 = "AP2";
@@ -79,8 +83,6 @@ public class homePage extends Fragment {
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.home_page, container, false);
 
-
-
         experimentList = view.findViewById(R.id.experimentList);
         experimentDataList = new ArrayList<>();
 
@@ -90,8 +92,9 @@ public class homePage extends Fragment {
                 "Binomial", "testtrial", false, 30,60, true, "03/05/2021"));
         experimentDataList.add(new Experiment("third", "123",
                 "Binomial", "testtrial", false, 30,60, true, "03/05/2021"));
-        experimentDataList.add(new Experiment("6", "123",
+        experimentDataList.add(new Experiment("fourth", "123",
                 "Binomial", "testtrial", false, 30,60, true, "03/05/2021"));
+//        experimentDataList.add(new Experiment("fifth", "123","Binomial", "testtrial", false, 30,60, true, "03/05/2021"));
 
         experimentAdapter = new CardList(getContext(), experimentDataList);
 
@@ -127,11 +130,18 @@ public class homePage extends Fragment {
         });
 
         return view;
+
+    }//onCreateView
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        LoaderManager.getInstance(this).restartLoader(0, null, this);
+
     }
 
     //Source: Shweta Chauhan; https://stackoverflow.com/users/6021469/shweta-chauhan
     //Code: https://stackoverflow.com/questions/40085608/how-to-pass-data-from-one-fragment-to-previous-fragment
-
     /**
      * Custom on activity result function that gets an experiment object from the second fragment
      * that had been started from this fragment (homePage.java).
@@ -155,8 +165,7 @@ public class homePage extends Fragment {
 
             }
         }
-    }
-
+    }//onActivityResult
 
     /**
      * Add a new experiment object to the Firebase database.
@@ -214,7 +223,21 @@ public class homePage extends Fragment {
                     }
                 });
 
-
     }//addExperimentToDB
 
+    @NonNull
+    @Override
+    public Loader<List<Experiment>> onCreateLoader(int id, @Nullable Bundle args) {
+        return null;
+    }
+
+    @Override
+    public void onLoadFinished(@NonNull Loader<List<Experiment>> loader, List<Experiment> data) {
+
+    }
+
+    @Override
+    public void onLoaderReset(@NonNull Loader<List<Experiment>> loader) {
+
+    }
 }

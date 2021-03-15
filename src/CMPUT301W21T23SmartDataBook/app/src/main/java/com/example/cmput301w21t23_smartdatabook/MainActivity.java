@@ -114,7 +114,7 @@ public class MainActivity extends AppCompatActivity {
                     public void onComplete(@NonNull Task<AuthResult> task) {
                         if (task.isSuccessful()) {
                             // Sign in success, update UI with the signed-in user's information
-                            Log.d("Authentication Success", "signInAnonymously:success");
+                            Log.d("Authentication Success", "signInAnonymously:success: " + mAuth.getUid());
                             FirebaseUser currentUser = mAuth.getCurrentUser();
 
                             db = FirebaseFirestore.getInstance();
