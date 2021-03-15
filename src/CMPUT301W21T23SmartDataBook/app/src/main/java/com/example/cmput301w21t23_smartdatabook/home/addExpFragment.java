@@ -95,6 +95,35 @@ public class addExpFragment extends Fragment {
         minTrials.setMinValue(1);
         minTrials.setMaxValue(25);
 
+        // TODO: grab the input in the text fields and add to the firebase
+        // TODO: also need to pass the user id to this class
+
+        //Source: Zoftino; https://www.zoftino.com/
+        //Code: https://www.zoftino.com//android-number-picker-tutorial
+        maxTrials.setOnValueChangedListener(new NumberPicker.OnValueChangeListener() {
+            @Override
+            public void onValueChange(NumberPicker picker, int oldVal, int newVal) {
+                newExperiment.setMaxTrials(picker.getValue());
+            }
+        });
+        minTrials.setOnValueChangedListener(new NumberPicker.OnValueChangeListener() {
+            @Override
+            public void onValueChange(NumberPicker picker, int oldVal, int newVal) {
+                newExperiment.setMinTrials(picker.getValue());
+            }
+        });
+
+        newExperiment.setExpName( name.getEditText().getText().toString().trim() );
+        newExperiment.setDescription( description.getEditText().getText().toString().trim() );
+
+        //Set trialType through Experiment Object function
+        newExperiment.setTrialType( newExperiment.findTrialType( trialChoice.getCheckedRadioButtonId() ) );
+
+        newExperiment.setRegionOn(LocationToggle.getShowText());
+        newExperiment.setPublic(PublicPrivateToggle.getShowText());
+
+        //newExperiment = new Experiment("sixth", "123", "Binomial", "unique", false, 30,60, true, "03/05/2021");
+
         LocationToggle.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
@@ -129,8 +158,17 @@ public class addExpFragment extends Fragment {
             @Override
             public void onClick(View v) {
 
+
+//                Log.d("MaxTrials", "Max:" + newExperiment.getMaxTrials() + "|");
+//                Log.d("MinTrials", "Min:" + newExperiment.getMinTrials() + "|");
+//                Log.d("EXPERIMENT NAME", "Name:" + newExperiment.getExpName() + "|");
+//                Log.d("TrialType", "TrialType:" + newExperiment.getTrialType() + "|");
+//                Log.d("RegionOn", "RegionOn:" + newExperiment.getRegionOn() + "|");
+//                System.exit(0);
+
                 //Instantiate currentDate object to get the current date
                 GetDate currentDate = new GetDate();
+
 
                 String expName = name.getEditText().getText().toString();
                 String expDescription = description.getEditText().getText().toString();
@@ -138,6 +176,7 @@ public class addExpFragment extends Fragment {
                 mAuth = FirebaseAuth.getInstance();
 
                 Experiment newExperiment = new Experiment(expName, Objects.requireNonNull(mAuth.getCurrentUser()).getUid(), trialType, expDescription, checkLocationOn, minTrials.getValue(), maxTrials.getValue(), checkPublicOn, currentDate.getFormattedDate());
+
 
                 //Source: Shweta Chauhan; https://stackoverflow.com/users/6021469/shweta-chauhan
                 //Code: https://stackoverflow.com/questions/40085608/how-to-pass-data-from-one-fragment-to-previous-fragment
