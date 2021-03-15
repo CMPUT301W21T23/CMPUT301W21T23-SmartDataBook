@@ -2,35 +2,28 @@ package com.example.cmput301w21t23_smartdatabook.home;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.CompoundButton;
-import android.widget.EditText;
 import android.widget.NumberPicker;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
-import android.widget.Switch;
-import android.widget.TextView;
-import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.AppCompatImageButton;
 import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentActivity;
 
 import com.example.cmput301w21t23_smartdatabook.Experiment;
 import com.example.cmput301w21t23_smartdatabook.GetDate;
-import com.example.cmput301w21t23_smartdatabook.MainActivity;
 import com.example.cmput301w21t23_smartdatabook.R;
 import com.google.android.material.switchmaterial.SwitchMaterial;
-import com.google.android.material.textfield.TextInputEditText;
 import com.google.android.material.textfield.TextInputLayout;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.firestore.FirebaseFirestore;
 
-import java.util.Date;
 import java.util.Objects;
 
 /**
@@ -59,11 +52,17 @@ public class addExpFragment extends Fragment {
     private boolean checkPublicOn;
 
     @Override
+    public void onDestroy(){
+        super.onDestroy();
+        ( (AppCompatActivity) getActivity() ).getSupportActionBar().setTitle("Home");
+    }
+
+    @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.new_experiment_location_on, container, false);
 
-        ( (AppCompatActivity) getActivity() ).getSupportActionBar().hide();
+        ( (AppCompatActivity) getActivity() ).getSupportActionBar().setTitle("Add new experiment");
 
         NumberPicker maxTrials = view.findViewById(R.id.maxTrialsNumberPicker);
         NumberPicker minTrials = view.findViewById(R.id.minTrialsNumberPicker);
@@ -115,13 +114,13 @@ public class addExpFragment extends Fragment {
             }
         });
 
-        final AppCompatImageButton back_btn = view.findViewById(R.id.newExperimentLocationOnBackButtonView);
-        back_btn.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                getFragmentManager().popBackStack();
-            }
-        });
+//        final AppCompatImageButton back_btn = view.findViewById(R.id.newExperimentLocationOnBackButtonView);
+//        back_btn.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View v) {
+//                getFragmentManager().popBackStack();
+//            }
+//        });
 
         final Button addExperiment = view.findViewById(R.id.newExperimentLocationOnCreateButtonView);
         addExperiment.setOnClickListener(new View.OnClickListener() {
@@ -143,7 +142,7 @@ public class addExpFragment extends Fragment {
                 Intent intent = new Intent(getActivity(), homePage.class);
                 intent.putExtra("newExp", newExperiment);
                 getTargetFragment().onActivityResult(getTargetRequestCode(), 1, intent);
-                getFragmentManager().popBackStack();
+                getParentFragmentManager().popBackStack();
 
             }
         });
