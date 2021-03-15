@@ -14,7 +14,6 @@ import android.widget.Toast;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
-import androidx.fragment.app.FragmentTransaction;
 import androidx.loader.app.LoaderManager;
 import androidx.loader.content.Loader;
 
@@ -25,7 +24,6 @@ import com.example.cmput301w21t23_smartdatabook.experimentDetails;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
-import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.firestore.CollectionReference;
 import com.google.firebase.firestore.FirebaseFirestore;
 
@@ -39,10 +37,9 @@ import java.util.List;
  * The home page initialize and displays the list of experiments
  * It inflate the layout for the experiment's fragment
  * It allows user to add a new experiment by clicking a floating button
- * 
- * @author Afaq Nabi, Bosco Chan 
+ *
+ * @author Afaq Nabi, Bosco Chan
  * @see Fragment, Firebase
- * @version
  */
 
 public class homePage extends Fragment implements LoaderManager.LoaderCallbacks<List<Experiment>> {
@@ -56,10 +53,10 @@ public class homePage extends Fragment implements LoaderManager.LoaderCallbacks<
 
     FirebaseFirestore db;
 
-    public homePage(){
+    public homePage() {
     }
 
-    public static homePage newInstance(String p1, String p2){
+    public static homePage newInstance(String p1, String p2) {
         homePage fragment = new homePage();
         Bundle args = new Bundle();
         fragment.setArguments(args);
@@ -70,7 +67,7 @@ public class homePage extends Fragment implements LoaderManager.LoaderCallbacks<
     public void onResume() {
         super.onResume();
         experimentAdapter.notifyDataSetChanged();
-
+        LoaderManager.getInstance(this).restartLoader(0, null, this);
     }
 
     @Override
@@ -87,24 +84,24 @@ public class homePage extends Fragment implements LoaderManager.LoaderCallbacks<
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.home_page, container, false);
 
-        experimentList = view.findViewById(R.id.experimentList);
+        experimentList = view.findViewById(R.id.experiment_list);
         experimentDataList = new ArrayList<>();
 
         experimentDataList.add(new Experiment("first", "123",
-                "Binomial", "testtrial", false, 30,60, true, "03/05/2021"));
+                "Binomial", "testtrial", false, 30, 60, true, "03/05/2021"));
         experimentDataList.add(new Experiment("second", "123",
-                "Binomial", "testtrial", false, 30,60, true, "03/05/2021"));
+                "Binomial", "testtrial", false, 30, 60, true, "03/05/2021"));
         experimentDataList.add(new Experiment("third", "123",
-                "Binomial", "testtrial", false, 30,60, true, "03/05/2021"));
+                "Binomial", "testtrial", false, 30, 60, true, "03/05/2021"));
         experimentDataList.add(new Experiment("fourth", "123",
-                "Binomial", "testtrial", false, 30,60, true, "03/05/2021"));
+                "Binomial", "testtrial", false, 30, 60, true, "03/05/2021"));
 //        experimentDataList.add(new Experiment("fifth", "123","Binomial", "testtrial", false, 30,60, true, "03/05/2021"));
 
         experimentDataList.add(new Experiment("6", "123",
-                "Binomial", "testtrial", false, 30,60, true, "03/05/2021"));
+                "Binomial", "testtrial", false, 30, 60, true, "03/05/2021"));
 
         experimentDataList.add(new Experiment("6", "123",
-                "Binomial", "testtrial", false, 30,60, true, "03/05/2021"));
+                "Binomial", "testtrial", false, 30, 60, true, "03/05/2021"));
 
 
         experimentAdapter = new CardList(getContext(), experimentDataList);
@@ -143,7 +140,7 @@ public class homePage extends Fragment implements LoaderManager.LoaderCallbacks<
         experimentList.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                Log.d("test","clicked");
+                Log.d("test", "clicked");
 //                Experiment exp = experimentDataList.get(position); // get the experiment from list
 //                Intent intent = new Intent(getActivity(), experimentDetails.class);
 //                intent.putExtra("position", position); // pass position to experimentDetails class
@@ -156,22 +153,17 @@ public class homePage extends Fragment implements LoaderManager.LoaderCallbacks<
 
     }//onCreateView
 
-    @Override
-    public void onResume() {
-        super.onResume();
-        LoaderManager.getInstance(this).restartLoader(0, null, this);
-
-    }
-
 
     //Source: Shweta Chauhan; https://stackoverflow.com/users/6021469/shweta-chauhan
     //Code: https://stackoverflow.com/questions/40085608/how-to-pass-data-from-one-fragment-to-previous-fragment
+
     /**
      * Custom on activity result function that gets an experiment object from the second fragment
      * that had been started from this fragment (homePage.java).
+     *
      * @param requestCode Determines which object is wanted from a fragment
-     * @param resultCode Determines what the result is when taken
-     * @param data The intent that holds the serialized object
+     * @param resultCode  Determines what the result is when taken
+     * @param data        The intent that holds the serialized object
      */
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
@@ -180,9 +172,9 @@ public class homePage extends Fragment implements LoaderManager.LoaderCallbacks<
         int addExpFragmentRequestCode = 0;
 
         if (resultCode == addExpFragmentResultCode) {
-            if (requestCode == addExpFragmentRequestCode){
+            if (requestCode == addExpFragmentRequestCode) {
                 Experiment newExperiment = (Experiment) data.getSerializableExtra("newExp");
-                Toast.makeText(getActivity(), newExperiment.getExpName() + " " + newExperiment.getDescription() , Toast.LENGTH_SHORT).show();
+                Toast.makeText(getActivity(), newExperiment.getExpName() + " " + newExperiment.getDescription(), Toast.LENGTH_SHORT).show();
                 experimentAdapter.add(newExperiment);
                 addExperimentToDB(newExperiment);
                 experimentAdapter.notifyDataSetChanged();
@@ -192,6 +184,7 @@ public class homePage extends Fragment implements LoaderManager.LoaderCallbacks<
 
     /**
      * Add a new experiment object to the Firebase database.
+     *
      * @param newExperiment The experiment object that is to be added to the Firebase database.
      */
     public void addExperimentToDB(Experiment newExperiment) {
@@ -206,8 +199,8 @@ public class homePage extends Fragment implements LoaderManager.LoaderCallbacks<
         data.put("Name", newExperiment.getExpName());
         data.put("Description", newExperiment.getDescription());
         data.put("Trial Type", newExperiment.getTrialType());
-        data.put("LocationStatus", ""+ newExperiment.getRegionOn());
-        data.put("PublicStatus", ""+ newExperiment.isPublic());
+        data.put("LocationStatus", "" + newExperiment.getRegionOn());
+        data.put("PublicStatus", "" + newExperiment.isPublic());
         data.put("UUID", newExperiment.getOwnerUserID());
 
         allCommentsCollection
