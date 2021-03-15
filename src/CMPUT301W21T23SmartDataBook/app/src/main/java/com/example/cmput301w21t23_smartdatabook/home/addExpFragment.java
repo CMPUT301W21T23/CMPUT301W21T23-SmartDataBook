@@ -131,10 +131,6 @@ public class addExpFragment extends Fragment {
     public void onDestroy() {
         super.onDestroy();
         ((AppCompatActivity) getActivity()).getSupportActionBar().setTitle("Home");
-    public void onDestroy() {
-        super.onDestroy();
-        ((AppCompatActivity) getActivity()).getSupportActionBar().setTitle("Home");
-
         //Source: Shweta Chauhan; https://stackoverflow.com/users/6021469/shweta-chauhan
         //Code: https://stackoverflow.com/questions/40085608/how-to-pass-data-from-one-fragment-to-previous-fragment
         Intent intent = new Intent(getActivity(), addExpFragment.class);
@@ -153,6 +149,7 @@ public class addExpFragment extends Fragment {
      * @return trialType
      * @author Bosco Chan
      */
+
     public String findTrialType(int trialTypeID) {
         switch (trialTypeID) {
             case binomialID:
