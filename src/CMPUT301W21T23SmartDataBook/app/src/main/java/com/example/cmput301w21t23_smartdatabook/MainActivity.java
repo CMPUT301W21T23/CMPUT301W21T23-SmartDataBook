@@ -14,7 +14,7 @@ import android.widget.ListView;
 import android.widget.Toast;
 
 import com.example.cmput301w21t23_smartdatabook.fav.favPage;
-import com.example.cmput301w21t23_smartdatabook.settings.settingsPage;
+import com.example.cmput301w21t23_smartdatabook.settings.SettingsPage;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
@@ -89,7 +89,7 @@ public class MainActivity extends AppCompatActivity {
 
                 case R.id.settings_nav:
                     toolbar.setTitle("Settings");
-                    openFragment(settingsPage.newInstance("",""));
+                    openFragment(SettingsPage.newInstance("",""));
                     return true;
             }
             return false;
