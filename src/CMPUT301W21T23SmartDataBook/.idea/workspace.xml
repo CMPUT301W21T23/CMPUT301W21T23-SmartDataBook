@@ -1,0 +1,137 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="AndroidLogFilters">
+    <option name="TOOL_WINDOW_CUSTOM_FILTER" value="test" />
+    <option name="TOOL_WINDOW_CONFIGURED_FILTER" value="Show only selected application" />
+  </component>
+  <component name="ChangeListManager">
+    <list default="true" id="9becaa34-ba84-4364-9e78-fc7ad4e3d313" name="Default Changelist" comment="">
+      <change beforePath="$PROJECT_DIR$/app/src/main/AndroidManifest.xml" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/AndroidManifest.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/src/main/java/com/example/cmput301w21t23_smartdatabook/MainActivity.java" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/com/example/cmput301w21t23_smartdatabook/MainActivity.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/src/main/java/com/example/cmput301w21t23_smartdatabook/home/addExpFragment.java" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/com/example/cmput301w21t23_smartdatabook/home/addExpFragment.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/src/main/java/com/example/cmput301w21t23_smartdatabook/home/homePage.java" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/com/example/cmput301w21t23_smartdatabook/home/homePage.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/src/main/res/layout/card.xml" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/res/layout/card.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/src/main/res/layout/experiment_details.xml" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/res/layout/experiment_details.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/src/main/res/layout/home_page.xml" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/res/layout/home_page.xml" afterDir="false" />
+    </list>
+    <option name="SHOW_DIALOG" value="false" />
+    <option name="HIGHLIGHT_CONFLICTS" value="true" />
+    <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
+    <option name="LAST_RESOLUTION" value="IGNORE" />
+  </component>
+  <component name="ExecutionTargetManager" SELECTED_TARGET="device_and_snapshot_combo_box_target[]" />
+  <component name="Git.Settings">
+    <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$/../.." />
+  </component>
+  <component name="PropertiesComponent">
+    <property name="DeviceAndSnapshotComboBoxAction.selectedDevice" value="Pixel_3a_XL_API_30" />
+    <property name="DeviceAndSnapshotComboBoxAction.selectionTime" value="2021-03-15T02:55:43.354Z" />
+  </component>
+  <component name="RunManager">
+    <configuration name="Unnamed" type="AndroidRunConfigurationType" factoryName="Android App" activateToolWindowBeforeRun="false" nameIsGenerated="true">
+      <module name="CMPUT301W21T23-SmartDataBook.app" />
+      <option name="DEPLOY" value="true" />
+      <option name="DEPLOY_APK_FROM_BUNDLE" value="false" />
+      <option name="DEPLOY_AS_INSTANT" value="false" />
+      <option name="ARTIFACT_NAME" value="" />
+      <option name="PM_INSTALL_OPTIONS" value="" />
+      <option name="ALL_USERS" value="false" />
+      <option name="DYNAMIC_FEATURES_DISABLED_LIST" value="" />
+      <option name="ACTIVITY_EXTRA_FLAGS" value="" />
+      <option name="MODE" value="default_activity" />
+      <option name="CLEAR_LOGCAT" value="false" />
+      <option name="SHOW_LOGCAT_AUTOMATICALLY" value="false" />
+      <option name="SKIP_NOOP_APK_INSTALLATIONS" value="true" />
+      <option name="FORCE_STOP_RUNNING_APP" value="true" />
+      <option name="TARGET_SELECTION_MODE" value="SHOW_DIALOG" />
+      <option name="SELECTED_CLOUD_MATRIX_CONFIGURATION_ID" value="-1" />
+      <option name="SELECTED_CLOUD_MATRIX_PROJECT_ID" value="" />
+      <option name="DEBUGGER_TYPE" value="Auto" />
+      <Auto>
+        <option name="USE_JAVA_AWARE_DEBUGGER" value="false" />
+        <option name="SHOW_STATIC_VARS" value="true" />
+        <option name="WORKING_DIR" value="" />
+        <option name="TARGET_LOGGING_CHANNELS" value="lldb process:gdb-remote packets" />
+        <option name="SHOW_OPTIMIZED_WARNING" value="true" />
+      </Auto>
+      <Hybrid>
+        <option name="USE_JAVA_AWARE_DEBUGGER" value="false" />
+        <option name="SHOW_STATIC_VARS" value="true" />
+        <option name="WORKING_DIR" value="" />
+        <option name="TARGET_LOGGING_CHANNELS" value="lldb process:gdb-remote packets" />
+        <option name="SHOW_OPTIMIZED_WARNING" value="true" />
+      </Hybrid>
+      <Java />
+      <Native>
+        <option name="USE_JAVA_AWARE_DEBUGGER" value="false" />
+        <option name="SHOW_STATIC_VARS" value="true" />
+        <option name="WORKING_DIR" value="" />
+        <option name="TARGET_LOGGING_CHANNELS" value="lldb process:gdb-remote packets" />
+        <option name="SHOW_OPTIMIZED_WARNING" value="true" />
+      </Native>
+      <Profilers>
+        <option name="ADVANCED_PROFILING_ENABLED" value="false" />
+        <option name="STARTUP_PROFILING_ENABLED" value="false" />
+        <option name="STARTUP_CPU_PROFILING_ENABLED" value="false" />
+        <option name="STARTUP_CPU_PROFILING_CONFIGURATION_NAME" value="Sample Java Methods" />
+        <option name="STARTUP_NATIVE_MEMORY_PROFILING_ENABLED" value="false" />
+        <option name="NATIVE_MEMORY_SAMPLE_RATE_BYTES" value="2048" />
+      </Profilers>
+      <option name="DEEP_LINK" value="" />
+      <option name="ACTIVITY_CLASS" value="" />
+      <option name="SEARCH_ACTIVITY_IN_GLOBAL_SCOPE" value="false" />
+      <option name="SKIP_ACTIVITY_VALIDATION" value="false" />
+      <method v="2">
+        <option name="Android.Gradle.BeforeRunTask" enabled="true" />
+      </method>
+    </configuration>
+  </component>
+  <component name="SvnConfiguration">
+    <configuration />
+  </component>
+  <component name="TaskManager">
+    <servers />
+  </component>
+  <component name="WindowStateProjectService">
+    <state x="214" y="121" key="#com.intellij.execution.impl.EditConfigurationsDialog" timestamp="1615776758257">
+      <screen x="60" y="25" width="1380" height="875" />
+    </state>
+    <state x="214" y="121" key="#com.intellij.execution.impl.EditConfigurationsDialog/60.25.1380.875@60.25.1380.875" timestamp="1615776758257" />
+    <state x="160" y="125" width="1180" height="675" key="AVDManager" timestamp="1615783598264">
+      <screen x="58" y="25" width="1382" height="875" />
+    </state>
+    <state x="160" y="125" width="1180" height="675" key="AVDManager/58.25.1382.875/1440.25.1116.795@58.25.1382.875" timestamp="1615783598264" />
+    <state width="1338" height="223" key="GridCell.Tab.0.bottom" timestamp="1615784402207">
+      <screen x="60" y="25" width="1380" height="875" />
+    </state>
+    <state width="1074" height="193" key="GridCell.Tab.0.bottom/58.25.1382.875/1440.25.1116.795@1440.25.1116.795" timestamp="1615781476875" />
+    <state width="1338" height="223" key="GridCell.Tab.0.bottom/58.25.1382.875/1440.25.1116.795@58.25.1382.875" timestamp="1615784270947" />
+    <state width="1338" height="228" key="GridCell.Tab.0.bottom/58.25.1382.875@58.25.1382.875" timestamp="1615779596315" />
+    <state width="1338" height="223" key="GridCell.Tab.0.bottom/60.25.1380.875/1440.25.1116.795@60.25.1380.875" timestamp="1615784402207" />
+    <state width="1338" height="373" key="GridCell.Tab.0.bottom/60.25.1380.875@60.25.1380.875" timestamp="1615777600707" />
+    <state width="1338" height="223" key="GridCell.Tab.0.center" timestamp="1615784402206">
+      <screen x="60" y="25" width="1380" height="875" />
+    </state>
+    <state width="1074" height="193" key="GridCell.Tab.0.center/58.25.1382.875/1440.25.1116.795@1440.25.1116.795" timestamp="1615781476873" />
+    <state width="1338" height="223" key="GridCell.Tab.0.center/58.25.1382.875/1440.25.1116.795@58.25.1382.875" timestamp="1615784270946" />
+    <state width="1338" height="228" key="GridCell.Tab.0.center/58.25.1382.875@58.25.1382.875" timestamp="1615779596314" />
+    <state width="1338" height="223" key="GridCell.Tab.0.center/60.25.1380.875/1440.25.1116.795@60.25.1380.875" timestamp="1615784402206" />
+    <state width="1338" height="373" key="GridCell.Tab.0.center/60.25.1380.875@60.25.1380.875" timestamp="1615777600706" />
+    <state width="1338" height="223" key="GridCell.Tab.0.left" timestamp="1615784402206">
+      <screen x="60" y="25" width="1380" height="875" />
+    </state>
+    <state width="1074" height="193" key="GridCell.Tab.0.left/58.25.1382.875/1440.25.1116.795@1440.25.1116.795" timestamp="1615781476871" />
+    <state width="1338" height="223" key="GridCell.Tab.0.left/58.25.1382.875/1440.25.1116.795@58.25.1382.875" timestamp="1615784270945" />
+    <state width="1338" height="228" key="GridCell.Tab.0.left/58.25.1382.875@58.25.1382.875" timestamp="1615779596314" />
+    <state width="1338" height="223" key="GridCell.Tab.0.left/60.25.1380.875/1440.25.1116.795@60.25.1380.875" timestamp="1615784402206" />
+    <state width="1338" height="373" key="GridCell.Tab.0.left/60.25.1380.875@60.25.1380.875" timestamp="1615777600706" />
+    <state width="1338" height="223" key="GridCell.Tab.0.right" timestamp="1615784402206">
+      <screen x="60" y="25" width="1380" height="875" />
+    </state>
+    <state width="1074" height="193" key="GridCell.Tab.0.right/58.25.1382.875/1440.25.1116.795@1440.25.1116.795" timestamp="1615781476874" />
+    <state width="1338" height="223" key="GridCell.Tab.0.right/58.25.1382.875/1440.25.1116.795@58.25.1382.875" timestamp="1615784270946" />
+    <state width="1338" height="228" key="GridCell.Tab.0.right/58.25.1382.875@58.25.1382.875" timestamp="1615779596315" />
+    <state width="1338" height="223" key="GridCell.Tab.0.right/60.25.1380.875/1440.25.1116.795@60.25.1380.875" timestamp="1615784402206" />
+    <state width="1338" height="373" key="GridCell.Tab.0.right/60.25.1380.875@60.25.1380.875" timestamp="1615777600706" />
+  </component>
+</project>

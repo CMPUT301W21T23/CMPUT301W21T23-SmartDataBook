@@ -1,0 +1,10 @@
+#Sun Mar 14 22:56:56 MDT 2021
+path.2=classes2.dex
+path.1=classes.dex
+path.0=classes.dex
+renamed.2=classes3.dex
+renamed.1=classes2.dex
+renamed.0=classes.dex
+base.2=/Users/afaqnabi/Desktop/301project/CMPUT301W21T23-SmartDataBook/src/CMPUT301W21T23SmartDataBook/app/build/intermediates/dex/debug/mergeExtDexDebug/classes2.dex
+base.1=/Users/afaqnabi/Desktop/301project/CMPUT301W21T23-SmartDataBook/src/CMPUT301W21T23SmartDataBook/app/build/intermediates/dex/debug/mergeProjectDexDebug/classes.dex
+base.0=/Users/afaqnabi/Desktop/301project/CMPUT301W21T23-SmartDataBook/src/CMPUT301W21T23SmartDataBook/app/build/intermediates/dex/debug/mergeExtDexDebug/classes.dex

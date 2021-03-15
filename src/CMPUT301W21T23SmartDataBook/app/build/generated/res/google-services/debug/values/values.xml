@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="default_web_client_id" translatable="false">140892353003-vbnud6somqpb3ilvmbrlhvjdo3prthr6.apps.googleusercontent.com</string>
+    <string name="gcm_defaultSenderId" translatable="false">140892353003</string>
+    <string name="google_api_key" translatable="false">AIzaSyDd8XEUkWujbCKbMbh616gGzefaRFOkClU</string>
+    <string name="google_app_id" translatable="false">1:140892353003:android:c47187a0020881514c69ae</string>
+    <string name="google_crash_reporting_api_key" translatable="false">AIzaSyDd8XEUkWujbCKbMbh616gGzefaRFOkClU</string>
+    <string name="google_storage_bucket" translatable="false">smartbook-31ad9.appspot.com</string>
+    <string name="project_id" translatable="false">smartbook-31ad9</string>
+</resources>

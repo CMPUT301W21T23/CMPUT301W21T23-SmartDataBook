@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="ProjectModuleManager">
+    <modules>
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/CMPUT301W21T23-SmartDataBook.iml" filepath="$PROJECT_DIR$/.idea/modules/CMPUT301W21T23-SmartDataBook.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/app/CMPUT301W21T23-SmartDataBook.app.iml" filepath="$PROJECT_DIR$/.idea/modules/app/CMPUT301W21T23-SmartDataBook.app.iml" />
+    </modules>
+  </component>
+</project>

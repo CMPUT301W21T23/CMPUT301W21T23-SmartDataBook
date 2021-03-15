@@ -1,0 +1,57 @@
+com/example/cmput301w21t23_smartdatabook/fav/favPage.java
+ com.example.cmput301w21t23_smartdatabook.fav.favPage
+com/example/cmput301w21t23_smartdatabook/CountTrial.java
+ com.example.cmput301w21t23_smartdatabook.CountTrial
+com/example/cmput301w21t23_smartdatabook/CommentList.java
+ com.example.cmput301w21t23_smartdatabook.CommentList
+com/example/cmput301w21t23_smartdatabook/User.java
+ com.example.cmput301w21t23_smartdatabook.User
+com/example/cmput301w21t23_smartdatabook/experimentDetails.java
+ com.example.cmput301w21t23_smartdatabook.experimentDetails
+com/example/cmput301w21t23_smartdatabook/BuildConfig.java
+ com.example.cmput301w21t23_smartdatabook.BuildConfig
+com/example/cmput301w21t23_smartdatabook/Comment.java
+ com.example.cmput301w21t23_smartdatabook.Comment
+com/example/cmput301w21t23_smartdatabook/settings/SettingsPage.java
+ com.example.cmput301w21t23_smartdatabook.settings.SettingsPage
+ com.example.cmput301w21t23_smartdatabook.settings.SettingsPage$1
+ com.example.cmput301w21t23_smartdatabook.settings.SettingsPage$1$1
+ com.example.cmput301w21t23_smartdatabook.settings.SettingsPage$1$1$1
+ com.example.cmput301w21t23_smartdatabook.settings.SettingsPage$1$1$2
+com/example/cmput301w21t23_smartdatabook/Experiment.java
+ com.example.cmput301w21t23_smartdatabook.Experiment
+com/example/cmput301w21t23_smartdatabook/CardList.java
+ com.example.cmput301w21t23_smartdatabook.CardList
+com/example/cmput301w21t23_smartdatabook/GetDate.java
+ com.example.cmput301w21t23_smartdatabook.GetDate
+com/example/cmput301w21t23_smartdatabook/BinomialTrial.java
+ com.example.cmput301w21t23_smartdatabook.BinomialTrial
+com/example/cmput301w21t23_smartdatabook/MeasurementTrial.java
+ com.example.cmput301w21t23_smartdatabook.MeasurementTrial
+com/example/cmput301w21t23_smartdatabook/Trial.java
+ com.example.cmput301w21t23_smartdatabook.Trial
+com/example/cmput301w21t23_smartdatabook/firbase.java
+ com.example.cmput301w21t23_smartdatabook.firbase
+com/example/cmput301w21t23_smartdatabook/CommentActivity.java
+ com.example.cmput301w21t23_smartdatabook.CommentActivity
+com/example/cmput301w21t23_smartdatabook/home/addExpFragment.java
+ com.example.cmput301w21t23_smartdatabook.home.addExpFragment
+ com.example.cmput301w21t23_smartdatabook.home.addExpFragment$1
+ com.example.cmput301w21t23_smartdatabook.home.addExpFragment$2
+ com.example.cmput301w21t23_smartdatabook.home.addExpFragment$3
+com/example/cmput301w21t23_smartdatabook/MainActivity.java
+ com.example.cmput301w21t23_smartdatabook.MainActivity
+ com.example.cmput301w21t23_smartdatabook.MainActivity$1
+ com.example.cmput301w21t23_smartdatabook.MainActivity$2
+ com.example.cmput301w21t23_smartdatabook.MainActivity$2$1
+ com.example.cmput301w21t23_smartdatabook.MainActivity$2$1$1
+ com.example.cmput301w21t23_smartdatabook.MainActivity$2$1$2
+com/example/cmput301w21t23_smartdatabook/home/homePage.java
+ com.example.cmput301w21t23_smartdatabook.home.homePage
+ com.example.cmput301w21t23_smartdatabook.home.homePage$1
+ com.example.cmput301w21t23_smartdatabook.home.homePage$2
+ com.example.cmput301w21t23_smartdatabook.home.homePage$3
+ com.example.cmput301w21t23_smartdatabook.home.homePage$4
+ com.example.cmput301w21t23_smartdatabook.home.homePage$5
+ com.example.cmput301w21t23_smartdatabook.home.homePage$6
+ com.example.cmput301w21t23_smartdatabook.home.homePage$7

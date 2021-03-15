@@ -1,0 +1,262 @@
+[
+    {
+        "merged": "/Users/afaqnabi/Desktop/301project/CMPUT301W21T23-SmartDataBook/src/CMPUT301W21T23SmartDataBook/app/build/intermediates/res/merged/debug/mipmap-hdpi_ic_map_button_round.png.flat",
+        "source": "/Users/afaqnabi/Desktop/301project/CMPUT301W21T23-SmartDataBook/src/CMPUT301W21T23SmartDataBook/app/src/main/res/mipmap-hdpi/ic_map_button_round.png"
+    },
+    {
+        "merged": "/Users/afaqnabi/Desktop/301project/CMPUT301W21T23-SmartDataBook/src/CMPUT301W21T23SmartDataBook/app/build/intermediates/res/merged/debug/mipmap-mdpi_ic_map_button_round.png.flat",
+        "source": "/Users/afaqnabi/Desktop/301project/CMPUT301W21T23-SmartDataBook/src/CMPUT301W21T23SmartDataBook/app/src/main/res/mipmap-mdpi/ic_map_button_round.png"
+    },
+    {
+        "merged": "/Users/afaqnabi/Desktop/301project/CMPUT301W21T23-SmartDataBook/src/CMPUT301W21T23SmartDataBook/app/build/intermediates/res/merged/debug/drawable-v24_ic_launcher_foreground.xml.flat",
+        "source": "/Users/afaqnabi/Desktop/301project/CMPUT301W21T23-SmartDataBook/src/CMPUT301W21T23SmartDataBook/app/src/main/res/drawable-v24/ic_launcher_foreground.xml"
+    },
+    {
+        "merged": "/Users/afaqnabi/Desktop/301project/CMPUT301W21T23-SmartDataBook/src/CMPUT301W21T23SmartDataBook/app/build/intermediates/res/merged/debug/mipmap-xhdpi_ic_generate_code_round.png.flat",
+        "source": "/Users/afaqnabi/Desktop/301project/CMPUT301W21T23-SmartDataBook/src/CMPUT301W21T23SmartDataBook/app/src/main/res/mipmap-xhdpi/ic_generate_code_round.png"
+    },
+    {
+        "merged": "/Users/afaqnabi/Desktop/301project/CMPUT301W21T23-SmartDataBook/src/CMPUT301W21T23SmartDataBook/app/build/intermediates/res/merged/debug/drawable-anydpi_ic_heart_nav.xml.flat",
+        "source": "/Users/afaqnabi/Desktop/301project/CMPUT301W21T23-SmartDataBook/src/CMPUT301W21T23SmartDataBook/app/src/main/res/drawable-anydpi/ic_heart_nav.xml"
+    },
+    {
+        "merged": "/Users/afaqnabi/Desktop/301project/CMPUT301W21T23-SmartDataBook/src/CMPUT301W21T23SmartDataBook/app/build/intermediates/res/merged/debug/layout_activity_main.xml.flat",
+        "source": "/Users/afaqnabi/Desktop/301project/CMPUT301W21T23-SmartDataBook/src/CMPUT301W21T23SmartDataBook/app/src/main/res/layout/activity_main.xml"
+    },
+    {
+        "merged": "/Users/afaqnabi/Desktop/301project/CMPUT301W21T23-SmartDataBook/src/CMPUT301W21T23SmartDataBook/app/build/intermediates/res/merged/debug/drawable-anydpi_ic_setting_nav.xml.flat",
+        "source": "/Users/afaqnabi/Desktop/301project/CMPUT301W21T23-SmartDataBook/src/CMPUT301W21T23SmartDataBook/app/src/main/res/drawable-anydpi/ic_setting_nav.xml"
+    },
+    {
+        "merged": "/Users/afaqnabi/Desktop/301project/CMPUT301W21T23-SmartDataBook/src/CMPUT301W21T23SmartDataBook/app/build/intermediates/res/merged/debug/mipmap-xxxhdpi_ic_map_button_round.png.flat",
+        "source": "/Users/afaqnabi/Desktop/301project/CMPUT301W21T23-SmartDataBook/src/CMPUT301W21T23SmartDataBook/app/src/main/res/mipmap-xxxhdpi/ic_map_button_round.png"
+    },
+    {
+        "merged": "/Users/afaqnabi/Desktop/301project/CMPUT301W21T23-SmartDataBook/src/CMPUT301W21T23SmartDataBook/app/build/intermediates/res/merged/debug/navigation_back_button.xml.flat",
+        "source": "/Users/afaqnabi/Desktop/301project/CMPUT301W21T23-SmartDataBook/src/CMPUT301W21T23SmartDataBook/app/src/main/res/navigation/back_button.xml"
+    },
+    {
+        "merged": "/Users/afaqnabi/Desktop/301project/CMPUT301W21T23-SmartDataBook/src/CMPUT301W21T23SmartDataBook/app/build/intermediates/res/merged/debug/drawable_ic_generate_code_foreground.xml.flat",
+        "source": "/Users/afaqnabi/Desktop/301project/CMPUT301W21T23-SmartDataBook/src/CMPUT301W21T23SmartDataBook/app/src/main/res/drawable/ic_generate_code_foreground.xml"
+    },
+    {
+        "merged": "/Users/afaqnabi/Desktop/301project/CMPUT301W21T23-SmartDataBook/src/CMPUT301W21T23SmartDataBook/app/build/intermediates/res/merged/debug/layout_qr_code.xml.flat",
+        "source": "/Users/afaqnabi/Desktop/301project/CMPUT301W21T23-SmartDataBook/src/CMPUT301W21T23SmartDataBook/app/src/main/res/layout/qr_code.xml"
+    },
+    {
+        "merged": "/Users/afaqnabi/Desktop/301project/CMPUT301W21T23-SmartDataBook/src/CMPUT301W21T23SmartDataBook/app/build/intermediates/res/merged/debug/drawable-xxhdpi_ic_launcher.xml.flat",
+        "source": "/Users/afaqnabi/Desktop/301project/CMPUT301W21T23-SmartDataBook/src/CMPUT301W21T23SmartDataBook/app/src/main/res/drawable-xxhdpi/ic_launcher.xml"
+    },
+    {
+        "merged": "/Users/afaqnabi/Desktop/301project/CMPUT301W21T23-SmartDataBook/src/CMPUT301W21T23SmartDataBook/app/build/intermediates/res/merged/debug/mipmap-xhdpi_ic_generate_code.png.flat",
+        "source": "/Users/afaqnabi/Desktop/301project/CMPUT301W21T23-SmartDataBook/src/CMPUT301W21T23SmartDataBook/app/src/main/res/mipmap-xhdpi/ic_generate_code.png"
+    },
+    {
+        "merged": "/Users/afaqnabi/Desktop/301project/CMPUT301W21T23-SmartDataBook/src/CMPUT301W21T23SmartDataBook/app/build/intermediates/res/merged/debug/mipmap-xhdpi_ic_launcher_round.png.flat",
+        "source": "/Users/afaqnabi/Desktop/301project/CMPUT301W21T23-SmartDataBook/src/CMPUT301W21T23SmartDataBook/app/src/main/res/mipmap-xhdpi/ic_launcher_round.png"
+    },
+    {
+        "merged": "/Users/afaqnabi/Desktop/301project/CMPUT301W21T23-SmartDataBook/src/CMPUT301W21T23SmartDataBook/app/build/intermediates/res/merged/debug/mipmap-hdpi_ic_launcher.png.flat",
+        "source": "/Users/afaqnabi/Desktop/301project/CMPUT301W21T23-SmartDataBook/src/CMPUT301W21T23SmartDataBook/app/src/main/res/mipmap-hdpi/ic_launcher.png"
+    },
+    {
+        "merged": "/Users/afaqnabi/Desktop/301project/CMPUT301W21T23-SmartDataBook/src/CMPUT301W21T23SmartDataBook/app/build/intermediates/res/merged/debug/mipmap-xxhdpi_ic_launcher.png.flat",
+        "source": "/Users/afaqnabi/Desktop/301project/CMPUT301W21T23-SmartDataBook/src/CMPUT301W21T23SmartDataBook/app/src/main/res/mipmap-xxhdpi/ic_launcher.png"
+    },
+    {
+        "merged": "/Users/afaqnabi/Desktop/301project/CMPUT301W21T23-SmartDataBook/src/CMPUT301W21T23SmartDataBook/app/build/intermediates/res/merged/debug/layout_generate_qr_binaomial.xml.flat",
+        "source": "/Users/afaqnabi/Desktop/301project/CMPUT301W21T23-SmartDataBook/src/CMPUT301W21T23SmartDataBook/app/src/main/res/layout/generate_qr_binaomial.xml"
+    },
+    {
+        "merged": "/Users/afaqnabi/Desktop/301project/CMPUT301W21T23-SmartDataBook/src/CMPUT301W21T23SmartDataBook/app/build/intermediates/res/merged/debug/layout_questions_items.xml.flat",
+        "source": "/Users/afaqnabi/Desktop/301project/CMPUT301W21T23-SmartDataBook/src/CMPUT301W21T23SmartDataBook/app/src/main/res/layout/questions_items.xml"
+    },
+    {
+        "merged": "/Users/afaqnabi/Desktop/301project/CMPUT301W21T23-SmartDataBook/src/CMPUT301W21T23SmartDataBook/app/build/intermediates/res/merged/debug/layout_followed_experiments.xml.flat",
+        "source": "/Users/afaqnabi/Desktop/301project/CMPUT301W21T23-SmartDataBook/src/CMPUT301W21T23SmartDataBook/app/src/main/res/layout/followed_experiments.xml"
+    },
+    {
+        "merged": "/Users/afaqnabi/Desktop/301project/CMPUT301W21T23-SmartDataBook/src/CMPUT301W21T23SmartDataBook/app/build/intermediates/res/merged/debug/mipmap-xxxhdpi_ic_launcher.png.flat",
+        "source": "/Users/afaqnabi/Desktop/301project/CMPUT301W21T23-SmartDataBook/src/CMPUT301W21T23SmartDataBook/app/src/main/res/mipmap-xxxhdpi/ic_launcher.png"
+    },
+    {
+        "merged": "/Users/afaqnabi/Desktop/301project/CMPUT301W21T23-SmartDataBook/src/CMPUT301W21T23SmartDataBook/app/build/intermediates/res/merged/debug/mipmap-xxhdpi_ic_map_button.png.flat",
+        "source": "/Users/afaqnabi/Desktop/301project/CMPUT301W21T23-SmartDataBook/src/CMPUT301W21T23SmartDataBook/app/src/main/res/mipmap-xxhdpi/ic_map_button.png"
+    },
+    {
+        "merged": "/Users/afaqnabi/Desktop/301project/CMPUT301W21T23-SmartDataBook/src/CMPUT301W21T23SmartDataBook/app/build/intermediates/res/merged/debug/drawable-anydpi_ic_default_profile_pic.xml.flat",
+        "source": "/Users/afaqnabi/Desktop/301project/CMPUT301W21T23-SmartDataBook/src/CMPUT301W21T23SmartDataBook/app/src/main/res/drawable-anydpi/ic_default_profile_pic.xml"
+    },
+    {
+        "merged": "/Users/afaqnabi/Desktop/301project/CMPUT301W21T23-SmartDataBook/src/CMPUT301W21T23SmartDataBook/app/build/intermediates/res/merged/debug/mipmap-hdpi_ic_generate_code_round.png.flat",
+        "source": "/Users/afaqnabi/Desktop/301project/CMPUT301W21T23-SmartDataBook/src/CMPUT301W21T23SmartDataBook/app/src/main/res/mipmap-hdpi/ic_generate_code_round.png"
+    },
+    {
+        "merged": "/Users/afaqnabi/Desktop/301project/CMPUT301W21T23-SmartDataBook/src/CMPUT301W21T23SmartDataBook/app/build/intermediates/res/merged/debug/drawable-anydpi_ic_back_button.xml.flat",
+        "source": "/Users/afaqnabi/Desktop/301project/CMPUT301W21T23-SmartDataBook/src/CMPUT301W21T23SmartDataBook/app/src/main/res/drawable-anydpi/ic_back_button.xml"
+    },
+    {
+        "merged": "/Users/afaqnabi/Desktop/301project/CMPUT301W21T23-SmartDataBook/src/CMPUT301W21T23SmartDataBook/app/build/intermediates/res/merged/debug/drawable_ic_launcher_background.xml.flat",
+        "source": "/Users/afaqnabi/Desktop/301project/CMPUT301W21T23-SmartDataBook/src/CMPUT301W21T23SmartDataBook/app/src/main/res/drawable/ic_launcher_background.xml"
+    },
+    {
+        "merged": "/Users/afaqnabi/Desktop/301project/CMPUT301W21T23-SmartDataBook/src/CMPUT301W21T23SmartDataBook/app/build/intermediates/res/merged/debug/layout_experiment_details.xml.flat",
+        "source": "/Users/afaqnabi/Desktop/301project/CMPUT301W21T23-SmartDataBook/src/CMPUT301W21T23SmartDataBook/app/src/main/res/layout/experiment_details.xml"
+    },
+    {
+        "merged": "/Users/afaqnabi/Desktop/301project/CMPUT301W21T23-SmartDataBook/src/CMPUT301W21T23SmartDataBook/app/build/intermediates/res/merged/debug/mipmap-mdpi_ic_generate_code.png.flat",
+        "source": "/Users/afaqnabi/Desktop/301project/CMPUT301W21T23-SmartDataBook/src/CMPUT301W21T23SmartDataBook/app/src/main/res/mipmap-mdpi/ic_generate_code.png"
+    },
+    {
+        "merged": "/Users/afaqnabi/Desktop/301project/CMPUT301W21T23-SmartDataBook/src/CMPUT301W21T23SmartDataBook/app/build/intermediates/res/merged/debug/layout_card.xml.flat",
+        "source": "/Users/afaqnabi/Desktop/301project/CMPUT301W21T23-SmartDataBook/src/CMPUT301W21T23SmartDataBook/app/src/main/res/layout/card.xml"
+    },
+    {
+        "merged": "/Users/afaqnabi/Desktop/301project/CMPUT301W21T23-SmartDataBook/src/CMPUT301W21T23SmartDataBook/app/build/intermediates/res/merged/debug/layout_generate_qr_count.xml.flat",
+        "source": "/Users/afaqnabi/Desktop/301project/CMPUT301W21T23-SmartDataBook/src/CMPUT301W21T23SmartDataBook/app/src/main/res/layout/generate_qr_count.xml"
+    },
+    {
+        "merged": "/Users/afaqnabi/Desktop/301project/CMPUT301W21T23-SmartDataBook/src/CMPUT301W21T23SmartDataBook/app/build/intermediates/res/merged/debug/mipmap-xhdpi_ic_launcher.png.flat",
+        "source": "/Users/afaqnabi/Desktop/301project/CMPUT301W21T23-SmartDataBook/src/CMPUT301W21T23SmartDataBook/app/src/main/res/mipmap-xhdpi/ic_launcher.png"
+    },
+    {
+        "merged": "/Users/afaqnabi/Desktop/301project/CMPUT301W21T23-SmartDataBook/src/CMPUT301W21T23SmartDataBook/app/build/intermediates/res/merged/debug/drawable-anydpi_ic_home_nav.xml.flat",
+        "source": "/Users/afaqnabi/Desktop/301project/CMPUT301W21T23-SmartDataBook/src/CMPUT301W21T23SmartDataBook/app/src/main/res/drawable-anydpi/ic_home_nav.xml"
+    },
+    {
+        "merged": "/Users/afaqnabi/Desktop/301project/CMPUT301W21T23-SmartDataBook/src/CMPUT301W21T23SmartDataBook/app/build/intermediates/res/merged/debug/layout_questions.xml.flat",
+        "source": "/Users/afaqnabi/Desktop/301project/CMPUT301W21T23-SmartDataBook/src/CMPUT301W21T23SmartDataBook/app/src/main/res/layout/questions.xml"
+    },
+    {
+        "merged": "/Users/afaqnabi/Desktop/301project/CMPUT301W21T23-SmartDataBook/src/CMPUT301W21T23SmartDataBook/app/build/intermediates/res/merged/debug/mipmap-mdpi_ic_launcher.png.flat",
+        "source": "/Users/afaqnabi/Desktop/301project/CMPUT301W21T23-SmartDataBook/src/CMPUT301W21T23SmartDataBook/app/src/main/res/mipmap-mdpi/ic_launcher.png"
+    },
+    {
+        "merged": "/Users/afaqnabi/Desktop/301project/CMPUT301W21T23-SmartDataBook/src/CMPUT301W21T23SmartDataBook/app/build/intermediates/res/merged/debug/mipmap-anydpi-v26_ic_generate_code_round.xml.flat",
+        "source": "/Users/afaqnabi/Desktop/301project/CMPUT301W21T23-SmartDataBook/src/CMPUT301W21T23SmartDataBook/app/src/main/res/mipmap-anydpi-v26/ic_generate_code_round.xml"
+    },
+    {
+        "merged": "/Users/afaqnabi/Desktop/301project/CMPUT301W21T23-SmartDataBook/src/CMPUT301W21T23SmartDataBook/app/build/intermediates/res/merged/debug/drawable_ic_map_button_foreground.xml.flat",
+        "source": "/Users/afaqnabi/Desktop/301project/CMPUT301W21T23-SmartDataBook/src/CMPUT301W21T23SmartDataBook/app/src/main/res/drawable/ic_map_button_foreground.xml"
+    },
+    {
+        "merged": "/Users/afaqnabi/Desktop/301project/CMPUT301W21T23-SmartDataBook/src/CMPUT301W21T23SmartDataBook/app/build/intermediates/res/merged/debug/mipmap-mdpi_ic_launcher_round.png.flat",
+        "source": "/Users/afaqnabi/Desktop/301project/CMPUT301W21T23-SmartDataBook/src/CMPUT301W21T23SmartDataBook/app/src/main/res/mipmap-mdpi/ic_launcher_round.png"
+    },
+    {
+        "merged": "/Users/afaqnabi/Desktop/301project/CMPUT301W21T23-SmartDataBook/src/CMPUT301W21T23SmartDataBook/app/build/intermediates/res/merged/debug/layout_activity_show_comments.xml.flat",
+        "source": "/Users/afaqnabi/Desktop/301project/CMPUT301W21T23-SmartDataBook/src/CMPUT301W21T23SmartDataBook/app/src/main/res/layout/activity_show_comments.xml"
+    },
+    {
+        "merged": "/Users/afaqnabi/Desktop/301project/CMPUT301W21T23-SmartDataBook/src/CMPUT301W21T23SmartDataBook/app/build/intermediates/res/merged/debug/mipmap-xxhdpi_ic_generate_code_round.png.flat",
+        "source": "/Users/afaqnabi/Desktop/301project/CMPUT301W21T23-SmartDataBook/src/CMPUT301W21T23SmartDataBook/app/src/main/res/mipmap-xxhdpi/ic_generate_code_round.png"
+    },
+    {
+        "merged": "/Users/afaqnabi/Desktop/301project/CMPUT301W21T23-SmartDataBook/src/CMPUT301W21T23SmartDataBook/app/build/intermediates/res/merged/debug/drawable-xxhdpi_ic_launcher_round.xml.flat",
+        "source": "/Users/afaqnabi/Desktop/301project/CMPUT301W21T23-SmartDataBook/src/CMPUT301W21T23SmartDataBook/app/src/main/res/drawable-xxhdpi/ic_launcher_round.xml"
+    },
+    {
+        "merged": "/Users/afaqnabi/Desktop/301project/CMPUT301W21T23-SmartDataBook/src/CMPUT301W21T23SmartDataBook/app/build/intermediates/res/merged/debug/mipmap-anydpi-v26_ic_generate_code.xml.flat",
+        "source": "/Users/afaqnabi/Desktop/301project/CMPUT301W21T23-SmartDataBook/src/CMPUT301W21T23SmartDataBook/app/src/main/res/mipmap-anydpi-v26/ic_generate_code.xml"
+    },
+    {
+        "merged": "/Users/afaqnabi/Desktop/301project/CMPUT301W21T23-SmartDataBook/src/CMPUT301W21T23SmartDataBook/app/build/intermediates/res/merged/debug/layout_followed_experiments_items.xml.flat",
+        "source": "/Users/afaqnabi/Desktop/301project/CMPUT301W21T23-SmartDataBook/src/CMPUT301W21T23SmartDataBook/app/src/main/res/layout/followed_experiments_items.xml"
+    },
+    {
+        "merged": "/Users/afaqnabi/Desktop/301project/CMPUT301W21T23-SmartDataBook/src/CMPUT301W21T23SmartDataBook/app/build/intermediates/res/merged/debug/layout_new_experiment_location_on.xml.flat",
+        "source": "/Users/afaqnabi/Desktop/301project/CMPUT301W21T23-SmartDataBook/src/CMPUT301W21T23SmartDataBook/app/src/main/res/layout/new_experiment_location_on.xml"
+    },
+    {
+        "merged": "/Users/afaqnabi/Desktop/301project/CMPUT301W21T23-SmartDataBook/src/CMPUT301W21T23SmartDataBook/app/build/intermediates/res/merged/debug/drawable-anydpi_ic_qr_image.xml.flat",
+        "source": "/Users/afaqnabi/Desktop/301project/CMPUT301W21T23-SmartDataBook/src/CMPUT301W21T23SmartDataBook/app/src/main/res/drawable-anydpi/ic_qr_image.xml"
+    },
+    {
+        "merged": "/Users/afaqnabi/Desktop/301project/CMPUT301W21T23-SmartDataBook/src/CMPUT301W21T23SmartDataBook/app/build/intermediates/res/merged/debug/mipmap-hdpi_ic_map_button.png.flat",
+        "source": "/Users/afaqnabi/Desktop/301project/CMPUT301W21T23-SmartDataBook/src/CMPUT301W21T23SmartDataBook/app/src/main/res/mipmap-hdpi/ic_map_button.png"
+    },
+    {
+        "merged": "/Users/afaqnabi/Desktop/301project/CMPUT301W21T23-SmartDataBook/src/CMPUT301W21T23SmartDataBook/app/build/intermediates/res/merged/debug/layout_settings.xml.flat",
+        "source": "/Users/afaqnabi/Desktop/301project/CMPUT301W21T23-SmartDataBook/src/CMPUT301W21T23SmartDataBook/app/src/main/res/layout/settings.xml"
+    },
+    {
+        "merged": "/Users/afaqnabi/Desktop/301project/CMPUT301W21T23-SmartDataBook/src/CMPUT301W21T23SmartDataBook/app/build/intermediates/res/merged/debug/mipmap-xhdpi_ic_map_button.png.flat",
+        "source": "/Users/afaqnabi/Desktop/301project/CMPUT301W21T23-SmartDataBook/src/CMPUT301W21T23SmartDataBook/app/src/main/res/mipmap-xhdpi/ic_map_button.png"
+    },
+    {
+        "merged": "/Users/afaqnabi/Desktop/301project/CMPUT301W21T23-SmartDataBook/src/CMPUT301W21T23SmartDataBook/app/build/intermediates/res/merged/debug/mipmap-xxxhdpi_ic_generate_code.png.flat",
+        "source": "/Users/afaqnabi/Desktop/301project/CMPUT301W21T23-SmartDataBook/src/CMPUT301W21T23SmartDataBook/app/src/main/res/mipmap-xxxhdpi/ic_generate_code.png"
+    },
+    {
+        "merged": "/Users/afaqnabi/Desktop/301project/CMPUT301W21T23-SmartDataBook/src/CMPUT301W21T23SmartDataBook/app/build/intermediates/res/merged/debug/layout_comment_item.xml.flat",
+        "source": "/Users/afaqnabi/Desktop/301project/CMPUT301W21T23-SmartDataBook/src/CMPUT301W21T23SmartDataBook/app/src/main/res/layout/comment_item.xml"
+    },
+    {
+        "merged": "/Users/afaqnabi/Desktop/301project/CMPUT301W21T23-SmartDataBook/src/CMPUT301W21T23SmartDataBook/app/build/intermediates/res/merged/debug/mipmap-anydpi-v26_ic_map_button.xml.flat",
+        "source": "/Users/afaqnabi/Desktop/301project/CMPUT301W21T23-SmartDataBook/src/CMPUT301W21T23SmartDataBook/app/src/main/res/mipmap-anydpi-v26/ic_map_button.xml"
+    },
+    {
+        "merged": "/Users/afaqnabi/Desktop/301project/CMPUT301W21T23-SmartDataBook/src/CMPUT301W21T23SmartDataBook/app/build/intermediates/res/merged/debug/mipmap-xxxhdpi_ic_launcher_round.png.flat",
+        "source": "/Users/afaqnabi/Desktop/301project/CMPUT301W21T23-SmartDataBook/src/CMPUT301W21T23SmartDataBook/app/src/main/res/mipmap-xxxhdpi/ic_launcher_round.png"
+    },
+    {
+        "merged": "/Users/afaqnabi/Desktop/301project/CMPUT301W21T23-SmartDataBook/src/CMPUT301W21T23SmartDataBook/app/build/intermediates/res/merged/debug/drawable_ic_ask_question.xml.flat",
+        "source": "/Users/afaqnabi/Desktop/301project/CMPUT301W21T23-SmartDataBook/src/CMPUT301W21T23SmartDataBook/app/src/main/res/drawable/ic_ask_question.xml"
+    },
+    {
+        "merged": "/Users/afaqnabi/Desktop/301project/CMPUT301W21T23-SmartDataBook/src/CMPUT301W21T23SmartDataBook/app/build/intermediates/res/merged/debug/mipmap-xxxhdpi_ic_generate_code_round.png.flat",
+        "source": "/Users/afaqnabi/Desktop/301project/CMPUT301W21T23-SmartDataBook/src/CMPUT301W21T23SmartDataBook/app/src/main/res/mipmap-xxxhdpi/ic_generate_code_round.png"
+    },
+    {
+        "merged": "/Users/afaqnabi/Desktop/301project/CMPUT301W21T23-SmartDataBook/src/CMPUT301W21T23SmartDataBook/app/build/intermediates/res/merged/debug/mipmap-anydpi-v26_ic_map_button_round.xml.flat",
+        "source": "/Users/afaqnabi/Desktop/301project/CMPUT301W21T23-SmartDataBook/src/CMPUT301W21T23SmartDataBook/app/src/main/res/mipmap-anydpi-v26/ic_map_button_round.xml"
+    },
+    {
+        "merged": "/Users/afaqnabi/Desktop/301project/CMPUT301W21T23-SmartDataBook/src/CMPUT301W21T23SmartDataBook/app/build/intermediates/res/merged/debug/mipmap-hdpi_ic_generate_code.png.flat",
+        "source": "/Users/afaqnabi/Desktop/301project/CMPUT301W21T23-SmartDataBook/src/CMPUT301W21T23SmartDataBook/app/src/main/res/mipmap-hdpi/ic_generate_code.png"
+    },
+    {
+        "merged": "/Users/afaqnabi/Desktop/301project/CMPUT301W21T23-SmartDataBook/src/CMPUT301W21T23SmartDataBook/app/build/intermediates/res/merged/debug/mipmap-xxhdpi_ic_map_button_round.png.flat",
+        "source": "/Users/afaqnabi/Desktop/301project/CMPUT301W21T23-SmartDataBook/src/CMPUT301W21T23SmartDataBook/app/src/main/res/mipmap-xxhdpi/ic_map_button_round.png"
+    },
+    {
+        "merged": "/Users/afaqnabi/Desktop/301project/CMPUT301W21T23-SmartDataBook/src/CMPUT301W21T23SmartDataBook/app/build/intermediates/res/merged/debug/menu_bottom_navigation_menu.xml.flat",
+        "source": "/Users/afaqnabi/Desktop/301project/CMPUT301W21T23-SmartDataBook/src/CMPUT301W21T23SmartDataBook/app/src/main/res/menu/bottom_navigation_menu.xml"
+    },
+    {
+        "merged": "/Users/afaqnabi/Desktop/301project/CMPUT301W21T23-SmartDataBook/src/CMPUT301W21T23SmartDataBook/app/build/intermediates/res/merged/debug/mipmap-mdpi_ic_map_button.png.flat",
+        "source": "/Users/afaqnabi/Desktop/301project/CMPUT301W21T23-SmartDataBook/src/CMPUT301W21T23SmartDataBook/app/src/main/res/mipmap-mdpi/ic_map_button.png"
+    },
+    {
+        "merged": "/Users/afaqnabi/Desktop/301project/CMPUT301W21T23-SmartDataBook/src/CMPUT301W21T23SmartDataBook/app/build/intermediates/res/merged/debug/drawable-anydpi_ic_star_nav.xml.flat",
+        "source": "/Users/afaqnabi/Desktop/301project/CMPUT301W21T23-SmartDataBook/src/CMPUT301W21T23SmartDataBook/app/src/main/res/drawable-anydpi/ic_star_nav.xml"
+    },
+    {
+        "merged": "/Users/afaqnabi/Desktop/301project/CMPUT301W21T23-SmartDataBook/src/CMPUT301W21T23SmartDataBook/app/build/intermediates/res/merged/debug/mipmap-xhdpi_ic_map_button_round.png.flat",
+        "source": "/Users/afaqnabi/Desktop/301project/CMPUT301W21T23-SmartDataBook/src/CMPUT301W21T23SmartDataBook/app/src/main/res/mipmap-xhdpi/ic_map_button_round.png"
+    },
+    {
+        "merged": "/Users/afaqnabi/Desktop/301project/CMPUT301W21T23-SmartDataBook/src/CMPUT301W21T23SmartDataBook/app/build/intermediates/res/merged/debug/mipmap-xxhdpi_ic_launcher_round.png.flat",
+        "source": "/Users/afaqnabi/Desktop/301project/CMPUT301W21T23-SmartDataBook/src/CMPUT301W21T23SmartDataBook/app/src/main/res/mipmap-xxhdpi/ic_launcher_round.png"
+    },
+    {
+        "merged": "/Users/afaqnabi/Desktop/301project/CMPUT301W21T23-SmartDataBook/src/CMPUT301W21T23SmartDataBook/app/build/intermediates/res/merged/debug/mipmap-xxxhdpi_ic_map_button.png.flat",
+        "source": "/Users/afaqnabi/Desktop/301project/CMPUT301W21T23-SmartDataBook/src/CMPUT301W21T23SmartDataBook/app/src/main/res/mipmap-xxxhdpi/ic_map_button.png"
+    },
+    {
+        "merged": "/Users/afaqnabi/Desktop/301project/CMPUT301W21T23-SmartDataBook/src/CMPUT301W21T23SmartDataBook/app/build/intermediates/res/merged/debug/mipmap-mdpi_ic_generate_code_round.png.flat",
+        "source": "/Users/afaqnabi/Desktop/301project/CMPUT301W21T23-SmartDataBook/src/CMPUT301W21T23SmartDataBook/app/src/main/res/mipmap-mdpi/ic_generate_code_round.png"
+    },
+    {
+        "merged": "/Users/afaqnabi/Desktop/301project/CMPUT301W21T23-SmartDataBook/src/CMPUT301W21T23SmartDataBook/app/build/intermediates/res/merged/debug/mipmap-xxhdpi_ic_generate_code.png.flat",
+        "source": "/Users/afaqnabi/Desktop/301project/CMPUT301W21T23-SmartDataBook/src/CMPUT301W21T23SmartDataBook/app/src/main/res/mipmap-xxhdpi/ic_generate_code.png"
+    },
+    {
+        "merged": "/Users/afaqnabi/Desktop/301project/CMPUT301W21T23-SmartDataBook/src/CMPUT301W21T23SmartDataBook/app/build/intermediates/res/merged/debug/layout_home_page.xml.flat",
+        "source": "/Users/afaqnabi/Desktop/301project/CMPUT301W21T23-SmartDataBook/src/CMPUT301W21T23SmartDataBook/app/src/main/res/layout/home_page.xml"
+    },
+    {
+        "merged": "/Users/afaqnabi/Desktop/301project/CMPUT301W21T23-SmartDataBook/src/CMPUT301W21T23SmartDataBook/app/build/intermediates/res/merged/debug/mipmap-hdpi_ic_launcher_round.png.flat",
+        "source": "/Users/afaqnabi/Desktop/301project/CMPUT301W21T23-SmartDataBook/src/CMPUT301W21T23SmartDataBook/app/src/main/res/mipmap-hdpi/ic_launcher_round.png"
+    }
+]
