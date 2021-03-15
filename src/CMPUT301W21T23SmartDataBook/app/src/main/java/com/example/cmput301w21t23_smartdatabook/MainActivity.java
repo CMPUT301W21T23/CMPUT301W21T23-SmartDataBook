@@ -32,7 +32,14 @@ import java.util.HashMap;
 
 import com.example.cmput301w21t23_smartdatabook.home.homePage;
 
-//https://androidwave.com/bottom-navigation-bar-android-example/ -> bottom tab navigation
+/**
+ * the Purpose of this class is to register the user in the database and initialize the bottom tab navigation
+ * functionality of the app
+ * the bottom tab should get covered if a new acitivity is opened
+ * @Author Afaq
+ * @Refrences https://androidwave.com/bottom-navigation-bar-android-example/
+ */
+
 public class MainActivity extends AppCompatActivity {
 
     ListView experimentList;
@@ -63,8 +70,8 @@ public class MainActivity extends AppCompatActivity {
         mAuth = FirebaseAuth.getInstance();
         authenticateAnon();
 
+    } //onCreate
 
-    }//onCreate
     public void openFragment(Fragment fragment) {
         FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
         transaction.replace(R.id.container, fragment);
@@ -107,7 +114,7 @@ public class MainActivity extends AppCompatActivity {
                     public void onComplete(@NonNull Task<AuthResult> task) {
                         if (task.isSuccessful()) {
                             // Sign in success, update UI with the signed-in user's information
-                            Log.d("Authentication Success", "signInAnonymously:success");
+                            Log.d("Authentication Success", "signInAnonymously:success: " + mAuth.getUid());
                             FirebaseUser currentUser = mAuth.getCurrentUser();
 
                             db = FirebaseFirestore.getInstance();
@@ -150,8 +157,6 @@ public class MainActivity extends AppCompatActivity {
                                     }
                                 }
                             });
-
-
                         } else {
                             // If sign in fails, display a message to the user.
                             Log.w("Authentication Failed", "signInAnonymously:failure", task.getException());
@@ -164,4 +169,4 @@ public class MainActivity extends AppCompatActivity {
                 });
     }//authenticationAnon
 
-}
+}//mainActivity

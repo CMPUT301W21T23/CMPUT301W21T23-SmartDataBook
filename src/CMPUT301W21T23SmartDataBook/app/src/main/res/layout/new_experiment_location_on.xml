@@ -92,13 +92,14 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="vertical"
-        android:paddingHorizontal="30dp">
+        android:paddingHorizontal="30dp"
+>
 
         <com.google.android.material.textfield.TextInputLayout
             style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+            android:id="@+id/experimentNameField"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginBottom="20dp"
             android:hint="Experiment Name"
             android:textColorHint="#777877"
             app:backgroundTint="@null"
@@ -113,9 +114,9 @@
 
         <com.google.android.material.textfield.TextInputLayout
             style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+            android:id="@+id/descriptionField"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginBottom="20dp"
             android:hint="Description"
             android:textColorHint="#777877"
             app:backgroundTint="@null"
@@ -206,7 +207,7 @@
             android:layout_height="wrap_content"
             android:orientation="horizontal"
             android:layout_gravity="center"
-            android:layout_marginTop="18dp">
+            android:layout_marginTop="10dp">
 
             <com.google.android.material.button.MaterialButton
                 android:id="@+id/newExperimentLocationOnCreateButtonView"
@@ -222,7 +223,5 @@
         </LinearLayout>
 
     </LinearLayout>
-
-
 
 </LinearLayout>
