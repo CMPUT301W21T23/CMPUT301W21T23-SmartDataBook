@@ -1,6 +1,5 @@
 package com.example.cmput301w21t23_smartdatabook.home;
 
-import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
@@ -14,12 +13,10 @@ import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
-import androidx.fragment.app.FragmentTransaction;
 
 import com.example.cmput301w21t23_smartdatabook.CardList;
 import com.example.cmput301w21t23_smartdatabook.Experiment;
 import com.example.cmput301w21t23_smartdatabook.R;
-import com.example.cmput301w21t23_smartdatabook.experimentDetails;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
@@ -29,8 +26,6 @@ import com.google.firebase.firestore.FirebaseFirestore;
 
 import java.util.ArrayList;
 import java.util.HashMap;
-
-import static android.app.Activity.RESULT_OK;
 
 /**
  * Class: homePage
@@ -88,7 +83,7 @@ public class homePage extends Fragment {
 
 
 
-        experimentList = view.findViewById(R.id.experimentList);
+        experimentList = view.findViewById(R.id.experiment_list);
         experimentDataList = new ArrayList<>();
 
         experimentDataList.add(new Experiment("first", "123",
@@ -99,6 +94,13 @@ public class homePage extends Fragment {
                 "Binomial", "testtrial", false, 30,60, true, "03/05/2021"));
         experimentDataList.add(new Experiment("6", "123",
                 "Binomial", "testtrial", false, 30,60, true, "03/05/2021"));
+
+        experimentDataList.add(new Experiment("6", "123",
+                "Binomial", "testtrial", false, 30,60, true, "03/05/2021"));
+
+        experimentDataList.add(new Experiment("6", "123",
+                "Binomial", "testtrial", false, 30,60, true, "03/05/2021"));
+
 
         experimentAdapter = new CardList(getContext(), experimentDataList);
 
@@ -133,8 +135,21 @@ public class homePage extends Fragment {
             }
         });
 
+        experimentList.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                Log.d("test","clicked");
+//                Experiment exp = experimentDataList.get(position); // get the experiment from list
+//                Intent intent = new Intent(getActivity(), experimentDetails.class);
+//                intent.putExtra("position", position); // pass position to experimentDetails class
+//                intent.putExtra("experiment", exp); // pass experiment object
+//                startActivity(intent);
+            }
+        });
+
         return view;
     }
+
 
     //Source: Shweta Chauhan; https://stackoverflow.com/users/6021469/shweta-chauhan
     //Code: https://stackoverflow.com/questions/40085608/how-to-pass-data-from-one-fragment-to-previous-fragment

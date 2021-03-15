@@ -38,13 +38,13 @@ public class CardList extends ArrayAdapter<Experiment> {
      * @param position
      * @param convertView
      * @param parent
-     * @return
+     * @return view
      */
     public View getView(int position, @Nullable View convertView, @NonNull ViewGroup parent) {
         View view = convertView;
 
         if (view == null){
-            view = LayoutInflater.from(context).inflate(R.layout.card,parent,false);
+            view = LayoutInflater.from(context).inflate(R.layout.card, parent,false);
         }
 
         Experiment experiment = experiments.get(position);
