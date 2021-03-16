@@ -87,8 +87,8 @@ public class homePage extends Fragment {
         experimentList = view.findViewById(R.id.experiment_list);
         experimentDataList = new ArrayList<>();
 
-        experimentDataList.add(new Experiment("first", "123", "Binomial", "testtrial", false, 30, 60, true, "03/05/2021"));
-        experimentDataList.add(new Experiment("second", "123", "Binomial", "testtrial", false, 30, 60, true, "03/05/2021"));
+//        experimentDataList.add(new Experiment("first", "123", "Binomial", "testtrial", false, 30, 60, true, "03/05/2021"));
+//        experimentDataList.add(new Experiment("second", "123", "Binomial", "testtrial", false, 30, 60, true, "03/05/2021"));
 
         fillDataList(experimentDataList);
 
@@ -116,7 +116,7 @@ public class homePage extends Fragment {
                 addExpFragment addExpFrag = new addExpFragment();
                 addExpFrag.setTargetFragment(homePage.this, 0);
                 FragmentTransaction ft = getActivity().getSupportFragmentManager().beginTransaction();
-                ft.add(R.id.container, addExpFrag, "addExpFragment");
+                ft.replace(R.id.container, addExpFrag, "addExpFragment");
                 ft.addToBackStack("addExpFragment");
                 ft.commit();
 
