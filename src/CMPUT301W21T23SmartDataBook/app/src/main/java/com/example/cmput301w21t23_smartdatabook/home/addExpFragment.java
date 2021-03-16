@@ -118,10 +118,9 @@ public class AddExpFragment extends Fragment {
                 mAuth = FirebaseAuth.getInstance();
 
                 returnedExperiment = new Experiment(expName, Objects.requireNonNull(mAuth.getCurrentUser()).getUid(), trialType, expDescription, checkLocationOn, minTrials.getValue(), maxTrials.getValue(), checkPublicOn, currentDate.getFormattedDate());
-
                 //Source: Shweta Chauhan; https://stackoverflow.com/users/6021469/shweta-chauhan
                 //Code: https://stackoverflow.com/questions/40085608/how-to-pass-data-from-one-fragment-to-previous-fragment
-                Intent intent = new Intent(getActivity(), AddExpFragment.class);
+                Intent intent = new Intent(getActivity(), addExpFragment.class);
                 intent.putExtra("newExp", returnedExperiment);
                 getTargetFragment().onActivityResult(getTargetRequestCode(), 1, intent);
 
@@ -137,7 +136,6 @@ public class AddExpFragment extends Fragment {
     public void onDestroy() {
         super.onDestroy();
         ((AppCompatActivity) getActivity()).getSupportActionBar().setTitle("Home");
-
 //        getActivity().getSupportFragmentManager().popBackStack();
 
     }

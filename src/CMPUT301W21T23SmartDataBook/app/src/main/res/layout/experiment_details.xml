@@ -34,7 +34,9 @@
             android:id="@+id/ClickedExpName"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_alignParentStart="true"
             android:layout_alignParentEnd="true"
+            android:layout_marginStart="128dp"
             android:layout_marginEnd="128dp"
             android:layout_marginBottom="10dp"
             android:text="EXPERIMENT NAME"
@@ -54,7 +56,9 @@
             android:layout_marginBottom="10dp"
             android:text="REGION"
             android:textColor="@color/theme_default"
-            android:textSize="17sp"></TextView>
+            android:textSize="17sp">
+
+        </TextView>
 
         <TextView
             android:id="@+id/MinTrials"
@@ -67,7 +71,9 @@
             android:layout_marginBottom="10dp"
             android:text="Min Trials: "
             android:textColor="@color/theme_default"
-            android:textSize="17sp"></TextView>
+            android:textSize="17sp">
+
+        </TextView>
 
         <TextView
             android:layout_width="wrap_content"
