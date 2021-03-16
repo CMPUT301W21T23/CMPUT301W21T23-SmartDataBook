@@ -128,7 +128,8 @@ public class addExpFragment extends Fragment {
                     Toast.makeText(getContext(), "The name or description can't be empty.", Toast.LENGTH_SHORT).show();
                 }else if (minTrials.getValue() >= maxTrials.getValue() ) {
                     Toast.makeText(getContext(), "Minimum is larger or equal to maximum.", Toast.LENGTH_SHORT).show();
-
+                }else if (trialType == null) {
+                    Toast.makeText(getContext(), "A trial type needs to be selected.", Toast.LENGTH_SHORT).show();
                 }else{
                     mAuth = FirebaseAuth.getInstance();
 
@@ -159,7 +160,6 @@ public class addExpFragment extends Fragment {
     /**
      * Gets the integer value "i" from the RadioGroup and determines what the trial type of the
      * experiment is based on the given "i" value.
-     *
      * @param trialTypeID Holds the int value to determine what String the trialType is.
      * @return trialType
      * @author Bosco Chan
@@ -172,8 +172,10 @@ public class addExpFragment extends Fragment {
                 return "Count";
             case nonNegativeID:
                 return "Non-Negative Count";
-            default:
+            case measurementID:
                 return "Measurement";
+            default:
+                return null;
         }
 
     }//findTrialType
