@@ -14,7 +14,7 @@ import androidx.annotation.Nullable;
 /**
  * This classs is simply to display the information from the experiment list adapters onto the screen
  * @Author Afaq
- * @return view the view of the card which contains a couple buttons and breif information about the experiment
+ * @return view the view of the card which contains a couple buttons and brief information about the experiment
  */
 
 public class CardList extends ArrayAdapter<Experiment> {
@@ -59,7 +59,7 @@ public class CardList extends ArrayAdapter<Experiment> {
         date.setText(experiment.getDate());
         ownerName.setText(experiment.getOwnerUserID());
         experimentDescription.setText(experiment.getDescription());
-        region.setText("null");
+        region.setText(null);
 
         return view;
     }

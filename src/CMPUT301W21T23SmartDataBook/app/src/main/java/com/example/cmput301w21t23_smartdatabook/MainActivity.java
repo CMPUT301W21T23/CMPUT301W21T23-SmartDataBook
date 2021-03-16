@@ -9,8 +9,6 @@ import androidx.fragment.app.FragmentTransaction;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.MenuItem;
-import android.widget.ArrayAdapter;
-import android.widget.ListView;
 import android.widget.Toast;
 
 import com.example.cmput301w21t23_smartdatabook.fav.FavPage;
@@ -27,10 +25,10 @@ import com.google.firebase.firestore.CollectionReference;
 import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
-import java.util.ArrayList;
+
 import java.util.HashMap;
 
-import com.example.cmput301w21t23_smartdatabook.home.HomePage;
+import com.example.cmput301w21t23_smartdatabook.home.homePage;
 
 /**
  * the Purpose of this class is to register the user in the database and initialize the bottom tab navigation
@@ -60,7 +58,7 @@ public class MainActivity extends AppCompatActivity {
         bottomNavigation.setOnNavigationItemSelectedListener(mOnNavigationItemSelectedListener);
 
         toolbar.setTitle("Home");
-        openFragment(HomePage.newInstance("",""));
+        openFragment(homePage.newInstance("",""));
 
         //anonymous authentication testing
         mAuth = FirebaseAuth.getInstance();
@@ -82,7 +80,7 @@ public class MainActivity extends AppCompatActivity {
                     switch (item.getItemId()) {
                         case R.id.home_nav:
                             toolbar.setTitle("Home");
-                            openFragment(HomePage.newInstance("",""));
+                            openFragment(homePage.newInstance("",""));
                             return true;
 
                         case R.id.fav_nav:

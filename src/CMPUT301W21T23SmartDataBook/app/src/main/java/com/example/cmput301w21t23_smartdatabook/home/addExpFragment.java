@@ -10,12 +10,14 @@ import android.widget.CompoundButton;
 import android.widget.NumberPicker;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
+import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
 
 import com.example.cmput301w21t23_smartdatabook.Experiment;
 import com.example.cmput301w21t23_smartdatabook.GetDate;
+import com.example.cmput301w21t23_smartdatabook.MainActivity;
 import com.example.cmput301w21t23_smartdatabook.R;
 import com.google.android.material.switchmaterial.SwitchMaterial;
 import com.google.android.material.textfield.TextInputLayout;
@@ -27,18 +29,16 @@ import java.util.Objects;
 /**
  * @author Afaq Nabi, Bosco Chan
  * @version 1
- * @Author Afaq
  * This class is the activity of which contains the add experiment, it has:
  * An experiment's minimum and maximum number of trials
  * An experiment's name and description
  * Radio button to choose which type of the trial the experiment has (binomial/ measurement/count/ non-negtaive count trials)
  * switch button that turns on/ off an experiment's trial location.
  * a back button that allows the user to go back
- * @see xml files that is associated with this AddExpFragment
+ * @see xml files that is associated with this addExpFragment
  */
-public class AddExpFragment extends Fragment {
+public class addExpFragment extends Fragment {
 
-    private FirebaseFirestore db;
     private FirebaseAuth mAuth;
 
     private static final int binomialID = 10;
@@ -104,6 +104,14 @@ public class AddExpFragment extends Fragment {
             }
         });
 
+        final Button back = view.findViewById(R.id.add_exp_back_button);
+        back.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                getActivity().getSupportFragmentManager().popBackStack();
+            }
+        });
+
         final Button addExperiment = view.findViewById(R.id.newExperimentLocationOnCreateButtonView);
         addExperiment.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -112,19 +120,27 @@ public class AddExpFragment extends Fragment {
                 //Instantiate currentDate object to get the current date
                 GetDate currentDate = new GetDate();
 
-                String expName = name.getEditText().getText().toString();
-                String expDescription = description.getEditText().getText().toString();
+                String expName = "" + name.getEditText().getText();
+                String expDescription = "" + description.getEditText().getText();
                 String trialType = findTrialType(trialChoice.getCheckedRadioButtonId());
-                mAuth = FirebaseAuth.getInstance();
 
-                returnedExperiment = new Experiment(expName, Objects.requireNonNull(mAuth.getCurrentUser()).getUid(), trialType, expDescription, checkLocationOn, minTrials.getValue(), maxTrials.getValue(), checkPublicOn, currentDate.getFormattedDate());
-                //Source: Shweta Chauhan; https://stackoverflow.com/users/6021469/shweta-chauhan
-                //Code: https://stackoverflow.com/questions/40085608/how-to-pass-data-from-one-fragment-to-previous-fragment
-                Intent intent = new Intent(getActivity(), addExpFragment.class);
-                intent.putExtra("newExp", returnedExperiment);
-                getTargetFragment().onActivityResult(getTargetRequestCode(), 1, intent);
+                if (expName == "" || expDescription == "") {
+                    Toast.makeText(getContext(), "The name or description can't be empty.", Toast.LENGTH_SHORT).show();
+                }else if (minTrials.getValue() >= maxTrials.getValue() ) {
+                    Toast.makeText(getContext(), "Minimum is larger or equal to maximum.", Toast.LENGTH_SHORT).show();
 
-                getActivity().getSupportFragmentManager().popBackStack();
+                }else{
+                    mAuth = FirebaseAuth.getInstance();
+
+                    returnedExperiment = new Experiment(expName, Objects.requireNonNull(mAuth.getCurrentUser()).getUid(), trialType, expDescription, checkLocationOn, minTrials.getValue(), maxTrials.getValue(), checkPublicOn, currentDate.getFormattedDate());
+                    //Source: Shweta Chauhan; https://stackoverflow.com/users/6021469/shweta-chauhan
+                    //Code: https://stackoverflow.com/questions/40085608/how-to-pass-data-from-one-fragment-to-previous-fragment
+                    Intent intent = new Intent(getActivity(), addExpFragment.class);
+                    intent.putExtra("newExp", returnedExperiment);
+                    getTargetFragment().onActivityResult(getTargetRequestCode(), 1, intent);
+
+                    getActivity().getSupportFragmentManager().popBackStack();
+                }
             }
         });
 
@@ -162,6 +178,6 @@ public class AddExpFragment extends Fragment {
 
     }//findTrialType
 
-}//AddExpFragment
+}//addExpFragment
 
 

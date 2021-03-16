@@ -28,7 +28,7 @@ import org.w3c.dom.Text;
  * @version 1
  * @see Experiment,
  */
-public class experimentDetails extends AppCompatActivity {
+public class ExperimentDetails extends AppCompatActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
