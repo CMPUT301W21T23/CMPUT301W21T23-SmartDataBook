@@ -11,23 +11,40 @@ import java.util.ArrayList;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 
+/**
+ * This classs is simply to display the information from the experiment list adapters onto the screen
+ * @Author Afaq
+ * @return view the view of the card which contains a couple buttons and breif information about the experiment
+ */
+
 public class CardList extends ArrayAdapter<Experiment> {
 
     private final ArrayList<Experiment> experiments;
     private final Context context;
 
+    /**
+     * Public Constructor for the CardList class
+     * @param context
+     * @param experiments
+     */
     public CardList(Context context, ArrayList<Experiment> experiments) {
         super(context,0, experiments);
         this.experiments = experiments;
         this.context = context;
     }
 
-    // set the attributes of each item in the list
+    /**
+     * Set attributes of the name, date, ownerName, experimentDescription and region in the list
+     * @param position
+     * @param convertView
+     * @param parent
+     * @return view
+     */
     public View getView(int position, @Nullable View convertView, @NonNull ViewGroup parent) {
         View view = convertView;
 
         if (view == null){
-            view = LayoutInflater.from(context).inflate(R.layout.card,parent,false);
+            view = LayoutInflater.from(context).inflate(R.layout.card, parent,false);
         }
 
         Experiment experiment = experiments.get(position);

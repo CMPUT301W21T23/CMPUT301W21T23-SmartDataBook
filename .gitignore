@@ -73,6 +73,7 @@ obj/
 
 # User-specific configurations
 /*/*/.idea
+
 .idea/caches/
 .idea/libraries/
 .idea/shelf/
@@ -146,3 +147,20 @@ fabric.properties
 !/gradle/wrapper/gradle-wrapper.jar
 
 # End of https://www.toptal.com/developers/gitignore/api/androidstudio
+src/CMPUT301W21T23SmartDataBook/.idea/assetWizardSettings.xml
+src/CMPUT301W21T23SmartDataBook/.idea/assetWizardSettings.xml
+src/CMPUT301W21T23SmartDataBook/.idea/assetWizardSettings.xml
+src/CMPUT301W21T23SmartDataBook/.idea/caches/build_file_checksums.ser
+src/CMPUT301W21T23SmartDataBook/.idea/misc.xml
+src/CMPUT301W21T23SmartDataBook/.idea/workspace.xml
+src/CMPUT301W21T23SmartDataBook/.idea/workspace.xml
+src/CMPUT301W21T23SmartDataBook/.idea/workspace.xml
+src/CMPUT301W21T23SmartDataBook/.idea/misc.xml
+src/CMPUT301W21T23SmartDataBook/.idea/workspace.xml
+src/CMPUT301W21T23SmartDataBook/.idea/caches/build_file_checksums.ser
+src/CMPUT301W21T23SmartDataBook/.idea/assetWizardSettings.xml
+src/CMPUT301W21T23SmartDataBook/.idea/assetWizardSettings.xml
+src/CMPUT301W21T23SmartDataBook/.idea/caches/build_file_checksums.ser
+src/CMPUT301W21T23SmartDataBook/.idea/misc.xml
+src/CMPUT301W21T23SmartDataBook/.idea/workspace.xml
+src/CMPUT301W21T23SmartDataBook/local.properties

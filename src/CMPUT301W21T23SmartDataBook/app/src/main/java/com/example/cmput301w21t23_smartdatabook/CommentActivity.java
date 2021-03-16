@@ -8,6 +8,11 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import java.util.ArrayList;
 
+/**
+ * Class: CommentActivity
+ * shows the activity of the comments
+ * @author Bosco Chan
+ */
 public class CommentActivity extends AppCompatActivity {
     ListView commentList;
     ArrayAdapter<Comment> commentAdapter;
@@ -18,13 +23,10 @@ public class CommentActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.questions);
 
-        commentList = findViewById(R.id.commentList);
+        commentList = findViewById(R.id.followedExpListView);
 
         commentDataList = new ArrayList<>();
 
-        commentDataList.add( new Comment ("Applecomment", "Apple", 1) );
-        commentDataList.add( new Comment ("BlueBerrycomment", "BlueBerry", 2) );
-        commentDataList.add( new Comment ("Potatocomment", "Potato", 3) );
 
         commentAdapter = new CommentList(this, commentDataList);
         commentList.setAdapter(commentAdapter);

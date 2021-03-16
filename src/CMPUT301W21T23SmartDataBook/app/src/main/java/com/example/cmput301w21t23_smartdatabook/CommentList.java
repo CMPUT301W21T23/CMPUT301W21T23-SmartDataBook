@@ -12,17 +12,32 @@ import androidx.annotation.Nullable;
 
 import java.util.ArrayList;
 
+/**
+ * Class: commentList
+ * @author Bosco Chan
+ */
 public class CommentList extends ArrayAdapter {
 
     private final ArrayList<Comment> comments;
     private final Context context;
 
+    /**
+     * Public Constructor of the CommentList class
+     * @param context
+     * @param comments
+     */
     public CommentList (Context context, ArrayList<Comment> comments) {
         super(context, 0, comments);
         this.context = context;
         this.comments = comments;
     }
 
+    /**
+     * @param position
+     * @param convertView
+     * @param parent
+     * @return view: the view that contains the list of comments and their comment ID
+     */
     @NonNull
     @Override
     public View getView (int position, @Nullable View convertView, @NonNull ViewGroup parent){
