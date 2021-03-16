@@ -9,15 +9,15 @@ import androidx.fragment.app.Fragment;
 
 import com.example.cmput301w21t23_smartdatabook.R;
 
-public class favPage extends Fragment {
+public class FavPage extends Fragment {
     private static final String AP1 = "AP1";
     private static final String AP2 = "AP2";
 
-    public favPage(){
+    public FavPage(){
     }
 
-    public static favPage newInstance(String p1, String p2){
-        favPage fragment = new favPage();
+    public static FavPage newInstance(String p1, String p2){
+        FavPage fragment = new FavPage();
         Bundle args = new Bundle();
         fragment.setArguments(args);
         return fragment;

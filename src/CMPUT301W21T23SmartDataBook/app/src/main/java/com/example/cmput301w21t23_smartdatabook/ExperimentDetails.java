@@ -12,7 +12,7 @@ import com.google.android.material.switchmaterial.SwitchMaterial;
 import com.google.android.material.textfield.TextInputEditText;
 
 /**
- * Class:experimentDetails
+ * Class:ExperimentDetails
  * This class shows the details of the experiment,it displays:
  * An experiment's minimum and maximum number of trials
  * An experiment's name and description
@@ -22,7 +22,7 @@ import com.google.android.material.textfield.TextInputEditText;
  * @version 1
  * @see Experiment, 
  */
-public class experimentDetails extends AppCompatActivity {
+public class ExperimentDetails extends AppCompatActivity {
 
     public int position;
 

@@ -34,9 +34,9 @@ import java.util.Objects;
  * Radio button to choose which type of the trial the experiment has (binomial/ measurement/count/ non-negtaive count trials)
  * switch button that turns on/ off an experiment's trial location.
  * a back button that allows the user to go back
- * @see xml files that is associated with this addExpFragment
+ * @see xml files that is associated with this AddExpFragment
  */
-public class addExpFragment extends Fragment {
+public class AddExpFragment extends Fragment {
 
     private FirebaseFirestore db;
     private FirebaseAuth mAuth;
@@ -112,13 +112,19 @@ public class addExpFragment extends Fragment {
                 //Instantiate currentDate object to get the current date
                 GetDate currentDate = new GetDate();
 
-
                 String expName = name.getEditText().getText().toString();
                 String expDescription = description.getEditText().getText().toString();
                 String trialType = findTrialType(trialChoice.getCheckedRadioButtonId());
                 mAuth = FirebaseAuth.getInstance();
 
                 returnedExperiment = new Experiment(expName, Objects.requireNonNull(mAuth.getCurrentUser()).getUid(), trialType, expDescription, checkLocationOn, minTrials.getValue(), maxTrials.getValue(), checkPublicOn, currentDate.getFormattedDate());
+
+                //Source: Shweta Chauhan; https://stackoverflow.com/users/6021469/shweta-chauhan
+                //Code: https://stackoverflow.com/questions/40085608/how-to-pass-data-from-one-fragment-to-previous-fragment
+                Intent intent = new Intent(getActivity(), AddExpFragment.class);
+                intent.putExtra("newExp", returnedExperiment);
+                getTargetFragment().onActivityResult(getTargetRequestCode(), 1, intent);
+
                 getActivity().getSupportFragmentManager().popBackStack();
             }
         });
@@ -131,19 +137,10 @@ public class addExpFragment extends Fragment {
     public void onDestroy() {
         super.onDestroy();
         ((AppCompatActivity) getActivity()).getSupportActionBar().setTitle("Home");
-    public void onDestroy() {
-        super.onDestroy();
-        ((AppCompatActivity) getActivity()).getSupportActionBar().setTitle("Home");
 
-        //Source: Shweta Chauhan; https://stackoverflow.com/users/6021469/shweta-chauhan
-        //Code: https://stackoverflow.com/questions/40085608/how-to-pass-data-from-one-fragment-to-previous-fragment
-        Intent intent = new Intent(getActivity(), addExpFragment.class);
-        intent.putExtra("newExp", returnedExperiment);
-        getTargetFragment().onActivityResult(getTargetRequestCode(), 1, intent);
 //        getActivity().getSupportFragmentManager().popBackStack();
 
     }
-
 
     /**
      * Gets the integer value "i" from the RadioGroup and determines what the trial type of the
@@ -167,6 +164,6 @@ public class addExpFragment extends Fragment {
 
     }//findTrialType
 
-}//addExpFragment
+}//AddExpFragment
 
 

@@ -17,8 +17,8 @@ import androidx.fragment.app.FragmentTransaction;
 
 import com.example.cmput301w21t23_smartdatabook.CardList;
 import com.example.cmput301w21t23_smartdatabook.Experiment;
+import com.example.cmput301w21t23_smartdatabook.ExperimentDetails;
 import com.example.cmput301w21t23_smartdatabook.R;
-import com.example.cmput301w21t23_smartdatabook.experimentDetails;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
@@ -29,7 +29,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 
 /**
- * Class: homePage
+ * Class: HomePage
  * This is a class that composes the home-page of the app
  * The home page initialize and displays the list of experiments
  * It inflate the layout for the experiment's fragment
@@ -39,7 +39,7 @@ import java.util.HashMap;
  * @see Fragment, Firebase
  */
 
-public class homePage extends Fragment {
+public class HomePage extends Fragment {
 
     private static final String AP1 = "AP1";
     private static final String AP2 = "AP2";
@@ -50,11 +50,11 @@ public class homePage extends Fragment {
 
     FirebaseFirestore db;
 
-    public homePage() {
+    public HomePage() {
     }
 
-    public static homePage newInstance(String p1, String p2) {
-        homePage fragment = new homePage();
+    public static HomePage newInstance(String p1, String p2) {
+        HomePage fragment = new HomePage();
         Bundle args = new Bundle();
         fragment.setArguments(args);
         return fragment;
@@ -96,8 +96,8 @@ public class homePage extends Fragment {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 Experiment exp = experimentDataList.get(position); // get the experiment from list
-                Intent intent = new Intent(getActivity(), experimentDetails.class);
-                intent.putExtra("position", position); // pass position to experimentDetails class
+                Intent intent = new Intent(getActivity(), ExperimentDetails.class);
+                intent.putExtra("position", position); // pass position to ExperimentDetails class
                 intent.putExtra("experiment", exp); // pass experiment object
                 startActivity(intent);
             }
@@ -110,34 +110,13 @@ public class homePage extends Fragment {
 
                 //Source: Shweta Chauhan; https://stackoverflow.com/users/6021469/shweta-chauhan
                 //Code: https://stackoverflow.com/questions/40085608/how-to-pass-data-from-one-fragment-to-previous-fragment
-                addExpFragment addExpFrag = new addExpFragment();
-                addExpFrag.setTargetFragment(homePage.this, 0);
-                getActivity().getSupportFragmentManager()
-                        .beginTransaction()
-                        .replace(R.id.container, addExpFrag, "addExpFragment")
-                        .addToBackStack("addExpFragment")
-                        .commit();
+                AddExpFragment addExpFrag = new AddExpFragment();
+                addExpFrag.setTargetFragment(HomePage.this, 0);
                 FragmentTransaction ft = getActivity().getSupportFragmentManager().beginTransaction();
-                ft.add(R.id.container, addExpFrag, "addExpFragment");
-                ft.addToBackStack("addExpFragment");
+                ft.add(R.id.container, addExpFrag, "AddExpFragment");
+                ft.addToBackStack("AddExpFragment");
                 ft.commit();
-//                getActivity().getSupportFragmentManager()
-//                        .beginTransaction()
-//                        .replace(R.id.container, addExpFrag, "addExpFragment")
-//                        .addToBackStack("addExpFragment")
-//                        .commit();
 
-            }
-        });
-
-        experimentList.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-            @Override
-            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                Experiment exp = experimentDataList.get(position); // get the experiment from list
-                Intent intent = new Intent(getActivity(), experimentDetails.class);
-                intent.putExtra("position", position); // pass position to experimentDetails class
-                intent.putExtra("experiment", exp); // pass experiment object
-                startActivity(intent);
             }
         });
 
@@ -151,7 +130,7 @@ public class homePage extends Fragment {
 
     /**
      * Custom on activity result function that gets an experiment object from the second fragment
-     * that had been started from this fragment (homePage.java).
+     * that had been started from this fragment (HomePage.java).
      *
      * @param requestCode Determines which object is wanted from a fragment
      * @param resultCode  Determines what the result is when taken
@@ -167,12 +146,9 @@ public class homePage extends Fragment {
             if (requestCode == addExpFragmentRequestCode) {
                 Experiment newExperiment = (Experiment) data.getSerializableExtra("newExp");
                 Toast.makeText(getActivity(), newExperiment.getExpName() + " " + newExperiment.getDescription(), Toast.LENGTH_SHORT).show();
-                experimentDataList.add(newExperiment);
                 experimentAdapter.add(newExperiment);
 //                addExperimentToDB(newExperiment);
                 experimentAdapter.notifyDataSetChanged();
-                System.out.println(data);
-                Log.d("data: ", data.toString());
             }
         }
     }//onActivityResult

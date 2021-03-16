@@ -19,13 +19,6 @@
             </intent-filter>
         </activity>
 
-        <activity android:name=".home.addExpFragment">
-
-        </activity>
-        <activity android:name=".experimentDetails">
-
-        </activity>
-
     </application>
 
 </manifest>
