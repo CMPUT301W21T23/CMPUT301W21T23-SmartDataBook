@@ -89,9 +89,10 @@ public class homePage extends Fragment {
 
         experimentDataList.add(new Experiment("first", "123", "Binomial", "testtrial", false, 30, 60, true, "03/05/2021"));
         experimentDataList.add(new Experiment("second", "123", "Binomial", "testtrial", false, 30, 60, true, "03/05/2021"));
-        fillDataList(experimentDataList);
-        experimentAdapter = new CardList(getContext(), experimentDataList);
 
+        fillDataList(experimentDataList);
+
+        experimentAdapter = new CardList(getContext(), experimentDataList);
         experimentList.setAdapter(experimentAdapter);
 
         experimentList.setOnItemClickListener(new AdapterView.OnItemClickListener() {
@@ -148,7 +149,7 @@ public class homePage extends Fragment {
                 Experiment newExperiment = (Experiment) data.getSerializableExtra("newExp");
                 Toast.makeText(getActivity(), newExperiment.getExpName() + " " + newExperiment.getDescription(), Toast.LENGTH_SHORT).show();
                 experimentAdapter.add(newExperiment);
-//                addExperimentToDB(newExperiment);
+                addExperimentToDB(newExperiment);
                 experimentAdapter.notifyDataSetChanged();
             }
         }
