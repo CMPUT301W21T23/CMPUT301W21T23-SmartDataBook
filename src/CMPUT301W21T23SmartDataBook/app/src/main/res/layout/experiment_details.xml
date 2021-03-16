@@ -8,67 +8,71 @@
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="50dp"
-        android:layout_marginBottom="10dp">
-        <com.google.android.material.appbar.AppBarLayout
-            android:layout_width="match_parent"
-            android:layout_height="60dp"
-            tools:ignore="MissingConstraints"
-            android:background="#d11c0f"
-            />
-        <androidx.appcompat.widget.AppCompatImageButton
-            android:layout_width="60dp"
-            android:layout_height="match_parent"
-            android:background="@color/theme_default"
-            android:src="@drawable/ic_back_button" />
-    </RelativeLayout>
+        android:layout_marginBottom="10dp"/>
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="fill_parent">
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:textSize="17sp"
-            android:text="EXPERIMENT NAME"
-            android:id="@+id/ClickedExpName"
-            android:layout_centerHorizontal="true"
-            android:textColor="@color/theme_default"
-            android:layout_marginBottom="10dp">
-        </TextView>
 
         <TextView
+            android:id="@+id/MaxTrials"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:textSize="17sp"
-            android:text="REGION"
-            android:id="@+id/ClickedExpRegion"
-            android:layout_centerHorizontal="true"
-            android:textColor="@color/theme_default"
-            android:layout_below="@id/ClickedExpName"
-            android:layout_marginBottom="10dp">
-        </TextView>
-
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:textSize="17sp"
-            android:text="MINIMUM # OF TRIALS:"
-            android:id="@+id/MinTrials"
-            android:layout_centerHorizontal="true"
-            android:textColor="@color/theme_default"
             android:layout_below="@id/ClickedExpRegion"
-            android:layout_marginBottom="10dp">
+            android:layout_alignParentEnd="true"
+            android:layout_marginStart="67dp"
+            android:layout_marginTop="11dp"
+            android:layout_marginEnd="91dp"
+            android:layout_marginBottom="10dp"
+            android:layout_toEndOf="@+id/MinTrials"
+            android:text="Max Trials: "
+            android:textColor="@color/theme_default"
+            android:textSize="17sp">
+
         </TextView>
 
         <TextView
+            android:id="@+id/ClickedExpName"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_below="@+id/ClickedExpRegion"
-            android:layout_marginStart="300dp"
-            android:text="0"
-            android:layout_marginTop="1dp"
-            android:textSize="17sp"
+            android:layout_alignParentStart="true"
+            android:layout_alignParentEnd="true"
+            android:layout_marginStart="128dp"
+            android:layout_marginEnd="128dp"
+            android:layout_marginBottom="10dp"
+            android:text="EXPERIMENT NAME"
             android:textColor="@color/theme_default"
-            android:id="@+id/MinTrialsNumber">
+            android:textSize="17sp">
+
+        </TextView>
+
+        <TextView
+            android:id="@+id/ClickedExpRegion"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/ClickedExpName"
+            android:layout_alignParentEnd="true"
+            android:layout_marginTop="35dp"
+            android:layout_marginEnd="175dp"
+            android:layout_marginBottom="10dp"
+            android:text="REGION"
+            android:textColor="@color/theme_default"
+            android:textSize="17sp">
+
+        </TextView>
+
+        <TextView
+            android:id="@+id/MinTrials"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/ClickedExpRegion"
+            android:layout_alignParentStart="true"
+            android:layout_marginStart="84dp"
+            android:layout_marginTop="11dp"
+            android:layout_marginBottom="10dp"
+            android:text="Min Trials: "
+            android:textColor="@color/theme_default"
+            android:textSize="17sp">
+
         </TextView>
 
         <TextView
@@ -149,6 +153,7 @@
             android:id="@+id/mapButton"
             android:layout_marginBottom="10dp"
             />
+
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -159,6 +164,7 @@
             android:layout_marginLeft="10dp"
             android:id="@+id/ShowMap"
             android:layout_marginBottom="10dp"
+            android:clickable="true"
             >
         </TextView>
 
@@ -213,16 +219,31 @@
         </TextView>
 
         <Button
+            android:id="@+id/endExp"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:textColor="@color/white"
-            android:text="END EXPERIMENT"
-            app:backgroundTint="@null"
-            android:background="@color/theme_default"
             android:layout_below="@id/askQuestionsBTN"
-            android:layout_marginLeft="40dp">
+            android:layout_marginLeft="40dp"
+            android:background="@color/theme_default"
+            android:text="END EXPERIMENT"
+            android:textColor="@color/white"
+            app:backgroundTint="@null">
 
         </Button>
+
+        <TextView
+            android:id="@+id/owner"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/ClickedExpName"
+            android:layout_alignParentStart="true"
+            android:layout_alignParentEnd="true"
+            android:layout_marginStart="178dp"
+            android:layout_marginTop="1dp"
+            android:layout_marginEnd="175dp"
+            android:text="Owner"
+            android:textColor="@color/theme_default"
+            android:textSize="17sp" />
 
     </RelativeLayout>
 
