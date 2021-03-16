@@ -110,8 +110,8 @@ public class HomePage extends Fragment {
 
                 //Source: Shweta Chauhan; https://stackoverflow.com/users/6021469/shweta-chauhan
                 //Code: https://stackoverflow.com/questions/40085608/how-to-pass-data-from-one-fragment-to-previous-fragment
-                AddExpFragment addExpFrag = new AddExpFragment();
-                addExpFrag.setTargetFragment(HomePage.this, 0);
+                addExpFragment addExpFrag = new addExpFragment();
+                addExpFrag.setTargetFragment(homePage.this, 0);
                 FragmentTransaction ft = getActivity().getSupportFragmentManager().beginTransaction();
                 ft.add(R.id.container, addExpFrag, "AddExpFragment");
                 ft.addToBackStack("AddExpFragment");
