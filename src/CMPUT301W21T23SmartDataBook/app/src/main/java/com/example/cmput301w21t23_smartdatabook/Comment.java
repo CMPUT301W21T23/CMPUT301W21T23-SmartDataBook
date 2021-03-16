@@ -20,7 +20,7 @@ class Comment extends User{
      * @param commentID
      */
     public Comment(String text, String userUniqueID, int commentID){
-        super(null, null, userUniqueID);
+//        super(null, null, userUniqueID);
         this.text = text;
         this.userUniqueID = userUniqueID;
         this.commentID = commentID;

@@ -12,9 +12,7 @@ import android.widget.RadioButton;
 import android.widget.RadioGroup;
 
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.appcompat.widget.AppCompatImageButton;
 import androidx.fragment.app.Fragment;
-import androidx.fragment.app.FragmentActivity;
 
 import com.example.cmput301w21t23_smartdatabook.Experiment;
 import com.example.cmput301w21t23_smartdatabook.GetDate;
@@ -27,6 +25,8 @@ import com.google.firebase.firestore.FirebaseFirestore;
 import java.util.Objects;
 
 /**
+ * @author Afaq Nabi, Bosco Chan
+ * @version 1
  * @Author Afaq
  * This class is the activity of which contains the add experiment, it has:
  * An experiment's minimum and maximum number of trials
@@ -34,11 +34,9 @@ import java.util.Objects;
  * Radio button to choose which type of the trial the experiment has (binomial/ measurement/count/ non-negtaive count trials)
  * switch button that turns on/ off an experiment's trial location.
  * a back button that allows the user to go back
- * @author Afaq Nabi, Bosco Chan
- * @see xml files that is associated with this addExpFragment
- * @version 1
+ * @see xml files that is associated with this AddExpFragment
  */
-public class addExpFragment extends Fragment {
+public class AddExpFragment extends Fragment {
 
     private FirebaseFirestore db;
     private FirebaseAuth mAuth;
@@ -51,12 +49,14 @@ public class addExpFragment extends Fragment {
     private boolean checkLocationOn;
     private boolean checkPublicOn;
 
+    private Experiment returnedExperiment;
+
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.new_experiment_location_on, container, false);
 
-        ( (AppCompatActivity) getActivity() ).getSupportActionBar().setTitle("Add new experiment");
+        ((AppCompatActivity) getActivity()).getSupportActionBar().setTitle("Add new experiment");
 
         NumberPicker maxTrials = view.findViewById(R.id.maxTrialsNumberPicker);
         NumberPicker minTrials = view.findViewById(R.id.minTrialsNumberPicker);
@@ -70,8 +70,8 @@ public class addExpFragment extends Fragment {
         RadioButton nonNegative = view.findViewById(R.id.nonNegativeRadioButton);
         RadioButton measurement = view.findViewById(R.id.measurmentRadioButton);
 
-        SwitchMaterial LocationToggle = view.findViewById(R.id.ExperimentLocationToggleSwitch);
-        SwitchMaterial PublicPrivateToggle = view.findViewById(R.id.ExperimentLocationPublicPrivateToggleSwitch);
+        SwitchMaterial LocationToggle = view.findViewById(R.id.newExperimentLocationToggleSwitch);
+        SwitchMaterial PublicPrivateToggle = view.findViewById(R.id.newExperimentLocationPublicPrivateToggleSwitch);
 
         //Source: user; https://stackoverflow.com/users/493939/user
         //Code: https://stackoverflow.com/questions/10356733/getcheckedradiobuttonid-returning-useless-inthttps://stackoverflow.com/questions/10356733/getcheckedradiobuttonid-returning-useless-int
@@ -87,24 +87,20 @@ public class addExpFragment extends Fragment {
         minTrials.setMinValue(1);
         minTrials.setMaxValue(25);
 
+        // Commented out for avoiding errors
+//      TODO: grab the input in the text fields and add to the firebase
+//      TODO: also need to pass the user id to this class
+
         LocationToggle.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
-                if (isChecked) {
-                    checkLocationOn = true;
-                }else{
-                    checkLocationOn = false;
-                }
+                checkLocationOn = isChecked;
             }
         });
         PublicPrivateToggle.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
-                if (isChecked) {
-                    checkPublicOn = true;
-                }else{
-                    checkPublicOn = false;
-                }
+                checkPublicOn = isChecked;
             }
         });
 
@@ -121,15 +117,15 @@ public class addExpFragment extends Fragment {
                 String trialType = findTrialType(trialChoice.getCheckedRadioButtonId());
                 mAuth = FirebaseAuth.getInstance();
 
-                Experiment newExperiment = new Experiment(expName, Objects.requireNonNull(mAuth.getCurrentUser()).getUid(), trialType, expDescription, checkLocationOn, minTrials.getValue(), maxTrials.getValue(), checkPublicOn, currentDate.getFormattedDate());
+                returnedExperiment = new Experiment(expName, Objects.requireNonNull(mAuth.getCurrentUser()).getUid(), trialType, expDescription, checkLocationOn, minTrials.getValue(), maxTrials.getValue(), checkPublicOn, currentDate.getFormattedDate());
 
                 //Source: Shweta Chauhan; https://stackoverflow.com/users/6021469/shweta-chauhan
                 //Code: https://stackoverflow.com/questions/40085608/how-to-pass-data-from-one-fragment-to-previous-fragment
-                Intent intent = new Intent(getActivity(), homePage.class);
-                intent.putExtra("newExp", newExperiment);
+                Intent intent = new Intent(getActivity(), AddExpFragment.class);
+                intent.putExtra("newExp", returnedExperiment);
                 getTargetFragment().onActivityResult(getTargetRequestCode(), 1, intent);
-                getFragmentManager().popBackStack();
 
+                getActivity().getSupportFragmentManager().popBackStack();
             }
         });
 
@@ -137,25 +133,25 @@ public class addExpFragment extends Fragment {
 
     }//onCreateView
 
-    /**
-     * Removes the action bar when the fragment is created, but the removal only exists
-     * after the fragment is destroyed.
-     */
     @Override
-    public void onDestroy(){
+    public void onDestroy() {
         super.onDestroy();
-        ( (AppCompatActivity) getActivity() ).getSupportActionBar().show();
+        ((AppCompatActivity) getActivity()).getSupportActionBar().setTitle("Home");
+
+//        getActivity().getSupportFragmentManager().popBackStack();
+
     }
 
     /**
      * Gets the integer value "i" from the RadioGroup and determines what the trial type of the
      * experiment is based on the given "i" value.
-     * @author Bosco Chan
+     *
      * @param trialTypeID Holds the int value to determine what String the trialType is.
      * @return trialType
+     * @author Bosco Chan
      */
     public String findTrialType(int trialTypeID) {
-        switch(trialTypeID) {
+        switch (trialTypeID) {
             case binomialID:
                 return "Binomial";
             case countID:
@@ -168,6 +164,6 @@ public class addExpFragment extends Fragment {
 
     }//findTrialType
 
-}//addExpFragment
+}//AddExpFragment
 
 

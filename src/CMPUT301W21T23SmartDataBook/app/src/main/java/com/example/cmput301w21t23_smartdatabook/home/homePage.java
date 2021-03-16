@@ -13,43 +13,57 @@ import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentTransaction;
 
 import com.example.cmput301w21t23_smartdatabook.CardList;
-import com.example.cmput301w21t23_smartdatabook.CommentActivity;
 import com.example.cmput301w21t23_smartdatabook.Experiment;
-import com.example.cmput301w21t23_smartdatabook.MainActivity;
+import com.example.cmput301w21t23_smartdatabook.ExperimentDetails;
 import com.example.cmput301w21t23_smartdatabook.R;
-<<<<<<< Updated upstream
-import com.google.android.gms.tasks.OnCompleteListener;
-=======
-import com.example.cmput301w21t23_smartdatabook.experimentDetails;
->>>>>>> Stashed changes
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
-import com.google.android.gms.tasks.Task;
-import com.google.firebase.auth.AuthResult;
-import com.google.firebase.auth.FirebaseUser;
+import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.firebase.firestore.CollectionReference;
-import com.google.firebase.firestore.DocumentReference;
-import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
 
 import java.util.ArrayList;
 import java.util.HashMap;
 
-public class homePage extends Fragment {
+/**
+ * Class: HomePage
+ * This is a class that composes the home-page of the app
+ * The home page initialize and displays the list of experiments
+ * It inflate the layout for the experiment's fragment
+ * It allows user to add a new experiment by clicking a floating button
+ *
+ * @author Afaq Nabi, Bosco Chan
+ * @see Fragment, Firebase
+ */
+
+public class HomePage extends Fragment {
 
     private static final String AP1 = "AP1";
     private static final String AP2 = "AP2";
 
-    public homePage(){
+    ListView experimentList;
+    ArrayAdapter<Experiment> experimentAdapter;
+    ArrayList<Experiment> experimentDataList;
+
+    FirebaseFirestore db;
+
+    public HomePage() {
     }
 
-    public static homePage newInstance(String p1, String p2){
-        homePage fragment = new homePage();
+    public static HomePage newInstance(String p1, String p2) {
+        HomePage fragment = new HomePage();
         Bundle args = new Bundle();
         fragment.setArguments(args);
         return fragment;
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        experimentAdapter.notifyDataSetChanged();
     }
 
     @Override
@@ -59,32 +73,20 @@ public class homePage extends Fragment {
             String mParam1 = getArguments().getString(AP1);
             String mParam2 = getArguments().getString(AP2);
         }
-    }//onCreate
+    }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.home_page, container, false);
 
-        ListView experimentList;
-        ArrayAdapter<Experiment> experimentAdapter;
-        ArrayList<Experiment> experimentDataList;
-
-        experimentList = view.findViewById(R.id.experimentList);
+        experimentList = view.findViewById(R.id.experiment_list);
         experimentDataList = new ArrayList<>();
 
         experimentDataList.add(new Experiment("first", "123",
-                "Binomial", "testtrial", false, 30,60, true, "03/05/2021"));
+                "Binomial", "testtrial", false, 30, 60, true, "03/05/2021"));
         experimentDataList.add(new Experiment("second", "123",
-                "Binomial", "testtrial", false, 30,60, true, "03/05/2021"));
-        experimentDataList.add(new Experiment("third", "123",
-                "Binomial", "testtrial", false, 30,60, true, "03/05/2021"));
-<<<<<<< Updated upstream
-=======
-        experimentDataList.add(new Experiment("fourth", "123",
-                "Binomial", "testtrial", false, 30,60, true, "03/05/2021"));
-        experimentDataList.add(new Experiment("fifth", "123","Binomial", "testtrial", false, 30,60, true, "03/05/2021"));
->>>>>>> Stashed changes
+                "Binomial", "testtrial", false, 30, 60, true, "03/05/2021"));
 
         experimentAdapter = new CardList(getContext(), experimentDataList);
 
@@ -93,13 +95,14 @@ public class homePage extends Fragment {
         experimentList.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                Intent intent = new Intent(getActivity(), CommentActivity.class);
+                Experiment exp = experimentDataList.get(position); // get the experiment from list
+                Intent intent = new Intent(getActivity(), ExperimentDetails.class);
+                intent.putExtra("position", position); // pass position to ExperimentDetails class
+                intent.putExtra("experiment", exp); // pass experiment object
                 startActivity(intent);
             }
         });
 
-<<<<<<< Updated upstream
-=======
         final FloatingActionButton addExperimentButton = view.findViewById(R.id.add_experiment_button);
         addExperimentButton.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -107,51 +110,31 @@ public class homePage extends Fragment {
 
                 //Source: Shweta Chauhan; https://stackoverflow.com/users/6021469/shweta-chauhan
                 //Code: https://stackoverflow.com/questions/40085608/how-to-pass-data-from-one-fragment-to-previous-fragment
-                addExpFragment addExpFrag = new addExpFragment();
-                addExpFrag.setTargetFragment(homePage.this, 0);
-                getActivity().getSupportFragmentManager()
-                        .beginTransaction()
-                        .replace(R.id.container, addExpFrag, "addExpFragment")
-                        .addToBackStack("addExpFragment")
-                        .commit();
+                AddExpFragment addExpFrag = new AddExpFragment();
+                addExpFrag.setTargetFragment(HomePage.this, 0);
+                FragmentTransaction ft = getActivity().getSupportFragmentManager().beginTransaction();
+                ft.add(R.id.container, addExpFrag, "AddExpFragment");
+                ft.addToBackStack("AddExpFragment");
+                ft.commit();
 
             }
         });
 
-        experimentList.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-            @Override
-            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                Log.d("test","clicked");
-                Experiment exp = experimentDataList.get(position); // get the experiment from list
-                Intent intent = new Intent(getActivity(), experimentDetails.class);
-                intent.putExtra("position", position); // pass position to experimentDetails class
-                intent.putExtra("experiment", exp); // pass experiment object
-                startActivity(intent);
-            }
-        });
-
->>>>>>> Stashed changes
         return view;
 
     }//onCreateView
 
-<<<<<<< Updated upstream
-=======
-    @Override
-    public void onResume() {
-        super.onResume();
-//        LoaderManager.getInstance(this).restartLoader(0, null, this);
-
-    }
 
     //Source: Shweta Chauhan; https://stackoverflow.com/users/6021469/shweta-chauhan
     //Code: https://stackoverflow.com/questions/40085608/how-to-pass-data-from-one-fragment-to-previous-fragment
+
     /**
      * Custom on activity result function that gets an experiment object from the second fragment
-     * that had been started from this fragment (homePage.java).
+     * that had been started from this fragment (HomePage.java).
+     *
      * @param requestCode Determines which object is wanted from a fragment
-     * @param resultCode Determines what the result is when taken
-     * @param data The intent that holds the serialized object
+     * @param resultCode  Determines what the result is when taken
+     * @param data        The intent that holds the serialized object
      */
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
@@ -160,11 +143,11 @@ public class homePage extends Fragment {
         int addExpFragmentRequestCode = 0;
 
         if (resultCode == addExpFragmentResultCode) {
-            if (requestCode == addExpFragmentRequestCode){
+            if (requestCode == addExpFragmentRequestCode) {
                 Experiment newExperiment = (Experiment) data.getSerializableExtra("newExp");
-                Toast.makeText(getActivity(), newExperiment.getExpName() + " " + newExperiment.getDescription() , Toast.LENGTH_SHORT).show();
+                Toast.makeText(getActivity(), newExperiment.getExpName() + " " + newExperiment.getDescription(), Toast.LENGTH_SHORT).show();
                 experimentAdapter.add(newExperiment);
-                addExperimentToDB(newExperiment);
+//                addExperimentToDB(newExperiment);
                 experimentAdapter.notifyDataSetChanged();
             }
         }
@@ -172,6 +155,7 @@ public class homePage extends Fragment {
 
     /**
      * Add a new experiment object to the Firebase database.
+     *
      * @param newExperiment The experiment object that is to be added to the Firebase database.
      */
     public void addExperimentToDB(Experiment newExperiment) {
@@ -186,9 +170,45 @@ public class homePage extends Fragment {
         data.put("Name", newExperiment.getExpName());
         data.put("Description", newExperiment.getDescription());
         data.put("Trial Type", newExperiment.getTrialType());
-        data.put("LocationStatus", ""+ newExperiment.getRegionOn());
-        data.put("PublicStatus", ""+ newExperiment.isPublic());
+        data.put("LocationStatus", "" + newExperiment.getRegionOn());
+        data.put("PublicStatus", "" + newExperiment.isPublic());
         data.put("UUID", newExperiment.getOwnerUserID());
->>>>>>> Stashed changes
 
-}//homePage
+        allCommentsCollection
+                .document("" + newExperiment.getExpName())
+                .set(data)
+                .addOnSuccessListener(new OnSuccessListener<Void>() {
+                    @Override
+                    public void onSuccess(Void aVoid) {
+                        Log.d("Success", "Experiment has been added successfully");
+                    }
+                })
+                .addOnFailureListener(new OnFailureListener() {
+                    @Override
+                    public void onFailure(@NonNull Exception e) {
+                        Log.d("Failure", "Data storing failed");
+                    }
+                });
+
+        data.clear();
+        data.put("Trial Type", newExperiment.getTrialType());
+        allCommentsCollection
+                .document("" + newExperiment.getExpName())
+                .collection("Trials")
+                .document("Trial#1")
+                .set(data)
+                .addOnSuccessListener(new OnSuccessListener<Void>() {
+                    @Override
+                    public void onSuccess(Void aVoid) {
+                        Log.d("Success", "Trial has been added successfully");
+                    }
+                })
+                .addOnFailureListener(new OnFailureListener() {
+                    @Override
+                    public void onFailure(@NonNull Exception e) {
+                        Log.d("Failure", "Data storing failed");
+                    }
+                });
+
+    }//addExperimentToDB
+}
