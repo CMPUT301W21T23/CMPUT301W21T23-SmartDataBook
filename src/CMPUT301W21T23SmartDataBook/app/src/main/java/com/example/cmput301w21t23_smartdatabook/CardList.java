@@ -73,7 +73,8 @@ public class CardList extends ArrayAdapter<Experiment> {
             }
         });
 
-        CheckBox follow = view.findViewById(R.id.fav);
+        //CheckBox follow = view.findViewById(R.id.fav);
+
 
         return view;
     }

@@ -10,6 +10,7 @@ import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.ListView;
+//import android.widget.SearchView;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
@@ -30,8 +31,10 @@ import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.QueryDocumentSnapshot;
 import com.google.firebase.firestore.QuerySnapshot;
 
+import java.lang.reflect.Array;
 import java.util.ArrayList;
 import java.util.HashMap;
+import androidx.appcompat.widget.SearchView;
 
 /**
  * Class: homePage
@@ -52,6 +55,7 @@ public class homePage extends Fragment {
     ListView experimentList;
     ArrayAdapter<Experiment> experimentAdapter;
     ArrayList<Experiment> experimentDataList;
+    SearchView searchView;
 
     FirebaseFirestore db;
 
@@ -87,6 +91,7 @@ public class homePage extends Fragment {
 //        View view1 = inflater.inflate(R.layout.card, container, false);
 
         experimentList = view.findViewById(R.id.experiment_list);
+        searchView = view.findViewById(R.id.searching_bar);
         experimentDataList = new ArrayList<>();
 
 //        experimentDataList.add(new Experiment("first", "123", "Binomial", "testtrial", false, 30, 60, true, "03/05/2021"));
@@ -124,6 +129,20 @@ public class homePage extends Fragment {
 
             }
         });
+
+        searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
+            @Override
+            public boolean onQueryTextSubmit(String query) {
+                return false;
+            }
+
+            @Override
+            public boolean onQueryTextChange(String newText) {
+                ArrayList<Experiment> filteredExp = new ArrayList<Experiment>();
+                return false;
+            }
+        });
+
 
         return view;
 
