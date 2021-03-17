@@ -3,6 +3,7 @@ package com.example.cmput301w21t23_smartdatabook;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.Toolbar;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentTransaction;
 
@@ -51,7 +52,7 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-
+        setSupportActionBar((Toolbar) findViewById(R.id.app_toolbar));
         toolbar = getSupportActionBar();
 
         bottomNavigation = findViewById(R.id.bottom_navigation);
