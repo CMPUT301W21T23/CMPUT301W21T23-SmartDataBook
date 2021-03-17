@@ -105,19 +105,23 @@ public class MainActivity extends AppCompatActivity {
             new BottomNavigationView.OnNavigationItemSelectedListener() {
                 @Override
                 public boolean onNavigationItemSelected(@NonNull MenuItem item) {
+                    View search = findViewById(R.id.app_bar_search);
                     switch (item.getItemId()) {
                         case R.id.home_nav:
                             toolbar.setTitle("Home");
+                            search.setVisibility(View.VISIBLE);
                             openFragment(homePage.newInstance("",""));
                             return true;
 
                         case R.id.fav_nav:
                             toolbar.setTitle("Favorites");
+                            search.setVisibility(View.VISIBLE);
                             openFragment(FavPage.newInstance("",""));
                             return true;
 
                         case R.id.settings_nav:
                             toolbar.setTitle("Settings");
+                            search.setVisibility(View.GONE);
                             openFragment(SettingsPage.newInstance("",""));
                             return true;
                     }
