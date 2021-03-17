@@ -64,8 +64,8 @@ public class FavPage extends Fragment {
         favList = view.findViewById(R.id.followedExpListView);
         favDataList = new ArrayList<>();
 
-        favDataList.add(new Experiment("first", "123", "Binomial", "testtrial", false, 30, 60, true, "03/05/2021"));
-        favDataList.add(new Experiment("second", "123", "Binomial", "testtrial", false, 30, 60, true, "03/05/2021"));
+//        favDataList.add(new Experiment("first", "123", "Binomial", "testtrial", false, 30, 60, true, "03/05/2021"));
+//        favDataList.add(new Experiment("second", "123", "Binomial", "testtrial", false, 30, 60, true, "03/05/2021"));
 
         favAdapter = new CardList(getContext(), favDataList, 2);
         favList.setAdapter(favAdapter);

@@ -2,7 +2,6 @@ package com.example.cmput301w21t23_smartdatabook;
 
 import android.util.Log;
 import android.widget.ArrayAdapter;
-import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 
@@ -55,8 +54,9 @@ public class Database {
     }
 
     /**
-     * Get a Experiment document from the database and add its contents to the experimentDataList
-     * to populate the user's homePage with ALL experiments in the app
+     * Get Experiment documents from the database and add its contents to the experimentDataList
+     * to populate the user's fragment page.
+     * (All experiments added to the experimentDataList ONLY exist in the SCOPE of the "onComplete()").
      * @author Bosco Chan
      * @param experimentDataList the array list that holds the all the experiments for a user
      */
