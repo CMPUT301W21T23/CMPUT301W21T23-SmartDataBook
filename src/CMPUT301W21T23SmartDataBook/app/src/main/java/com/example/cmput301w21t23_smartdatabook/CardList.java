@@ -82,7 +82,7 @@ public class CardList extends ArrayAdapter<Experiment> {
             // https://developer.android.com/reference/android/widget/CheckBox
             CheckBox follow = view.findViewById(R.id.fav);
             if (follow.isChecked()) {
-                //            follow.setChecked(false);
+                follow.setChecked(false);
             }
             return view;
 

@@ -35,7 +35,7 @@ public class ExperimentDetails extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.experiment_details);
 
-        ActionBar toolbar  = getSupportActionBar();
+        ActionBar toolbar = getSupportActionBar();
 
         assert toolbar != null;
         toolbar.setDisplayHomeAsUpEnabled(true);
