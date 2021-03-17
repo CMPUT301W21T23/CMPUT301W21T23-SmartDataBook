@@ -25,17 +25,44 @@ import java.util.HashMap;
 
 public class Database {
 
-    FirebaseAuth mAuth = FirebaseAuth.getInstance();
-    FirebaseFirestore db = FirebaseFirestore.getInstance();
+    FirebaseAuth mAuth;
+    FirebaseFirestore db;
+
+    public void addTrialToDB(Experiment experiment, String parentCollection){
+
+        db = FirebaseFirestore.getInstance();
+        final CollectionReference allExpCollection = db.collection(parentCollection);
+        HashMap<String, String> data = new HashMap<>();
+
+        data.put("Trial Type", experiment.getTrialType());
+        allExpCollection
+                .document("" + experiment.getExpName())
+                .collection("Trials")
+                .document("Trial#1")
+                .set(data)
+                .addOnSuccessListener(new OnSuccessListener<Void>() {
+                    @Override
+                    public void onSuccess(Void aVoid) {
+                        Log.d("Success", "Trial has been added successfully");
+                    }
+                })
+                .addOnFailureListener(new OnFailureListener() {
+                    @Override
+                    public void onFailure(@NonNull Exception e) {
+                        Log.d("Failure", "Data storing failed");
+                    }
+                });
+    }
 
     /**
      * Get a Experiment document from the database and add its contents to the experimentDataList
      * to populate the user's homePage with ALL experiments in the app
+     * @author Bosco Chan
      * @param experimentDataList the array list that holds the all the experiments for a user
      */
-    public void fillDataList(ArrayList<Experiment> experimentDataList, ArrayAdapter<Experiment> experimentAdapter) {
+    public void fillDataList(ArrayList<Experiment> experimentDataList, ArrayAdapter<Experiment> experimentAdapter, CollectionReference collection) {
         db = FirebaseFirestore.getInstance();
-        db.collection("Experiments")
+        collection
                 .get()
                 .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
                     @Override
@@ -100,12 +127,9 @@ public class Database {
      * @author Bosco Chan
      * @param newExperiment The experiment object that is to be added to the Firebase database
      */
-    public void addExperimentToDB(Experiment newExperiment) {
+    public void addExperimentToDB(Experiment newExperiment, CollectionReference collection) {
 
-        //Add into a Comments collection with a comment document containing
-        //a Pies collection with a pie document
         db = FirebaseFirestore.getInstance();
-        final CollectionReference allCommentsCollection = db.collection("Experiments");
         HashMap<String, String> data = new HashMap<>();
 
         // If there’s some data in the EditText field, then we create a new key-value pair.
@@ -119,8 +143,8 @@ public class Database {
         data.put("Maximum Trials", "" + newExperiment.getMaxTrials() );
         data.put("Date", newExperiment.getDate() );
 
-        allCommentsCollection
-                .document("" + newExperiment.getExpName())
+        collection
+                .document("" + newExperiment.getExpName() )
                 .set(data)
                 .addOnSuccessListener(new OnSuccessListener<Void>() {
                     @Override
@@ -135,28 +159,7 @@ public class Database {
                     }
                 });
 
-        data.clear();
-        data.put("Trial Type", newExperiment.getTrialType());
-        allCommentsCollection
-                .document("" + newExperiment.getExpName())
-                .collection("Trials")
-                .document("Trial#1")
-                .set(data)
-                .addOnSuccessListener(new OnSuccessListener<Void>() {
-                    @Override
-                    public void onSuccess(Void aVoid) {
-                        Log.d("Success", "Trial has been added successfully");
-                    }
-                })
-                .addOnFailureListener(new OnFailureListener() {
-                    @Override
-                    public void onFailure(@NonNull Exception e) {
-                        Log.d("Failure", "Data storing failed");
-                    }
-                });
-
     }//addExperimentToDB
-
 
     //Temporarily sign in user as an anonymous user on first sign in
     //Source: firebase guides, https://firebase.google.com
@@ -221,7 +224,6 @@ public class Database {
                             Log.w("Authentication Failed", "signInAnonymously:failure", task.getException());
 
                         }//if
-
                     }
                 });
 

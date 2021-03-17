@@ -8,22 +8,32 @@ import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
+import android.widget.Toast;
 
 import androidx.fragment.app.Fragment;
 
+import com.example.cmput301w21t23_smartdatabook.Database;
 import com.example.cmput301w21t23_smartdatabook.ExperimentDetails;
 import com.example.cmput301w21t23_smartdatabook.CardList;
 import com.example.cmput301w21t23_smartdatabook.Experiment;
 import com.example.cmput301w21t23_smartdatabook.R;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.firestore.FirebaseFirestore;
 
 import java.util.ArrayList;
+import java.util.Objects;
 
 public class FavPage extends Fragment {
     private static final String AP1 = "AP1";
     private static final String AP2 = "AP2";
+
     ListView experimentList;
     ArrayAdapter<Experiment> experimentAdapter;
     ArrayList<Experiment> experimentDataList;
+
+    FirebaseAuth mAuth = FirebaseAuth.getInstance();
+    FirebaseFirestore db = FirebaseFirestore.getInstance();
+    Database database = new Database();
 
     public FavPage(){
     }
@@ -57,10 +67,10 @@ public class FavPage extends Fragment {
         experimentDataList.add(new Experiment("first", "123", "Binomial", "testtrial", false, 30, 60, true, "03/05/2021"));
         experimentDataList.add(new Experiment("second", "123", "Binomial", "testtrial", false, 30, 60, true, "03/05/2021"));
 
-//        fillDataList(experimentDataList);
-
         experimentAdapter = new CardList(getContext(), experimentDataList, 2);
         experimentList.setAdapter(experimentAdapter);
+
+        database.fillDataList(experimentDataList, experimentAdapter, db.collection("User").document(Objects.requireNonNull(mAuth.getUid())).collection("Favorites"));
 
         experimentList.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override

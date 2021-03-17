@@ -25,6 +25,7 @@ import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
+import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.firestore.CollectionReference;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.QueryDocumentSnapshot;
@@ -54,6 +55,7 @@ public class homePage extends Fragment {
     ArrayList<Experiment> experimentDataList;
 
     Database database = new Database();
+    FirebaseFirestore db = FirebaseFirestore.getInstance();
 
     public homePage() {
     }
@@ -84,7 +86,6 @@ public class homePage extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.home_page, container, false);
-//        View view1 = inflater.inflate(R.layout.card, container, false);
 
         experimentList = view.findViewById(R.id.experiment_list);
         experimentDataList = new ArrayList<>();
@@ -95,7 +96,7 @@ public class homePage extends Fragment {
         experimentAdapter = new CardList(getContext(), experimentDataList,1);
         experimentList.setAdapter(experimentAdapter);
 
-        database.fillDataList(experimentDataList, experimentAdapter);
+        database.fillDataList(experimentDataList, experimentAdapter, db.collection("Experiments"));
 
         experimentList.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
@@ -149,7 +150,8 @@ public class homePage extends Fragment {
                 Experiment newExperiment = (Experiment) data.getSerializableExtra("newExp");
                 Toast.makeText(getActivity(), newExperiment.getExpName() + " " + newExperiment.getDescription(), Toast.LENGTH_SHORT).show();
                 experimentAdapter.add(newExperiment);
-                database.addExperimentToDB(newExperiment);
+                CollectionReference experimentsCollection = db.collection("Experiments");
+                database.addExperimentToDB(newExperiment, experimentsCollection );
                 experimentAdapter.notifyDataSetChanged();
             }
         }

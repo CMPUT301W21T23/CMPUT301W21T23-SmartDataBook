@@ -10,9 +10,15 @@ import android.widget.CheckBox;
 import android.widget.TextView;
 
 import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Objects;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.firestore.CollectionReference;
+import com.google.firebase.firestore.FirebaseFirestore;
 
 /**
  * This classs is simply to display the information from the experiment list adapters onto the screen
@@ -25,6 +31,10 @@ public class CardList extends ArrayAdapter<Experiment> {
     private final ArrayList<Experiment> experiments;
     private final Context context;
     private final int index;
+
+    Database database = new Database();
+    FirebaseFirestore db = FirebaseFirestore.getInstance();
+    FirebaseAuth mAuth = FirebaseAuth.getInstance();
 
     /**
      * Public Constructor for the CardList class
@@ -39,7 +49,6 @@ public class CardList extends ArrayAdapter<Experiment> {
         this.index = index;
     }
 
-
     /**
      * Set attributes of the name, date, ownerName, experimentDescription and region in the list
      * @param position
@@ -51,14 +60,14 @@ public class CardList extends ArrayAdapter<Experiment> {
         View view = convertView;
         View view1 = null;
 
-        if (view == null){
-            view = LayoutInflater.from(context).inflate(R.layout.card, parent,false);
-            view1 = LayoutInflater.from(context).inflate(R.layout.followed_experiments_items, parent,false);
-        }
-
         Experiment experiment = experiments.get(position);
 
         if (index == 1) {
+
+            if (view == null){
+                view = LayoutInflater.from(context).inflate(R.layout.card, parent,false);
+            }
+
             TextView experimentName = view.findViewById(R.id.experimentName);
             TextView date = view.findViewById(R.id.dateCreated);
             TextView ownerName = view.findViewById(R.id.Owner);
@@ -82,18 +91,28 @@ public class CardList extends ArrayAdapter<Experiment> {
             // https://developer.android.com/reference/android/widget/CheckBox
             CheckBox follow = view.findViewById(R.id.fav);
             if (follow.isChecked()) {
-                follow.setChecked(false);
+                final CollectionReference favExpCollection = db.collection("Users")
+                        .document(Objects.requireNonNull(mAuth.getUid()))
+                        .collection("Favorites");
+
+                database.addExperimentToDB(experiment, favExpCollection);
             }
+
             return view;
 
-        }
-        else if (index == 2){
+        } else if (index == 2){
+
+            if (view1 == null){
+                view1 = LayoutInflater.from(context).inflate(R.layout.followed_experiments_items, parent,false);
+            }
+
             assert view1 != null;
             TextView experimentName = view1.findViewById(R.id.ExpNameTextView);
             TextView ownerName = view1.findViewById(R.id.ownerTextView);
 
             experimentName.setText(experiment.getExpName());
             ownerName.setText(experiment.getOwnerUserID());
+
             return view1;
 
         }
