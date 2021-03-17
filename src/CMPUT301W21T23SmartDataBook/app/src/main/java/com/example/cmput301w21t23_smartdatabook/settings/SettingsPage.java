@@ -115,6 +115,9 @@ public class SettingsPage extends Fragment {
                                                 Toast.makeText(getContext(), "Successfully Updated!", Toast.LENGTH_SHORT).show();
                                             }
                                         });
+
+                                usernameTextField.getText().clear();
+                                emailTextField.getText().clear();
                             }
                         });
 
