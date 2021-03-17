@@ -1,6 +1,7 @@
 package com.example.cmput301w21t23_smartdatabook;
 
 import android.util.Log;
+import android.widget.ArrayAdapter;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
@@ -16,12 +17,146 @@ import com.google.firebase.firestore.CollectionReference;
 import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.firestore.QueryDocumentSnapshot;
+import com.google.firebase.firestore.QuerySnapshot;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 
 public class Database {
 
     FirebaseAuth mAuth = FirebaseAuth.getInstance();
+    FirebaseFirestore db = FirebaseFirestore.getInstance();
+
+    /**
+     * Get a Experiment document from the database and add its contents to the experimentDataList
+     * to populate the user's homePage with ALL experiments in the app
+     * @param experimentDataList the array list that holds the all the experiments for a user
+     */
+    public void fillDataList(ArrayList<Experiment> experimentDataList, ArrayAdapter<Experiment> experimentAdapter) {
+        db = FirebaseFirestore.getInstance();
+        db.collection("Experiments")
+                .get()
+                .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
+                    @Override
+                    public void onComplete(@NonNull Task<QuerySnapshot> task) {
+                        if (task.isSuccessful()) {
+                            for (QueryDocumentSnapshot document : task.getResult()) {
+                                Log.d("Success", document.getId() + " => " + document.getData());
+                                experimentDataList.add( new Experiment(
+                                        document.getData().get("Name").toString(),
+                                        document.getData().get("UUID").toString(),
+                                        document.getData().get("Trial Type").toString(),
+                                        document.getData().get("Description").toString(),
+                                        giveBoolean( document.getData().get("LocationStatus").toString() ),
+                                        Integer.parseInt( document.getData().get("Minimum Trials").toString() ),
+                                        Integer.parseInt( document.getData().get("Maximum Trials").toString() ),
+                                        giveBoolean( document.getData().get("PublicStatus").toString() ),
+                                        document.getData().get("Date").toString() ) );
+                            }
+
+                            experimentAdapter.notifyDataSetChanged();
+
+                        } else {
+                            Log.d("Failure", "Error getting documents: ", task.getException());
+                        }
+                    }
+                });
+
+    }
+
+    /**
+     * Checks if the status of  "PublicStatus" and "LocationStatus" found in the database
+     * is "on" or "of" and gives respective boolean.
+     * @author Bosco Chan
+     * @param status
+     * @return a boolean that is either "true" or "false"
+     */
+    public boolean giveBoolean (String status) {
+        if (status == "On"){
+            return true;
+        }else{
+            return false;
+        }
+    }
+
+    /**
+     * Checks if the boolean condition of "getRegionOn" and "isPublic" is "true" or "false"
+     * and gives the respective "on" or "off" string
+     * @author Bosco Chan
+     * @param condition the boolean that determines if region or isPublic is true or false
+     * @return a string that is either "on" or "off"
+     */
+    public String giveString (boolean condition) {
+        if (condition == true) {
+            return "On";
+        }else{
+            return "Off";
+        }
+    }
+
+    /**
+     * Add a new experiment object to the Firebase database
+     * @author Bosco Chan
+     * @param newExperiment The experiment object that is to be added to the Firebase database
+     */
+    public void addExperimentToDB(Experiment newExperiment) {
+
+        //Add into a Comments collection with a comment document containing
+        //a Pies collection with a pie document
+        db = FirebaseFirestore.getInstance();
+        final CollectionReference allCommentsCollection = db.collection("Experiments");
+        HashMap<String, String> data = new HashMap<>();
+
+        // If there’s some data in the EditText field, then we create a new key-value pair.
+        data.put("Name", newExperiment.getExpName());
+        data.put("Description", newExperiment.getDescription());
+        data.put("Trial Type", newExperiment.getTrialType());
+        data.put("LocationStatus", giveString( newExperiment.getRegionOn() ) );
+        data.put("PublicStatus", giveString( newExperiment.isPublic() ) );
+        data.put("UUID", newExperiment.getOwnerUserID());
+        data.put("Minimum Trials", "" + newExperiment.getMinTrials() );
+        data.put("Maximum Trials", "" + newExperiment.getMaxTrials() );
+        data.put("Date", newExperiment.getDate() );
+
+        allCommentsCollection
+                .document("" + newExperiment.getExpName())
+                .set(data)
+                .addOnSuccessListener(new OnSuccessListener<Void>() {
+                    @Override
+                    public void onSuccess(Void aVoid) {
+                        Log.d("Success", "Experiment has been added successfully");
+                    }
+                })
+                .addOnFailureListener(new OnFailureListener() {
+                    @Override
+                    public void onFailure(@NonNull Exception e) {
+                        Log.d("Failure", "Data storing failed");
+                    }
+                });
+
+        data.clear();
+        data.put("Trial Type", newExperiment.getTrialType());
+        allCommentsCollection
+                .document("" + newExperiment.getExpName())
+                .collection("Trials")
+                .document("Trial#1")
+                .set(data)
+                .addOnSuccessListener(new OnSuccessListener<Void>() {
+                    @Override
+                    public void onSuccess(Void aVoid) {
+                        Log.d("Success", "Trial has been added successfully");
+                    }
+                })
+                .addOnFailureListener(new OnFailureListener() {
+                    @Override
+                    public void onFailure(@NonNull Exception e) {
+                        Log.d("Failure", "Data storing failed");
+                    }
+                });
+
+    }//addExperimentToDB
+
 
     //Temporarily sign in user as an anonymous user on first sign in
     //Source: firebase guides, https://firebase.google.com
