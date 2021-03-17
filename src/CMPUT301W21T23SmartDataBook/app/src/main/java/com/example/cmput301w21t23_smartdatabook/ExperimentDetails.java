@@ -37,6 +37,7 @@ public class ExperimentDetails extends AppCompatActivity {
 
         ActionBar toolbar  = getSupportActionBar();
 
+        assert toolbar != null;
         toolbar.setDisplayHomeAsUpEnabled(true);
 
         Intent intent = getIntent();
