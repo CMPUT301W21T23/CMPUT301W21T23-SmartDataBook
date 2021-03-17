@@ -27,7 +27,7 @@ import com.google.firebase.firestore.FirebaseFirestore;
 import java.util.Objects;
 
 /**
- * @author Afaq Nabi, Bosco Chan
+ * @author Afaq Nabi, Bosco Chan, Jayden
  * @version 1
  * This class is the activity of which contains the add experiment, it has:
  * An experiment's minimum and maximum number of trials

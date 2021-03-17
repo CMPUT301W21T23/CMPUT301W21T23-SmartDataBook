@@ -41,7 +41,7 @@ import java.util.HashMap;
  * It inflate the layout for the experiment's fragment
  * It allows user to add a new experiment by clicking a floating button
  *
- * @author Afaq Nabi, Bosco Chan
+ * @author Afaq Nabi, Bosco Chan, Jayden
  * @see Fragment, Firebase
  */
 
