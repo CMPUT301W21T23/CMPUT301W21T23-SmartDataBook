@@ -10,11 +10,13 @@
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:background="?attr/colorPrimary"
-            android:theme="?attr/actionBarTheme"
+            android:theme="@style/Theme.CMPUT301W21T23SmartDataBook"
             android:minHeight="?attr/actionBarSize"
             android:id="@+id/app_toolbar"
+            android:elevation="4dp"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
+            app:layout_constraintTop_toTopOf="parent"
+            app:popupTheme="@style/Theme.CMPUT301W21T23SmartDataBook" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
