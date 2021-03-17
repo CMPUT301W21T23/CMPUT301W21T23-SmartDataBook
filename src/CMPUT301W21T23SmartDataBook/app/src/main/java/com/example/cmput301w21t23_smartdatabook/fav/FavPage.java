@@ -27,9 +27,9 @@ public class FavPage extends Fragment {
     private static final String AP1 = "AP1";
     private static final String AP2 = "AP2";
 
-    ListView experimentList;
-    ArrayAdapter<Experiment> experimentAdapter;
-    ArrayList<Experiment> experimentDataList;
+    ListView favList;
+    ArrayAdapter<Experiment> favAdapter;
+    ArrayList<Experiment> favDataList;
 
     FirebaseAuth mAuth = FirebaseAuth.getInstance();
     FirebaseFirestore db = FirebaseFirestore.getInstance();
@@ -61,21 +61,21 @@ public class FavPage extends Fragment {
         View view = inflater.inflate(R.layout.followed_experiments, container, false);
         // TODO: add code here
 
-        experimentList = view.findViewById(R.id.followedExpListView);
-        experimentDataList = new ArrayList<>();
+        favList = view.findViewById(R.id.followedExpListView);
+        favDataList = new ArrayList<>();
 
-        experimentDataList.add(new Experiment("first", "123", "Binomial", "testtrial", false, 30, 60, true, "03/05/2021"));
-        experimentDataList.add(new Experiment("second", "123", "Binomial", "testtrial", false, 30, 60, true, "03/05/2021"));
+        favDataList.add(new Experiment("first", "123", "Binomial", "testtrial", false, 30, 60, true, "03/05/2021"));
+        favDataList.add(new Experiment("second", "123", "Binomial", "testtrial", false, 30, 60, true, "03/05/2021"));
 
-        experimentAdapter = new CardList(getContext(), experimentDataList, 2);
-        experimentList.setAdapter(experimentAdapter);
+        favAdapter = new CardList(getContext(), favDataList, 2);
+        favList.setAdapter(favAdapter);
 
-        database.fillDataList(experimentDataList, experimentAdapter, db.collection("User").document(Objects.requireNonNull(mAuth.getUid())).collection("Favorites"));
+        database.fillDataList( favDataList, favAdapter, db.collection("Users").document(mAuth.getUid()).collection("Favorites") );
 
-        experimentList.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+        favList.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                Experiment exp = experimentDataList.get(position); // get the experiment from list
+                Experiment exp = favDataList.get(position); // get the experiment from list
                 Intent intent = new Intent(getActivity(), ExperimentDetails.class);
                 intent.putExtra("position", position); // pass position to ExperimentDetails class
                 intent.putExtra("experiment", exp); // pass experiment object
@@ -84,5 +84,6 @@ public class FavPage extends Fragment {
         });
 
         return view;
-    }
+    }//onCreateView
+
 }

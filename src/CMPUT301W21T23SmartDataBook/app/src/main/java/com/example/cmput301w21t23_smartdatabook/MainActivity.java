@@ -58,7 +58,8 @@ public class MainActivity extends AppCompatActivity {
         bottomNavigation.setOnNavigationItemSelectedListener(mOnNavigationItemSelectedListener);
 
         toolbar.setTitle("Home");
-        openFragment(homePage.newInstance("",""));
+//        openFragment(homePage.newInstance("",""));
+        openFragment(FavPage.newInstance("",""));
 
         //anonymous authentication testing
         Database database = new Database();
