@@ -19,6 +19,10 @@
             </intent-filter>
         </activity>
 
+        <activity android:name=".ExperimentDetails">
+
+        </activity>
+
     </application>
 
 </manifest>
