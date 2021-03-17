@@ -14,7 +14,6 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import com.google.android.material.switchmaterial.SwitchMaterial;
 import com.google.android.material.textfield.TextInputEditText;
-
 import org.w3c.dom.Text;
 
 /**
@@ -28,7 +27,7 @@ import org.w3c.dom.Text;
  * @version 1
  * @see Experiment,
  */
-public class ExperimentDetails extends AppCompatActivity {
+public class experimentDetails extends AppCompatActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

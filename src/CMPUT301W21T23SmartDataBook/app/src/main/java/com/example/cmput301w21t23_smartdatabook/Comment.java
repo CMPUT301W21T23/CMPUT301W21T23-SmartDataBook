@@ -7,6 +7,7 @@ class Comment extends User{
 
     String text;
     int commentID;
+    Comment question;
 
     //Contains a list of comment objects that are replying to the 
     //parent comment object.
@@ -19,9 +20,11 @@ class Comment extends User{
      * @param commentID
      */
     public Comment(String text, String userUniqueID, int commentID){
+//        super(null, null, userUniqueID);
         this.text = text;
         this.userUniqueID = userUniqueID;
         this.commentID = commentID;
+        this.question=question;
     }
 
     /**
@@ -68,6 +71,18 @@ class Comment extends User{
      */
     public void setReplyList(ArrayList<Comment> replyList) {
         this.replyList = replyList;
+    }
+    
+    public Comment getQuestion(){
+        return question;
+    }
+
+     public void setQuestion(ArrayList <Comment> replyList){
+        // only set the question if the list is not empty
+        if (!replyList.isEmpty()){
+            this.question=replyList.get(0);
+        }
+
     }
 
 }

@@ -15,6 +15,7 @@ public class Experiment implements Serializable {
     private String trialType;
     private String description;
     private boolean regionOn;
+
     // private Map region;
     private int minTrials;
     private int maxTrials;

@@ -63,135 +63,140 @@
     </androidx.constraintlayout.widget.ConstraintLayout>
 
     <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="vertical"
-            android:paddingHorizontal="30dp">
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:paddingHorizontal="30dp">
 
         <com.google.android.material.textfield.TextInputLayout
-                style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
-                android:id="@+id/experimentNameField"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:hint="Experiment Name"
-                android:textColorHint="#777877"
-                app:backgroundTint="@null"
-                app:boxStrokeColor="@color/theme_default">
+            android:id="@+id/experimentNameField"
+            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="Experiment Name"
+            android:textColorHint="#777877"
+            app:backgroundTint="@null"
+            app:boxStrokeColor="@color/theme_default">
 
             <com.google.android.material.textfield.TextInputEditText
-                    android:id="@+id/newExperimentLocationOnExperimentNameEditText"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content" />
+                android:id="@+id/newExperimentLocationOnExperimentNameEditText"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content" />
 
         </com.google.android.material.textfield.TextInputLayout>
 
         <com.google.android.material.textfield.TextInputLayout
-                style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
-                android:id="@+id/descriptionField"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:hint="Description"
-                android:textColorHint="#777877"
-                app:backgroundTint="@null"
-                app:boxStrokeColor="@color/theme_default">
+            android:id="@+id/descriptionField"
+            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="Description"
+            android:textColorHint="#777877"
+            app:backgroundTint="@null"
+            app:boxStrokeColor="@color/theme_default">
 
             <com.google.android.material.textfield.TextInputEditText
-                    android:id="@+id/newExperimentLocationOnExperimentDescriptionEditText"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content" />
+                android:id="@+id/newExperimentLocationOnExperimentDescriptionEditText"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content" />
 
         </com.google.android.material.textfield.TextInputLayout>
 
         <androidx.constraintlayout.widget.ConstraintLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center">
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center">
 
             <RadioGroup
-                    android:id="@+id/typeoFTrialRadioGroup"
+                android:id="@+id/typeoFTrialRadioGroup"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:checkedButton="@+id/radio_button_1"
+                tools:ignore="MissingConstraints">
+
+                <RadioButton
+                    android:id="@+id/binomialRadioButton"
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:checkedButton="@+id/radio_button_1"
-                    tools:ignore="MissingConstraints">
+                    android:layout_height="match_parent"
+                    android:buttonTint="@color/theme_default"
+                    android:text="Binomial"
+                    android:textColor="@color/theme_default" />
 
                 <RadioButton
-                        android:id="@+id/binomialRadioButton"
-                        android:layout_width="match_parent"
-                        android:layout_height="match_parent"
-                        android:text="Binomial"
-                        android:buttonTint="@color/theme_default"
-                        android:textColor="@color/theme_default" />
+                    android:id="@+id/countRadioButton"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:buttonTint="@color/theme_default"
+                    android:text="Count"
+                    android:textColor="@color/theme_default" />
 
                 <RadioButton
-                        android:id="@+id/countRadioButton"
-                        android:layout_width="match_parent"
-                        android:layout_height="match_parent"
-                        android:text="Count"
-                        android:buttonTint="@color/theme_default"
-                        android:textColor="@color/theme_default" />
+                    android:id="@+id/nonNegativeRadioButton"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:buttonTint="@color/theme_default"
+                    android:text="Non-Negative Count"
+                    android:textColor="@color/theme_default" />
 
                 <RadioButton
-                        android:id="@+id/nonNegativeRadioButton"
-                        android:layout_width="match_parent"
-                        android:layout_height="match_parent"
-                        android:text="Non-Negative Count"
-                        android:buttonTint="@color/theme_default"
-                        android:textColor="@color/theme_default" />
-
-                <RadioButton
-                        android:id="@+id/measurmentRadioButton"
-                        android:layout_width="match_parent"
-                        android:layout_height="match_parent"
-                        android:text="Measurment"
-                        android:buttonTint="@color/theme_default"
-                        android:textColor="@color/theme_default" />
+                    android:id="@+id/measurmentRadioButton"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:buttonTint="@color/theme_default"
+                    android:text="Measurment"
+                    android:textColor="@color/theme_default" />
             </RadioGroup>
 
         </androidx.constraintlayout.widget.ConstraintLayout>
 
         <com.google.android.material.switchmaterial.SwitchMaterial
-                android:id="@+id/newExperimentLocationToggleSwitch"
-                android:layout_width="144dp"
-                android:layout_height="42dp"
-                android:layout_marginTop="4dp"
-                android:checked="true"
-                android:text="Location"
-                android:textColor="@color/theme_default"
-                android:textStyle="bold"
-                app:thumbTint="@color/theme_default"
-                app:trackTint="@color/theme_opaque"
-                tools:ignore="MissingConstraints" />
+            android:id="@+id/newExperimentLocationToggleSwitch"
+            android:layout_width="144dp"
+            android:layout_height="42dp"
+            android:layout_marginTop="4dp"
+            android:checked="true"
+            android:text="Location"
+            android:textColor="@color/theme_default"
+            android:textStyle="bold"
+            app:thumbTint="@color/theme_default"
+            app:trackTint="@color/theme_opaque"
+            tools:ignore="MissingConstraints" />
 
         <com.google.android.material.switchmaterial.SwitchMaterial
-                android:layout_width="144dp"
-                android:layout_height="42dp"
-                android:layout_marginTop="4dp"
-                android:checked="true"
-                android:text="Public"
-                android:textColor="@color/theme_default"
-                android:textStyle="bold"
-                app:thumbTint="@color/theme_default"
-                app:trackTint="@color/theme_opaque"
-                tools:ignore="MissingConstraints"
-                android:id="@+id/newExperimentLocationPublicPrivateToggleSwitch" />
+            android:id="@+id/newExperimentLocationPublicPrivateToggleSwitch"
+            android:layout_width="144dp"
+            android:layout_height="42dp"
+            android:layout_marginTop="4dp"
+            android:checked="true"
+            android:text="Public"
+            android:textColor="@color/theme_default"
+            android:textStyle="bold"
+            app:thumbTint="@color/theme_default"
+            app:trackTint="@color/theme_opaque"
+            tools:ignore="MissingConstraints" />
 
         <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_marginTop="10dp"
+            android:orientation="horizontal">
+
+            <Button
+                android:id="@+id/add_exp_back_button"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:orientation="horizontal"
-                android:layout_gravity="center"
-                android:layout_marginTop="10dp">
+                android:layout_marginRight="60dp"
+                android:layout_weight="1"
+                android:text="Back" />
 
             <com.google.android.material.button.MaterialButton
-                    android:id="@+id/newExperimentLocationOnCreateButtonView"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginStart="16dp"
-                    android:layout_marginLeft="16dp"
-                    android:layout_marginRight="30dp"
-                    android:backgroundTint="@color/theme_default"
-                    android:text="Create"
-                    app:layout_constraintStart_toStartOf="parent" />
+                android:id="@+id/newExperimentLocationOnCreateButtonView"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:backgroundTint="@color/theme_default"
+                android:text="Create"
+                app:layout_constraintStart_toStartOf="parent" />
 
         </LinearLayout>
 

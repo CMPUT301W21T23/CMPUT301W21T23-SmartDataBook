@@ -7,7 +7,7 @@ import static org.junit.jupiter.api.Assertions.*;
  * Test class to assure GetDate class returns a correctly formatted date
  * string in form of
  */
-public class GetDateTest {
+public class GetDateUnitTest {
 
     /**
      * Creates a string of the current date-realtime for testing

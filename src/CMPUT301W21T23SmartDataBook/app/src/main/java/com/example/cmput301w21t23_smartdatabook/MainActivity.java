@@ -9,11 +9,9 @@ import androidx.fragment.app.FragmentTransaction;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.MenuItem;
-import android.widget.ArrayAdapter;
-import android.widget.ListView;
 import android.widget.Toast;
 
-import com.example.cmput301w21t23_smartdatabook.fav.favPage;
+import com.example.cmput301w21t23_smartdatabook.fav.FavPage;
 import com.example.cmput301w21t23_smartdatabook.settings.SettingsPage;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnFailureListener;
@@ -27,7 +25,7 @@ import com.google.firebase.firestore.CollectionReference;
 import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
-import java.util.ArrayList;
+
 import java.util.HashMap;
 
 import com.example.cmput301w21t23_smartdatabook.home.homePage;
@@ -77,27 +75,27 @@ public class MainActivity extends AppCompatActivity {
 
     BottomNavigationView.OnNavigationItemSelectedListener mOnNavigationItemSelectedListener =
             new BottomNavigationView.OnNavigationItemSelectedListener() {
-        @Override
-        public boolean onNavigationItemSelected(@NonNull MenuItem item) {
-            switch (item.getItemId()) {
-                case R.id.home_nav:
-                    toolbar.setTitle("Home");
-                    openFragment(homePage.newInstance("",""));
-                    return true;
+                @Override
+                public boolean onNavigationItemSelected(@NonNull MenuItem item) {
+                    switch (item.getItemId()) {
+                        case R.id.home_nav:
+                            toolbar.setTitle("Home");
+                            openFragment(homePage.newInstance("",""));
+                            return true;
 
-                case R.id.fav_nav:
-                    toolbar.setTitle("Favorites");
-                    openFragment(favPage.newInstance("",""));
-                    return true;
+                        case R.id.fav_nav:
+                            toolbar.setTitle("Favorites");
+                            openFragment(FavPage.newInstance("",""));
+                            return true;
 
-                case R.id.settings_nav:
-                    toolbar.setTitle("Settings");
-                    openFragment(SettingsPage.newInstance("",""));
-                    return true;
-            }
-            return false;
-        }
-    };
+                        case R.id.settings_nav:
+                            toolbar.setTitle("Settings");
+                            openFragment(SettingsPage.newInstance("",""));
+                            return true;
+                    }
+                    return false;
+                }
+            };
 
     /**
      * Authenticates a new app user anonymously and generates a "User document" for the user
