@@ -73,11 +73,11 @@
 
     <Button
         android:id="@+id/comment_btn"
-        android:layout_width="279dp"
+        android:layout_width="204dp"
         android:layout_height="wrap_content"
-        android:text="Comments"
         android:layout_marginLeft="10dp"
-        />
+        android:layout_marginTop="-50dp"
+        android:text="Comments" />
 
 
 </LinearLayout>
