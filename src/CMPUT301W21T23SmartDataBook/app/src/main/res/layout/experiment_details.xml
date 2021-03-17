@@ -236,14 +236,11 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_below="@+id/ClickedExpName"
-            android:layout_alignParentStart="true"
-            android:layout_alignParentEnd="true"
-            android:layout_marginStart="178dp"
             android:layout_marginTop="1dp"
-            android:layout_marginEnd="175dp"
             android:text="Owner"
             android:textColor="@color/theme_default"
-            android:textSize="17sp" />
+            android:textSize="17sp"
+            android:layout_centerHorizontal="true"/>
 
     </RelativeLayout>
 

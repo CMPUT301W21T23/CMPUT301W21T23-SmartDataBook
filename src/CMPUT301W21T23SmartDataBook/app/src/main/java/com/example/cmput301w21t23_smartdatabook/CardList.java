@@ -1,9 +1,12 @@
 package com.example.cmput301w21t23_smartdatabook;
 import android.content.Context;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
+import android.widget.Button;
+import android.widget.CheckBox;
 import android.widget.TextView;
 
 import java.util.ArrayList;
@@ -33,6 +36,7 @@ public class CardList extends ArrayAdapter<Experiment> {
         this.context = context;
     }
 
+
     /**
      * Set attributes of the name, date, ownerName, experimentDescription and region in the list
      * @param position
@@ -61,7 +65,29 @@ public class CardList extends ArrayAdapter<Experiment> {
         experimentDescription.setText(experiment.getDescription());
         region.setText(null);
 
+        Button comment = view.findViewById(R.id.comment_btn);
+        comment.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Log.d("test", experiment.getExpName());
+            }
+        });
+
+        CheckBox follow = view.findViewById(R.id.fav);
+
         return view;
     }
+
+//    public View getView1(int position, @Nullable View convertView, @NonNull ViewGroup parent) {
+//        View view = convertView;
+//
+//        if (view == null) {
+//            view = LayoutInflater.from(context).inflate(R.layout.followed_experiments_items, parent, false);
+//        }
+//
+//        Experiment experiment = experiments.get(position);
+//
+//        return view;
+//    }
 }
 
