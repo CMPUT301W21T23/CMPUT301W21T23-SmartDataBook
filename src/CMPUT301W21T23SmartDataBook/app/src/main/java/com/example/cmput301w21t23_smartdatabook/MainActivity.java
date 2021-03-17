@@ -3,13 +3,19 @@ package com.example.cmput301w21t23_smartdatabook;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.SearchView;
 import androidx.appcompat.widget.Toolbar;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentTransaction;
 
+import android.app.SearchManager;
+import android.content.Context;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.Menu;
+import android.view.MenuInflater;
 import android.view.MenuItem;
+import android.view.View;
 import android.widget.Toast;
 
 import com.example.cmput301w21t23_smartdatabook.fav.FavPage;
@@ -35,7 +41,7 @@ import com.example.cmput301w21t23_smartdatabook.home.homePage;
  * the Purpose of this class is to register the user in the database and initialize the bottom tab navigation
  * functionality of the app
  * the bottom tab should get covered if a new acitivity is opened
- * @Author Afaq
+ * @Author Afaq, Jayden
  * @Refrences https://androidwave.com/bottom-navigation-bar-android-example/
  */
 
@@ -52,13 +58,14 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        setSupportActionBar((Toolbar) findViewById(R.id.app_toolbar));
+        setSupportActionBar(findViewById(R.id.app_toolbar));
         toolbar = getSupportActionBar();
 
         bottomNavigation = findViewById(R.id.bottom_navigation);
         bottomNavigation.setOnNavigationItemSelectedListener(mOnNavigationItemSelectedListener);
 
         toolbar.setTitle("Home");
+
 //        openFragment(homePage.newInstance("",""));
         openFragment(FavPage.newInstance("",""));
 
@@ -67,6 +74,25 @@ public class MainActivity extends AppCompatActivity {
 //        database.authenticateAnon();
 
     } //onCreate
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        MenuInflater inflater = getMenuInflater();
+        inflater.inflate(R.menu.search_menu, menu);
+
+        SearchManager searchManager = (SearchManager) getSystemService(Context.SEARCH_SERVICE);
+        SearchView searchView = (SearchView) menu.findItem(R.id.app_bar_search).getActionView();
+
+        searchView.setSearchableInfo(searchManager.getSearchableInfo(getComponentName()));
+        searchView.setIconifiedByDefault(false);
+        return true;
+    }
+
+    @Override
+    public boolean onSearchRequested() {
+        System.out.println("Search requested");
+        return super.onSearchRequested();
+    }
 
     public void openFragment(Fragment fragment) {
         final FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
