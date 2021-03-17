@@ -3,6 +3,8 @@ package com.example.cmput301w21t23_smartdatabook;
 import android.app.SearchManager;
 import android.content.Intent;
 import android.os.Bundle;
+import android.view.View;
+import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
 
@@ -10,7 +12,6 @@ import androidx.appcompat.app.AppCompatActivity;
 /**
  * this class handles the search query, and do the appropriate actions
  * @Author Jayden
- * @Refrences https://androidwave.com/bottom-navigation-bar-android-example/
  */
 public class SearchableActivity extends AppCompatActivity {
 
@@ -21,8 +22,7 @@ public class SearchableActivity extends AppCompatActivity {
         Intent intent = getIntent();
         if (Intent.ACTION_SEARCH.equals(intent.getAction())) {
             String query = intent.getStringExtra(SearchManager.QUERY);
-            System.out.println(query);
-
+            Toast.makeText(getApplicationContext(), query, Toast.LENGTH_SHORT).show();
         }
     }
 
