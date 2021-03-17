@@ -62,32 +62,21 @@
     </TextView>
 
     <CheckBox
-        android:id="@+id/fav"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_below="@id/ClickedExpDesc"
-        android:layout_marginLeft="330dp"
-        android:layout_marginTop="-30dp"
+        android:layout_marginLeft="300dp"
+
         >
 
     </CheckBox>
 
     <Button
         android:id="@+id/comment_btn"
-        android:layout_width="200dp"
+        android:layout_width="279dp"
         android:layout_height="wrap_content"
-        android:layout_marginLeft="10dp"
         android:text="Comments"
+        android:layout_marginLeft="10dp"
         />
 
-<!--    <com.google.android.material.floatingactionbutton.FloatingActionButton-->
-<!--        android:id="@+id/floatingActionButton2"-->
-<!--        android:layout_width="match_parent"-->
-<!--        android:layout_height="wrap_content"-->
-<!--        android:layout_marginLeft="330dp"-->
-<!--        android:layout_marginTop="-59dp"-->
-<!--        android:backgroundTint="#faf5ff"-->
-<!--        app:srcCompat="@drawable/ic_star_nav"-->
-<!--        />-->
 
 </LinearLayout>
