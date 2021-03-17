@@ -30,7 +30,7 @@ public class favList extends Fragment {
 
 //        fillDataList(experimentDataList);
 
-        experimentAdapter = new CardList(getContext(), experimentDataList);
+//        experimentAdapter = new CardList(getContext(), experimentDataList);
         experimentList.setAdapter(experimentAdapter);
 
         return view;

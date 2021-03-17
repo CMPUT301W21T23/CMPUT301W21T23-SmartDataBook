@@ -8,7 +8,6 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
-import android.widget.Button;
 import android.widget.ListView;
 import android.widget.Toast;
 
@@ -94,7 +93,7 @@ public class homePage extends Fragment {
 
         fillDataList(experimentDataList);
 
-        experimentAdapter = new CardList(getContext(), experimentDataList);
+        experimentAdapter = new CardList(getContext(), experimentDataList, 1);
         experimentList.setAdapter(experimentAdapter);
 
         experimentList.setOnItemClickListener(new AdapterView.OnItemClickListener() {

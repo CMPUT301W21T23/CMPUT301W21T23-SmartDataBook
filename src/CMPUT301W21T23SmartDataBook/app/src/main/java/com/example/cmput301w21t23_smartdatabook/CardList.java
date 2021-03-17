@@ -24,16 +24,19 @@ public class CardList extends ArrayAdapter<Experiment> {
 
     private final ArrayList<Experiment> experiments;
     private final Context context;
+    private final int index;
 
     /**
      * Public Constructor for the CardList class
      * @param context
      * @param experiments
+     * @param index
      */
-    public CardList(Context context, ArrayList<Experiment> experiments) {
+    public CardList(Context context, ArrayList<Experiment> experiments, int index) {
         super(context,0, experiments);
         this.experiments = experiments;
         this.context = context;
+        this.index = index;
     }
 
 
@@ -46,48 +49,57 @@ public class CardList extends ArrayAdapter<Experiment> {
      */
     public View getView(int position, @Nullable View convertView, @NonNull ViewGroup parent) {
         View view = convertView;
+        View view1 = null;
 
         if (view == null){
             view = LayoutInflater.from(context).inflate(R.layout.card, parent,false);
+            view1 = LayoutInflater.from(context).inflate(R.layout.followed_experiments_items, parent,false);
         }
 
         Experiment experiment = experiments.get(position);
 
-        TextView experimentName = view.findViewById(R.id.experimentName);
-        TextView date = view.findViewById(R.id.dateCreated);
-        TextView ownerName = view.findViewById(R.id.Owner);
-        TextView experimentDescription = view.findViewById(R.id.Experiment_descr);
-        TextView region = view.findViewById(R.id.Region);
+        if (index == 1) {
+            TextView experimentName = view.findViewById(R.id.experimentName);
+            TextView date = view.findViewById(R.id.dateCreated);
+            TextView ownerName = view.findViewById(R.id.Owner);
+            TextView experimentDescription = view.findViewById(R.id.Experiment_descr);
+            TextView region = view.findViewById(R.id.Region);
 
-        experimentName.setText(experiment.getExpName());
-        date.setText(experiment.getDate());
-        ownerName.setText(experiment.getOwnerUserID());
-        experimentDescription.setText(experiment.getDescription());
-        region.setText(null);
+            experimentName.setText(experiment.getExpName());
+            date.setText(experiment.getDate());
+            ownerName.setText(experiment.getOwnerUserID());
+            experimentDescription.setText(experiment.getDescription());
+            region.setText(null);
 
-        Button comment = view.findViewById(R.id.comment_btn);
-        comment.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Log.d("test", experiment.getExpName());
+            Button comment = view.findViewById(R.id.comment_btn);
+            comment.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    Log.d("test", experiment.getExpName());
+                }
+            });
+
+            // https://developer.android.com/reference/android/widget/CheckBox
+            CheckBox follow = view.findViewById(R.id.fav);
+            if (follow.isChecked()) {
+                //            follow.setChecked(false);
             }
-        });
+            return view;
 
-        CheckBox follow = view.findViewById(R.id.fav);
+        }
+        else if (index == 2){
+            assert view1 != null;
+            TextView experimentName = view1.findViewById(R.id.ExpNameTextView);
+            TextView ownerName = view1.findViewById(R.id.ownerTextView);
+
+            experimentName.setText(experiment.getExpName());
+            ownerName.setText(experiment.getOwnerUserID());
+            return view1;
+
+        }
 
         return view;
     }
 
-//    public View getView1(int position, @Nullable View convertView, @NonNull ViewGroup parent) {
-//        View view = convertView;
-//
-//        if (view == null) {
-//            view = LayoutInflater.from(context).inflate(R.layout.followed_experiments_items, parent, false);
-//        }
-//
-//        Experiment experiment = experiments.get(position);
-//
-//        return view;
-//    }
 }
 

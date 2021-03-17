@@ -12,7 +12,7 @@ import android.widget.ListView;
 import androidx.fragment.app.Fragment;
 
 import com.example.cmput301w21t23_smartdatabook.ExperimentDetails;
-import com.example.cmput301w21t23_smartdatabook.fav.CardList;
+import com.example.cmput301w21t23_smartdatabook.CardList;
 import com.example.cmput301w21t23_smartdatabook.Experiment;
 import com.example.cmput301w21t23_smartdatabook.R;
 
@@ -59,7 +59,7 @@ public class FavPage extends Fragment {
 
 //        fillDataList(experimentDataList);
 
-        experimentAdapter = new CardList(getContext(), experimentDataList);
+        experimentAdapter = new CardList(getContext(), experimentDataList, 2);
         experimentList.setAdapter(experimentAdapter);
 
         experimentList.setOnItemClickListener(new AdapterView.OnItemClickListener() {
