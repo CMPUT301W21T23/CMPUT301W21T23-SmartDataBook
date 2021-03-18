@@ -56,25 +56,25 @@ public class BinomialTrial extends Trial{
      * Setter for numPass for experiment
      * @param numPass
      */
-    public void setNumpass(int numPass){super.numPass=numPass;}
+    public void setNumPass(int numPass){super.numPass=numPass;}
 
     /**
      * Getter for numPass for experiment
      * @return int for the number of passes
      */
-    public int getNumpass(){return super.numPass;}
+    public int getNumPass(){return super.numPass;}
 
     /**
      * Setter for numFail for the experiment
      * @param numFail
      */
-    public void setNumfail(int numFail){super.numFail=numFail;}
+    public void setNumFail(int numFail){super.numFail=numFail;}
 
     /**
      * Getter for numFail that returns int of number of fails
      * @return int which is the number of fails
      */
-    public int getNumfail(){return super.numFail;}
+    public int getNumFail(){return super.numFail;}
 
     /**
      * Set child attributes numTotal to numPass + numFail
