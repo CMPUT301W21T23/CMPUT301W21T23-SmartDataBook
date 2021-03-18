@@ -17,7 +17,7 @@ public class Statistics extends Experiment{
      *  (optional: mean or median if you really need them)
      */
 
-    public void BinomialTrialStat(){
+    public void binomialTrialStat(){
 
     }
 
@@ -30,7 +30,7 @@ public class Statistics extends Experiment{
      * quartiles
      * not sure about std dev, and quartiles since they are more appropriate to be shown in the histogram/plots
      */
-    public void CountTrialStat(){
+    public void countTrialStat(){
 
     }
 
@@ -44,7 +44,7 @@ public class Statistics extends Experiment{
      * not sure about quartiles since they are more appropriate to be shown in the histogram/plots
      */
 
-    public void MeasurementTrialStat(){
+    public void measurementTrialStat(){
 
     }
 
