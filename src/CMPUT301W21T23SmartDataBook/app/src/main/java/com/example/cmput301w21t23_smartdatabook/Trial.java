@@ -10,12 +10,13 @@ import android.location.Location;
 public class Trial {
     private boolean geoLocationSettingOn;
     private String trialValue;
+
     // TODO to_be_deleted
     // private float longitude;
     // private float latitude;
+
     private Location location;
-
-
+    private String expType;
 
     // attributes for count(non-negative count)
     public int count;
@@ -23,6 +24,11 @@ public class Trial {
     // attributes for binomial trials
     public int numPass;
     public int numFail;
+
+    public Trial(String trialValue, String expType) {
+        this.trialValue = trialValue;
+        this.expType = expType;
+    }
 
     // attributes measurement trials
     public Float input;

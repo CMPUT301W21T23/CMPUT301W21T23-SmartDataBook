@@ -77,7 +77,8 @@ public class UploadTrial extends AppCompatActivity {
         trialsList = findViewById(R.id.uploaded_trials);
         trialDataList = new ArrayList<>();
 
-//        trialDataList.add(new Trial());
+        trialDataList.add(new Trial("123","1234"));
+
         trialArrayAdapter = new TrialList( trialDataList, getBaseContext());
         trialsList.setAdapter(trialArrayAdapter);
 

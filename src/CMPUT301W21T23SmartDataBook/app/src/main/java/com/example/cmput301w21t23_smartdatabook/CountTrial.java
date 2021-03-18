@@ -12,8 +12,11 @@ package com.example.cmput301w21t23_smartdatabook;
  */
 
 public class CountTrial extends Trial{
+     public CountTrial(String trialValue, String expType) {
+         super(trialValue, expType);
+     }
 
-    // might need to be fixed in future, change to local attributes if necessary
+     // might need to be fixed in future, change to local attributes if necessary
 
      /**
       * Public constructor for the CountTrial class
@@ -22,9 +25,9 @@ public class CountTrial extends Trial{
       * @param numFail
       * @param input
       */
-    public CountTrial(int count, int numPass, int numFail, Float input) {
-        super(count, numPass, numFail, input);
-    }
+//    public CountTrial(int count, int numPass, int numFail, Float input) {
+//        super(count, numPass, numFail, input);
+//    }
 
 
      /**

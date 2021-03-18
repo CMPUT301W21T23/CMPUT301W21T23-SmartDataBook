@@ -9,6 +9,9 @@ package com.example.cmput301w21t23_smartdatabook;
  */
 
 public class MeasurementTrial extends Trial{
+    public MeasurementTrial(String trialValue, String expType) {
+        super(trialValue, expType);
+    }
 
     /**
      * Public constructor for the MeasurementTrial class
@@ -17,9 +20,9 @@ public class MeasurementTrial extends Trial{
      * @param numFail
      * @param input
      */
-    public MeasurementTrial(int count, int numPass, int numFail, float input) {
-        super(count, numPass, numFail, input);
-    }
+//    public MeasurementTrial(int count, int numPass, int numFail, float input) {
+//        super(count, numPass, numFail, input);
+//    }
 
     // setter and getter for input (in case the experiment's owner want to ignore some experiment
 
