@@ -40,6 +40,8 @@ public class ExperimentDetails extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.experiment_details);
 
+        Database database = new Database();
+
         setSupportActionBar(findViewById(R.id.app_toolbar));
         ActionBar toolbar = getSupportActionBar();
 
@@ -126,6 +128,7 @@ public class ExperimentDetails extends AppCompatActivity {
         });
 
         CheckBox publish = findViewById(R.id.Publish);
+
         publish.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -133,44 +136,14 @@ public class ExperimentDetails extends AppCompatActivity {
                 FirebaseUser currentUser = mAuth.getCurrentUser();
 
                 FirebaseFirestore db = FirebaseFirestore.getInstance();
-                db.collection("Experiments")
-                        .document(experiment.getExpID()).update("PublicStatus", "On")
-                        .addOnSuccessListener(new OnSuccessListener<Void>() {
-                    @Override
-                    public void onSuccess(Void aVoid) {
-                        Log.d("Message", "DocumentSnapshot successfully updated!");
+                database.publicNotPublic(db.collection("Experiments"), "On", experiment);
+                database.publicNotPublic((db.collection("Users").document(currentUser.getUid()).collection("Favorites")),"On", experiment);
 
-                    }
-                })
-                        .addOnFailureListener(new OnFailureListener() {
-                            @Override
-                            public void onFailure(@NonNull Exception e) {
-                                Log.w("message", "Error updating document", e);
-                            }
-                        });
-
-                db.collection("Users").document(currentUser.getUid())
-                        .collection("Favorites")
-                        .document(experiment.getExpID())
-                        .update("PublicStatus", "On")
-                        .addOnSuccessListener(new OnSuccessListener<Void>() {
-                            @Override
-                            public void onSuccess(Void aVoid) {
-                                Log.d("Message", "DocumentSnapshot successfully updated!");
-
-                            }
-                        })
-                        .addOnFailureListener(new OnFailureListener() {
-                            @Override
-                            public void onFailure(@NonNull Exception e) {
-                                Log.w("message", "Error updating document", e);
-                            }
-                        });
-
-//                publish.setChecked(true);
             }
 
         });
+
+        Button endExp = findViewById(R.id.endExp);
 
     }
 

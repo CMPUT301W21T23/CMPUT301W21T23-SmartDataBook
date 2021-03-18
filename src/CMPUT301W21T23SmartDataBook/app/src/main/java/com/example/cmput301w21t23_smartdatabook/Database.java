@@ -397,4 +397,33 @@ public class Database {
 
     }//authenticationAnon
 
+
+
+
+    public void publicNotPublic(CollectionReference coll, String onOff, Experiment experiment){
+        FirebaseAuth mAuth = FirebaseAuth.getInstance();
+        FirebaseUser currentUser = mAuth.getCurrentUser();
+
+        FirebaseFirestore db = FirebaseFirestore.getInstance();
+        coll.document(experiment.getExpID()).update("PublicStatus", onOff)
+                .addOnSuccessListener(new OnSuccessListener<Void>() {
+                    @Override
+                    public void onSuccess(Void aVoid) {
+                        Log.d("Message", "DocumentSnapshot successfully updated!");
+
+                    }
+                })
+                .addOnFailureListener(new OnFailureListener() {
+                    @Override
+                    public void onFailure(@NonNull Exception e) {
+                        Log.w("message", "Error updating document", e);
+                    }
+                });
+
+
+
+
+
+    }
+
 }//Database
