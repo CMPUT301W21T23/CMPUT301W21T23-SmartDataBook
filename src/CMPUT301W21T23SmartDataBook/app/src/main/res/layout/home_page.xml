@@ -8,9 +8,14 @@
         android:id="@+id/frameLayout">
 
     <ListView
-            android:id="@+id/experiment_list"
-            android:layout_width="411dp"
-            android:layout_height="624dp">
+        android:id="@+id/experiment_list"
+        android:layout_width="411dp"
+        android:layout_height="624dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
+
     </ListView>
 
     <com.google.android.material.floatingactionbutton.FloatingActionButton

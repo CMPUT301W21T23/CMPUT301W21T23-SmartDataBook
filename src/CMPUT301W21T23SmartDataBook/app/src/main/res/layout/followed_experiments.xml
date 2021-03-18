@@ -12,10 +12,9 @@
 <!--        android:layout_height="60dp" />-->
 
     <ListView
-            android:id="@+id/followedExpListView"
-            android:layout_width="match_parent"
-            android:layout_height="614dp"
-        />
+        android:id="@+id/followedExpListView"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content" />
 
 <!--    <LinearLayout-->
 <!--        xmlns:android="http://schemas.android.com/apk/res/android"-->
