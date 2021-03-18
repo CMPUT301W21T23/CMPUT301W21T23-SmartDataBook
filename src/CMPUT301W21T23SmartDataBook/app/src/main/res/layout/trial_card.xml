@@ -19,6 +19,8 @@
             android:layout_alignParentStart="true"
             android:layout_marginStart="68dp"
             android:layout_marginTop="22dp"
+            android:textSize="17sp"
+            android:textColor="@color/theme_default"
             android:text="Location" />
 
         <TextView
@@ -29,6 +31,8 @@
             android:layout_alignParentStart="true"
             android:layout_marginStart="63dp"
             android:layout_marginTop="19dp"
+            android:textSize="17sp"
+            android:textColor="@color/theme_default"
             android:text="trial value" />
 
         <TextView
@@ -39,6 +43,8 @@
             android:layout_alignParentTop="true"
             android:layout_marginStart="84dp"
             android:layout_marginTop="26dp"
+            android:textSize="17sp"
+            android:textColor="@color/theme_default"
             android:text="date" />
     </RelativeLayout>
 </androidx.constraintlayout.widget.ConstraintLayout>
