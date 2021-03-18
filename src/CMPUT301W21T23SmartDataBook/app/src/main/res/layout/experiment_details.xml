@@ -106,7 +106,7 @@
                 app:layout_constraintRight_toRightOf="parent"></TextView>
 
         <TextView
-            android:id="@+id/Publish"
+            android:id="@+id/Publish_text"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="32dp"
