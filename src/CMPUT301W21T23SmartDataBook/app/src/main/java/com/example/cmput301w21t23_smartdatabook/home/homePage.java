@@ -2,6 +2,7 @@ package com.example.cmput301w21t23_smartdatabook.home;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -44,8 +45,10 @@ public class homePage extends Fragment implements CallBack{
     private static final String AP2 = "AP2";
 
     private ListView experimentList;
-    private static ArrayList<Experiment> experimentDataList;
+    private ArrayList<Experiment> experimentDataList;
     private static ArrayAdapter<Experiment> experimentAdapter;
+
+    int i = 0;
 
     Database database;
 
@@ -107,13 +110,15 @@ public class homePage extends Fragment implements CallBack{
             @Override
             public void getExpDataList(ArrayList<Experiment> DataList) {
 
+                i += 1;
+
                 //experimentDataList with added items ONLY exist inside the scope of this getExpDataList function
                 experimentDataList = DataList;
                 experimentAdapter.addAll(DataList);
 
-//                Log.d("List", "" + experimentDataList.get(0).getExpName());
+                Log.d("List"+i, "" + experimentDataList.size());
 
-                experimentAdapter.notifyDataSetChanged();
+//                experimentAdapter.notifyDataSetChanged();
 
                 experimentList.setOnItemClickListener(new AdapterView.OnItemClickListener() {
                     @Override
@@ -123,12 +128,12 @@ public class homePage extends Fragment implements CallBack{
                         intent.putExtra("position", position); // pass position to ExperimentDetails class
                         intent.putExtra("experiment", exp); // pass experiment object
                         startActivity(intent);
+
                     }
                 });
 
             }//getExpDataList
-        });//fillDataList
-
+        }, experimentAdapter);//fillDataList
 
         final FloatingActionButton addExperimentButton = view.findViewById(R.id.add_experiment_button);
         addExperimentButton.setOnClickListener(new View.OnClickListener() {

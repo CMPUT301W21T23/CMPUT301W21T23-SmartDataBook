@@ -83,7 +83,15 @@ public class Database {
                 });
     }
 
-    public void fillDataList(CallBack callBack) {
+    /**
+     * Get Experiment documents from the database and add its contents to the experimentDataList
+     * to populate the user's fragment page.
+     * (All experiments added to the experimentDataList ONLY exist in the SCOPE of the "onComplete()").
+     * (Since ArrayAdapter<Experiment> experimentAdapter
+     * @author Bosco Chan
+     * @param callBack is the callback instance from a synchronous.
+     */
+    public void fillDataList(CallBack callBack, ArrayAdapter<Experiment> experimentArrayAdapter) {
         db = FirebaseFirestore.getInstance();
         db.collection("Experiments")
                 .get()
@@ -93,6 +101,7 @@ public class Database {
                         if (task.isSuccessful()) {
                             for (QueryDocumentSnapshot document : task.getResult()) {
 //                                Log.d("Success", document.getId() + " => " + document.getData());
+
                                 experimentDataList.add( new Experiment(
                                         document.getData().get("Name").toString(),
                                         document.getData().get("UUID").toString(),
@@ -105,9 +114,11 @@ public class Database {
                                         document.getData().get("Date").toString(),
                                         document.getData().get("ExpID").toString() ));
 
-                                //Get callback to grab the populated dataList
-                                callBack.getExpDataList(experimentDataList);
                             }
+
+                            //Get callback to grab the populated dataList
+                            callBack.getExpDataList(experimentDataList);
+                            experimentArrayAdapter.notifyDataSetChanged();
 
                         } else {
                             Log.d("Failure", "Error getting documents: ", task.getException());
@@ -115,52 +126,7 @@ public class Database {
                         }
                     }
                 });
-
     }
-
-    /**
-     * Get Experiment documents from the database and add its contents to the experimentDataList
-     * to populate the user's fragment page.
-     * (All experiments added to the experimentDataList ONLY exist in the SCOPE of the "onComplete()").
-     * (Since ArrayAdapter<Experiment> experimentAdapter
-     * @author Bosco Chan
-     * @param experimentDataList the array list that holds the all the experiments for a user
-     */
-//    public void fillDataList(ArrayList<Experiment> experimentDataList, ArrayAdapter<Experiment> experimentAdapter, CollectionReference collection) {
-//        db = FirebaseFirestore.getInstance();
-//        collection
-//                .get()
-//                .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
-//                    @Override
-//                    public void onComplete(@NonNull Task<QuerySnapshot> task) {
-//                        if (task.isSuccessful()) {
-//                            for (QueryDocumentSnapshot document : task.getResult()) {
-////                                Log.d("Success", document.getId() + " => " + document.getData());
-//                                experimentDataList.add( new Experiment(
-//                                        document.getData().get("Name").toString(),
-//                                        document.getData().get("UUID").toString(),
-//                                        document.getData().get("Trial Type").toString(),
-//                                        document.getData().get("Description").toString(),
-//                                        giveBoolean( document.getData().get("LocationStatus").toString() ),
-//                                        Integer.parseInt( document.getData().get("Minimum Trials").toString() ),
-//                                        Integer.parseInt( document.getData().get("Maximum Trials").toString() ),
-//                                        giveBoolean( document.getData().get("PublicStatus").toString() ),
-//                                        document.getData().get("Date").toString() ) );
-//
-//                                //Get callback to grab the populated dataList
-//                                callBack.getExpDataList(experimentDataList);
-//                            }
-//
-//                            experimentAdapter.notifyDataSetChanged();
-//
-//                        } else {
-//                            Log.d("Failure", "Error getting documents: ", task.getException());
-//                            callBack.getExpDataList(new ArrayList<>());
-//                        }
-//                    }
-//                });
-//
-//    }
 
     /**
      * Checks if the status of  "PublicStatus" and "LocationStatus" found in the database
@@ -192,6 +158,12 @@ public class Database {
         }
     }
 
+    /**
+     * Add a new experiment object to the Firebase database by assigning a unique experiment ID.
+     * An experiment is added by firstly checking if the collection contains any
+     * @author Bosco Chan
+     * @param newExperiment The experiment object that is to be added to the Firebase database
+     */
     public void addExperimentToDB(Experiment newExperiment, CollectionReference collection) {
 
         db = FirebaseFirestore.getInstance();
@@ -225,72 +197,6 @@ public class Database {
                 });
 
     }//addExperimentToDB
-
-    /**
-     * Add a new experiment object to the Firebase database by assigning a unique experiment ID.
-     * An experiment is added by firstly checking if the collection contains any
-     * @author Bosco Chan
-     * @param newExperiment The experiment object that is to be added to the Firebase database
-     */
-//    public void addExperimentToDB(Experiment newExperiment, CollectionReference collection) {
-//
-//        db = FirebaseFirestore.getInstance();
-//
-//        //Query only gets one document
-//        Query query = collection
-//                .orderBy("ID", Query.Direction.DESCENDING)
-//                .limit(1);
-//
-//        query.get()
-//                .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
-//                    @Override
-//                    public void onComplete(@NonNull Task<QuerySnapshot> task) {
-//
-//                        List documentList = task.getResult().getDocuments();
-//
-//                        int expID;
-//
-//                        HashMap<String, String> data = new HashMap<>();
-//                        // If there’s some data in the EditText field, then we create a new key-value pair.
-//                        data.put("Name", newExperiment.getExpName());
-//                        data.put("Description", newExperiment.getDescription());
-//                        data.put("Trial Type", newExperiment.getTrialType());
-//                        data.put("LocationStatus", giveString( newExperiment.getRegionOn() ) );
-//                        data.put("PublicStatus", giveString( newExperiment.isPublic() ) );
-//                        data.put("UUID", newExperiment.getOwnerUserID());
-//                        data.put("Minimum Trials", "" + newExperiment.getMinTrials() );
-//                        data.put("Maximum Trials", "" + newExperiment.getMaxTrials() );
-//                        data.put("Date", newExperiment.getDate() );
-//
-//                        //If the query successfully returns a document, then it means a doc exists in the collection
-//                        if ( documentList.size() != 0 ){
-//                        DocumentSnapshot document = task.getResult().getDocuments().get(0);
-//                        expID = Integer.parseInt(document.getData().get("ID").toString()) + 1;
-//                        }else{
-//                            expID = 0;
-//                        }//if
-//
-//                        data.put("ID", "" + expID);
-//                        collection
-//                                .document("" + expID )
-//                                .set(data)
-//                                .addOnSuccessListener(new OnSuccessListener<Void>() {
-//                                    @Override
-//                                    public void onSuccess(Void aVoid) {
-//                                        Log.d("Success", "Experiment has been added successfully");
-//                                    }
-//                                })
-//                                .addOnFailureListener(new OnFailureListener() {
-//                                    @Override
-//                                    public void onFailure(@NonNull Exception e) {
-//                                        Log.d("Failure", "Data storing failed");
-//                                    }
-//                                });
-//
-//                    }
-//                });
-//
-//    }//addExperimentToDB
 
     /**
      * Edit user profile by querying the database.

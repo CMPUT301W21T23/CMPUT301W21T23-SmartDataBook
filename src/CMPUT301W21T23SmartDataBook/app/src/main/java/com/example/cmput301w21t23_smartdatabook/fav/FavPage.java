@@ -100,7 +100,7 @@ public class FavPage extends Fragment implements CallBack {
                 });
 
             }//getExpDataList
-        });//fillDataList
+        }, favAdapter);//fillDataList
 
         favList.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
