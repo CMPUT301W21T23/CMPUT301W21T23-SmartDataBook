@@ -1,7 +1,11 @@
 package com.example.cmput301w21t23_smartdatabook;
 
+import android.content.Context;
 import android.util.Log;
+import android.view.View;
 import android.widget.ArrayAdapter;
+import android.widget.EditText;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 
@@ -23,6 +27,8 @@ import com.google.firebase.firestore.QuerySnapshot;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
+import java.util.Objects;
 
 public class Database {
 
@@ -61,6 +67,7 @@ public class Database {
      * Get Experiment documents from the database and add its contents to the experimentDataList
      * to populate the user's fragment page.
      * (All experiments added to the experimentDataList ONLY exist in the SCOPE of the "onComplete()").
+     * (Since ArrayAdapter<Experiment> experimentAdapter
      * @author Bosco Chan
      * @param experimentDataList the array list that holds the all the experiments for a user
      */
@@ -73,7 +80,7 @@ public class Database {
                     public void onComplete(@NonNull Task<QuerySnapshot> task) {
                         if (task.isSuccessful()) {
                             for (QueryDocumentSnapshot document : task.getResult()) {
-                                Log.d("Success", document.getId() + " => " + document.getData());
+//                                Log.d("Success", document.getId() + " => " + document.getData());
                                 experimentDataList.add( new Experiment(
                                         document.getData().get("Name").toString(),
                                         document.getData().get("UUID").toString(),
@@ -190,38 +197,83 @@ public class Database {
                     }
                 });
 
-//
-//        HashMap<String, String> data = new HashMap<>();
-//
-//        // If there’s some data in the EditText field, then we create a new key-value pair.
-//        data.put("Name", newExperiment.getExpName());
-//        data.put("Description", newExperiment.getDescription());
-//        data.put("Trial Type", newExperiment.getTrialType());
-//        data.put("LocationStatus", giveString( newExperiment.getRegionOn() ) );
-//        data.put("PublicStatus", giveString( newExperiment.isPublic() ) );
-//        data.put("UUID", newExperiment.getOwnerUserID());
-//        data.put("Minimum Trials", "" + newExperiment.getMinTrials() );
-//        data.put("Maximum Trials", "" + newExperiment.getMaxTrials() );
-//        data.put("Date", newExperiment.getDate() );
-//        data.put("ID", "" + expID);
-//
-//        collection
-//                .document("" + newExperiment.getExpName() )
-//                .set(data)
-//                .addOnSuccessListener(new OnSuccessListener<Void>() {
-//                    @Override
-//                    public void onSuccess(Void aVoid) {
-//                        Log.d("Success", "Experiment has been added successfully");
-//                    }
-//                })
-//                .addOnFailureListener(new OnFailureListener() {
-//                    @Override
-//                    public void onFailure(@NonNull Exception e) {
-//                        Log.d("Failure", "Data storing failed");
-//                    }
-//                });
-
     }//addExperimentToDB
+
+    /**
+     * Edit user profile by querying the database.
+     * @author Bosco Chan
+     * @param usernameTextField contains the editText field to write username to
+     * @param emailTextField contains the editText field to write email to
+     * @param saveButtonView contains the save button view
+     * @param context contains the given context from which this function is called from
+     */
+    public void editUser(EditText usernameTextField, EditText emailTextField, View saveButtonView, Context context) {
+
+        FirebaseAuth mAuth = FirebaseAuth.getInstance();
+        FirebaseUser currentUser = mAuth.getCurrentUser();
+        db = FirebaseFirestore.getInstance();
+
+        DocumentReference docRef = db.collection("Users").document(currentUser.getUid());
+        docRef.get().addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
+            @Override
+            public void onComplete(@NonNull Task<DocumentSnapshot> task) {
+                if (task.isSuccessful()) {
+                    DocumentSnapshot document = task.getResult();
+                    if (document.exists()) {
+                        Log.d("DocSnapShot", "DocumentSnapshot data: " + document.getData());
+                        Map<String, Object> data = document.getData();
+
+                        if (data.get("UserName").toString() == ""){
+                            usernameTextField.setHint("Username");
+                        }else{
+                            usernameTextField.setHint(data.get("UserName").toString());
+                        }
+
+                        if (data.get("Email").toString().equals("")){
+                            emailTextField.setHint("Email");
+                        }else{
+                            emailTextField.setHint(data.get("Email").toString());
+                        }
+
+                        saveButtonView.setOnClickListener(new View.OnClickListener() {
+                            @Override
+                            public void onClick(View v) {
+                                String username = usernameTextField.getText().toString();
+                                String email = emailTextField.getText().toString();
+
+                                docRef
+                                        .update("UserName", username)
+                                        .addOnSuccessListener(new OnSuccessListener<Void>() {
+                                            @Override
+                                            public void onSuccess(Void aVoid) {
+                                                Toast.makeText(context, "Successfully Updated!", Toast.LENGTH_SHORT).show();
+                                            }
+                                        });
+
+                                docRef
+                                        .update("Email", email)
+                                        .addOnSuccessListener(new OnSuccessListener<Void>() {
+                                            @Override
+                                            public void onSuccess(Void aVoid) {
+                                                Toast.makeText(context, "Successfully Updated!", Toast.LENGTH_SHORT).show();
+                                            }
+                                        });
+
+                                usernameTextField.getText().clear();
+                                emailTextField.getText().clear();
+                            }
+                        });
+
+                    } else {
+                        Log.d("Empty", "No such document");
+                    }
+                } else {
+                    Log.d("Failed", "get failed with ", task.getException());
+                }
+            }
+        });
+
+    }
 
     //Temporarily sign in user as an anonymous user on first sign in
     //Source: firebase guides, https://firebase.google.com
@@ -232,6 +284,8 @@ public class Database {
      * containing their respective "username and contact".
      */
     public void authenticateAnon() {
+
+        FirebaseAuth mAuth = FirebaseAuth.getInstance();
         mAuth.signInAnonymously()
                 .addOnCompleteListener( new OnCompleteListener<AuthResult>() {
                     @Override

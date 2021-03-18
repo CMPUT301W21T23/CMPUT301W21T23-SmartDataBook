@@ -108,10 +108,7 @@ public class HomePageTest {
 
     }
 
-<<<<<<< Updated upstream
-=======
     @Test
->>>>>>> Stashed changes
     public void checkClickSearchBarDropDown(){
         solo.assertCurrentActivity("Wrong Activity", MainActivity.class);
         solo.clickOnView(searchBar);

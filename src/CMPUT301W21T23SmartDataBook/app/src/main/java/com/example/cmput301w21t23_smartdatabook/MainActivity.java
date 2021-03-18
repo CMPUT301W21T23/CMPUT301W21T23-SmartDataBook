@@ -1,46 +1,33 @@
 package com.example.cmput301w21t23_smartdatabook;
 
-import androidx.annotation.NonNull;
-import androidx.appcompat.app.ActionBar;
-import androidx.appcompat.app.AppCompatActivity;
-import androidx.appcompat.widget.SearchView;
-import androidx.appcompat.widget.Toolbar;
-import androidx.fragment.app.Fragment;
-import androidx.fragment.app.FragmentTransaction;
-
 import android.app.SearchManager;
 import android.content.Context;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
-import android.widget.Toast;
+
+import androidx.annotation.NonNull;
+import androidx.appcompat.app.ActionBar;
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.SearchView;
+import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentTransaction;
 
 import com.example.cmput301w21t23_smartdatabook.fav.FavPage;
-import com.example.cmput301w21t23_smartdatabook.settings.SettingsPage;
-import com.google.android.gms.tasks.OnCompleteListener;
-import com.google.android.gms.tasks.OnFailureListener;
-import com.google.android.gms.tasks.OnSuccessListener;
-import com.google.android.gms.tasks.Task;
-import com.google.android.material.bottomnavigation.BottomNavigationView;
-import com.google.firebase.auth.AuthResult;
-import com.google.firebase.auth.FirebaseAuth;
-import com.google.firebase.auth.FirebaseUser;
-import com.google.firebase.firestore.CollectionReference;
-import com.google.firebase.firestore.DocumentReference;
-import com.google.firebase.firestore.DocumentSnapshot;
-import com.google.firebase.firestore.FirebaseFirestore;
-
-import java.util.HashMap;
-
+import com.example.cmput301w21t23_smartdatabook.home.addExpFragment;
 import com.example.cmput301w21t23_smartdatabook.home.homePage;
+import com.example.cmput301w21t23_smartdatabook.settings.SettingsPage;
+import com.google.android.material.bottomnavigation.BottomNavigationView;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.firestore.FirebaseFirestore;
 
 /**
  * the Purpose of this class is to register the user in the database and initialize the bottom tab navigation
  * functionality of the app
  * the bottom tab should get covered if a new acitivity is opened
+ *
  * @Author Afaq, Jayden
  * @Refrences https://androidwave.com/bottom-navigation-bar-android-example/
  */
@@ -53,6 +40,22 @@ public class MainActivity extends AppCompatActivity {
     private FirebaseAuth mAuth;
 
     private ActionBar toolbar;
+    private boolean searchShow;
+
+    // VERY IMPORTANT FUNCTION
+    // searchShow is set to false by default
+    // if fragment is homePage or FavPage, set searchShow to true
+    // invalidateOptionsMenu calls onCreateOptionsMenu
+    @Override
+    public void onAttachFragment(Fragment fragment) {
+        super.onAttachFragment(fragment);
+        searchShow = false;
+        if (fragment instanceof homePage) searchShow = true;
+        if (fragment instanceof FavPage) searchShow = true;
+        if (fragment instanceof addExpFragment) bottomNavigation.setVisibility(View.GONE);
+        else bottomNavigation.setVisibility(View.VISIBLE);
+        invalidateOptionsMenu();
+    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -66,12 +69,12 @@ public class MainActivity extends AppCompatActivity {
 
         toolbar.setTitle("Home");
 
-        openFragment(homePage.newInstance("",""));
+        openFragment(homePage.newInstance("", ""));
 //        openFragment(FavPage.newInstance("",""));
 
         //anonymous authentication testing
         Database database = new Database();
-//        database.authenticateAnon();
+        database.authenticateAnon();
 
     } //onCreate
 
@@ -79,6 +82,8 @@ public class MainActivity extends AppCompatActivity {
     public boolean onCreateOptionsMenu(Menu menu) {
         MenuInflater inflater = getMenuInflater();
         inflater.inflate(R.menu.search_menu, menu);
+
+        menu.findItem(R.id.app_bar_search).setVisible(searchShow);
 
         SearchManager searchManager = (SearchManager) getSystemService(Context.SEARCH_SERVICE);
         SearchView searchView = (SearchView) menu.findItem(R.id.app_bar_search).getActionView();
@@ -105,24 +110,20 @@ public class MainActivity extends AppCompatActivity {
             new BottomNavigationView.OnNavigationItemSelectedListener() {
                 @Override
                 public boolean onNavigationItemSelected(@NonNull MenuItem item) {
-                    View search = findViewById(R.id.app_bar_search);
                     switch (item.getItemId()) {
                         case R.id.home_nav:
                             toolbar.setTitle("Home");
-                            search.setVisibility(View.VISIBLE);
-                            openFragment(homePage.newInstance("",""));
+                            openFragment(homePage.newInstance("", ""));
                             return true;
 
                         case R.id.fav_nav:
                             toolbar.setTitle("Favorites");
-                            search.setVisibility(View.VISIBLE);
-                            openFragment(FavPage.newInstance("",""));
+                            openFragment(FavPage.newInstance("", ""));
                             return true;
 
                         case R.id.settings_nav:
                             toolbar.setTitle("Settings");
-                            search.setVisibility(View.GONE);
-                            openFragment(SettingsPage.newInstance("",""));
+                            openFragment(SettingsPage.newInstance("", ""));
                             return true;
                     }
                     return false;

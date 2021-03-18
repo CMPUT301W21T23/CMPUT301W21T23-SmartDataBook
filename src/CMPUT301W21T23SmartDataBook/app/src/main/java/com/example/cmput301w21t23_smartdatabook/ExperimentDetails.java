@@ -4,6 +4,9 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
+import android.widget.CheckBox;
+import android.widget.NumberPicker;
+import android.widget.RadioButton;
 import android.widget.TextView;
 
 import androidx.appcompat.app.ActionBar;
@@ -112,7 +115,16 @@ public class ExperimentDetails extends AppCompatActivity {
             }
         });
 
-        
+
+        CheckBox publish = findViewById(R.id.Publish);
+        publish.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                publish.setChecked(true);
+
+            }
+
+        });
 
     }
 

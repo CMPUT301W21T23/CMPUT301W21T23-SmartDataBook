@@ -31,6 +31,10 @@ public class CardList extends ArrayAdapter<Experiment> {
     private final Context context;
     private final int index;
 
+    public ArrayList<Experiment> getExperiments() {
+        return experiments;
+    }
+
     Database database = new Database();
     FirebaseFirestore db = FirebaseFirestore.getInstance();
     FirebaseAuth mAuth = FirebaseAuth.getInstance();
