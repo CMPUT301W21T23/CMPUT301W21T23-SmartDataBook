@@ -11,6 +11,7 @@ import android.widget.TextView;
 
 import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.Toolbar;
 
 import com.google.android.material.switchmaterial.SwitchMaterial;
 import com.google.android.material.textfield.TextInputEditText;
@@ -24,7 +25,7 @@ import org.w3c.dom.Text;
  * An experiment's name and description
  * Radio button to choose which type of the trial the experiment has (binomial/ measurement/count/ non-negtaive count trials)
  * switch button that turns on/ off an experiment's trial location.
- * @author Afaq Nabi, Bosco Chan
+ * @author Afaq Nabi, Bosco Chan, Jayden
  * @version 1
  * @see Experiment,
  */
@@ -34,9 +35,10 @@ public class ExperimentDetails extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.experiment_details);
+        setSupportActionBar(findViewById(R.id.app_toolbar));
+        ActionBar toolbar = getSupportActionBar();
 
-        ActionBar toolbar  = getSupportActionBar();
-
+        assert toolbar != null;
         toolbar.setDisplayHomeAsUpEnabled(true);
 
         Intent intent = getIntent();
@@ -112,7 +114,7 @@ public class ExperimentDetails extends AppCompatActivity {
             }
         });
 
-
+        
 
     }
 

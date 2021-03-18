@@ -25,7 +25,6 @@ public class Experiment implements Serializable {
     private boolean requireLocation = false;
     private Location location;
 
-
     /**
      * Public constructor for Experiment without location settings
      * @param expName

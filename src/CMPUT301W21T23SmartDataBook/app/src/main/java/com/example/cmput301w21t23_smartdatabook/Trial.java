@@ -5,6 +5,7 @@ import android.location.Location;
 /**
  * Class Trial
  * The class that constructs the trials
+ * @author Jayden
  */
 public class Trial {
     private boolean geoLocationSettingOn;

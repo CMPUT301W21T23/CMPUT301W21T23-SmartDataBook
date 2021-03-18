@@ -5,246 +5,256 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical">
-    <RelativeLayout
-        android:layout_width="match_parent"
-        android:layout_height="50dp"
-        android:layout_marginBottom="10dp"/>
-    <RelativeLayout
-        android:layout_width="match_parent"
-        android:layout_height="fill_parent">
+
+    <include
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            layout="@layout/app_toolbar" />
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="fill_parent"
+            android:id="@+id/relativeLayout4">
 
         <TextView
-            android:id="@+id/MaxTrials"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_below="@id/ClickedExpRegion"
-            android:layout_alignParentEnd="true"
-            android:layout_marginStart="67dp"
-            android:layout_marginTop="11dp"
-            android:layout_marginEnd="91dp"
-            android:layout_marginBottom="10dp"
-            android:layout_toEndOf="@+id/MinTrials"
-            android:text="Max Trials: "
-            android:textColor="@color/theme_default"
-            android:textSize="17sp">
+                android:id="@+id/MaxTrials"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="67dp"
+                android:layout_marginTop="10dp"
+                android:layout_marginEnd="91dp"
+                android:layout_marginBottom="10dp"
+                android:text="Max Trials: "
+                android:textColor="@color/theme_default"
+                android:textSize="17sp"
+                app:layout_constraintTop_toBottomOf="@id/ClickedExpRegion"
+                app:layout_constraintStart_toEndOf="@+id/MinTrials"
+                app:layout_constraintEnd_toEndOf="parent">
 
         </TextView>
 
         <TextView
-            android:id="@+id/ClickedExpName"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_alignParentStart="true"
-            android:layout_alignParentEnd="true"
-            android:layout_marginStart="128dp"
-            android:layout_marginEnd="128dp"
-            android:layout_marginBottom="10dp"
-            android:text="EXPERIMENT NAME"
-            android:textColor="@color/theme_default"
-            android:textSize="17sp">
+                android:id="@+id/ClickedExpName"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="128dp"
+                android:layout_marginEnd="128dp"
+                android:text="EXPERIMENT NAME"
+                android:textColor="@color/theme_default"
+                android:textSize="17sp"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                android:layout_marginTop="16dp"
+                app:layout_constraintHorizontal_bias="0.0">
 
         </TextView>
 
         <TextView
-            android:id="@+id/ClickedExpRegion"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_below="@+id/ClickedExpName"
-            android:layout_alignParentEnd="true"
-            android:layout_marginTop="35dp"
-            android:layout_marginEnd="175dp"
-            android:layout_marginBottom="10dp"
-            android:text="REGION"
-            android:textColor="@color/theme_default"
-            android:textSize="17sp">
+                android:id="@+id/ClickedExpRegion"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="48dp"
+                android:layout_marginEnd="172dp"
+                android:text="REGION"
+                android:textColor="@color/theme_default"
+                android:textSize="17sp"
+                app:layout_constraintTop_toBottomOf="@+id/ClickedExpName"
+                app:layout_constraintEnd_toEndOf="parent">
 
         </TextView>
 
         <TextView
-            android:id="@+id/MinTrials"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_below="@id/ClickedExpRegion"
-            android:layout_alignParentStart="true"
-            android:layout_marginStart="84dp"
-            android:layout_marginTop="11dp"
-            android:layout_marginBottom="10dp"
-            android:text="Min Trials: "
-            android:textColor="@color/theme_default"
-            android:textSize="17sp">
+                android:id="@+id/MinTrials"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="84dp"
+                android:layout_marginTop="10dp"
+                android:layout_marginBottom="10dp"
+                android:text="Min Trials: "
+                android:textColor="@color/theme_default"
+                android:textSize="17sp"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/ClickedExpRegion">
 
         </TextView>
 
         <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:textSize="17sp"
-            android:text="TYPE OF EXPERIMENT"
-            android:id="@+id/ExpType"
-            android:layout_centerHorizontal="true"
-            android:textColor="@color/theme_default"
-            android:layout_below="@id/MinTrials"
-            android:layout_marginBottom="10dp">
-        </TextView>
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textSize="17sp"
+                android:text="TYPE OF EXPERIMENT"
+                android:id="@+id/ExpType"
+                android:textColor="@color/theme_default"
+                android:layout_marginBottom="10dp"
+                android:layout_marginTop="10dp"
+                app:layout_constraintTop_toBottomOf="@id/MinTrials"
+                app:layout_constraintLeft_toLeftOf="parent"
+                app:layout_constraintRight_toRightOf="parent"></TextView>
 
         <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:textSize="17sp"
-            android:text="DESCRIPTION PARAGRAPH"
-            android:id="@+id/ClickedExpDesc"
-            android:layout_centerHorizontal="true"
-            android:textColor="@color/theme_default"
-            android:layout_below="@id/ExpType"
-            android:layout_marginBottom="10dp">
-        </TextView>
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textSize="17sp"
+                android:text="DESCRIPTION PARAGRAPH"
+                android:id="@+id/ClickedExpDesc"
+                android:textColor="@color/theme_default"
+                android:layout_marginBottom="10dp"
+                android:layout_marginTop="10dp"
+                app:layout_constraintTop_toBottomOf="@id/ExpType"
+                app:layout_constraintLeft_toLeftOf="parent"
+                app:layout_constraintRight_toRightOf="parent"></TextView>
 
         <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:textSize="17sp"
-            android:text="PUBLISH"
-            android:id="@+id/Publish"
-            android:layout_centerHorizontal="true"
-            android:textColor="@color/theme_default"
-            android:layout_below="@id/ClickedExpDesc"
-            android:layout_marginBottom="35dp">
-        </TextView>
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textSize="17sp"
+                android:text="PUBLISH"
+                android:id="@+id/Publish"
+                android:textColor="@color/theme_default"
+                android:layout_marginBottom="35dp"
+                android:layout_marginTop="10dp"
+                app:layout_constraintTop_toBottomOf="@id/ClickedExpDesc"
+                app:layout_constraintLeft_toLeftOf="parent"
+                app:layout_constraintRight_toRightOf="parent"></TextView>
 
         <CheckBox
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="245dp"
-            android:layout_below="@id/ClickedExpDesc"
-            android:layout_marginTop="-12dp"
-            android:layout_marginBottom="10dp">
-        </CheckBox>
-        <Button
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="VIEW STATS"
-            app:backgroundTint="@null"
-            android:background="@color/theme_default"
-            android:layout_below="@id/Publish"
-            android:layout_centerHorizontal="true"
-            android:id="@+id/ViewStatsBTN"
-            android:layout_marginBottom="30dp">
-        </Button>
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="245dp"
+                android:layout_marginTop="10dp"
+                android:layout_marginBottom="10dp"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/ClickedExpDesc"
+                android:id="@+id/checkBox4"></CheckBox>
 
         <Button
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="UPLOAD TRIALS"
-            app:backgroundTint="@null"
-            android:background="@color/theme_default"
-            android:layout_below="@id/ViewStatsBTN"
-            android:layout_centerHorizontal="true"
-            android:id="@+id/UploadTrialsBTN"
-            android:layout_marginBottom="40dp">
-        </Button>
-        <androidx.appcompat.widget.AppCompatImageButton
-            android:layout_width="25dp"
-            android:layout_height="25dp"
-            android:background="@color/white"
-            android:src="@drawable/ic_map_button_foreground"
-            app:backgroundTint="@null"
-            android:layout_below="@id/UploadTrialsBTN"
-            android:layout_marginLeft="40dp"
-            android:id="@+id/mapButton"
-            android:layout_marginBottom="10dp"
-            />
-
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="SHOW MAP"
-            android:textColor="@color/theme_default"
-            android:layout_below="@id/UploadTrialsBTN"
-            android:layout_toRightOf="@id/mapButton"
-            android:layout_marginLeft="10dp"
-            android:id="@+id/ShowMap"
-            android:layout_marginBottom="10dp"
-            android:clickable="true"
-            >
-        </TextView>
-
-        <androidx.appcompat.widget.AppCompatImageButton
-            android:layout_width="25dp"
-            android:layout_height="25dp"
-            android:background="@color/white"
-            android:src="@drawable/ic_generate_code_foreground"
-            app:backgroundTint="@null"
-            android:layout_below="@id/mapButton"
-            android:layout_marginLeft="40dp"
-            android:id="@+id/generateCodeBTN"
-            android:layout_marginBottom="10dp"
-            />
-
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="GENERATE/REGISTER CODE"
-            android:textColor="@color/theme_default"
-            android:layout_below="@id/ShowMap"
-            android:layout_toRightOf="@id/generateCodeBTN"
-            android:layout_marginLeft="10dp"
-            android:layout_marginTop="8dp"
-            android:id="@+id/generateCodeTextView"
-            >
-        </TextView>
-
-        <androidx.appcompat.widget.AppCompatImageButton
-            android:layout_width="25dp"
-            android:layout_height="25dp"
-            android:background="@color/white"
-            android:src="@drawable/ic_ask_question"
-            app:backgroundTint="@null"
-            android:layout_below="@id/generateCodeBTN"
-            android:layout_marginLeft="40dp"
-            android:id="@+id/askQuestionsBTN"
-            android:layout_marginBottom="15dp"
-            />
-
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="ASK QUESTIONS"
-            android:textColor="@color/theme_default"
-            android:layout_below="@id/generateCodeTextView"
-            android:layout_toRightOf="@id/askQuestionsBTN"
-            android:layout_marginLeft="10dp"
-            android:layout_marginTop="15dp"
-            android:id="@+id/askQuestionsTextView"
-            >
-        </TextView>
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="VIEW STATS"
+                app:backgroundTint="@null"
+                android:background="@color/theme_default"
+                android:id="@+id/ViewStatsBTN"
+                android:layout_marginBottom="30dp"
+                android:layout_marginTop="35dp"
+                app:layout_constraintTop_toBottomOf="@id/Publish"
+                app:layout_constraintLeft_toLeftOf="parent"
+                app:layout_constraintRight_toRightOf="parent"></Button>
 
         <Button
-            android:id="@+id/endExp"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_below="@id/askQuestionsBTN"
-            android:layout_marginLeft="40dp"
-            android:background="@color/theme_default"
-            android:text="END EXPERIMENT"
-            android:textColor="@color/white"
-            app:backgroundTint="@null">
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="UPLOAD TRIALS"
+                app:backgroundTint="@null"
+                android:background="@color/theme_default"
+                android:id="@+id/UploadTrialsBTN"
+                android:layout_marginBottom="40dp"
+                android:layout_marginTop="30dp"
+                app:layout_constraintTop_toBottomOf="@id/ViewStatsBTN"
+                app:layout_constraintLeft_toLeftOf="parent"
+                app:layout_constraintRight_toRightOf="parent"></Button>
+
+        <androidx.appcompat.widget.AppCompatImageButton
+                android:layout_width="25dp"
+                android:layout_height="25dp"
+                android:background="@color/white"
+                android:src="@drawable/ic_map_button_foreground"
+                app:backgroundTint="@null"
+                android:layout_marginLeft="40dp"
+                android:id="@+id/mapButton"
+                android:layout_marginBottom="10dp"
+                app:layout_constraintStart_toStartOf="parent"
+                android:layout_marginTop="40dp"
+                app:layout_constraintTop_toBottomOf="@id/UploadTrialsBTN" />
+
+        <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="SHOW MAP"
+                android:textColor="@color/theme_default"
+                android:layout_marginLeft="10dp"
+                android:id="@+id/ShowMap"
+                android:layout_marginBottom="10dp"
+                android:clickable="true"
+                app:layout_constraintLeft_toRightOf="@id/mapButton"
+                android:layout_marginTop="40dp"
+                app:layout_constraintTop_toBottomOf="@id/UploadTrialsBTN"></TextView>
+
+        <androidx.appcompat.widget.AppCompatImageButton
+                android:layout_width="25dp"
+                android:layout_height="25dp"
+                android:background="@color/white"
+                android:src="@drawable/ic_generate_code_foreground"
+                app:backgroundTint="@null"
+                android:layout_marginLeft="40dp"
+                android:id="@+id/generateCodeBTN"
+                android:layout_marginBottom="10dp"
+                app:layout_constraintStart_toStartOf="parent"
+                android:layout_marginTop="10dp"
+                app:layout_constraintTop_toBottomOf="@id/mapButton" />
+
+        <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="GENERATE/REGISTER CODE"
+                android:textColor="@color/theme_default"
+                android:layout_marginLeft="10dp"
+                android:layout_marginTop="10dp"
+                android:id="@+id/generateCodeTextView"
+                app:layout_constraintLeft_toRightOf="@id/generateCodeBTN"
+                app:layout_constraintTop_toBottomOf="@id/ShowMap"></TextView>
+
+        <androidx.appcompat.widget.AppCompatImageButton
+                android:layout_width="25dp"
+                android:layout_height="25dp"
+                android:background="@color/white"
+                android:src="@drawable/ic_ask_question"
+                app:backgroundTint="@null"
+                android:layout_marginLeft="40dp"
+                android:id="@+id/askQuestionsBTN"
+                android:layout_marginBottom="15dp"
+                app:layout_constraintStart_toStartOf="parent"
+                android:layout_marginTop="10dp"
+                app:layout_constraintTop_toBottomOf="@id/generateCodeBTN" />
+
+        <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="ASK QUESTIONS"
+                android:textColor="@color/theme_default"
+                android:layout_marginLeft="10dp"
+                android:layout_marginTop="15dp"
+                android:id="@+id/askQuestionsTextView"
+                app:layout_constraintLeft_toRightOf="@id/askQuestionsBTN"
+                app:layout_constraintTop_toBottomOf="@id/generateCodeTextView"></TextView>
+
+        <Button
+                android:id="@+id/endExp"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="40dp"
+                android:background="@color/theme_default"
+                android:text="END EXPERIMENT"
+                android:textColor="@color/white"
+                app:backgroundTint="@null"
+                app:layout_constraintStart_toStartOf="parent"
+                android:layout_marginTop="15dp"
+                app:layout_constraintTop_toBottomOf="@id/askQuestionsBTN">
 
         </Button>
 
         <TextView
-            android:id="@+id/owner"
-            android:layout_width="258dp"
-            android:layout_height="wrap_content"
-            android:layout_below="@+id/ClickedExpName"
-            android:layout_alignParentStart="true"
-            android:layout_alignParentEnd="true"
-            android:layout_marginStart="91dp"
-            android:layout_marginTop="1dp"
-            android:layout_marginEnd="62dp"
-            android:text="Owner"
-            android:textColor="@color/theme_default"
-            android:textSize="17sp" />
+                android:id="@+id/owner"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
+                android:text="Owner"
+                android:textColor="@color/theme_default"
+                android:textSize="17sp"
+                app:layout_constraintTop_toBottomOf="@+id/ClickedExpName"
+                app:layout_constraintLeft_toLeftOf="parent"
+                app:layout_constraintRight_toRightOf="parent" />
 
-    </RelativeLayout>
+    </androidx.constraintlayout.widget.ConstraintLayout>
 
 </LinearLayout>

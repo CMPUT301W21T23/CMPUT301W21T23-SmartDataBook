@@ -16,7 +16,7 @@
             android:layout_width="200dp"
             android:layout_height="200dp"
             android:layout_centerHorizontal="true"
-            android:src="@drawable/ic_default_profile_pic" />
+            app:srcCompat="@drawable/ic_default_profile_pic" />
     </RelativeLayout>
 
     <LinearLayout

@@ -8,7 +8,8 @@
         android:id="@+id/fav_nav"
         android:enabled="true"
         android:icon="@drawable/ic_heart_nav"
-        android:title="Favourite"/>
+        android:title="Favourite"
+        />
     <item
         android:id="@+id/settings_nav"
         android:enabled="true"
