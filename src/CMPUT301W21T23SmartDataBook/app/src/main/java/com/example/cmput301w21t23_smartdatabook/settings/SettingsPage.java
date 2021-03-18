@@ -14,6 +14,7 @@ import android.widget.Toast;
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 
+import com.example.cmput301w21t23_smartdatabook.Database;
 import com.example.cmput301w21t23_smartdatabook.R;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnSuccessListener;
@@ -38,6 +39,7 @@ public class SettingsPage extends Fragment {
     public EditText emailTextField;
     public Button saveButtonView;
     public FirebaseUser currentUser;
+    Database database = new Database();
 
     public SettingsPage(){
 
@@ -63,74 +65,12 @@ public class SettingsPage extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.settings, container, false);
+
         usernameTextField = (EditText) view.findViewById(R.id.usernameTextField);
         emailTextField = (EditText) view.findViewById(R.id.emailTextField);
         saveButtonView = (Button) view.findViewById(R.id.saveButtonView);
-        db = FirebaseFirestore.getInstance();
-        mAuth = FirebaseAuth.getInstance();
-        currentUser = mAuth.getCurrentUser();
 
-        DocumentReference docRef = db.collection("Users").document(currentUser.getUid());
-        docRef.get().addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
-            @Override
-            public void onComplete(@NonNull Task<DocumentSnapshot> task) {
-                if (task.isSuccessful()) {
-                    DocumentSnapshot document = task.getResult();
-                    if (document.exists()) {
-                        Log.d(TAG1, "DocumentSnapshot data: " + document.getData());
-                        Map<String, Object> data = document.getData();
-
-                        if (data.get("UserName").toString() == ""){
-                            usernameTextField.setHint("Username");
-                        }else{
-                            usernameTextField.setHint(data.get("UserName").toString());
-                        }
-
-                        if (data.get("Email").toString().equals("")){
-                            emailTextField.setHint("Email");
-                        }else{
-                            emailTextField.setHint(data.get("Email").toString());
-                        }
-
-                        saveButtonView.setOnClickListener(new View.OnClickListener() {
-                            @Override
-                            public void onClick(View v) {
-                                String username = usernameTextField.getText().toString();
-                                String email = emailTextField.getText().toString();
-
-                                docRef
-                                        .update("UserName", username)
-                                        .addOnSuccessListener(new OnSuccessListener<Void>() {
-                                            @Override
-                                            public void onSuccess(Void aVoid) {
-                                                Toast.makeText(getContext(), "Successfully Updated!", Toast.LENGTH_SHORT).show();
-                                            }
-                                        });
-
-                                docRef
-                                        .update("Email", email)
-                                        .addOnSuccessListener(new OnSuccessListener<Void>() {
-                                            @Override
-                                            public void onSuccess(Void aVoid) {
-                                                Toast.makeText(getContext(), "Successfully Updated!", Toast.LENGTH_SHORT).show();
-                                            }
-                                        });
-
-                                usernameTextField.getText().clear();
-                                emailTextField.getText().clear();
-                            }
-                        });
-
-                    } else {
-                        Log.d(TAG2, "No such document");
-                    }
-                } else {
-                    Log.d(TAG3, "get failed with ", task.getException());
-                }
-            }
-        });
-
-
+        database.editUser(usernameTextField, emailTextField, saveButtonView, getContext());
 
         return view;
     }

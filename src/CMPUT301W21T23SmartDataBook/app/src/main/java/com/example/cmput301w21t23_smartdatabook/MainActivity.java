@@ -71,7 +71,7 @@ public class MainActivity extends AppCompatActivity {
 
         //anonymous authentication testing
         Database database = new Database();
-//        database.authenticateAnon();
+        database.authenticateAnon();
 
     } //onCreate
 
