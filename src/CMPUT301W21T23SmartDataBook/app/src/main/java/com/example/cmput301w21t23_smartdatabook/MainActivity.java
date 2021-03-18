@@ -6,6 +6,7 @@ import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
+import android.view.View;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.ActionBar;
@@ -15,6 +16,7 @@ import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentTransaction;
 
 import com.example.cmput301w21t23_smartdatabook.fav.FavPage;
+import com.example.cmput301w21t23_smartdatabook.home.addExpFragment;
 import com.example.cmput301w21t23_smartdatabook.home.homePage;
 import com.example.cmput301w21t23_smartdatabook.settings.SettingsPage;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
@@ -50,6 +52,8 @@ public class MainActivity extends AppCompatActivity {
         searchShow = false;
         if (fragment instanceof homePage) searchShow = true;
         if (fragment instanceof FavPage) searchShow = true;
+        if (fragment instanceof addExpFragment) bottomNavigation.setVisibility(View.GONE);
+        else bottomNavigation.setVisibility(View.VISIBLE);
         invalidateOptionsMenu();
     }
 
