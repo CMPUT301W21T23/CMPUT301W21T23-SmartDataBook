@@ -91,11 +91,7 @@ public class ExperimentDetails extends AppCompatActivity {
 //               // get the name of the experiment
                 // get the user's
 
-
-
-
-                intent.putExtra("experiment name", experiment.getExpName()); // pass position to ExperimentDetails class
-                intent.putExtra("experiment", exp); // pass experiment object
+                intent.putExtra("experiment", experiment); // pass experiment object
                 startActivity(trialIntent);
 
             }
