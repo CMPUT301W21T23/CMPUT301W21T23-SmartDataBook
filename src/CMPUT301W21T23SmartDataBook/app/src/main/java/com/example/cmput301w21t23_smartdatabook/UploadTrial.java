@@ -35,7 +35,7 @@ public class UploadTrial extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.upload_trial);
 
-
+        Database db = new Database();
 
         setSupportActionBar(findViewById(R.id.app_toolbar));
         ActionBar toolbar = getSupportActionBar();

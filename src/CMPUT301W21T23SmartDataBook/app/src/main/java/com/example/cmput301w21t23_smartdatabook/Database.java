@@ -51,6 +51,28 @@ public class Database {
 
     //Task will be executed here. Done in the background. Called Asynchronous task.
 
+    public void deleteTrialFromDB(Experiment experiment, String parentCollection){
+        db = FirebaseFirestore.getInstance();
+        final CollectionReference allExpCollection = db.collection(parentCollection);
+        allExpCollection
+                .document(experiment.getExpID())
+                .collection("Trials")
+                .document("Trial#1")
+                .delete()
+                .addOnSuccessListener(new OnSuccessListener<Void>() {
+                    @Override
+                    public void onSuccess(Void aVoid) {
+                        Log.d("Success", "Trial has been deleted");
+                    }
+                })
+                .addOnFailureListener(new OnFailureListener() {
+                    @Override
+                    public void onFailure(@NonNull Exception e) {
+                        Log.d("Failure", "Data storing failed");
+                    }
+                });
+    }
+
     public void addTrialToDB(Experiment experiment, String parentCollection){
 
         db = FirebaseFirestore.getInstance();
@@ -87,30 +109,49 @@ public class Database {
      */
     public void fillDataList(CallBack callBack, ArrayAdapter<Experiment> experimentArrayAdapter, CollectionReference collection) {
         db = FirebaseFirestore.getInstance();
+
         collection
                 .get()
                 .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
                     @Override
                     public void onComplete(@NonNull Task<QuerySnapshot> task) {
+                        mAuth = FirebaseAuth.getInstance();
+                        FirebaseUser currentUser = mAuth.getCurrentUser();
 
                         experimentDataList.clear();
+                        String coll1 = db.collection("Experiments").getPath();
 
                         if (task.isSuccessful()) {
                             for (QueryDocumentSnapshot document : task.getResult()) {
-
-//                                Log.d("Success", document.getId() + " => " + document.getData());
-
-                                experimentDataList.add( new Experiment(
-                                        document.getData().get("Name").toString(),
-                                        document.getData().get("UUID").toString(),
-                                        document.getData().get("Trial Type").toString(),
-                                        document.getData().get("Description").toString(),
-                                        giveBoolean( document.getData().get("LocationStatus").toString() ),
-                                        Integer.parseInt( document.getData().get("Minimum Trials").toString() ),
-                                        Integer.parseInt( document.getData().get("Maximum Trials").toString() ),
-                                        giveBoolean( document.getData().get("PublicStatus").toString() ),
-                                        document.getData().get("Date").toString(),
-                                        document.getData().get("ExpID").toString() ));
+                                Log.d("second", String.valueOf(giveBoolean( document.getData().get("PublicStatus").toString())));
+                                if (coll1.equals(collection.getPath()) && giveBoolean( document.getData().get("PublicStatus").toString())){
+                                    experimentDataList.add( new Experiment(
+                                            document.getData().get("Name").toString(),
+                                            document.getData().get("UUID").toString(),
+                                            document.getData().get("Trial Type").toString(),
+                                            document.getData().get("Description").toString(),
+                                            giveBoolean( document.getData().get("LocationStatus").toString() ),
+                                            Integer.parseInt( document.getData().get("Minimum Trials").toString() ),
+                                            Integer.parseInt( document.getData().get("Maximum Trials").toString() ),
+                                            giveBoolean( document.getData().get("PublicStatus").toString() ),
+                                            document.getData().get("Date").toString(),
+                                            document.getData().get("ExpID").toString()));
+                                }
+//                                Log.d("else if: ", )
+                                else if(collection.getPath().equals(db.collection("Users").document(currentUser.getUid()).collection("Favorites").getPath())){
+                                    experimentDataList.add( new Experiment(
+                                            document.getData().get("Name").toString(),
+                                            document.getData().get("UUID").toString(),
+                                            document.getData().get("Trial Type").toString(),
+                                            document.getData().get("Description").toString(),
+                                            giveBoolean( document.getData().get("LocationStatus").toString() ),
+                                            Integer.parseInt( document.getData().get("Minimum Trials").toString() ),
+                                            Integer.parseInt( document.getData().get("Maximum Trials").toString() ),
+                                            giveBoolean( document.getData().get("PublicStatus").toString() ),
+                                            document.getData().get("Date").toString(),
+                                            document.getData().get("ExpID").toString()));
+                                }
+                                Log.d("Success", document.getId() + " => " + document.getData());
 
                             }
 
@@ -134,11 +175,7 @@ public class Database {
      * @return a boolean that is either "true" or "false"
      */
     public boolean giveBoolean (String status) {
-        if (status == "On"){
-            return true;
-        }else{
-            return false;
-        }
+        return status.equals("On");
     }
 
     /**
@@ -149,7 +186,7 @@ public class Database {
      * @return a string that is either "on" or "off"
      */
     public String giveString (boolean condition) {
-        if (condition == true) {
+        if (condition) {
             return "On";
         }else{
             return "Off";
@@ -163,6 +200,10 @@ public class Database {
      * @param newExperiment The experiment object that is to be added to the Firebase database
      */
     public void addExperimentToDB(Experiment newExperiment, CollectionReference collection) {
+        mAuth = FirebaseAuth.getInstance();
+        FirebaseUser currentUser = mAuth.getCurrentUser();
+
+        CollectionReference favPath = db.collection("Users").document(currentUser.getUid()).collection("Favorites");
 
         db = FirebaseFirestore.getInstance();
         HashMap<String, String> data = new HashMap<>();
@@ -180,6 +221,20 @@ public class Database {
 
         collection
                 .document(newExperiment.getExpID())
+                .set(data)
+                .addOnSuccessListener(new OnSuccessListener<Void>() {
+                    @Override
+                    public void onSuccess(Void aVoid) {
+                        Log.d("Success", "Experiment has been added successfully");
+                    }
+                })
+                .addOnFailureListener(new OnFailureListener() {
+                    @Override
+                    public void onFailure(@NonNull Exception e) {
+                        Log.d("Failure", "Data storing failed");
+                    }
+                });
+        favPath.document(newExperiment.getExpID())
                 .set(data)
                 .addOnSuccessListener(new OnSuccessListener<Void>() {
                     @Override

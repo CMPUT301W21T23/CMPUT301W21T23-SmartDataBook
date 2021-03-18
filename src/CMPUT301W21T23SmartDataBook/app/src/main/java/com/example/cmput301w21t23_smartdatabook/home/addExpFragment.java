@@ -45,8 +45,8 @@ public class addExpFragment extends Fragment {
     private static final int nonNegativeID = 12;
     private static final int measurementID = 13;
 
-    private boolean checkLocationOn;
-    private boolean checkPublicOn;
+    private boolean checkLocationOn = true;
+    private boolean checkPublicOn = true;
 
     private Experiment returnedExperiment;
 
