@@ -65,7 +65,7 @@
         android:id="@+id/fav"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginLeft="300dp"
+        android:layout_marginLeft="340dp"
 
         >
 
@@ -78,6 +78,15 @@
         android:layout_marginLeft="10dp"
         android:layout_marginTop="-50dp"
         android:text="Comments" />
+
+    <TextView
+        android:id="@+id/follow"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="1.7in"
+        android:layout_marginTop="-36dp"
+        android:text="follow"
+        android:textSize="20dp" />
 
 
 </LinearLayout>
