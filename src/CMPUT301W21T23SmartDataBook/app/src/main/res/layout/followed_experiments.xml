@@ -7,9 +7,9 @@
     tools:context=".MainActivity"
     android:orientation="vertical">
 
-    <RelativeLayout
-        android:layout_width="match_parent"
-        android:layout_height="60dp" />
+<!--    <RelativeLayout-->
+<!--        android:layout_width="match_parent"-->
+<!--        android:layout_height="60dp" />-->
 
     <ListView
             android:id="@+id/followedExpListView"
@@ -17,14 +17,14 @@
             android:layout_height="614dp"
         />
 
-    <LinearLayout
-        xmlns:android="http://schemas.android.com/apk/res/android"
-        xmlns:app="http://schemas.android.com/apk/res-auto"
-        android:layout_width="match_parent"
-        android:layout_height="fill_parent"
-        android:gravity="bottom">
+<!--    <LinearLayout-->
+<!--        xmlns:android="http://schemas.android.com/apk/res/android"-->
+<!--        xmlns:app="http://schemas.android.com/apk/res-auto"-->
+<!--        android:layout_width="match_parent"-->
+<!--        android:layout_height="fill_parent"-->
+<!--        android:gravity="bottom">-->
 
-    </LinearLayout>
+<!--    </LinearLayout>-->
 
 
 </androidx.appcompat.widget.LinearLayoutCompat>

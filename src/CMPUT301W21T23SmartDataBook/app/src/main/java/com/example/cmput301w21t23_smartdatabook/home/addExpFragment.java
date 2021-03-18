@@ -85,7 +85,7 @@ public class addExpFragment extends Fragment {
         maxTrials.setMinValue(2);
         maxTrials.setMaxValue(50);
         minTrials.setMinValue(1);
-        minTrials.setMaxValue(25);
+        minTrials.setMaxValue(50);
 
         // Commented out for avoiding errors
 //      TODO: grab the input in the text fields and add to the firebase

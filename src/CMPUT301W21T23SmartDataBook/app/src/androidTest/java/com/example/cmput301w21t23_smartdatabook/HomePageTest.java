@@ -104,7 +104,18 @@ public class HomePageTest {
         solo.clickOnView(searchBar);
         solo.enterText(0,"Grain");
         solo.sleep(6000);
+        // TODO: check the output and click one
 
+    }
+
+    public void checkClickSearchBarDropDown(){
+        solo.assertCurrentActivity("Wrong Activity", MainActivity.class);
+        solo.clickOnView(searchBar);
+        solo.enterText(0,"Grain");
+        solo.sleep(6000);
+        // TODO: click an experiment and check the experiment details activity
+
+        solo.assertCurrentActivity("Wrong Activity", ExperimentDetails.class);
     }
 
 
