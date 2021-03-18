@@ -90,13 +90,19 @@ public class CardList extends ArrayAdapter<Experiment> {
 
             // https://developer.android.com/reference/android/widget/CheckBox
             CheckBox follow = view.findViewById(R.id.fav);
-            if (follow.isChecked()) {
-                final CollectionReference favExpCollection = db.collection("Users")
-                        .document(Objects.requireNonNull(mAuth.getUid()))
-                        .collection("Favorites");
+            follow.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
 
-                database.addExperimentToDB(experiment, favExpCollection);
-            }
+                    final CollectionReference favExpCollection = db.collection("Users")
+                            .document(Objects.requireNonNull(mAuth.getUid()))
+                            .collection("Favorites");
+
+                    database.addExperimentToDB(experiment, favExpCollection);
+
+                    follow.setChecked(true);
+                }
+            });
 
             return view;
 

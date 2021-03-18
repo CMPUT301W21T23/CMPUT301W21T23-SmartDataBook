@@ -119,7 +119,7 @@ public class homePage extends Fragment {
                 addExpFragment addExpFrag = new addExpFragment();
                 addExpFrag.setTargetFragment(homePage.this, 0);
                 FragmentTransaction ft = getActivity().getSupportFragmentManager().beginTransaction();
-                ft.replace(R.id.container, addExpFrag, "addExpFragment");
+                ft.add(R.id.container, addExpFrag, "addExpFragment");
                 ft.addToBackStack("addExpFragment");
                 ft.commit();
             }
