@@ -10,7 +10,6 @@ import android.widget.CheckBox;
 import android.widget.TextView;
 
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.Objects;
 
 import androidx.annotation.NonNull;

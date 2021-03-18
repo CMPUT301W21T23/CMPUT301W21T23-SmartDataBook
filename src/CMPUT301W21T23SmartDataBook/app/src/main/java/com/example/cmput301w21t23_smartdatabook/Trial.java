@@ -16,6 +16,7 @@ public class Trial {
     private Location location;
 
 
+
     // attributes for count(non-negative count)
     public int count;
 

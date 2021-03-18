@@ -4,7 +4,6 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
-import android.widget.EditText;
 import android.widget.TextView;
 
 import androidx.appcompat.app.ActionBar;
@@ -27,6 +26,7 @@ public class ExperimentDetails extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.experiment_details);
+
         setSupportActionBar(findViewById(R.id.app_toolbar));
         ActionBar toolbar = getSupportActionBar();
 
@@ -78,20 +78,11 @@ public class ExperimentDetails extends AppCompatActivity {
         upload.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                // TODO: new upload activity
-//              connect button, create new intent to xml file, need a new class upload trials
-
                 // create new intent with this
                 // https://stackoverflow.com/questions/30965292/cannot-resolve-constructor-android-intent
-
-                //  the new activity needs
                 Intent trialIntent;
                 trialIntent = new Intent(ExperimentDetails.this, UploadTrial.class);
-
-//               // get the name of the experiment
-                // get the user's
-
-                intent.putExtra("experiment", experiment); // pass experiment object
+                trialIntent.putExtra("experiment", experiment); // pass experiment object
                 startActivity(trialIntent);
 
             }

@@ -38,6 +38,10 @@
 
         </activity>
 
+        <activity android:name=".UploadTrial">
+
+        </activity>
+
     </application>
 
 </manifest>
