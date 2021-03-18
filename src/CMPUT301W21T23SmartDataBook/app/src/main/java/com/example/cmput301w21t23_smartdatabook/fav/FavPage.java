@@ -30,6 +30,8 @@ public class FavPage extends Fragment implements CallBack {
     private static ArrayAdapter<Experiment> favAdapter;
     private static ArrayList<Experiment> favDataList;
 
+    FirebaseFirestore db = FirebaseFirestore.getInstance();
+    FirebaseAuth mAuth = FirebaseAuth.getInstance();
     Database database;
 
     //Implement interrupted exception throw on database object instantiation
@@ -100,7 +102,7 @@ public class FavPage extends Fragment implements CallBack {
                 });
 
             }//getExpDataList
-        }, favAdapter);//fillDataList
+        }, favAdapter, db.collection("Users").document(mAuth.getUid()).collection("Favorites"));//fillDataList
 
         favList.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
