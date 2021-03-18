@@ -94,6 +94,8 @@ public class homePage extends Fragment {
 //        experimentDataList.add(new Experiment("second", "123", "Binomial", "testtrial", false, 30, 60, true, "03/05/2021"));
 
         experimentAdapter = new CardList(getContext(), experimentDataList,1);
+        ArrayList<Experiment> someList = ((CardList) experimentAdapter).getExperiments();
+        Log.d("Some", String.valueOf(someList.size()));
         experimentList.setAdapter(experimentAdapter);
 
         database.fillDataList(experimentDataList, experimentAdapter, db.collection("Experiments"));

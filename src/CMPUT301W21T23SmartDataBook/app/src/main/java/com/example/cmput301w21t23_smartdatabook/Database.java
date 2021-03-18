@@ -76,7 +76,7 @@ public class Database {
                     public void onComplete(@NonNull Task<QuerySnapshot> task) {
                         if (task.isSuccessful()) {
                             for (QueryDocumentSnapshot document : task.getResult()) {
-                                Log.d("Success", document.getId() + " => " + document.getData());
+//                                Log.d("Success", document.getId() + " => " + document.getData());
                                 experimentDataList.add( new Experiment(
                                         document.getData().get("Name").toString(),
                                         document.getData().get("UUID").toString(),
