@@ -8,16 +8,16 @@ import java.time.format.DateTimeFormatter;
  * @author Bosco Chan
  * @References https://www.javatpoint.com/java-get-current-date
  */
-public class GetDate {
+public class Date {
 
     DateTimeFormatter dtf;
     LocalDateTime currentDate;
     String formattedDate;
 
     /**
-     * Public Constructor on the GetDate class
+     * Public Constructor on the Date class
      */
-    public GetDate() {
+    public Date() {
         this.dtf = DateTimeFormatter.ofPattern("yyyy/MM/dd");
         this.currentDate = LocalDateTime.now();
         this.formattedDate = dtf.format(currentDate);
@@ -27,7 +27,7 @@ public class GetDate {
      * functions obtains the formattedDate
      * @return formattedDate: a string that consists the formatted date
      */
-    public String getFormattedDate() {
+    public String getDate() {
         return formattedDate;
     }
 

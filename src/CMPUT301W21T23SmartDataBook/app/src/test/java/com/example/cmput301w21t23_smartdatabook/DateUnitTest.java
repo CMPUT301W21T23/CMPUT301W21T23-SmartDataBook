@@ -4,28 +4,28 @@ import org.junit.jupiter.api.Test;
 import static org.junit.jupiter.api.Assertions.*;
 
 /**
- * Test class to assure GetDate class returns a correctly formatted date
+ * Test class to assure Date class returns a correctly formatted date
  * string in form of
  */
-public class GetDateUnitTest {
+public class DateUnitTest {
 
     /**
      * Creates a string of the current date-realtime for testing
      * @return mockCurrentDate - A string holding the current date in the form of (yyyy/MM/dd)
      */
     private String mockGetDate() {
-        GetDate getDate = new GetDate();
-        String mockCurrentDate = getDate.getFormattedDate();
+        Date date = new Date();
+        String mockCurrentDate = date.getFormattedDate();
         return mockCurrentDate;
     }
 
     /**
-     * Test the consistency of the getFormattedDate getter in GetDate
+     * Test the consistency of the getFormattedDate getter in Date
      */
     @Test
     void testGetFormattedDate() {
-        GetDate getDate = new GetDate();
-        String currentDate = getDate.getFormattedDate();
+        Date date = new Date();
+        String currentDate = date.getFormattedDate();
         String mockCurrentDate = mockGetDate();
         assertEquals(currentDate, mockCurrentDate);
     }

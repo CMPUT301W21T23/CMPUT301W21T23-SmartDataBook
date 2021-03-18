@@ -15,14 +15,12 @@ import android.widget.Toast;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
 
+import com.example.cmput301w21t23_smartdatabook.Date;
 import com.example.cmput301w21t23_smartdatabook.Experiment;
-import com.example.cmput301w21t23_smartdatabook.GetDate;
-import com.example.cmput301w21t23_smartdatabook.MainActivity;
 import com.example.cmput301w21t23_smartdatabook.R;
 import com.google.android.material.switchmaterial.SwitchMaterial;
 import com.google.android.material.textfield.TextInputLayout;
 import com.google.firebase.auth.FirebaseAuth;
-import com.google.firebase.firestore.FirebaseFirestore;
 
 import java.util.Objects;
 
@@ -119,7 +117,7 @@ public class addExpFragment extends Fragment {
             public void onClick(View v) {
 
                 //Instantiate currentDate object to get the current date
-                GetDate currentDate = new GetDate();
+                Date currentDate = new Date();
 
                 String expName = "" + name.getEditText().getText();
                 String expDescription = "" + description.getEditText().getText();
@@ -132,9 +130,11 @@ public class addExpFragment extends Fragment {
                 }else if (trialType == null) {
                     Toast.makeText(getContext(), "A trial type needs to be selected.", Toast.LENGTH_SHORT).show();
                 }else{
+
                     mAuth = FirebaseAuth.getInstance();
 
-                    returnedExperiment = new Experiment(expName, Objects.requireNonNull(mAuth.getCurrentUser()).getUid(), trialType, expDescription, checkLocationOn, minTrials.getValue(), maxTrials.getValue(), checkPublicOn, currentDate.getFormattedDate());
+                    returnedExperiment = new Experiment(expName, Objects.requireNonNull(mAuth.getCurrentUser()).getUid(), trialType, expDescription, checkLocationOn, minTrials.getValue(), maxTrials.getValue(), checkPublicOn, currentDate.getDate() );
+
                     //Source: Shweta Chauhan; https://stackoverflow.com/users/6021469/shweta-chauhan
                     //Code: https://stackoverflow.com/questions/40085608/how-to-pass-data-from-one-fragment-to-previous-fragment
                     Intent intent = new Intent(getActivity(), addExpFragment.class);
