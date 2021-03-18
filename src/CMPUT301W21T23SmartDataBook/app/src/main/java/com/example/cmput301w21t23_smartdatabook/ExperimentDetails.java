@@ -2,21 +2,13 @@ package com.example.cmput301w21t23_smartdatabook;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.View;
 import android.widget.Button;
-import android.widget.NumberPicker;
-import android.widget.RadioButton;
+import android.widget.EditText;
 import android.widget.TextView;
 
 import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.appcompat.widget.Toolbar;
-
-import com.google.android.material.switchmaterial.SwitchMaterial;
-import com.google.android.material.textfield.TextInputEditText;
-
-import org.w3c.dom.Text;
 
 /**
  * Class:ExperimentDetails
@@ -87,6 +79,25 @@ public class ExperimentDetails extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 // TODO: new upload activity
+//              connect button, create new intent to xml file, need a new class upload trials
+
+                // create new intent with this
+                // https://stackoverflow.com/questions/30965292/cannot-resolve-constructor-android-intent
+
+                //  the new activity needs
+                Intent trialIntent;
+                trialIntent = new Intent(ExperimentDetails.this, UploadTrial.class);
+
+//               // get the name of the experiment
+                // get the user's
+
+
+
+
+                intent.putExtra("experiment name", experiment.getExpName()); // pass position to ExperimentDetails class
+                intent.putExtra("experiment", exp); // pass experiment object
+                startActivity(trialIntent);
+
             }
         });
 
