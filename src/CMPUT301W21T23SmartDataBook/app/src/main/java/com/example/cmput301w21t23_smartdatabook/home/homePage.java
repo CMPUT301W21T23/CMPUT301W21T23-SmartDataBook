@@ -27,6 +27,10 @@ import com.google.firebase.firestore.CollectionReference;
 import com.google.firebase.firestore.FirebaseFirestore;
 
 import java.util.ArrayList;
+import java.util.HashSet;
+import java.util.List;
+import java.util.Set;
+import java.util.stream.Collectors;
 
 /**
  * Class: homePage
@@ -104,6 +108,9 @@ public class homePage extends Fragment implements CallBack{
 
         experimentList.setAdapter(experimentAdapter);
 
+        experimentAdapter.clear();
+        experimentDataList.clear();
+
         //Source: Erwin Kurniawan A; https://stackoverflow.com/users/7693494/erwin-kurniawan-a
         //Code: https://stackoverflow.com/questions/61930061/how-to-return-a-value-from-oncompletelistener-while-creating-user-with-email-and
         database.fillDataList(new CallBack() {
@@ -114,11 +121,15 @@ public class homePage extends Fragment implements CallBack{
 
                 //experimentDataList with added items ONLY exist inside the scope of this getExpDataList function
                 experimentDataList = DataList;
-                experimentAdapter.addAll(DataList);
+                ArrayList<Experiment> intersectedList = (ArrayList<Experiment>) experimentDataList.stream()
+                        .distinct()
+                        .collect(Collectors.toList());
 
-                Log.d("List"+i, "" + experimentDataList.size());
+                experimentAdapter.addAll(intersectedList);
 
-//                experimentAdapter.notifyDataSetChanged();
+                Log.d("List"+i, "" + intersectedList.size());
+
+                experimentAdapter.notifyDataSetChanged();
 
                 experimentList.setOnItemClickListener(new AdapterView.OnItemClickListener() {
                     @Override
@@ -193,4 +204,13 @@ public class homePage extends Fragment implements CallBack{
         experimentDataList = DataList;
     }
 
+    public ArrayList<Experiment> getDistinctList(ArrayList<Experiment> experimentDataList, ArrayList<Experiment> DataList) {
+
+        ArrayList<Experiment> intersectedList = new ArrayList<>();
+
+        for (Experiment experiment : DataList){
+            if ()
+        }
+
+    }
 }//homePage
