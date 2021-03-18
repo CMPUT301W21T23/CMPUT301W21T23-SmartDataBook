@@ -108,9 +108,6 @@ public class homePage extends Fragment implements CallBack{
 
         experimentList.setAdapter(experimentAdapter);
 
-        experimentAdapter.clear();
-        experimentDataList.clear();
-
         //Source: Erwin Kurniawan A; https://stackoverflow.com/users/7693494/erwin-kurniawan-a
         //Code: https://stackoverflow.com/questions/61930061/how-to-return-a-value-from-oncompletelistener-while-creating-user-with-email-and
         database.fillDataList(new CallBack() {
@@ -121,13 +118,10 @@ public class homePage extends Fragment implements CallBack{
 
                 //experimentDataList with added items ONLY exist inside the scope of this getExpDataList function
                 experimentDataList = DataList;
-                ArrayList<Experiment> intersectedList = (ArrayList<Experiment>) experimentDataList.stream()
-                        .distinct()
-                        .collect(Collectors.toList());
+                experimentAdapter.clear();
+                experimentAdapter.addAll(experimentDataList);
 
-                experimentAdapter.addAll(intersectedList);
-
-                Log.d("List"+i, "" + intersectedList.size());
+                Log.d("List"+i, "" + experimentDataList.size());
 
                 experimentAdapter.notifyDataSetChanged();
 
@@ -208,9 +202,8 @@ public class homePage extends Fragment implements CallBack{
 
         ArrayList<Experiment> intersectedList = new ArrayList<>();
 
-        for (Experiment experiment : DataList){
-            if ()
-        }
-
+        for (Experiment experiment : DataList){ }
+        return new ArrayList<>();
     }
+
 }//homePage
