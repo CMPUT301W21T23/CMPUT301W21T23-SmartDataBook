@@ -52,8 +52,8 @@ public class MainActivity extends AppCompatActivity {
         searchShow = false;
         if (fragment instanceof homePage) searchShow = true;
         if (fragment instanceof FavPage) searchShow = true;
-//        if (fragment instanceof addExpFragment) bottomNavigation.setVisibility(View.GONE);
-//        else bottomNavigation.setVisibility(View.VISIBLE);
+        if (fragment instanceof addExpFragment) bottomNavigation.setVisibility(View.GONE);
+        else bottomNavigation.setVisibility(View.VISIBLE);
         invalidateOptionsMenu();
     }
 

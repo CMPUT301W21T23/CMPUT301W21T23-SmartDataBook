@@ -52,8 +52,6 @@ public class homePage extends Fragment implements CallBack{
     private ArrayList<Experiment> experimentDataList;
     private static ArrayAdapter<Experiment> experimentAdapter;
 
-    int i = 0;
-
     Database database;
 
     //Implement interrupted exception throw on database object instantiation
@@ -114,14 +112,11 @@ public class homePage extends Fragment implements CallBack{
             @Override
             public void getExpDataList(ArrayList<Experiment> DataList) {
 
-                i += 1;
-
                 //experimentDataList with added items ONLY exist inside the scope of this getExpDataList function
                 experimentDataList = DataList;
-                experimentAdapter.clear();
                 experimentAdapter.addAll(experimentDataList);
 
-                Log.d("List"+i, "" + experimentDataList.size());
+//                Log.d("List"+i, "" + experimentDataList.size());
 
                 experimentAdapter.notifyDataSetChanged();
 
@@ -138,7 +133,7 @@ public class homePage extends Fragment implements CallBack{
                 });
 
             }//getExpDataList
-        }, experimentAdapter);//fillDataList
+        }, experimentAdapter, db.collection("Experiments"));//fillDataList
 
         final FloatingActionButton addExperimentButton = view.findViewById(R.id.add_experiment_button);
         addExperimentButton.setOnClickListener(new View.OnClickListener() {
@@ -196,14 +191,6 @@ public class homePage extends Fragment implements CallBack{
     @Override
     public void getExpDataList(ArrayList<Experiment> DataList) {
         experimentDataList = DataList;
-    }
-
-    public ArrayList<Experiment> getDistinctList(ArrayList<Experiment> experimentDataList, ArrayList<Experiment> DataList) {
-
-        ArrayList<Experiment> intersectedList = new ArrayList<>();
-
-        for (Experiment experiment : DataList){ }
-        return new ArrayList<>();
     }
 
 }//homePage

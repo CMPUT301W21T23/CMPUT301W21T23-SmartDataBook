@@ -49,12 +49,6 @@ public class Database {
 
     public Database (){};
 
-//    public void doAsyncTask() throws InterruptedException {
-//        System.out.println("Starting task");
-//        Thread.sleep(10000);
-//        callBack.getExpDataList(new ArrayList<>());
-//    }
-
     //Task will be executed here. Done in the background. Called Asynchronous task.
 
     public void addTrialToDB(Experiment experiment, String parentCollection){
@@ -91,9 +85,9 @@ public class Database {
      * @author Bosco Chan
      * @param callBack is the callback instance from a synchronous.
      */
-    public void fillDataList(CallBack callBack, ArrayAdapter<Experiment> experimentArrayAdapter) {
+    public void fillDataList(CallBack callBack, ArrayAdapter<Experiment> experimentArrayAdapter, CollectionReference collection) {
         db = FirebaseFirestore.getInstance();
-        db.collection("Experiments")
+        collection
                 .get()
                 .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
                     @Override
@@ -103,6 +97,7 @@ public class Database {
 
                         if (task.isSuccessful()) {
                             for (QueryDocumentSnapshot document : task.getResult()) {
+
 //                                Log.d("Success", document.getId() + " => " + document.getData());
 
                                 experimentDataList.add( new Experiment(
