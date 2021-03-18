@@ -57,6 +57,7 @@ public class addExpFragment extends Fragment {
         View view = inflater.inflate(R.layout.new_experiment_location_on, container, false);
 
         ((AppCompatActivity) getActivity()).getSupportActionBar().setTitle("Add new experiment");
+        ((AppCompatActivity) getActivity()).getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
         NumberPicker maxTrials = view.findViewById(R.id.maxTrialsNumberPicker);
         NumberPicker minTrials = view.findViewById(R.id.minTrialsNumberPicker);
