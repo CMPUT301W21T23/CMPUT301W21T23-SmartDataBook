@@ -2,15 +2,25 @@ package com.example.cmput301w21t23_smartdatabook;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.CheckBox;
-import android.widget.NumberPicker;
-import android.widget.RadioButton;
 import android.widget.TextView;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
+
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.OnFailureListener;
+import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.android.gms.tasks.Task;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.firestore.DocumentSnapshot;
+import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.firestore.Source;
 
 /**
  * Class:ExperimentDetails
@@ -51,8 +61,8 @@ public class ExperimentDetails extends AppCompatActivity {
             }
         });
 
-        TextView expName = findViewById(R.id.ClickedExpName);
-        expName.setText(experiment.getExpName());
+        TextView expDate = findViewById(R.id.ClickedExpdate);
+        expDate.setText(experiment.getDate());
 
         TextView description = findViewById(R.id.ClickedExpDesc);
         description.setText(experiment.getDescription());
@@ -115,13 +125,49 @@ public class ExperimentDetails extends AppCompatActivity {
             }
         });
 
-
         CheckBox publish = findViewById(R.id.Publish);
         publish.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                publish.setChecked(true);
+                FirebaseAuth mAuth = FirebaseAuth.getInstance();
+                FirebaseUser currentUser = mAuth.getCurrentUser();
 
+                FirebaseFirestore db = FirebaseFirestore.getInstance();
+                db.collection("Experiments")
+                        .document(experiment.getExpID()).update("PublicStatus", "On")
+                        .addOnSuccessListener(new OnSuccessListener<Void>() {
+                    @Override
+                    public void onSuccess(Void aVoid) {
+                        Log.d("Message", "DocumentSnapshot successfully updated!");
+
+                    }
+                })
+                        .addOnFailureListener(new OnFailureListener() {
+                            @Override
+                            public void onFailure(@NonNull Exception e) {
+                                Log.w("message", "Error updating document", e);
+                            }
+                        });
+
+                db.collection("Users").document(currentUser.getUid())
+                        .collection("Favorites")
+                        .document(experiment.getExpID())
+                        .update("PublicStatus", "On")
+                        .addOnSuccessListener(new OnSuccessListener<Void>() {
+                            @Override
+                            public void onSuccess(Void aVoid) {
+                                Log.d("Message", "DocumentSnapshot successfully updated!");
+
+                            }
+                        })
+                        .addOnFailureListener(new OnFailureListener() {
+                            @Override
+                            public void onFailure(@NonNull Exception e) {
+                                Log.w("message", "Error updating document", e);
+                            }
+                        });
+
+//                publish.setChecked(true);
             }
 
         });
