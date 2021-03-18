@@ -119,12 +119,12 @@ public class Database {
                         FirebaseUser currentUser = mAuth.getCurrentUser();
 
                         experimentDataList.clear();
+                            
                         String coll1 = db.collection("Experiments").getPath();
 
                         if (task.isSuccessful()) {
                             for (QueryDocumentSnapshot document : task.getResult()) {
-                                Log.d("second", String.valueOf(giveBoolean( document.getData().get("PublicStatus").toString())));
-                                if (coll1.equals(collection.getPath()) && giveBoolean( document.getData().get("PublicStatus").toString())){
+                                if ( (coll1.equals(collection.getPath()) && giveBoolean( document.getData().get("PublicStatus").toString())) || (collection.getPath().equals(db.collection("Users").document(currentUser.getUid()).collection("Favorites").getPath())) ){
                                     experimentDataList.add( new Experiment(
                                             document.getData().get("Name").toString(),
                                             document.getData().get("UUID").toString(),
@@ -137,20 +137,7 @@ public class Database {
                                             document.getData().get("Date").toString(),
                                             document.getData().get("ExpID").toString()));
                                 }
-//                                Log.d("else if: ", )
-                                else if(collection.getPath().equals(db.collection("Users").document(currentUser.getUid()).collection("Favorites").getPath())){
-                                    experimentDataList.add( new Experiment(
-                                            document.getData().get("Name").toString(),
-                                            document.getData().get("UUID").toString(),
-                                            document.getData().get("Trial Type").toString(),
-                                            document.getData().get("Description").toString(),
-                                            giveBoolean( document.getData().get("LocationStatus").toString() ),
-                                            Integer.parseInt( document.getData().get("Minimum Trials").toString() ),
-                                            Integer.parseInt( document.getData().get("Maximum Trials").toString() ),
-                                            giveBoolean( document.getData().get("PublicStatus").toString() ),
-                                            document.getData().get("Date").toString(),
-                                            document.getData().get("ExpID").toString()));
-                                }
+
                                 Log.d("Success", document.getId() + " => " + document.getData());
 
                             }
