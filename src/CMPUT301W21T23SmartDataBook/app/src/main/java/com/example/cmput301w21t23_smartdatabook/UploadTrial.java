@@ -1,5 +1,6 @@
 package com.example.cmput301w21t23_smartdatabook;
 
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
@@ -10,6 +11,7 @@ import android.widget.ListView;
 import android.widget.TextView;
 
 import androidx.appcompat.app.ActionBar;
+import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.google.firebase.auth.FirebaseAuth;
@@ -81,6 +83,21 @@ public class UploadTrial extends AppCompatActivity {
 
         trialArrayAdapter = new TrialList( trialDataList, getBaseContext());
         trialsList.setAdapter(trialArrayAdapter);
+
+        trialsList.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                AlertDialog.Builder builder = new AlertDialog.Builder(getBaseContext());
+                builder.setTitle("Delete Trial?");
+                builder.setNegativeButton("cancel",  null)
+                        .setPositiveButton("Delete", new DialogInterface.OnClickListener() {
+                            @Override
+                            public void onClick(DialogInterface dialog, int which) {
+
+                            }
+                        }).create();
+            }
+        });
 
     }
 }
