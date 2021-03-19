@@ -132,10 +132,6 @@ public class HomePageTest {
 
         //Sign out and sign into a new UUID
         String pastUUID = currentUser.getUid();
-        Log.d("Old", pastUUID);
-        currentUser.delete();
-        currentUser.getUid();
-        Log.d("New", currentUser.getUid() );
 
         //Check that a new user is actually created
 //        assertFalse( pastUUID == newUUID);
