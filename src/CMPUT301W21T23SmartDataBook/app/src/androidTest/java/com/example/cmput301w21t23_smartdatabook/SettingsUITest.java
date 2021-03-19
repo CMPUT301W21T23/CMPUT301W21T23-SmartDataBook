@@ -13,6 +13,10 @@ import org.junit.After;
 import org.junit.Before;
 import org.junit.Rule;
 import org.junit.Test;
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertFalse;
+
+import static org.junit.Assert.assertEquals;
 
 public class SettingsUITest {
 
@@ -41,10 +45,14 @@ public class SettingsUITest {
 
     @Test
     public void checkNameEditField(){
+        final String usernameDefault = "Username";
+        final String emailDefault = "Email";
+
         solo.assertCurrentActivity("Wrong Activity", MainActivity.class);
-        final TextView nameTextView = (TextView) solo.getCurrentActivity().findViewById(R.id.usernameTextField);
+        solo.clickOnScreen(780, 1943); //"Settings" Menu Item
+        final TextView usernameTextView = (TextView) solo.getCurrentActivity().findViewById(R.id.usernameTextField);
         final TextView emailTextView = (TextView) solo.getCurrentActivity().findViewById(R.id.emailTextField);
-        
+        assertEquals(usernameDefault, usernameTextView.getText().toString());
     }
 
 

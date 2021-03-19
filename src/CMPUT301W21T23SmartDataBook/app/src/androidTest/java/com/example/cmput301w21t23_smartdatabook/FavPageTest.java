@@ -87,6 +87,8 @@ public class FavPageTest {
         solo.assertCurrentActivity("Wrong Activity", MainActivity.class);
         solo.sleep(1000);
         solo.clickOnScreen(444, 1925); //"Favorite" Menu Item
+        solo.sleep(1000);
+
         solo.clickInList(0);
         solo.assertCurrentActivity("Wrong Activity", ExperimentDetails.class);
         solo.goBack();
