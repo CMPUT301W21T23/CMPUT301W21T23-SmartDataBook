@@ -33,6 +33,12 @@ import java.util.List;
 import java.util.Map;
 import java.util.Objects;
 
+/**
+ * class: Database
+ * This class consists database, it has the attributes call back which handles synchronous and asychronous functions, and an arraylist of experiment
+ * It passes/ takes information to firestore
+ * @author Bosco Chan
+ */
 public class Database {
 
     private CallBack callBack;
@@ -43,14 +49,29 @@ public class Database {
 
     int expID = 0;
 
+    /**
+     * Constructor of the database class
+     * @param callBack
+     * @throws InterruptedException
+     * @author Bosco Chan
+     */
     public Database(CallBack callBack) throws InterruptedException {
         this.callBack = callBack;
     }
 
+    /**
+     * Main function does most of database's tasks
+     * @author Bosco Chan
+     */
     public Database (){};
 
     //Task will be executed here. Done in the background. Called Asynchronous task.
 
+    /**
+     * This function delete trials from the database
+     * @param experiment
+     * @param parentCollection
+     */
     public void deleteTrialFromDB(Experiment experiment, String parentCollection){
         db = FirebaseFirestore.getInstance();
         final CollectionReference allExpCollection = db.collection(parentCollection);
@@ -73,6 +94,12 @@ public class Database {
                 });
     }
 
+    /**
+     * This function adds trials from the database
+     * @author Bosco Chan
+     * @param experiment
+     * @param parentCollection
+     */
     public void addTrialToDB(Experiment experiment, String parentCollection){
 
         db = FirebaseFirestore.getInstance();
@@ -321,6 +348,7 @@ public class Database {
     /**
      * Authenticates a new app user anonymously and generates a "User document" for the user
      * containing their respective "username and contact".
+     * @author Bosco Chan
      */
     public void authenticateAnon() {
 
@@ -385,8 +413,13 @@ public class Database {
     }//authenticationAnon
 
 
-
-
+    /**
+     * This function acts as getters and setters for public status
+     * @param coll
+     * @param onOff
+     * @param experiment
+     * @author Bosco Chan
+     */
     public void publicNotPublic(CollectionReference coll, String onOff, Experiment experiment){
         FirebaseAuth mAuth = FirebaseAuth.getInstance();
         FirebaseUser currentUser = mAuth.getCurrentUser();

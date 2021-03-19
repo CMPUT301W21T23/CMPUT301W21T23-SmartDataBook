@@ -5,7 +5,8 @@ import android.location.Location;
 /**
  * Class Trial
  * The class that constructs the trials
- * @author Jayden
+ * The class has the location, the experiment type,  number of counts, number of passes, number of fails, input
+ * @author Jayden, Krutik, Natnail
  */
 public class Trial {
     private boolean geoLocationSettingOn;

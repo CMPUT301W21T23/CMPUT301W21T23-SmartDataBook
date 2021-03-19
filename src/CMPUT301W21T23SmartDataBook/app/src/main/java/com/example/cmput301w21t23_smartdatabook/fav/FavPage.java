@@ -22,6 +22,11 @@ import com.google.firebase.firestore.FirebaseFirestore;
 
 import java.util.ArrayList;
 
+/**
+ * class: FavPage
+ * This class consists the page of the user's favourite experiments
+ * @author Afaq Nabi, Bosco Chan
+ */
 public class FavPage extends Fragment implements CallBack {
     private static final String AP1 = "AP1";
     private static final String AP2 = "AP2";
@@ -46,6 +51,12 @@ public class FavPage extends Fragment implements CallBack {
     public FavPage(){
     }
 
+    /**
+     * new instance method of FavPage
+     * @param p1
+     * @param p2
+     * @return fragment
+     */
     public static FavPage newInstance(String p1, String p2){
         FavPage fragment = new FavPage();
         Bundle args = new Bundle();
@@ -53,6 +64,10 @@ public class FavPage extends Fragment implements CallBack {
         return fragment;
     }
 
+    /**
+     * oncreate method of FavPage
+     * @param savedInstanceState
+     */
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -62,6 +77,13 @@ public class FavPage extends Fragment implements CallBack {
         }
     }
 
+    /**
+     * this emthod create the view of the user's favouritte experiments page
+     * @param inflater
+     * @param container
+     * @param savedInstanceState
+     * @return View, the view of the page
+     */
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         // Inflate the layout for this fragment
