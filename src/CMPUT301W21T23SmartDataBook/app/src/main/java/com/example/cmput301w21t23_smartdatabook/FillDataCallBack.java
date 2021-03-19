@@ -10,6 +10,6 @@ import java.util.ArrayList;
  * and Database.java (Asynchronous).
  * @author Bosco Chan
  */
-public interface CallBack {
+public interface FillDataCallBack {
     void getExpDataList(ArrayList<Experiment> DataList);
 }
