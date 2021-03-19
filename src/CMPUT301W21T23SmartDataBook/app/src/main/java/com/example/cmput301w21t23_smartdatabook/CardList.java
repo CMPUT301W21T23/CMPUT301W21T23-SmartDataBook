@@ -98,11 +98,13 @@ public class CardList extends ArrayAdapter<Experiment> {
             });
 
             // https://developer.android.com/reference/android/widget/CheckBox
+//            Log.d("test", currentUser.getUid());
             CheckBox follow = view.findViewById(R.id.fav);
             DocumentReference ref = db.collection("Users")
                     .document(currentUser.getUid())
                     .collection("Favorites")
                     .document(experiment.getExpID());
+
             ref.get().addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
                 @Override
                 public void onComplete(@NonNull Task<DocumentSnapshot> task) {
@@ -111,14 +113,10 @@ public class CardList extends ArrayAdapter<Experiment> {
                         if (document.exists()) {
                             follow.setChecked(true);
                             Log.d("test", "DocumentSnapshot data: " + document.getString("ExpID"));
-                        }  //                            follow.setChecked(false);
-                        //                            Log.d(TAG, "No such document");
-
-                    }  //                        Log.d(TAG, "get failed with ", task.getException());
-
+                        }
+                    }
                 }
             });
-
 
             follow.setOnClickListener(new View.OnClickListener() {
                 @Override
@@ -129,10 +127,8 @@ public class CardList extends ArrayAdapter<Experiment> {
                             .collection("Favorites");
 
                     database.addExperimentToDB(experiment, favExpCollection);
-
                 }
             });
-
             return view;
 
         } else if (index == 2){

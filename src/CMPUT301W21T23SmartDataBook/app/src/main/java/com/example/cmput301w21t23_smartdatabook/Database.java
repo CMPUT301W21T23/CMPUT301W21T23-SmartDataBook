@@ -191,6 +191,8 @@ public class Database {
         mAuth = FirebaseAuth.getInstance();
         FirebaseUser currentUser = mAuth.getCurrentUser();
 
+        Log.d("test", currentUser.getUid());
+
         CollectionReference favPath = db.collection("Users").document(currentUser.getUid()).collection("Favorites");
 
         db = FirebaseFirestore.getInstance();
