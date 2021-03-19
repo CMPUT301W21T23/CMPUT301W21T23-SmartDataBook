@@ -17,6 +17,7 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toTopOf="parent"
-            app:popupTheme="@style/Theme.CMPUT301W21T23SmartDataBook" />
+            app:popupTheme="@style/Theme.CMPUT301W21T23SmartDataBook"
+            app:titleTextColor="@color/white"/>
 
 </androidx.constraintlayout.widget.ConstraintLayout>

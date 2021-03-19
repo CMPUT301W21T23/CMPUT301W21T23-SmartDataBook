@@ -2,12 +2,17 @@ package com.example.cmput301w21t23_smartdatabook;
 
 import android.app.SearchManager;
 import android.content.Context;
+import android.graphics.Point;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.TextView;
+import android.widget.Toast;
 
+import androidx.annotation.Dimension;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
@@ -21,6 +26,7 @@ import com.example.cmput301w21t23_smartdatabook.home.homePage;
 import com.example.cmput301w21t23_smartdatabook.settings.SettingsPage;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.firestore.FirebaseFirestore;
 
 /**
@@ -28,39 +34,58 @@ import com.google.firebase.firestore.FirebaseFirestore;
  * functionality of the app
  * the bottom tab should get covered if a new acitivity is opened
  *
- * @Author Afaq, Jayden
+ * @Author Afaq, Jayden, Natnail Ghebresilasie
  * @Refrences https://androidwave.com/bottom-navigation-bar-android-example/
  */
 
-public class MainActivity extends AppCompatActivity {
+public class MainActivity extends AppCompatActivity implements SignCallBack {
 
     BottomNavigationView bottomNavigation;
 
+    FirebaseAuth mAuth = FirebaseAuth.getInstance();
     private FirebaseFirestore db;
-    private FirebaseAuth mAuth;
 
     private ActionBar toolbar;
     private boolean searchShow;
+
+    Database database;
+
+    //Implement interrupted exception throw on database object instantiation
+    {
+        try {
+            database = new Database(this);
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
+    }
 
     // VERY IMPORTANT FUNCTION
     // searchShow is set to false by default
     // if fragment is homePage or FavPage, set searchShow to true
     // invalidateOptionsMenu calls onCreateOptionsMenu
+
+    /**
+     * This method runs when new fragment is attached to this activity
+     * @param fragment
+     */
     @Override
     public void onAttachFragment(Fragment fragment) {
         super.onAttachFragment(fragment);
-        searchShow = false;
-        if (fragment instanceof homePage) searchShow = true;
+        searchShow = fragment instanceof homePage;
         if (fragment instanceof FavPage) searchShow = true;
         if (fragment instanceof addExpFragment) bottomNavigation.setVisibility(View.GONE);
-        else bottomNavigation.setVisibility(View.VISIBLE);
         invalidateOptionsMenu();
     }
 
+    /**
+     * This method runs on the creation of the main activity
+     * @param savedInstanceState
+     */
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
         setSupportActionBar(findViewById(R.id.app_toolbar));
         toolbar = getSupportActionBar();
 
@@ -69,15 +94,26 @@ public class MainActivity extends AppCompatActivity {
 
         toolbar.setTitle("Home");
 
-        openFragment(homePage.newInstance("", ""));
-//        openFragment(FavPage.newInstance("",""));
-
         //anonymous authentication testing
-        Database database = new Database();
         database.authenticateAnon();
+
+//        openFragment(homePage.newInstance("", ""));
+//        openFragment(FavPage.newInstance("",""));
 
     } //onCreate
 
+    @Override
+    public void onDestroy() {
+        super.onDestroy();
+        FirebaseAuth.getInstance().getCurrentUser().delete();
+    }
+
+
+    /**
+     * THis method set up menu's search icon
+     * @param menu
+     * @return
+     */
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         MenuInflater inflater = getMenuInflater();
@@ -99,6 +135,10 @@ public class MainActivity extends AppCompatActivity {
         return super.onSearchRequested();
     }
 
+    /**
+     * This function supports opening fragments
+     * @param fragment
+     */
     public void openFragment(Fragment fragment) {
         final FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
         transaction.replace(R.id.container, fragment);
@@ -129,5 +169,13 @@ public class MainActivity extends AppCompatActivity {
                     return false;
                 }
             };
+
+    @Override
+    public void updateHomeScreen() {
+        final FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
+        transaction.replace(R.id.container, homePage.newInstance("", ""));
+        transaction.addToBackStack(null);
+        transaction.commit();
+    }
 
 }//mainActivity

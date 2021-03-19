@@ -2,15 +2,25 @@ package com.example.cmput301w21t23_smartdatabook;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.CheckBox;
-import android.widget.NumberPicker;
-import android.widget.RadioButton;
 import android.widget.TextView;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
+
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.OnFailureListener;
+import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.android.gms.tasks.Task;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.firestore.DocumentSnapshot;
+import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.firestore.Source;
 
 /**
  * Class:ExperimentDetails
@@ -30,6 +40,10 @@ public class ExperimentDetails extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.experiment_details);
 
+        Database database = new Database();
+        FirebaseAuth mAuth = FirebaseAuth.getInstance();
+        FirebaseUser currentUser = mAuth.getCurrentUser();
+
         setSupportActionBar(findViewById(R.id.app_toolbar));
         ActionBar toolbar = getSupportActionBar();
 
@@ -41,7 +55,6 @@ public class ExperimentDetails extends AppCompatActivity {
 
         toolbar.setTitle(experiment.getExpName());
 
-
         TextView Owner = findViewById(R.id.owner);
         Owner.setText(experiment.getOwnerUserID());
         Owner.setOnClickListener(new View.OnClickListener() {
@@ -51,8 +64,8 @@ public class ExperimentDetails extends AppCompatActivity {
             }
         });
 
-        TextView expName = findViewById(R.id.ClickedExpName);
-        expName.setText(experiment.getExpName());
+        TextView expDate = findViewById(R.id.ClickedExpdate);
+        expDate.setText(experiment.getDate());
 
         TextView description = findViewById(R.id.ClickedExpDesc);
         description.setText(experiment.getDescription());
@@ -115,17 +128,34 @@ public class ExperimentDetails extends AppCompatActivity {
             }
         });
 
-
+        Button endExp = findViewById(R.id.endExp);
         CheckBox publish = findViewById(R.id.Publish);
+        TextView publish_text = findViewById(R.id.Publish_text);
+        publish.setChecked(experiment.isPublic());
+        if (currentUser.getUid().equals(experiment.getOwnerUserID())){
+            endExp.setVisibility(View.VISIBLE);
+            publish.setVisibility(View.VISIBLE);
+            publish_text.setVisibility(View.VISIBLE);
+        }
+
         publish.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                publish.setChecked(true);
-
+                String onOff;
+                if (publish.isChecked()){
+                    onOff = "On";
+                }
+                else{
+                    onOff = "Off";
+                }
+                Log.d("ONOFF", onOff);
+                FirebaseFirestore db = FirebaseFirestore.getInstance();
+                database.publicNotPublic(db.collection("Experiments"), onOff, experiment);
+                database.publicNotPublic((db.collection("Users")
+                        .document(currentUser.getUid())
+                        .collection("Favorites")),onOff, experiment);
             }
-
         });
-
     }
 
 }

@@ -10,6 +10,7 @@ import java.io.Serializable;
  * @author Afaq Nabi, Bosco Chan
  */
 public class Experiment implements Serializable {
+    private String expID;
     private String expName;
     private String ownerUserID;
     private String trialType;
@@ -20,6 +21,7 @@ public class Experiment implements Serializable {
     private int minTrials;
     private int maxTrials;
     private boolean isPublic;
+
     // private Trial Array<Trial>;
     private String date;
     private boolean requireLocation = false;
@@ -37,7 +39,7 @@ public class Experiment implements Serializable {
      * @param isPublic
      * @param date
      */
-    public Experiment(String expName, String ownerUserID, String trialType, String description, boolean regionOn, int minTrials, int maxTrials, boolean isPublic, String date) {
+    public Experiment(String expName, String ownerUserID, String trialType, String description, boolean regionOn, int minTrials, int maxTrials, boolean isPublic, String date, String expID) {
         this.expName = expName;
         this.ownerUserID = ownerUserID;
         this.trialType = trialType;
@@ -47,6 +49,7 @@ public class Experiment implements Serializable {
         this.maxTrials = maxTrials;
         this.isPublic = isPublic;
         this.date = date;
+        this.expID = expID;
     }
 
     /**
@@ -255,6 +258,13 @@ public class Experiment implements Serializable {
         this.location = location;
     }
 
+    public String getExpID() {
+        return expID;
+    }
+
+    public void setExpID(String expID) {
+        this.expID = expID;
+    }
 }//Experiment
 
 

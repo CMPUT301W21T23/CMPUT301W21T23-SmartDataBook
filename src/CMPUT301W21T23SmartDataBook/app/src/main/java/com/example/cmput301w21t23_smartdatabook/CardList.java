@@ -7,7 +7,9 @@ import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.CheckBox;
+import android.widget.CompoundButton;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import java.util.ArrayList;
 import java.util.Objects;
@@ -15,13 +17,20 @@ import java.util.Objects;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.OnFailureListener;
+import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.firestore.CollectionReference;
+import com.google.firebase.firestore.DocumentReference;
+import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
 
 /**
  * This classs is simply to display the information from the experiment list adapters onto the screen
- * @Author Afaq, Bosco
+ * @Author Afaq, Bosco, Krutik
  * @return view the view of the card which contains a couple buttons and brief information about the experiment
  */
 
@@ -35,9 +44,11 @@ public class CardList extends ArrayAdapter<Experiment> {
         return experiments;
     }
 
-    Database database = new Database();
-    FirebaseFirestore db = FirebaseFirestore.getInstance();
-    FirebaseAuth mAuth = FirebaseAuth.getInstance();
+    Database database;
+    FirebaseAuth mAuth;
+    FirebaseUser currentUser;
+    FirebaseFirestore db;
+
 
     /**
      * Public Constructor for the CardList class
@@ -62,6 +73,11 @@ public class CardList extends ArrayAdapter<Experiment> {
     public View getView(int position, @Nullable View convertView, @NonNull ViewGroup parent) {
         View view = convertView;
         View view1 = null;
+
+        database = new Database();
+        mAuth = FirebaseAuth.getInstance();
+        currentUser = mAuth.getCurrentUser();
+        db = FirebaseFirestore.getInstance();
 
         Experiment experiment = experiments.get(position);
 
@@ -93,19 +109,46 @@ public class CardList extends ArrayAdapter<Experiment> {
 
             // https://developer.android.com/reference/android/widget/CheckBox
             CheckBox follow = view.findViewById(R.id.fav);
-            follow.setOnClickListener(new View.OnClickListener() {
+
+            DocumentReference ref = db.collection("Users")
+                    .document(currentUser.getUid())
+                    .collection("Favorites")
+                    .document(experiment.getExpID());
+
+            ref.get().addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
                 @Override
-                public void onClick(View v) {
-
-                    final CollectionReference favExpCollection = db.collection("Users")
-                            .document(Objects.requireNonNull(mAuth.getUid()))
-                            .collection("Favorites");
-
-                    database.addExperimentToDB(experiment, favExpCollection);
-
-                    follow.setChecked(true);
+                public void onComplete(@NonNull Task<DocumentSnapshot> task) {
+                    if (task.isSuccessful()) {
+                        DocumentSnapshot document = task.getResult();
+                        if (document.exists()) {
+                            follow.setChecked(true);
+                        }
+                    }
                 }
             });
+
+            follow.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+                      @Override
+                      public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+                          if(isChecked){
+                              FirebaseUser currentUser = mAuth.getCurrentUser();
+                              final CollectionReference favExpCollection = db.collection("Users")
+                                      .document(Objects.requireNonNull(currentUser.getUid()))
+                                      .collection("Favorites");
+
+                              database.addExperimentToDB(experiment, favExpCollection);
+
+                              System.out.println("Checked");
+
+                          } else {
+
+                              database.followStatus( ref, experiment, getContext(), follow );
+
+                              System.out.println("Un-Checked");
+                          }
+                      }
+                  }
+            );
 
             return view;
 

@@ -10,11 +10,11 @@ import android.widget.ArrayAdapter;
 import android.widget.ListView;
 import android.widget.Toast;
 
-import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentTransaction;
 
+import com.example.cmput301w21t23_smartdatabook.FillDataCallBack;
 import com.example.cmput301w21t23_smartdatabook.CardList;
 import com.example.cmput301w21t23_smartdatabook.Database;
 import com.example.cmput301w21t23_smartdatabook.Experiment;
@@ -37,16 +37,35 @@ import java.util.ArrayList;
  * @see Fragment, Firebase
  */
 
-public class homePage extends Fragment {
+public class homePage extends Fragment implements FillDataCallBack {
 
     private static final String AP1 = "AP1";
     private static final String AP2 = "AP2";
 
-    ListView experimentList;
-    ArrayAdapter<Experiment> experimentAdapter;
-    ArrayList<Experiment> experimentDataList;
+    private ListView experimentList;
+    private ArrayList<Experiment> experimentDataList;
+    private static ArrayAdapter<Experiment> experimentAdapter;
 
-    Database database = new Database();
+    Database database;
+
+    //Implement interrupted exception throw on database object instantiation
+    {
+        try {
+            database = new Database(this);
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
+    }
+
+    /**
+     * Assigns the experimentDataList with the callback-acquired DataList containing Experiment objects
+     * @param DataList is the Experiment-populated array list found in Database.fillDataList()
+     */
+    @Override
+    public void getExpDataList(ArrayList<Experiment> DataList) {
+        experimentDataList = DataList;
+    }
+
     FirebaseFirestore db = FirebaseFirestore.getInstance();
 
     public homePage() {
@@ -90,17 +109,34 @@ public class homePage extends Fragment {
 
         experimentList.setAdapter(experimentAdapter);
 
-        database.fillDataList(experimentDataList, experimentAdapter, db.collection("Experiments"));
-
-        experimentList.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+        //Source: Erwin Kurniawan A; https://stackoverflow.com/users/7693494/erwin-kurniawan-a
+        //Code: https://stackoverflow.com/questions/61930061/how-to-return-a-value-from-oncompletelistener-while-creating-user-with-email-and
+        database.fillDataList(new FillDataCallBack() {
             @Override
-            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                Experiment exp = experimentDataList.get(position); // get the experiment from list
-                Intent intent = new Intent(getActivity(), ExperimentDetails.class);
-                intent.putExtra("experiment", exp); // pass experiment object
-                startActivity(intent);
-            }
-        });
+            public void getExpDataList(ArrayList<Experiment> DataList) {
+
+                //experimentDataList with added items ONLY exist inside the scope of this getExpDataList function
+                experimentDataList = DataList;
+                experimentAdapter.addAll(experimentDataList);
+
+//                Log.d("List"+i, "" + experimentDataList.size());
+
+                experimentAdapter.notifyDataSetChanged();
+
+                experimentList.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+                    @Override
+                    public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                        Experiment exp = experimentDataList.get(position); // get the experiment from list
+                        Intent intent = new Intent(getActivity(), ExperimentDetails.class);
+                        intent.putExtra("position", position); // pass position to ExperimentDetails class
+                        intent.putExtra("experiment", exp); // pass experiment object
+                        startActivity(intent);
+
+                    }
+                });
+
+            }//getExpDataList
+        }, experimentAdapter, db.collection("Experiments"));//fillDataList
 
         final FloatingActionButton addExperimentButton = view.findViewById(R.id.add_experiment_button);
         addExperimentButton.setOnClickListener(new View.OnClickListener() {
@@ -148,6 +184,8 @@ public class homePage extends Fragment {
                 experimentAdapter.notifyDataSetChanged();
             }
         }
+
     }//onActivityResult
 
-}
+
+}//homePage

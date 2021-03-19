@@ -11,31 +11,55 @@ import android.widget.ListView;
 
 import androidx.fragment.app.Fragment;
 
+import com.example.cmput301w21t23_smartdatabook.FillDataCallBack;
 import com.example.cmput301w21t23_smartdatabook.Database;
 import com.example.cmput301w21t23_smartdatabook.ExperimentDetails;
 import com.example.cmput301w21t23_smartdatabook.CardList;
 import com.example.cmput301w21t23_smartdatabook.Experiment;
 import com.example.cmput301w21t23_smartdatabook.R;
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.firestore.FirebaseFirestore;
 
 import java.util.ArrayList;
+import java.util.Objects;
 
-public class FavPage extends Fragment {
+/**
+ * class: FavPage
+ * This class consists the page of the user's favourite experiments
+ * @author Afaq Nabi, Bosco Chan
+ */
+public class FavPage extends Fragment implements FillDataCallBack {
     private static final String AP1 = "AP1";
     private static final String AP2 = "AP2";
 
-    ListView favList;
-    ArrayAdapter<Experiment> favAdapter;
-    ArrayList<Experiment> favDataList;
+    private ListView favList;
+    private static ArrayAdapter<Experiment> favAdapter;
+    private static ArrayList<Experiment> favDataList;
 
-    FirebaseAuth mAuth = FirebaseAuth.getInstance();
     FirebaseFirestore db = FirebaseFirestore.getInstance();
-    Database database = new Database();
+    FirebaseAuth mAuth = FirebaseAuth.getInstance();
+    FirebaseUser currentUser = mAuth.getCurrentUser();
+    Database database;
+
+    //Implement interrupted exception throw on database object instantiation
+    {
+        try {
+            database = new Database(this);
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
+    }
 
     public FavPage(){
     }
 
+    /**
+     * new instance method of FavPage
+     * @param p1
+     * @param p2
+     * @return fragment
+     */
     public static FavPage newInstance(String p1, String p2){
         FavPage fragment = new FavPage();
         Bundle args = new Bundle();
@@ -43,6 +67,10 @@ public class FavPage extends Fragment {
         return fragment;
     }
 
+    /**
+     * oncreate method of FavPage
+     * @param savedInstanceState
+     */
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -52,6 +80,13 @@ public class FavPage extends Fragment {
         }
     }
 
+    /**
+     * this emthod create the view of the user's favouritte experiments page
+     * @param inflater
+     * @param container
+     * @param savedInstanceState
+     * @return View, the view of the page
+     */
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         // Inflate the layout for this fragment
@@ -68,7 +103,32 @@ public class FavPage extends Fragment {
         favAdapter = new CardList(getContext(), favDataList, 2);
         favList.setAdapter(favAdapter);
 
-        database.fillDataList( favDataList, favAdapter, db.collection("Users").document(mAuth.getUid()).collection("Favorites") );
+
+        database.fillDataList(new FillDataCallBack() {
+            @Override
+            public void getExpDataList(ArrayList<Experiment> DataList) {
+
+                //experimentDataList with added items ONLY exist inside the scope of this getExpDataList function
+                favDataList = DataList;
+                favAdapter.addAll(DataList);
+
+//                Log.d("List", "" + favDataList.get(0).getExpName());
+
+                favAdapter.notifyDataSetChanged();
+
+                favList.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+                    @Override
+                    public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                        Experiment exp = favDataList.get(position); // get the experiment from list
+                        Intent intent = new Intent(getActivity(), ExperimentDetails.class);
+                        intent.putExtra("position", position); // pass position to ExperimentDetails class
+                        intent.putExtra("experiment", exp); // pass experiment object
+                        startActivity(intent);
+                    }
+                });
+
+            }//getExpDataList
+        }, favAdapter, db.collection("Users").document(Objects.requireNonNull(currentUser.getUid())).collection("Favorites"));//fillDataList
 
         favList.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
@@ -83,5 +143,14 @@ public class FavPage extends Fragment {
 
         return view;
     }//onCreateView
+
+    /**
+     * Assigns the experimentDataList with the callback-acquired DataList containing Experiment objects
+     * @param DataList is the Experiment-populated array list found in Database.fillDataList()
+     */
+    @Override
+    public void getExpDataList(ArrayList<Experiment> DataList) {
+        favDataList = DataList;
+    }
 
 }

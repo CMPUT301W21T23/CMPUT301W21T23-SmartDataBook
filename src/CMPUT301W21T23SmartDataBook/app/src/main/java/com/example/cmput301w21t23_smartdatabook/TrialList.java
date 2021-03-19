@@ -12,10 +12,21 @@ import androidx.annotation.Nullable;
 
 import java.util.ArrayList;
 
+/**
+ * Class: TrialList
+ * This class consists of a list of trials
+ * @author Afaq Nabi, Jayden Cho
+ * @See Trial
+ */
 public class TrialList extends ArrayAdapter<Trial> {
     private final ArrayList<Trial> trials;
     private final Context context;
 
+    /**
+     * TrialList's public constructor
+     * @param trials
+     * @param context
+     */
     public TrialList(ArrayList<Trial> trials, Context context) {
         super(context,0, trials);
         this.trials = trials;
@@ -23,6 +34,13 @@ public class TrialList extends ArrayAdapter<Trial> {
     }
 
 
+    /**
+     * This function gets the view of the trialList
+     * @param position
+     * @param convertView
+     * @param parent
+     * @return
+     */
     public View getView(int position, @Nullable View convertView, @NonNull ViewGroup parent) {
         Trial trial = trials.get(position);
         if (convertView == null){

@@ -1,8 +1,11 @@
 package com.example.cmput301w21t23_smartdatabook.home;
 
+import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.LayoutInflater;
+import android.view.Menu;
+import android.view.MenuInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
@@ -18,11 +21,13 @@ import androidx.fragment.app.Fragment;
 import com.example.cmput301w21t23_smartdatabook.Date;
 import com.example.cmput301w21t23_smartdatabook.Experiment;
 import com.example.cmput301w21t23_smartdatabook.R;
+import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.android.material.switchmaterial.SwitchMaterial;
 import com.google.android.material.textfield.TextInputLayout;
 import com.google.firebase.auth.FirebaseAuth;
 
 import java.util.Objects;
+import java.util.UUID;
 
 /**
  * @author Afaq Nabi, Bosco Chan, Jayden
@@ -38,14 +43,13 @@ import java.util.Objects;
 public class addExpFragment extends Fragment {
 
     private FirebaseAuth mAuth;
-
     private static final int binomialID = 10;
     private static final int countID = 11;
     private static final int nonNegativeID = 12;
     private static final int measurementID = 13;
 
-    private boolean checkLocationOn;
-    private boolean checkPublicOn;
+    private boolean checkLocationOn = true;
+    private boolean checkPublicOn = true;
 
     private Experiment returnedExperiment;
 
@@ -53,7 +57,6 @@ public class addExpFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.new_experiment_location_on, container, false);
-
         ((AppCompatActivity) getActivity()).getSupportActionBar().setTitle("Add new experiment");
         ((AppCompatActivity) getActivity()).getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
@@ -133,7 +136,10 @@ public class addExpFragment extends Fragment {
 
                     mAuth = FirebaseAuth.getInstance();
 
-                    returnedExperiment = new Experiment(expName, Objects.requireNonNull(mAuth.getCurrentUser()).getUid(), trialType, expDescription, checkLocationOn, minTrials.getValue(), maxTrials.getValue(), checkPublicOn, currentDate.getDate() );
+                    returnedExperiment = new Experiment(expName, Objects.requireNonNull(mAuth.getCurrentUser()).getUid(),
+                            trialType, expDescription, checkLocationOn, minTrials.getValue(), maxTrials.getValue(),
+                            checkPublicOn, currentDate.getDate(), UUID.randomUUID().toString() );
+
 
                     //Source: Shweta Chauhan; https://stackoverflow.com/users/6021469/shweta-chauhan
                     //Code: https://stackoverflow.com/questions/40085608/how-to-pass-data-from-one-fragment-to-previous-fragment
@@ -153,9 +159,11 @@ public class addExpFragment extends Fragment {
     @Override
     public void onDestroy() {
         super.onDestroy();
-        ((AppCompatActivity) getActivity()).getSupportActionBar().setTitle("Home");
+        AppCompatActivity activity = ((AppCompatActivity) getActivity());
+        activity.getSupportActionBar().setTitle("Home");
 //        getActivity().getSupportFragmentManager().popBackStack();
-
+        BottomNavigationView bottomNavigation = activity.findViewById(R.id.bottom_navigation);
+        bottomNavigation.setVisibility(View.VISIBLE);
     }
 
     /**

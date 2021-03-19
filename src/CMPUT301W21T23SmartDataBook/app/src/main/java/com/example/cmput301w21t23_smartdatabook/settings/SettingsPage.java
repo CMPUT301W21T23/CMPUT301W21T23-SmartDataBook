@@ -70,7 +70,7 @@ public class SettingsPage extends Fragment {
         emailTextField = (EditText) view.findViewById(R.id.emailTextField);
         saveButtonView = (Button) view.findViewById(R.id.saveButtonView);
 
-        database.editUser(usernameTextField, emailTextField, saveButtonView, getContext());
+        database.editUser( usernameTextField, emailTextField, saveButtonView, getContext() );
 
         return view;
     }
