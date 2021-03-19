@@ -2,6 +2,7 @@ package com.example.cmput301w21t23_smartdatabook;
 
 import android.app.Activity;
 import android.view.View;
+import android.widget.TextView;
 
 import androidx.test.platform.app.InstrumentationRegistry;
 import androidx.test.rule.ActivityTestRule;
@@ -37,6 +38,15 @@ public class SettingsUITest {
     public void start() throws Exception{
         Activity activity = rule.getActivity();
     }
+
+    @Test
+    public void checkNameEditField(){
+        solo.assertCurrentActivity("Wrong Activity", MainActivity.class);
+        final TextView nameTextView = (TextView) solo.getCurrentActivity().findViewById(R.id.usernameTextField);
+        final TextView emailTextView = (TextView) solo.getCurrentActivity().findViewById(R.id.emailTextField);
+        
+    }
+
 
     //Finally, add tearDown() method using the @After tag to run after every test method.
     //This method closes the activity after each test.
