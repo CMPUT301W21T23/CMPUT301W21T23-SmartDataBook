@@ -21,6 +21,7 @@ import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.firestore.FirebaseFirestore;
 
 import java.util.ArrayList;
+import java.util.Objects;
 
 public class FavPage extends Fragment implements CallBack {
     private static final String AP1 = "AP1";
@@ -102,7 +103,7 @@ public class FavPage extends Fragment implements CallBack {
                 });
 
             }//getExpDataList
-        }, favAdapter, db.collection("Users").document(mAuth.getUid()).collection("Favorites"));//fillDataList
+        }, favAdapter, db.collection("Users").document(Objects.requireNonNull(mAuth.getUid())).collection("Favorites"));//fillDataList
 
         favList.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override

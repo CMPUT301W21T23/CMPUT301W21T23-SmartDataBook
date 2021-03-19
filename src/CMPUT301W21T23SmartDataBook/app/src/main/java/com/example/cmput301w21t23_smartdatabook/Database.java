@@ -191,8 +191,6 @@ public class Database {
         mAuth = FirebaseAuth.getInstance();
         FirebaseUser currentUser = mAuth.getCurrentUser();
 
-        CollectionReference favPath = db.collection("Users").document(currentUser.getUid()).collection("Favorites");
-
         db = FirebaseFirestore.getInstance();
         HashMap<String, String> data = new HashMap<>();
         // If there’s some data in the EditText field, then we create a new key-value pair.
@@ -222,7 +220,11 @@ public class Database {
                         Log.d("Failure", "Data storing failed");
                     }
                 });
-        favPath.document(newExperiment.getExpID())
+
+        db.collection("Users")
+                .document(currentUser.getUid())
+                .collection("Favorites")
+                .document(newExperiment.getExpID())
                 .set(data)
                 .addOnSuccessListener(new OnSuccessListener<Void>() {
                     @Override

@@ -16,6 +16,7 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.firestore.CollectionReference;
 import com.google.firebase.firestore.FirebaseFirestore;
 
@@ -96,9 +97,10 @@ public class CardList extends ArrayAdapter<Experiment> {
             follow.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-
+                    FirebaseUser currentUser = mAuth.getCurrentUser();
+                    Log.d("User", "" + currentUser.getUid());
                     final CollectionReference favExpCollection = db.collection("Users")
-                            .document(Objects.requireNonNull(mAuth.getUid()))
+                            .document(Objects.requireNonNull(currentUser.getUid()))
                             .collection("Favorites");
 
                     database.addExperimentToDB(experiment, favExpCollection);
