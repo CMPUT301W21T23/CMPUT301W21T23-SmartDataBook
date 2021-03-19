@@ -175,7 +175,7 @@ public class MainActivity extends AppCompatActivity implements SignCallBack {
         final FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
         transaction.replace(R.id.container, homePage.newInstance("", ""));
         transaction.addToBackStack(null);
-        transaction.commit();
+        transaction.commitAllowingStateLoss();
     }
 
 }//mainActivity

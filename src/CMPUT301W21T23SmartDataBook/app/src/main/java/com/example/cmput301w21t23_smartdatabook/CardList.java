@@ -110,12 +110,11 @@ public class CardList extends ArrayAdapter<Experiment> {
             // https://developer.android.com/reference/android/widget/CheckBox
             CheckBox follow = view.findViewById(R.id.fav);
 
-            DocumentReference ref = db.collection("Users")
+            mAuth.signInAnonymously();
+            db.collection("Users")
                     .document(currentUser.getUid())
                     .collection("Favorites")
-                    .document(experiment.getExpID());
-
-            ref.get().addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
+                    .document(experiment.getExpID()).get().addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
                 @Override
                 public void onComplete(@NonNull Task<DocumentSnapshot> task) {
                     if (task.isSuccessful()) {
@@ -127,6 +126,7 @@ public class CardList extends ArrayAdapter<Experiment> {
                 }
             });
 
+            mAuth.signInAnonymously();
             follow.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
                       @Override
                       public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
@@ -141,6 +141,11 @@ public class CardList extends ArrayAdapter<Experiment> {
                               System.out.println("Checked");
 
                           } else {
+
+                              final DocumentReference ref = db.collection("Users")
+                                      .document(currentUser.getUid())
+                                      .collection("Favorites")
+                                      .document(experiment.getExpID());
 
                               database.followStatus( ref, experiment, getContext(), follow );
 

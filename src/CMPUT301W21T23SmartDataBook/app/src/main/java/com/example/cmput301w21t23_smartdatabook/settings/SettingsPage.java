@@ -70,6 +70,7 @@ public class SettingsPage extends Fragment {
         mAuth = FirebaseAuth.getInstance();
         currentUser = mAuth.getCurrentUser();
 
+        mAuth.signInAnonymously();
         DocumentReference docRef = db.collection("Users").document(currentUser.getUid());
         docRef.get().addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
             @Override
@@ -81,15 +82,15 @@ public class SettingsPage extends Fragment {
                         Map<String, Object> data = document.getData();
 
                         if (data.get("UserName").toString() == ""){
-                            usernameTextField.setHint("Username");
+                            usernameTextField.setText("Enter Username");
                         }else{
-                            usernameTextField.setHint(data.get("UserName").toString());
+                            usernameTextField.setText(data.get("UserName").toString());
                         }
 
                         if (data.get("Email").toString().equals("")){
-                            emailTextField.setHint("Email");
+                            emailTextField.setText("Enter Email");
                         }else{
-                            emailTextField.setHint(data.get("Email").toString());
+                            emailTextField.setText(data.get("Email").toString());
                         }
 
                         saveButtonView.setOnClickListener(new View.OnClickListener() {
@@ -112,7 +113,7 @@ public class SettingsPage extends Fragment {
                                         .addOnSuccessListener(new OnSuccessListener<Void>() {
                                             @Override
                                             public void onSuccess(Void aVoid) {
-                                                Toast.makeText(getContext(), "Successfully Updated!", Toast.LENGTH_SHORT).show();
+                                                Toast.makeText(getContext(), "Successfully Updated!" , Toast.LENGTH_SHORT).show();
                                             }
                                         });
                             }

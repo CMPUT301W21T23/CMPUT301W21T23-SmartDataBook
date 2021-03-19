@@ -2,6 +2,7 @@ package com.example.cmput301w21t23_smartdatabook.home;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -94,6 +95,8 @@ public class homePage extends Fragment implements FillDataCallBack {
         }
     }
 
+    int i = 0;
+
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         // Inflate the layout for this fragment
@@ -119,7 +122,7 @@ public class homePage extends Fragment implements FillDataCallBack {
                 experimentDataList = DataList;
                 experimentAdapter.addAll(experimentDataList);
 
-//                Log.d("List"+i, "" + experimentDataList.size());
+                Log.d("List"+i, "" + experimentDataList.size());
 
                 experimentAdapter.notifyDataSetChanged();
 
