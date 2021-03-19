@@ -1,11 +1,15 @@
 package com.example.cmput301w21t23_smartdatabook;
 
 import android.app.Activity;
+import android.content.ClipData;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
 
 import androidx.test.platform.app.InstrumentationRegistry;
 import androidx.test.rule.ActivityTestRule;
 
+import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.robotium.solo.Solo;
 
 import org.junit.After;
@@ -13,6 +17,11 @@ import org.junit.Before;
 import org.junit.Rule;
 import org.junit.Test;
 
+import static org.junit.Assert.assertTrue;
+
+/**
+ * Test the UI of the favPage.java class. Assumes that an experiment object is already made
+ */
 public class FavPageTest {
     private Solo solo;
     private View addExpButton;
@@ -53,5 +62,37 @@ public class FavPageTest {
         solo.assertCurrentActivity("Wrong Activity", ExperimentDetails.class);
     }
 
+    @Test
+    public void checkSearchBar(){
+        solo.assertCurrentActivity("Wrong Activity", MainActivity.class);
+        solo.clickOnView(searchBar);
+        solo.enterText(0,"Grain");
+        solo.sleep(6000);
+        // TODO: check the output and click one
+    }
+
+    @Test
+    public void checkClickSearchBarDropDown(){
+        solo.assertCurrentActivity("Wrong Activity", MainActivity.class);
+        solo.clickOnView(searchBar);
+        solo.enterText(0,"Grain");
+        solo.sleep(6000);
+        // TODO: click an experiment and check the experiment details activity
+        solo.assertCurrentActivity("Wrong Activity", ExperimentDetails.class);
+    }
+
+    @Test
+    public void checkBackButton(){
+        solo.assertCurrentActivity("Wrong Activity", MainActivity.class);
+        solo.sleep(1000);
+        solo.
+        solo.sleep(1000);
+        solo.clickInList(0);
+        solo.sleep(1000);
+        solo.assertCurrentActivity("Wrong Activity", ExperimentDetails.class);
+        solo.goBack();
+        assertTrue(solo.waitForFragmentById(R.layout.followed_experiments));
+        solo.assertCurrentActivity("Wrong Activity", MainActivity.class);
+    }
 
 }

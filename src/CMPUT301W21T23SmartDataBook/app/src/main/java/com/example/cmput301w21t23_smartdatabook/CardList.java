@@ -144,7 +144,7 @@ public class CardList extends ArrayAdapter<Experiment> {
                       }
                   }
             );
-            
+
             return view;
 
         } else if (index == 2){
