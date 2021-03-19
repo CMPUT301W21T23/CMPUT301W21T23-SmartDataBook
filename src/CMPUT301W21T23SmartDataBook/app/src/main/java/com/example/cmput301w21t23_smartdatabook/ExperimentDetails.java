@@ -41,6 +41,8 @@ public class ExperimentDetails extends AppCompatActivity {
         setContentView(R.layout.experiment_details);
 
         Database database = new Database();
+        FirebaseAuth mAuth = FirebaseAuth.getInstance();
+        FirebaseUser currentUser = mAuth.getCurrentUser();
 
         setSupportActionBar(findViewById(R.id.app_toolbar));
         ActionBar toolbar = getSupportActionBar();
@@ -127,24 +129,28 @@ public class ExperimentDetails extends AppCompatActivity {
             }
         });
 
+        Button endExp = findViewById(R.id.endExp);
         CheckBox publish = findViewById(R.id.Publish);
+        TextView publish_text = findViewById(R.id.Publish_text);
+        publish.setChecked(experiment.isPublic());
+        if (currentUser.getUid().equals(experiment.getOwnerUserID())){
+            endExp.setVisibility(View.VISIBLE);
+            publish.setVisibility(View.VISIBLE);
+            publish_text.setVisibility(View.VISIBLE);
+        }
 
         publish.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
-                FirebaseAuth mAuth = FirebaseAuth.getInstance();
-                FirebaseUser currentUser = mAuth.getCurrentUser();
-
                 FirebaseFirestore db = FirebaseFirestore.getInstance();
                 database.publicNotPublic(db.collection("Experiments"), "On", experiment);
-                database.publicNotPublic((db.collection("Users").document(currentUser.getUid()).collection("Favorites")),"On", experiment);
-
+                database.publicNotPublic((db.collection("Users")
+                        .document(currentUser.getUid())
+                        .collection("Favorites")),"On", experiment);
             }
 
         });
 
-        Button endExp = findViewById(R.id.endExp);
 
     }
 

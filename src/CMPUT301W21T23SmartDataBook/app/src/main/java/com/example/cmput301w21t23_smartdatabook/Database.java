@@ -392,9 +392,6 @@ public class Database {
 
     public void publicNotPublic(CollectionReference coll, String onOff, Experiment experiment){
         FirebaseAuth mAuth = FirebaseAuth.getInstance();
-        FirebaseUser currentUser = mAuth.getCurrentUser();
-
-        FirebaseFirestore db = FirebaseFirestore.getInstance();
         coll.document(experiment.getExpID()).update("PublicStatus", onOff)
                 .addOnSuccessListener(new OnSuccessListener<Void>() {
                     @Override
