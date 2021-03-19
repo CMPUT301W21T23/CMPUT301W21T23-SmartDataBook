@@ -2,7 +2,9 @@ package com.example.cmput301w21t23_smartdatabook;
 
 import android.app.Activity;
 import android.view.View;
+import android.widget.EditText;
 import android.widget.ListView;
+import android.widget.NumberPicker;
 import android.widget.TextView;
 
 import androidx.test.platform.app.InstrumentationRegistry;
@@ -25,6 +27,7 @@ import static org.junit.Assert.assertNull;
 public class ExperimentDetailsPageTest {
     private Solo solo;
     private View addTrialsBtn;
+    private View addExpButton;
 
     @Rule
     public ActivityTestRule<MainActivity> rule = new ActivityTestRule<MainActivity>(MainActivity.class, true, true);
@@ -32,6 +35,7 @@ public class ExperimentDetailsPageTest {
     @Before
     public void setUp() {
         solo = new Solo(InstrumentationRegistry.getInstrumentation(), rule.getActivity());
+        addExpButton = rule.getActivity().findViewById(R.id.add_experiment_button);
 
     }
 
@@ -74,14 +78,74 @@ public class ExperimentDetailsPageTest {
         solo.assertCurrentActivity("Wrong Acitvity", MainActivity.class);
         solo.clickInList(0);
         solo.assertCurrentActivity("Wrong Activity", ExperimentDetails.class);
-        assertTrue(experiment.getDate(), solo.searchText(experiment.getDate()));
-        assertTrue(experiment.getDescription(), solo.searchText(experiment.getDescription()));
-        assertTrue(experiment.getOwnerUserID(), solo.searchText(experiment.getOwnerUserID()));
-        assertTrue(String.valueOf(experiment.getMaxTrials()), solo.searchText(String.valueOf(experiment.getMaxTrials())));
-        assertTrue(String.valueOf(experiment.getMinTrials()), solo.searchText(String.valueOf(experiment.getMinTrials())));
-        assertTrue(experiment.getTrialType(), solo.searchText(experiment.getTrialType()));
-
+        assertTrue(solo.searchText(experiment.getExpName()));
+        assertTrue(solo.searchText(experiment.getDate()));
+        assertTrue(solo.searchText(experiment.getDescription()));
+        assertTrue(solo.searchText(experiment.getOwnerUserID()));
+        assertTrue(solo.searchText(String.valueOf(experiment.getMaxTrials())));
+        assertTrue(solo.searchText(String.valueOf(experiment.getMinTrials())));
+        assertTrue(solo.searchText(experiment.getTrialType()));
+        assertFalse(solo.searchText("PUBLISH"));
+        assertFalse(solo.searchButton("END EXPERIMENT"));
 //        solo.assertFalse(solo.getView(R.id.ClickedExpdate));
+
+    }
+
+    @Test
+    public void checkExpInfoForOwner(){
+        solo.assertCurrentActivity("Wrong Class", MainActivity.class);
+        solo.waitForFragmentById(R.layout.home_page, 1000);
+        solo.clickOnView(addExpButton);
+        solo.waitForFragmentById(R.layout.new_experiment_location_on, 1000);
+
+        //Source: Bouabane Mohamed Salah; https://stackoverflow.com/users/1600405/bouabane-mohamed-salah
+        //Code: https://stackoverflow.com/questions/30456474/set-numberpicker-value-with-robotium
+        rule.getActivity().runOnUiThread(new Runnable() {
+            @Override
+            public void run() {
+                NumberPicker minPicker = rule.getActivity().findViewById(R.id.minTrialsNumberPicker);
+                minPicker.setValue(10);
+            }
+        });
+        solo.sleep(1000);
+        rule.getActivity().runOnUiThread(new Runnable() {
+            @Override
+            public void run() {
+                NumberPicker maxPicker = rule.getActivity().findViewById(R.id.maxTrialsNumberPicker);
+                maxPicker.setValue(30);
+            }
+        });
+
+        solo.enterText( (EditText) solo.getView(R.id.newExperimentLocationOnExperimentNameEditText), "Name");
+        solo.sleep(1000);
+        solo.enterText( (EditText) solo.getView(R.id.newExperimentLocationOnExperimentDescriptionEditText), "Description");
+        solo.sleep(1000);
+        solo.clickOnRadioButton(2);
+        solo.sleep(1000);
+        solo.clickOnView(rule.getActivity().findViewById(R.id.newExperimentLocationToggleSwitch));
+        solo.sleep(1000);
+        solo.clickOnButton("Create");
+        solo.sleep(1000);
+        solo.assertCurrentActivity("Wrong Class", MainActivity.class);
+
+        ListView experimentList = rule.getActivity().findViewById(R.id.experiment_list);
+        Experiment experiment = (Experiment) experimentList.getItemAtPosition(0);
+
+        solo.clickInList(0);
+
+        solo.assertCurrentActivity("Wrong Activity", ExperimentDetails.class);
+        assertTrue(solo.searchText(experiment.getExpName()));
+        assertTrue(solo.searchText(experiment.getDate()));
+        assertTrue(solo.searchText(experiment.getDescription()));
+        assertTrue(solo.searchText(experiment.getOwnerUserID()));
+        assertTrue(solo.searchText(String.valueOf(experiment.getMaxTrials())));
+        assertTrue(solo.searchText(String.valueOf(experiment.getMinTrials())));
+        assertTrue(solo.searchText(experiment.getTrialType()));
+        assertTrue(solo.searchText("PUBLISH"));
+        assertTrue(solo.searchButton("END EXPERIMENT"));
+
+        // TODO: MIGHT NOT WORK
+        assertTrue(solo.getView(rule.getActivity().findViewById(R.id.Publish)).isPressed());
 
     }
 

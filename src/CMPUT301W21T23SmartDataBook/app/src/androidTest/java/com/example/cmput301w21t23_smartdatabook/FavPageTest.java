@@ -6,6 +6,7 @@ import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.ListView;
 
 import androidx.test.platform.app.InstrumentationRegistry;
 import androidx.test.rule.ActivityTestRule;
@@ -13,11 +14,14 @@ import androidx.test.rule.ActivityTestRule;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.robotium.solo.Solo;
 
+import junit.framework.TestCase;
+
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Rule;
 import org.junit.Test;
 
+import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
 
 /**
@@ -56,6 +60,7 @@ public class FavPageTest {
 
     @Test
     public void checkClickExperiment(){
+
         solo.assertCurrentActivity("Wrong Activity", MainActivity.class);
         solo.sleep(1000);
         solo.clickInList(0);
@@ -93,6 +98,28 @@ public class FavPageTest {
         solo.assertCurrentActivity("Wrong Activity", ExperimentDetails.class);
         solo.goBack();
         solo.assertCurrentActivity("Wrong Activity", MainActivity.class);
+    }
+
+    @Test
+    public void checkDetails(){
+        ListView experimentList = rule.getActivity().findViewById(R.id.experiment_list);
+        Experiment experiment = (Experiment) experimentList.getItemAtPosition(0);
+        solo.assertCurrentActivity("Wrong Activity", MainActivity.class);
+        solo.sleep(1000);
+        solo.clickInList(0);
+        solo.sleep(1000);
+        solo.assertCurrentActivity("Wrong Activity", ExperimentDetails.class);
+        solo.sleep(1000);
+        assertTrue(solo.searchText(experiment.getExpName()));
+        assertTrue(solo.searchText(experiment.getDate()));
+        assertTrue(solo.searchText(experiment.getDescription()));
+        assertTrue(solo.searchText(experiment.getOwnerUserID()));
+        assertTrue(solo.searchText(String.valueOf(experiment.getMaxTrials())));
+        assertTrue(solo.searchText(String.valueOf(experiment.getMinTrials())));
+        assertTrue(solo.searchText(experiment.getTrialType()));
+        assertFalse(solo.searchText("PUBLISH"));
+        assertFalse(solo.searchButton("END EXPERIMENT"));
+
     }
 
 }
