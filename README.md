@@ -24,6 +24,12 @@ Add An Experiment:
   - Click the Red-circle-plus sign to add a new experiment
   - It will present you with a new "Experiment Details" screen 
   - Input values into the presented empty fields that describe the experiment
+  - Set the minimum and maximum of trials
+  - 
   - Select "Create&Publish" to publish the experiment so other users may, and you, may see it
+
+
+Search an experiment:
+  
 
 ...More to be added...
