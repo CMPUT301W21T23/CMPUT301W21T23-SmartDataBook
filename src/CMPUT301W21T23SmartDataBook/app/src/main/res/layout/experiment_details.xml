@@ -178,16 +178,15 @@
                 app:layout_constraintTop_toBottomOf="@id/UploadTrialsBTN" />
 
         <TextView
+            android:id="@+id/ShowMap"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_marginLeft="8dp"
+            android:layout_marginTop="44dp"
+            android:clickable="true"
             android:text="SHOW MAP"
             android:textColor="@color/theme_default"
-            android:layout_marginLeft="10dp"
-            android:id="@+id/ShowMap"
-            android:layout_marginBottom="10dp"
-            android:clickable="true"
             app:layout_constraintLeft_toRightOf="@id/mapButton"
-            android:layout_marginTop="40dp"
             app:layout_constraintTop_toBottomOf="@id/UploadTrialsBTN" />
 
         <androidx.appcompat.widget.AppCompatImageButton
@@ -204,13 +203,13 @@
                 app:layout_constraintTop_toBottomOf="@id/mapButton" />
 
         <TextView
+            android:id="@+id/generateCodeTextView"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_marginLeft="8dp"
+            android:layout_marginTop="16dp"
             android:text="GENERATE/REGISTER CODE"
             android:textColor="@color/theme_default"
-            android:layout_marginLeft="10dp"
-            android:layout_marginTop="10dp"
-            android:id="@+id/generateCodeTextView"
             app:layout_constraintLeft_toRightOf="@id/generateCodeBTN"
             app:layout_constraintTop_toBottomOf="@id/ShowMap" />
 
