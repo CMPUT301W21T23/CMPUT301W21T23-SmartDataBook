@@ -80,30 +80,30 @@
         </TextView>
 
         <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:textSize="17sp"
-                android:text="TYPE OF EXPERIMENT"
-                android:id="@+id/ExpType"
-                android:textColor="@color/theme_default"
-                android:layout_marginBottom="10dp"
-                android:layout_marginTop="10dp"
-                app:layout_constraintTop_toBottomOf="@id/MinTrials"
-                app:layout_constraintLeft_toLeftOf="parent"
-                app:layout_constraintRight_toRightOf="parent"></TextView>
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textSize="17sp"
+            android:text="TYPE OF EXPERIMENT"
+            android:id="@+id/ExpType"
+            android:textColor="@color/theme_default"
+            android:layout_marginBottom="10dp"
+            android:layout_marginTop="10dp"
+            app:layout_constraintTop_toBottomOf="@id/MinTrials"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintRight_toRightOf="parent" />
 
         <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:textSize="17sp"
-                android:text="DESCRIPTION PARAGRAPH"
-                android:id="@+id/ClickedExpDesc"
-                android:textColor="@color/theme_default"
-                android:layout_marginBottom="10dp"
-                android:layout_marginTop="10dp"
-                app:layout_constraintTop_toBottomOf="@id/ExpType"
-                app:layout_constraintLeft_toLeftOf="parent"
-                app:layout_constraintRight_toRightOf="parent"></TextView>
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textSize="17sp"
+            android:text="DESCRIPTION PARAGRAPH"
+            android:id="@+id/ClickedExpDesc"
+            android:textColor="@color/theme_default"
+            android:layout_marginBottom="10dp"
+            android:layout_marginTop="10dp"
+            app:layout_constraintTop_toBottomOf="@id/ExpType"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintRight_toRightOf="parent" />
 
         <TextView
             android:id="@+id/Publish_text"
@@ -178,17 +178,17 @@
                 app:layout_constraintTop_toBottomOf="@id/UploadTrialsBTN" />
 
         <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="SHOW MAP"
-                android:textColor="@color/theme_default"
-                android:layout_marginLeft="10dp"
-                android:id="@+id/ShowMap"
-                android:layout_marginBottom="10dp"
-                android:clickable="true"
-                app:layout_constraintLeft_toRightOf="@id/mapButton"
-                android:layout_marginTop="40dp"
-                app:layout_constraintTop_toBottomOf="@id/UploadTrialsBTN"></TextView>
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="SHOW MAP"
+            android:textColor="@color/theme_default"
+            android:layout_marginLeft="10dp"
+            android:id="@+id/ShowMap"
+            android:layout_marginBottom="10dp"
+            android:clickable="true"
+            app:layout_constraintLeft_toRightOf="@id/mapButton"
+            android:layout_marginTop="40dp"
+            app:layout_constraintTop_toBottomOf="@id/UploadTrialsBTN" />
 
         <androidx.appcompat.widget.AppCompatImageButton
                 android:layout_width="25dp"
@@ -204,15 +204,15 @@
                 app:layout_constraintTop_toBottomOf="@id/mapButton" />
 
         <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="GENERATE/REGISTER CODE"
-                android:textColor="@color/theme_default"
-                android:layout_marginLeft="10dp"
-                android:layout_marginTop="10dp"
-                android:id="@+id/generateCodeTextView"
-                app:layout_constraintLeft_toRightOf="@id/generateCodeBTN"
-                app:layout_constraintTop_toBottomOf="@id/ShowMap"></TextView>
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="GENERATE/REGISTER CODE"
+            android:textColor="@color/theme_default"
+            android:layout_marginLeft="10dp"
+            android:layout_marginTop="10dp"
+            android:id="@+id/generateCodeTextView"
+            app:layout_constraintLeft_toRightOf="@id/generateCodeBTN"
+            app:layout_constraintTop_toBottomOf="@id/ShowMap" />
 
         <androidx.appcompat.widget.AppCompatImageButton
                 android:layout_width="25dp"
@@ -228,15 +228,15 @@
                 app:layout_constraintTop_toBottomOf="@id/generateCodeBTN" />
 
         <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="ASK QUESTIONS"
-                android:textColor="@color/theme_default"
-                android:layout_marginLeft="10dp"
-                android:layout_marginTop="15dp"
-                android:id="@+id/askQuestionsTextView"
-                app:layout_constraintLeft_toRightOf="@id/askQuestionsBTN"
-                app:layout_constraintTop_toBottomOf="@id/generateCodeTextView"></TextView>
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="ASK QUESTIONS"
+            android:textColor="@color/theme_default"
+            android:layout_marginLeft="10dp"
+            android:layout_marginTop="15dp"
+            android:id="@+id/askQuestionsTextView"
+            app:layout_constraintLeft_toRightOf="@id/askQuestionsBTN"
+            app:layout_constraintTop_toBottomOf="@id/generateCodeTextView" />
 
         <Button
             android:id="@+id/endExp"
