@@ -7,7 +7,7 @@ import java.util.ArrayList;
  * Abstract class user
  * Constrcuts the user
  * @see Experiment
- * @author Bosco Chan
+ * @author Bosco Chan, Afaq Nabi, Alex Mak, Jaydem Cho, Krutik Soni, Natnail Ghebresilasie
  */
 abstract class User{
     String userName;

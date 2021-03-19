@@ -28,7 +28,7 @@ import com.google.firebase.firestore.FirebaseFirestore;
  * functionality of the app
  * the bottom tab should get covered if a new acitivity is opened
  *
- * @Author Afaq, Jayden
+ * @Author Afaq, Jayden, Natnail Ghebresilasie
  * @Refrences https://androidwave.com/bottom-navigation-bar-android-example/
  */
 
@@ -46,6 +46,11 @@ public class MainActivity extends AppCompatActivity {
     // searchShow is set to false by default
     // if fragment is homePage or FavPage, set searchShow to true
     // invalidateOptionsMenu calls onCreateOptionsMenu
+
+    /**
+     * This method runs when new fragment is attached to this activity
+     * @param fragment
+     */
     @Override
     public void onAttachFragment(Fragment fragment) {
         super.onAttachFragment(fragment);
@@ -56,6 +61,10 @@ public class MainActivity extends AppCompatActivity {
         invalidateOptionsMenu();
     }
 
+    /**
+     * This method runs on the creation of the main activity
+     * @param savedInstanceState
+     */
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -77,6 +86,11 @@ public class MainActivity extends AppCompatActivity {
 
     } //onCreate
 
+    /**
+     * THis method set up menu's serach icon
+     * @param menu
+     * @return
+     */
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         MenuInflater inflater = getMenuInflater();
@@ -98,6 +112,10 @@ public class MainActivity extends AppCompatActivity {
         return super.onSearchRequested();
     }
 
+    /**
+     * This function supports opening fragments
+     * @param fragment
+     */
     public void openFragment(Fragment fragment) {
         final FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
         transaction.replace(R.id.container, fragment);

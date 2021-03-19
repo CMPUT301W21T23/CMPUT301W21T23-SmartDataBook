@@ -23,8 +23,7 @@ import java.util.ArrayList;
 /**
  * Class: UploadTrial activity
  * displays the upload trials page
- *
- * @author afaq Nabi
+ * @author Afaq Nabi, Krutik Soni
  * @see TrialList
  */
 public class UploadTrial extends AppCompatActivity {
@@ -34,6 +33,10 @@ public class UploadTrial extends AppCompatActivity {
     FirebaseAuth mAuth = FirebaseAuth.getInstance();
     FirebaseUser currentUser = mAuth.getCurrentUser();
 
+    /**
+     * This function create the uploadTrial view
+     * @param savedInstanceState
+     */
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);

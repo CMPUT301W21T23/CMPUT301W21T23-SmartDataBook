@@ -8,6 +8,7 @@ import java.util.ArrayList;
  * Acts as a coordinator between classes that are split by synchronous and asynchronous
  * methods in their respective classes. Currently used by homePage.java (Synchronous), favPage.java (Synchronous)
  * and Database.java (Asynchronous).
+ * @author Bosco Chan
  */
 public interface CallBack {
     void getExpDataList(ArrayList<Experiment> DataList);

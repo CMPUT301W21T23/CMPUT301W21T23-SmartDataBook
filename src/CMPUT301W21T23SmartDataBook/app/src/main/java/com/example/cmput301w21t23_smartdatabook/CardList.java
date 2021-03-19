@@ -30,7 +30,7 @@ import com.google.firebase.firestore.FirebaseFirestore;
 
 /**
  * This classs is simply to display the information from the experiment list adapters onto the screen
- * @Author Afaq, Bosco
+ * @Author Afaq, Bosco, Krutik
  * @return view the view of the card which contains a couple buttons and brief information about the experiment
  */
 
