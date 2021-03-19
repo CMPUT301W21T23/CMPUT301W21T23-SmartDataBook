@@ -44,10 +44,10 @@ public class CardList extends ArrayAdapter<Experiment> {
         return experiments;
     }
 
-    FirebaseAuth mAuth = FirebaseAuth.getInstance();
-    FirebaseUser currentUser = mAuth.getCurrentUser();
-    Database database = new Database();
-    FirebaseFirestore db = FirebaseFirestore.getInstance();
+    Database database;
+    FirebaseAuth mAuth;
+    FirebaseUser currentUser;
+    FirebaseFirestore db;
 
 
     /**
@@ -73,6 +73,11 @@ public class CardList extends ArrayAdapter<Experiment> {
     public View getView(int position, @Nullable View convertView, @NonNull ViewGroup parent) {
         View view = convertView;
         View view1 = null;
+
+        database = new Database();
+        mAuth = FirebaseAuth.getInstance();
+        currentUser = mAuth.getCurrentUser();
+        db = FirebaseFirestore.getInstance();
 
         Experiment experiment = experiments.get(position);
 

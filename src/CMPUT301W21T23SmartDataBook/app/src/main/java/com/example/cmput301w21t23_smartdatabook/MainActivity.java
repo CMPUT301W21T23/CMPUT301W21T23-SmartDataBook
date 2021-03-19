@@ -84,7 +84,6 @@ public class MainActivity extends AppCompatActivity {
 
         toolbar.setTitle("Home");
 
-
         //anonymous authentication testing
         Database database = new Database();
         database.authenticateAnon();
@@ -93,6 +92,12 @@ public class MainActivity extends AppCompatActivity {
 //        openFragment(FavPage.newInstance("",""));
 
     } //onCreate
+
+    @Override
+    public void onDestroy() {
+        super.onDestroy();
+        FirebaseAuth.getInstance().getCurrentUser().delete();
+    }
 
 
     /**
