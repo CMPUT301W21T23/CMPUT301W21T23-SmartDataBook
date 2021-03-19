@@ -15,9 +15,13 @@ import java.util.Objects;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.firestore.CollectionReference;
+import com.google.firebase.firestore.DocumentReference;
+import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
 
 /**
@@ -39,6 +43,7 @@ public class CardList extends ArrayAdapter<Experiment> {
     Database database = new Database();
     FirebaseFirestore db = FirebaseFirestore.getInstance();
     FirebaseAuth mAuth = FirebaseAuth.getInstance();
+    FirebaseUser currentUser = mAuth.getCurrentUser();
 
     /**
      * Public Constructor for the CardList class
@@ -94,6 +99,27 @@ public class CardList extends ArrayAdapter<Experiment> {
 
             // https://developer.android.com/reference/android/widget/CheckBox
             CheckBox follow = view.findViewById(R.id.fav);
+            DocumentReference ref = db.collection("Users")
+                    .document(currentUser.getUid())
+                    .collection("Favorites")
+                    .document(experiment.getExpID());
+            ref.get().addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
+                @Override
+                public void onComplete(@NonNull Task<DocumentSnapshot> task) {
+                    if (task.isSuccessful()) {
+                        DocumentSnapshot document = task.getResult();
+                        if (document.exists()) {
+                            follow.setChecked(true);
+                            Log.d("test", "DocumentSnapshot data: " + document.getString("ExpID"));
+                        }  //                            follow.setChecked(false);
+                        //                            Log.d(TAG, "No such document");
+
+                    }  //                        Log.d(TAG, "get failed with ", task.getException());
+
+                }
+            });
+
+
             follow.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
@@ -105,7 +131,6 @@ public class CardList extends ArrayAdapter<Experiment> {
 
                     database.addExperimentToDB(experiment, favExpCollection);
 
-                    follow.setChecked(true);
                 }
             });
 
