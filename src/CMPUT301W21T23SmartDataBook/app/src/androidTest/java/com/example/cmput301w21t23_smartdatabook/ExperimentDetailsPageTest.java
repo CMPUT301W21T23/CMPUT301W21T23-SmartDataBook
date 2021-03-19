@@ -30,8 +30,7 @@ public class ExperimentDetailsPageTest {
     @Before
     public void setUp() {
         solo = new Solo(InstrumentationRegistry.getInstrumentation(), rule.getActivity());
-        ListView experimentList = rule.getActivity().findViewById(R.id.experiment_list);
-        Experiment experiment = (Experiment) experimentList.getItemAtPosition(0);
+
     }
 
     /**
@@ -67,9 +66,13 @@ public class ExperimentDetailsPageTest {
 
     @Test
     public void checkExpInfo(){
+        ListView experimentList = rule.getActivity().findViewById(R.id.experiment_list);
+        Experiment experiment = (Experiment) experimentList.getItemAtPosition(0);
+
         solo.assertCurrentActivity("Wrong Acitvity", MainActivity.class);
         solo.clickInList(0);
         solo.assertCurrentActivity("Wrong Activity", ExperimentDetails.class);
+        solo.asserTrue(solo.searchText(experiment.getDate()));
 //        solo.assertFalse(solo.getView(R.id.ClickedExpdate));
 
     }
