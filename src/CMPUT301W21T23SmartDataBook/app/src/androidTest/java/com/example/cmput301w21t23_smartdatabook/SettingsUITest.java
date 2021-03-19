@@ -2,6 +2,7 @@ package com.example.cmput301w21t23_smartdatabook;
 
 import android.app.Activity;
 import android.view.View;
+import android.widget.EditText;
 import android.widget.TextView;
 
 import androidx.test.platform.app.InstrumentationRegistry;
@@ -47,12 +48,22 @@ public class SettingsUITest {
     public void checkNameEditField(){
         final String usernameDefault = "Username";
         final String emailDefault = "Email";
+        final String newUsername = "Krutik";
+        final String newEmail = "sonikrutik0@gmail.com";
 
         solo.assertCurrentActivity("Wrong Activity", MainActivity.class);
         solo.clickOnScreen(780, 1943); //"Settings" Menu Item
-        final TextView usernameTextView = (TextView) solo.getCurrentActivity().findViewById(R.id.usernameTextField);
-        final TextView emailTextView = (TextView) solo.getCurrentActivity().findViewById(R.id.emailTextField);
+
+        final EditText usernameTextView = solo.getCurrentActivity().findViewById(R.id.usernameTextField);
+        final EditText emailTextView = solo.getCurrentActivity().findViewById(R.id.emailTextField);
+        assertEquals(usernameTextView.getText().toString(), usernameDefault);
+        assertEquals(emailDefault, emailTextView.getText().toString());
+
+        solo.enterText((EditText) usernameTextView, newUsername);
+        solo.enterText((EditText) emailTextView, newEmail);
+
         assertEquals(usernameDefault, usernameTextView.getText().toString());
+        assertEquals(emailDefault, emailTextView.getText().toString());
     }
 
 
