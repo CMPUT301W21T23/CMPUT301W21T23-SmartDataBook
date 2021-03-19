@@ -99,10 +99,12 @@ public class CardList extends ArrayAdapter<Experiment> {
 
             // https://developer.android.com/reference/android/widget/CheckBox
             CheckBox follow = view.findViewById(R.id.fav);
+
             DocumentReference ref = db.collection("Users")
                     .document(currentUser.getUid())
                     .collection("Favorites")
                     .document(experiment.getExpID());
+
             ref.get().addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
                 @Override
                 public void onComplete(@NonNull Task<DocumentSnapshot> task) {
@@ -118,7 +120,6 @@ public class CardList extends ArrayAdapter<Experiment> {
 
                 }
             });
-
 
             follow.setOnClickListener(new View.OnClickListener() {
                 @Override
