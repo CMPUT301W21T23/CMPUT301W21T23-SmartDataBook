@@ -82,6 +82,7 @@ public class UploadTrial extends AppCompatActivity {
                 Log.d("Test", "Add Trial Button");
             }
         });
+        // gg
 
         trialsList = findViewById(R.id.uploaded_trials);
         trialDataList = new ArrayList<>();
