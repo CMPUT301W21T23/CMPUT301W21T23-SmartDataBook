@@ -54,8 +54,7 @@ public class MainActivity extends AppCompatActivity {
     @Override
     public void onAttachFragment(Fragment fragment) {
         super.onAttachFragment(fragment);
-        searchShow = false;
-        if (fragment instanceof homePage) searchShow = true;
+        searchShow = fragment instanceof homePage;
         if (fragment instanceof FavPage) searchShow = true;
 //        if (fragment instanceof addExpFragment) bottomNavigation.setVisibility(View.GONE);
 //        else bottomNavigation.setVisibility(View.VISIBLE);

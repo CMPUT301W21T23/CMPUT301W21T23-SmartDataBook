@@ -146,12 +146,13 @@ public class Database {
                         FirebaseUser currentUser = mAuth.getCurrentUser();
 
                         experimentDataList.clear();
-                            
+
                         String coll1 = db.collection("Experiments").getPath();
 
                         if (task.isSuccessful()) {
                             for (QueryDocumentSnapshot document : task.getResult()) {
-                                if ( (coll1.equals(collection.getPath()) && giveBoolean( document.getData().get("PublicStatus").toString())) || (collection.getPath().equals(db.collection("Users").document(currentUser.getUid()).collection("Favorites").getPath())) ){
+                                if ( (coll1.equals(collection.getPath()) && giveBoolean( document.getData().get("PublicStatus").toString())) ||
+                                        (collection.getPath().equals(db.collection("Users").document(currentUser.getUid()).collection("Favorites").getPath())) ){
                                     experimentDataList.add( new Experiment(
                                             document.getData().get("Name").toString(),
                                             document.getData().get("UUID").toString(),
@@ -217,8 +218,6 @@ public class Database {
         mAuth = FirebaseAuth.getInstance();
         FirebaseUser currentUser = mAuth.getCurrentUser();
 
-        CollectionReference favPath = db.collection("Users").document(currentUser.getUid()).collection("Favorites");
-
         db = FirebaseFirestore.getInstance();
         HashMap<String, String> data = new HashMap<>();
         // If there’s some data in the EditText field, then we create a new key-value pair.
@@ -248,7 +247,11 @@ public class Database {
                         Log.d("Failure", "Data storing failed");
                     }
                 });
-        favPath.document(newExperiment.getExpID())
+
+        db.collection("Users")
+                .document(currentUser.getUid())
+                .collection("Favorites")
+                .document(newExperiment.getExpID())
                 .set(data)
                 .addOnSuccessListener(new OnSuccessListener<Void>() {
                     @Override
@@ -412,19 +415,12 @@ public class Database {
 
     }//authenticationAnon
 
+    //Getter for the public status
+    public void getPublicStatus() {
 
-    /**
-     * This function acts as getters and setters for public status
-     * @param coll
-     * @param onOff
-     * @param experiment
-     * @author Bosco Chan
-     */
+    }
+
     public void publicNotPublic(CollectionReference coll, String onOff, Experiment experiment){
-        FirebaseAuth mAuth = FirebaseAuth.getInstance();
-        FirebaseUser currentUser = mAuth.getCurrentUser();
-
-        FirebaseFirestore db = FirebaseFirestore.getInstance();
         coll.document(experiment.getExpID()).update("PublicStatus", onOff)
                 .addOnSuccessListener(new OnSuccessListener<Void>() {
                     @Override

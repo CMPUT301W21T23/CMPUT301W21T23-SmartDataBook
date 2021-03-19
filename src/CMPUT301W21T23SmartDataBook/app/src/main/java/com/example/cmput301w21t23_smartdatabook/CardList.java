@@ -15,8 +15,13 @@ import java.util.Objects;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.firestore.CollectionReference;
+import com.google.firebase.firestore.DocumentReference;
+import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
 
 /**
@@ -38,6 +43,7 @@ public class CardList extends ArrayAdapter<Experiment> {
     Database database = new Database();
     FirebaseFirestore db = FirebaseFirestore.getInstance();
     FirebaseAuth mAuth = FirebaseAuth.getInstance();
+    FirebaseUser currentUser = mAuth.getCurrentUser();
 
     /**
      * Public Constructor for the CardList class
@@ -92,21 +98,39 @@ public class CardList extends ArrayAdapter<Experiment> {
             });
 
             // https://developer.android.com/reference/android/widget/CheckBox
+//            Log.d("test", currentUser.getUid());
             CheckBox follow = view.findViewById(R.id.fav);
-            follow.setOnClickListener(new View.OnClickListener() {
+
+            DocumentReference ref = db.collection("Users")
+                    .document(currentUser.getUid())
+                    .collection("Favorites")
+                    .document(experiment.getExpID());
+
+            ref.get().addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
                 @Override
-                public void onClick(View v) {
-
-                    final CollectionReference favExpCollection = db.collection("Users")
-                            .document(Objects.requireNonNull(mAuth.getUid()))
-                            .collection("Favorites");
-
-                    database.addExperimentToDB(experiment, favExpCollection);
-
-                    follow.setChecked(true);
+                public void onComplete(@NonNull Task<DocumentSnapshot> task) {
+                    if (task.isSuccessful()) {
+                        DocumentSnapshot document = task.getResult();
+                        if (document.exists()) {
+                            follow.setChecked(true);
+                            Log.d("test", "DocumentSnapshot data: " + document.getString("ExpID"));
+                        }
+                    }
                 }
             });
 
+            follow.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    FirebaseUser currentUser = mAuth.getCurrentUser();
+                    Log.d("User", "" + currentUser.getUid());
+                    final CollectionReference favExpCollection = db.collection("Users")
+                            .document(Objects.requireNonNull(currentUser.getUid()))
+                            .collection("Favorites");
+
+                    database.addExperimentToDB(experiment, favExpCollection);
+                }
+            });
             return view;
 
         } else if (index == 2){

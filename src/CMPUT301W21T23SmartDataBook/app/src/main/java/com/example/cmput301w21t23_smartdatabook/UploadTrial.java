@@ -5,6 +5,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
+import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.ListView;
@@ -15,6 +16,7 @@ import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
 
 import java.util.ArrayList;
 
@@ -28,6 +30,8 @@ public class UploadTrial extends AppCompatActivity {
     ListView trialsList;
     ArrayAdapter<Trial> trialArrayAdapter;
     ArrayList<Trial> trialDataList;
+    FirebaseAuth mAuth = FirebaseAuth.getInstance();
+    FirebaseUser currentUser = mAuth.getCurrentUser();
 
     /**
      * This function create the uploadTrial view
@@ -87,18 +91,18 @@ public class UploadTrial extends AppCompatActivity {
         trialArrayAdapter = new TrialList( trialDataList, getBaseContext());
         trialsList.setAdapter(trialArrayAdapter);
 
-        trialsList.setOnClickListener(new View.OnClickListener() {
+        trialsList.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
-            public void onClick(View v) {
-                AlertDialog.Builder builder = new AlertDialog.Builder(getBaseContext());
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                AlertDialog.Builder builder = new AlertDialog.Builder(UploadTrial.this);
                 builder.setTitle("Delete Trial?");
                 builder.setNegativeButton("cancel",  null)
                         .setPositiveButton("Delete", new DialogInterface.OnClickListener() {
                             @Override
                             public void onClick(DialogInterface dialog, int which) {
-
+                                Log.d("Test","test");
                             }
-                        }).create();
+                        }).create().show();
             }
         });
 
