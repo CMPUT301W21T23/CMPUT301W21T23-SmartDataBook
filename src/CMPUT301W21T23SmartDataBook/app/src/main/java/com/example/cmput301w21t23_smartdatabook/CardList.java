@@ -7,7 +7,9 @@ import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.CheckBox;
+import android.widget.CompoundButton;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import java.util.ArrayList;
 import java.util.Objects;
@@ -16,6 +18,8 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 
 import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.OnFailureListener;
+import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
@@ -113,24 +117,73 @@ public class CardList extends ArrayAdapter<Experiment> {
                         DocumentSnapshot document = task.getResult();
                         if (document.exists()) {
                             follow.setChecked(true);
-                            Log.d("test", "DocumentSnapshot data: " + document.getString("ExpID"));
                         }
                     }
                 }
             });
 
-            follow.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    FirebaseUser currentUser = mAuth.getCurrentUser();
-                    Log.d("User", "" + currentUser.getUid());
-                    final CollectionReference favExpCollection = db.collection("Users")
-                            .document(Objects.requireNonNull(currentUser.getUid()))
-                            .collection("Favorites");
+            follow.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+                      @Override
+                      public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+                          if(isChecked){
+                              FirebaseUser currentUser = mAuth.getCurrentUser();
+                              final CollectionReference favExpCollection = db.collection("Users")
+                                      .document(Objects.requireNonNull(currentUser.getUid()))
+                                      .collection("Favorites");
 
-                    database.addExperimentToDB(experiment, favExpCollection);
-                }
-            });
+                              database.addExperimentToDB(experiment, favExpCollection);
+                              System.out.println("Checked");
+                          } else {
+                              ref.get().addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
+                                  @Override
+                                  public void onComplete(@NonNull Task<DocumentSnapshot> task) {
+                                      if (task.isSuccessful()) {
+                                          DocumentSnapshot document = task.getResult();
+                                          if (document.exists()) {
+//                                              follow.setChecked(true);
+                                              if(!currentUser.getUid().equals(experiment.getOwnerUserID())){
+                                                  ref.delete()
+                                                          .addOnSuccessListener(new OnSuccessListener<Void>() {
+                                                              @Override
+                                                              public void onSuccess(Void aVoid) {
+                                                                  Log.d("test", "DocumentSnapshot successfully deleted!");
+                                                              }
+                                                          })
+                                                          .addOnFailureListener(new OnFailureListener() {
+                                                              @Override
+                                                              public void onFailure(@NonNull Exception e) {
+                                                                  Log.w("Test", "Error deleting document", e);
+                                                              }
+                                                          });
+
+                                              }
+                                              else{
+                                                  Toast.makeText(getContext(),"Cannot unfollow owned Experiment",Toast.LENGTH_SHORT).show();
+                                                  follow.setChecked(true);
+                                              }
+
+                                          }
+                                      }
+                                  }
+                              });
+                              System.out.println("Un-Checked");
+                          }
+                      }
+                  }
+            );
+
+//            follow.setOnClickListener(new View.OnClickListener() {
+//                @Override
+//                public void onClick(View v) {
+//                    FirebaseUser currentUser = mAuth.getCurrentUser();
+////                    Log.d("User", "" + currentUser.getUid());
+//                    final CollectionReference favExpCollection = db.collection("Users")
+//                            .document(Objects.requireNonNull(currentUser.getUid()))
+//                            .collection("Favorites");
+//
+//                    database.addExperimentToDB(experiment, favExpCollection);
+//                }
+//            });
             return view;
 
         } else if (index == 2){
