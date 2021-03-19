@@ -23,9 +23,11 @@ Add An Experiment:
   - Select the "Home" tab on the nagivation bar on the bottom of the app
   - Click the Red-circle-plus sign to add a new experiment
   - It will present you with a new "Experiment Details" screen 
-  - Input values into the presented empty fields that describe the experiment
-  - Set the minimum and maximum of trials
-  - 
+  - Input values into the presented empty fields, such as the experiment's name and description
+  - Set the minimum and maximum of trials for the experiment
+  - Select either binomial, count, non-negative count, and measurement for the type of tests of the experiment
+  - Activate or deactivate the location of your experiment
+  - Allow or deny the experiment of being public and shared its contents with others
   - Select "Create&Publish" to publish the experiment so other users may, and you, may see it
 
 
