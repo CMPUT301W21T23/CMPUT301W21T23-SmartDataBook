@@ -12,6 +12,8 @@ import androidx.test.rule.ActivityTestRule;
 
 import com.robotium.solo.Solo;
 
+import junit.framework.TestCase;
+
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Rule;
@@ -72,23 +74,25 @@ public class ExperimentDetailsPageTest {
 
     @Test
     public void checkExpInfo(){
+        solo.sleep(6000);
+
+        solo.assertCurrentActivity("Wrong Acitvity", MainActivity.class);
+
         ListView experimentList = rule.getActivity().findViewById(R.id.experiment_list);
         Experiment experiment = (Experiment) experimentList.getItemAtPosition(0);
 
-        solo.assertCurrentActivity("Wrong Acitvity", MainActivity.class);
         solo.clickInList(0);
         solo.assertCurrentActivity("Wrong Activity", ExperimentDetails.class);
+        solo.sleep(1000);
         assertTrue(solo.searchText(experiment.getExpName()));
         assertTrue(solo.searchText(experiment.getDate()));
         assertTrue(solo.searchText(experiment.getDescription()));
         assertTrue(solo.searchText(experiment.getOwnerUserID()));
-        assertTrue(solo.searchText(String.valueOf(experiment.getMaxTrials())));
-        assertTrue(solo.searchText(String.valueOf(experiment.getMinTrials())));
+        assertTrue(solo.searchText("Max Trials: "+String.valueOf(experiment.getMaxTrials())));
+        assertTrue(solo.searchText("Min Trials: "+String.valueOf(experiment.getMinTrials())));
         assertTrue(solo.searchText(experiment.getTrialType()));
-        assertFalse(solo.searchText("PUBLISH"));
-        assertFalse(solo.searchButton("END EXPERIMENT"));
-//        solo.assertFalse(solo.getView(R.id.ClickedExpdate));
-
+        assertEquals(solo.getView(R.id.Publish_text).getVisibility(), (View.INVISIBLE));
+        assertEquals(solo.getView(R.id.endExp).getVisibility(), (View.INVISIBLE));
     }
 
     @Test
@@ -128,6 +132,8 @@ public class ExperimentDetailsPageTest {
         solo.sleep(1000);
         solo.assertCurrentActivity("Wrong Class", MainActivity.class);
 
+        solo.sleep(3000);
+
         ListView experimentList = rule.getActivity().findViewById(R.id.experiment_list);
         Experiment experiment = (Experiment) experimentList.getItemAtPosition(0);
 
@@ -138,14 +144,14 @@ public class ExperimentDetailsPageTest {
         assertTrue(solo.searchText(experiment.getDate()));
         assertTrue(solo.searchText(experiment.getDescription()));
         assertTrue(solo.searchText(experiment.getOwnerUserID()));
-        assertTrue(solo.searchText(String.valueOf(experiment.getMaxTrials())));
-        assertTrue(solo.searchText(String.valueOf(experiment.getMinTrials())));
+        assertTrue(solo.searchText("Max Trials: "+String.valueOf(experiment.getMaxTrials())));
+        assertTrue(solo.searchText("Min Trials: "+String.valueOf(experiment.getMinTrials())));
         assertTrue(solo.searchText(experiment.getTrialType()));
-        assertTrue(solo.searchText("PUBLISH"));
-        assertTrue(solo.searchButton("END EXPERIMENT"));
+        assertEquals(solo.getView(R.id.Publish_text).getVisibility(), (View.VISIBLE));
+        assertEquals(solo.getView(R.id.endExp).getVisibility(), (View.VISIBLE));
 
         // TODO: MIGHT NOT WORK
-        assertTrue(solo.getView(rule.getActivity().findViewById(R.id.Publish)).isPressed());
+        assertTrue(solo.getView(R.id.Publish).isPressed());
 
     }
 

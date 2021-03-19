@@ -21,6 +21,7 @@ import org.junit.Before;
 import org.junit.Rule;
 import org.junit.Test;
 
+import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
 
@@ -110,15 +111,15 @@ public class FavPageTest {
         solo.sleep(1000);
         solo.assertCurrentActivity("Wrong Activity", ExperimentDetails.class);
         solo.sleep(1000);
-        assertTrue(solo.searchText(experiment.getExpName()));
-        assertTrue(solo.searchText(experiment.getDate()));
-        assertTrue(solo.searchText(experiment.getDescription()));
-        assertTrue(solo.searchText(experiment.getOwnerUserID()));
-        assertTrue(solo.searchText(String.valueOf(experiment.getMaxTrials())));
-        assertTrue(solo.searchText(String.valueOf(experiment.getMinTrials())));
-        assertTrue(solo.searchText(experiment.getTrialType()));
-        assertFalse(solo.searchText("PUBLISH"));
-        assertFalse(solo.searchButton("END EXPERIMENT"));
+        TestCase.assertTrue(solo.searchText(experiment.getExpName()));
+        TestCase.assertTrue(solo.searchText(experiment.getDate()));
+        TestCase.assertTrue(solo.searchText(experiment.getDescription()));
+        TestCase.assertTrue(solo.searchText(experiment.getOwnerUserID()));
+        TestCase.assertTrue(solo.searchText("Max Trials: "+String.valueOf(experiment.getMaxTrials())));
+        TestCase.assertTrue(solo.searchText("Min Trials: "+String.valueOf(experiment.getMinTrials())));
+        TestCase.assertTrue(solo.searchText(experiment.getTrialType()));
+        assertEquals(solo.getView(R.id.Publish_text).getVisibility(), (View.INVISIBLE));
+        assertEquals(solo.getView(R.id.endExp).getVisibility(), (View.INVISIBLE));
 
     }
 

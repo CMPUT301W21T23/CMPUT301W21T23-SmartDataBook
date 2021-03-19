@@ -249,7 +249,7 @@
             app:backgroundTint="@null"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@id/askQuestionsBTN"
-            android:visibility="gone">
+            android:visibility="invisible">
 
         </Button>
 
