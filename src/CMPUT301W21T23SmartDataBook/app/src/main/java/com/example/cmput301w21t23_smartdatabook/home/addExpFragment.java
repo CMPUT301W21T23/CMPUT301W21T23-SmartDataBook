@@ -18,6 +18,7 @@ import androidx.fragment.app.Fragment;
 import com.example.cmput301w21t23_smartdatabook.Date;
 import com.example.cmput301w21t23_smartdatabook.Experiment;
 import com.example.cmput301w21t23_smartdatabook.R;
+import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.android.material.switchmaterial.SwitchMaterial;
 import com.google.android.material.textfield.TextInputLayout;
 import com.google.firebase.auth.FirebaseAuth;
@@ -53,7 +54,6 @@ public class addExpFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.new_experiment_location_on, container, false);
-
         ((AppCompatActivity) getActivity()).getSupportActionBar().setTitle("Add new experiment");
         ((AppCompatActivity) getActivity()).getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
@@ -158,7 +158,8 @@ public class addExpFragment extends Fragment {
         super.onDestroy();
         ((AppCompatActivity) getActivity()).getSupportActionBar().setTitle("Home");
 //        getActivity().getSupportFragmentManager().popBackStack();
-
+        BottomNavigationView bottomNavigation = ((AppCompatActivity) getActivity()).findViewById(R.id.bottom_navigation);
+        bottomNavigation.setVisibility(View.VISIBLE);
     }
 
     /**
