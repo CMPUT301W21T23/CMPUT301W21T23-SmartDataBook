@@ -85,7 +85,7 @@ public class FavPageTest {
     public void checkBackButton(){
         solo.assertCurrentActivity("Wrong Activity", MainActivity.class);
         solo.sleep(1000);
-        solo.
+//        solo.
         solo.sleep(1000);
         solo.clickInList(0);
         solo.sleep(1000);
