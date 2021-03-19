@@ -55,7 +55,6 @@ public class ExperimentDetails extends AppCompatActivity {
 
         toolbar.setTitle(experiment.getExpName());
 
-
         TextView Owner = findViewById(R.id.owner);
         Owner.setText(experiment.getOwnerUserID());
         Owner.setOnClickListener(new View.OnClickListener() {

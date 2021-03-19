@@ -2,13 +2,17 @@ package com.example.cmput301w21t23_smartdatabook;
 
 import android.app.SearchManager;
 import android.content.Context;
+import android.graphics.Point;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.TextView;
+import android.widget.Toast;
 
+import androidx.annotation.Dimension;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
@@ -72,6 +76,7 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
         setSupportActionBar(findViewById(R.id.app_toolbar));
         toolbar = getSupportActionBar();
 
@@ -86,8 +91,8 @@ public class MainActivity extends AppCompatActivity {
         Database database = new Database();
         database.authenticateAnon();
 
-
     } //onCreate
+
 
     /**
      * THis method set up menu's serach icon

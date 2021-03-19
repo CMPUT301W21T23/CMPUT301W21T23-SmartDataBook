@@ -453,11 +453,6 @@ public class Database {
 
     }//authenticationAnon
 
-    //Getter for the public status
-    public void getPublicStatus() {
-
-    }
-
     public void publicNotPublic(CollectionReference coll, String onOff, Experiment experiment){
         coll.document(experiment.getExpID()).update("PublicStatus", onOff)
                 .addOnSuccessListener(new OnSuccessListener<Void>() {
@@ -473,10 +468,6 @@ public class Database {
                         Log.w("message", "Error updating document", e);
                     }
                 });
-
-
-
-
 
     }
 

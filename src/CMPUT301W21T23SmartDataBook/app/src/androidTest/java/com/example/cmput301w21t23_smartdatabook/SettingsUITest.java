@@ -44,4 +44,13 @@ public class SettingsUITest {
     public void tearDown() {
         solo.finishOpenedActivities();
     }
+
+    @Test
+    public void checkInputs() {
+        solo.assertCurrentActivity("Wrong Activity", MainActivity.class);
+        solo.sleep(1000);
+        solo.clickOnScreen(780, 1943); //"Settings" Menu Item
+        solo.clickInList(0);
+        //insert fragment check here
+    }
 }

@@ -6,16 +6,10 @@ import androidx.test.rule.ActivityTestRule;
 import android.app.Activity;
 import android.util.Log;
 import android.view.View;
-import android.widget.EditText;
-import android.widget.ListView;
-import android.widget.NumberPicker;
-import android.widget.RadioButton;
-import android.widget.TextView;
+import android.widget.CheckBox;
 
-import com.example.cmput301w21t23_smartdatabook.home.addExpFragment;
-import com.example.cmput301w21t23_smartdatabook.home.homePage;
-import com.google.android.material.floatingactionbutton.FloatingActionButton;
-import com.google.android.material.textfield.TextInputLayout;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
 import com.robotium.solo.Solo;
 
 import org.hamcrest.Matcher;
@@ -25,10 +19,13 @@ import org.junit.Rule;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 
+import java.util.UUID;
+
 import static androidx.test.espresso.Espresso.onView;
 import static junit.framework.TestCase.assertTrue;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertNotEquals;
 import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertNull;
 
@@ -38,9 +35,15 @@ import static org.junit.Assert.assertNull;
  * @See https://developer.android.com/training/testing/ui-testing/espresso-testing#java
  */
 public class HomePageTest {
+
     private Solo solo;
     private View addExpButton;
     private View searchBar;
+    private CheckBox box;
+
+    FirebaseAuth mAuth = FirebaseAuth.getInstance();
+    FirebaseUser currentUser = mAuth.getCurrentUser();
+    Database database = new Database();
 
     @Rule
     public ActivityTestRule<MainActivity> rule = new ActivityTestRule<MainActivity>(MainActivity.class, true, true);
@@ -109,13 +112,36 @@ public class HomePageTest {
     }
 
     @Test
-    public void checkClickSearchBarDropDown(){
+    public void checkClickSearchBarDropDown() {
         solo.assertCurrentActivity("Wrong Activity", MainActivity.class);
         solo.clickOnView(searchBar);
         solo.enterText(0,"Grain");
         solo.sleep(6000);
         // TODO: click an experiment and check the experiment details activity
         solo.assertCurrentActivity("Wrong Activity", ExperimentDetails.class);
+    }
+
+    @Test
+    public void checkFollow() {
+        solo.assertCurrentActivity("Wrong Activity", MainActivity.class);
+        solo.sleep(1000);
+        solo.clickOnScreen(930, 622);
+        solo.sleep(1000);
+        box = rule.getActivity().findViewById(R.id.fav);
+        assertTrue(box.isChecked()); //Box shouldn't return a false as the owner can't unfollow their own experiment
+
+        //Sign out and sign into a new UUID
+        String pastUUID = currentUser.getUid();
+        Log.d("Old", pastUUID);
+        currentUser.delete();
+        currentUser.getUid();
+        Log.d("New", currentUser.getUid() );
+
+        //Check that a new user is actually created
+//        assertFalse( pastUUID == newUUID);
+
+        solo.sleep(1000);
+
     }
 
 
