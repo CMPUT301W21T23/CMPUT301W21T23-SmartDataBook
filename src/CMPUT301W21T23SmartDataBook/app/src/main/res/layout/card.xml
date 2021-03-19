@@ -7,7 +7,8 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:orientation="vertical"
     android:background="#faf5ff"
-    android:descendantFocusability="blocksDescendants">
+    android:descendantFocusability="blocksDescendants"
+    android:paddingLeft="10dp">
 
     <TextView
         android:id="@+id/experimentName"

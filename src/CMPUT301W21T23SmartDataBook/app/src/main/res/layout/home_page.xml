@@ -10,11 +10,12 @@
     <ListView
         android:id="@+id/experiment_list"
         android:layout_width="419dp"
-        android:layout_height="733dp"
+        android:layout_height="match_parent"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent">
+        app:layout_constraintTop_toTopOf="parent"
+        android:layout_marginTop="15dp">
 
     </ListView>
 
