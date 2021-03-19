@@ -39,7 +39,6 @@ import java.util.UUID;
 public class addExpFragment extends Fragment {
 
     private FirebaseAuth mAuth;
- 
     private static final int binomialID = 10;
     private static final int countID = 11;
     private static final int nonNegativeID = 12;
