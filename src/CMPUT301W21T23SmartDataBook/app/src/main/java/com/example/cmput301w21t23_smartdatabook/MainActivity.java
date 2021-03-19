@@ -84,15 +84,20 @@ public class MainActivity extends AppCompatActivity {
 
         toolbar.setTitle("Home");
 
-
-        openFragment(homePage.newInstance("", ""));
-//        openFragment(FavPage.newInstance("",""));
-
         //anonymous authentication testing
         Database database = new Database();
         database.authenticateAnon();
 
+        openFragment(homePage.newInstance("", ""));
+//        openFragment(FavPage.newInstance("",""));
+
     } //onCreate
+
+    @Override
+    public void onDestroy() {
+        super.onDestroy();
+        FirebaseAuth.getInstance().getCurrentUser().delete();
+    }
 
 
     /**
