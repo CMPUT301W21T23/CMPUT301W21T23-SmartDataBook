@@ -142,16 +142,21 @@ public class ExperimentDetails extends AppCompatActivity {
         publish.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                String onOff;
+                if (publish.isChecked()){
+                    onOff = "On";
+                }
+                else{
+                    onOff = "Off";
+                }
+                Log.d("ONOFF", onOff);
                 FirebaseFirestore db = FirebaseFirestore.getInstance();
-                database.publicNotPublic(db.collection("Experiments"), "On", experiment);
+                database.publicNotPublic(db.collection("Experiments"), onOff, experiment);
                 database.publicNotPublic((db.collection("Users")
                         .document(currentUser.getUid())
-                        .collection("Favorites")),"On", experiment);
+                        .collection("Favorites")),onOff, experiment);
             }
-
         });
-
-
     }
 
 }
