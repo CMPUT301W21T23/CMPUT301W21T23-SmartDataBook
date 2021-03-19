@@ -11,7 +11,7 @@ import android.widget.ListView;
 
 import androidx.fragment.app.Fragment;
 
-import com.example.cmput301w21t23_smartdatabook.CallBack;
+import com.example.cmput301w21t23_smartdatabook.FillDataCallBack;
 import com.example.cmput301w21t23_smartdatabook.Database;
 import com.example.cmput301w21t23_smartdatabook.ExperimentDetails;
 import com.example.cmput301w21t23_smartdatabook.CardList;
@@ -29,7 +29,7 @@ import java.util.Objects;
  * This class consists the page of the user's favourite experiments
  * @author Afaq Nabi, Bosco Chan
  */
-public class FavPage extends Fragment implements CallBack {
+public class FavPage extends Fragment implements FillDataCallBack {
     private static final String AP1 = "AP1";
     private static final String AP2 = "AP2";
 
@@ -104,7 +104,7 @@ public class FavPage extends Fragment implements CallBack {
         favList.setAdapter(favAdapter);
 
 
-        database.fillDataList(new CallBack() {
+        database.fillDataList(new FillDataCallBack() {
             @Override
             public void getExpDataList(ArrayList<Experiment> DataList) {
 

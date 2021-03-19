@@ -11,7 +11,6 @@ import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 
-import com.example.cmput301w21t23_smartdatabook.Experiment;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
@@ -23,16 +22,12 @@ import com.google.firebase.firestore.CollectionReference;
 import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
-import com.google.firebase.firestore.Query;
 import com.google.firebase.firestore.QueryDocumentSnapshot;
 import com.google.firebase.firestore.QuerySnapshot;
-import com.google.firebase.firestore.util.Assert;
 
 import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
-import java.util.Objects;
 
 /**
  * class: Database
@@ -42,7 +37,8 @@ import java.util.Objects;
  */
 public class Database {
 
-    private CallBack callBack;
+    private FillDataCallBack fillDataCallBack;
+    private SignCallBack signCallBack;
     private ArrayList<Experiment> experimentDataList = new ArrayList<>();
 
     FirebaseAuth mAuth;
@@ -52,12 +48,16 @@ public class Database {
 
     /**
      * Constructor of the database class
-     * @param callBack
+     * @param fillDataCallBack
      * @throws InterruptedException
      * @author Bosco Chan
      */
-    public Database(CallBack callBack) throws InterruptedException {
-        this.callBack = callBack;
+    public Database(FillDataCallBack fillDataCallBack) throws InterruptedException {
+        this.fillDataCallBack = fillDataCallBack;
+    }
+
+    public Database(SignCallBack signCallBack) throws InterruptedException {
+        this.signCallBack = signCallBack;
     }
 
     /**
@@ -170,9 +170,9 @@ public class Database {
      * (All experiments added to the experimentDataList ONLY exist in the SCOPE of the "onComplete()").
      * (Since ArrayAdapter<Experiment> experimentAdapter
      * @author Bosco Chan
-     * @param callBack is the callback instance from a synchronous.
+     * @param fillDataCallBack is the callback instance from a synchronous.
      */
-    public void fillDataList(CallBack callBack, ArrayAdapter<Experiment> experimentArrayAdapter, CollectionReference collection) {
+    public void fillDataList(FillDataCallBack fillDataCallBack, ArrayAdapter<Experiment> experimentArrayAdapter, CollectionReference collection) {
         db = FirebaseFirestore.getInstance();
 
         collection
@@ -209,12 +209,12 @@ public class Database {
                             }
 
                             //Get callback to grab the populated dataList
-                            callBack.getExpDataList(experimentDataList);
+                            fillDataCallBack.getExpDataList(experimentDataList);
                             experimentArrayAdapter.notifyDataSetChanged();
 
                         } else {
                             Log.d("Failure", "Error getting documents: ", task.getException());
-                            callBack.getExpDataList(new ArrayList<>());
+                            fillDataCallBack.getExpDataList(new ArrayList<>());
                         }
                     }
                 });
@@ -399,6 +399,9 @@ public class Database {
                     @Override
                     public void onComplete(@NonNull Task<AuthResult> task) {
                         if (task.isSuccessful()) {
+
+                            signCallBack.updateHomeScreen();
+
                             // Sign in success, update UI with the signed-in user's information
                             Log.d("Authentication Success", "signInAnonymously:success: " + mAuth.getUid());
                             FirebaseUser currentUser = mAuth.getCurrentUser();

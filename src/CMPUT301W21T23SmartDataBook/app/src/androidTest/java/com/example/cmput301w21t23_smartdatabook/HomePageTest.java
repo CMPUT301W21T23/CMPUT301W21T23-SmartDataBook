@@ -130,9 +130,6 @@ public class HomePageTest {
         box = rule.getActivity().findViewById(R.id.fav);
         assertTrue(box.isChecked()); //Box shouldn't return a false as the owner can't unfollow their own experiment
 
-        //Sign out and sign into a new UUID
-        String pastUUID = currentUser.getUid();
-
         //Check that a new user is actually created
 //        assertFalse( pastUUID == newUUID);
 
