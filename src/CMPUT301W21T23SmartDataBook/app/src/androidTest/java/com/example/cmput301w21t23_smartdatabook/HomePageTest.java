@@ -122,18 +122,13 @@ public class HomePageTest {
     }
 
     @Test
-    public void checkFollow() {
+    public void checkUnFollow() {
         solo.assertCurrentActivity("Wrong Activity", MainActivity.class);
         solo.sleep(1000);
         solo.clickOnScreen(930, 622);
         solo.sleep(1000);
         box = rule.getActivity().findViewById(R.id.fav);
         assertTrue(box.isChecked()); //Box shouldn't return a false as the owner can't unfollow their own experiment
-
-        //Check that a new user is actually created
-//        assertFalse( pastUUID == newUUID);
-
-        solo.sleep(1000);
 
     }
 

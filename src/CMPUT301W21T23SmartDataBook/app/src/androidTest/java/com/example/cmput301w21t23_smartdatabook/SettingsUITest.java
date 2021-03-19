@@ -1,12 +1,15 @@
 package com.example.cmput301w21t23_smartdatabook;
 
 import android.app.Activity;
+import android.util.Log;
 import android.view.View;
+import android.widget.EditText;
 import android.widget.TextView;
 
 import androidx.test.platform.app.InstrumentationRegistry;
 import androidx.test.rule.ActivityTestRule;
 
+import com.google.android.material.textfield.TextInputLayout;
 import com.robotium.solo.Solo;
 
 import org.junit.After;
@@ -23,6 +26,7 @@ public class SettingsUITest {
     private Solo solo;
     private View addExpButton;
     private View searchBar;
+
 
     @Rule
     public ActivityTestRule<MainActivity> rule = new ActivityTestRule<MainActivity>(MainActivity.class, true, true);
@@ -45,14 +49,44 @@ public class SettingsUITest {
 
     @Test
     public void checkNameEditField(){
-        final String usernameDefault = "Username";
-        final String emailDefault = "Email";
+        final String usernameDefault = "Enter Username";
+        final String emailDefault = "Enter Email";
+        final String correctUsername = "Krutik";
+        final String correctEmail = "sonikrutik0@gmail.com";
+
+
+//        emailTextView = (TextInputLayout) solo.getView(R.id.emailTextField);
 
         solo.assertCurrentActivity("Wrong Activity", MainActivity.class);
         solo.clickOnScreen(780, 1943); //"Settings" Menu Item
-        final TextView usernameTextView = (TextView) solo.getCurrentActivity().findViewById(R.id.usernameTextField);
-        final TextView emailTextView = (TextView) solo.getCurrentActivity().findViewById(R.id.emailTextField);
-        assertEquals(usernameDefault, usernameTextView.getText().toString());
+        solo.sleep(1000);
+
+        assertEquals(( (EditText) solo.getView(R.id.usernameTextField) ).getText().toString(), usernameDefault );
+        assertEquals(( (EditText) solo.getView(R.id.emailTextField) ).getText().toString(), emailDefault );
+
+        solo.sleep(2000);
+
+        solo.clearEditText((EditText) solo.getView(R.id.usernameTextField));
+        solo.clearEditText((EditText) solo.getView(R.id.emailTextField));
+
+        solo.enterText( (EditText) solo.getView(R.id.usernameTextField), correctUsername);
+        solo.enterText( (EditText) solo.getView(R.id.emailTextField), correctEmail);
+
+        solo.sleep(2000);
+        solo.clickOnView( solo.getView(R.id.saveButtonView) );
+        solo.sleep(2000);
+
+        solo.clickOnScreen(444, 1925); //"Favorite" Menu Item
+        solo.clickOnScreen(780, 1943); //"Settings" Menu Item
+        solo.sleep(2000);
+
+        String enteredName= ( (EditText) solo.getView(R.id.usernameTextField) ).getText().toString();
+        String enteredEmail= ( (EditText) solo.getView(R.id.emailTextField) ).getText().toString();
+
+        assertEquals(enteredName, correctUsername );
+        assertEquals(enteredEmail, correctEmail );
+
+        solo.sleep(2000);
     }
 
 

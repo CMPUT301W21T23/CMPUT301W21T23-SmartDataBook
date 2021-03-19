@@ -40,6 +40,9 @@ public class Database {
     private FillDataCallBack fillDataCallBack;
     private SignCallBack signCallBack;
     private ArrayList<Experiment> experimentDataList = new ArrayList<>();
+    private static final String TAG1 = "Your";
+    private static final String TAG2 = "Warning";
+    private static final String TAG3 = "Exception";
 
     FirebaseAuth mAuth;
     FirebaseFirestore db;
@@ -327,19 +330,19 @@ public class Database {
                 if (task.isSuccessful()) {
                     DocumentSnapshot document = task.getResult();
                     if (document.exists()) {
-                        Log.d("DocSnapShot", "DocumentSnapshot data: " + document.getData());
+                        Log.d(TAG1, "DocumentSnapshot data: " + document.getData());
                         Map<String, Object> data = document.getData();
 
                         if (data.get("UserName").toString() == ""){
-                            usernameTextField.setHint("Username");
+                            usernameTextField.setText("Enter Username");
                         }else{
-                            usernameTextField.setHint(data.get("UserName").toString());
+                            usernameTextField.setText(data.get("UserName").toString());
                         }
 
                         if (data.get("Email").toString().equals("")){
-                            emailTextField.setHint("Email");
+                            emailTextField.setText("Enter Email");
                         }else{
-                            emailTextField.setHint(data.get("Email").toString());
+                            emailTextField.setText(data.get("Email").toString());
                         }
 
                         saveButtonView.setOnClickListener(new View.OnClickListener() {
@@ -362,20 +365,17 @@ public class Database {
                                         .addOnSuccessListener(new OnSuccessListener<Void>() {
                                             @Override
                                             public void onSuccess(Void aVoid) {
-                                                Toast.makeText(context, "Successfully Updated!", Toast.LENGTH_SHORT).show();
+                                                Toast.makeText(context, "Successfully Updated!" , Toast.LENGTH_SHORT).show();
                                             }
                                         });
-
-                                usernameTextField.getText().clear();
-                                emailTextField.getText().clear();
                             }
                         });
 
                     } else {
-                        Log.d("Empty", "No such document");
+                        Log.d(TAG2, "No such document");
                     }
                 } else {
-                    Log.d("Failed", "get failed with ", task.getException());
+                    Log.d(TAG3, "get failed with ", task.getException());
                 }
             }
         });

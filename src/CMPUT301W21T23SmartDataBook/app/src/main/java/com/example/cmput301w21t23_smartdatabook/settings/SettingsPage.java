@@ -1,5 +1,6 @@
 package com.example.cmput301w21t23_smartdatabook.settings;
 
+import android.content.Context;
 import android.nfc.Tag;
 import android.os.Bundle;
 import android.util.Log;
@@ -39,7 +40,7 @@ public class SettingsPage extends Fragment {
     public EditText emailTextField;
     public Button saveButtonView;
     public FirebaseUser currentUser;
-    Database database = new Database();
+    public Database database = new Database();
 
     public SettingsPage(){
 
@@ -65,12 +66,18 @@ public class SettingsPage extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.settings, container, false);
-
         usernameTextField = (EditText) view.findViewById(R.id.usernameTextField);
         emailTextField = (EditText) view.findViewById(R.id.emailTextField);
         saveButtonView = (Button) view.findViewById(R.id.saveButtonView);
+        db = FirebaseFirestore.getInstance();
+        mAuth = FirebaseAuth.getInstance();
+        currentUser = mAuth.getCurrentUser();
 
-        database.editUser( usernameTextField, emailTextField, saveButtonView, getContext() );
+        mAuth.signInAnonymously();
+        database.editUser(usernameTextField, emailTextField, saveButtonView, getContext());
+
+
+
 
         return view;
     }
