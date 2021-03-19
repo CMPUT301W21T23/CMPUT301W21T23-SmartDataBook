@@ -34,7 +34,7 @@ Select An Experiment:
   - The home page shows the list of experiments, as well as its name, the experiment owner's ID, the experiment created date, and its description.
   - Users can choose to follow the experiment by ticking on the check box on the experiment. Once an experiment is followed, it will appear on the Favourite page on the bottom of the app.
   - Once clicked to an experiment, its additional information will be displayed
-  - Users will be able to perform more actions regarrds tot the experiment
+  - Users will be able to perform more actions regarrds to the experiment
 
 
   
