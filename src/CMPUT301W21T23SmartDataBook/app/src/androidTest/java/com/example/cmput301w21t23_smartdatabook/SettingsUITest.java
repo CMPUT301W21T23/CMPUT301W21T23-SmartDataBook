@@ -49,16 +49,22 @@ public class SettingsUITest {
 
     @Test
     public void checkNameEditField(){
-        final String usernameDefault = "Username";
-        final String emailDefault = "Email";
+        final String usernameDefault = "Enter Username";
+        final String emailDefault = "Enter Email";
         final String correctUsername = "Krutik";
         final String correctEmail = "sonikrutik0@gmail.com";
+
 
 //        emailTextView = (TextInputLayout) solo.getView(R.id.emailTextField);
 
         solo.assertCurrentActivity("Wrong Activity", MainActivity.class);
         solo.clickOnScreen(780, 1943); //"Settings" Menu Item
         solo.sleep(1000);
+
+        assertEquals(( (EditText) solo.getView(R.id.usernameTextField) ).getText().toString(), usernameDefault );
+        assertEquals(( (EditText) solo.getView(R.id.emailTextField) ).getText().toString(), emailDefault );
+
+        solo.sleep(2000);
 
         solo.clearEditText((EditText) solo.getView(R.id.usernameTextField));
         solo.clearEditText((EditText) solo.getView(R.id.emailTextField));
@@ -75,19 +81,12 @@ public class SettingsUITest {
         solo.sleep(2000);
 
         String enteredName= ( (EditText) solo.getView(R.id.usernameTextField) ).getText().toString();
+        String enteredEmail= ( (EditText) solo.getView(R.id.emailTextField) ).getText().toString();
 
         assertEquals(enteredName, correctUsername );
+        assertEquals(enteredEmail, correctEmail );
 
         solo.sleep(2000);
-
-//        assertEquals(usernameTextView.getHint().toString(), usernameDefault);
-//        assertEquals(emailDefault, emailTextView.getHint().toString());
-//
-//        solo.enterText(usernameTextView, newUsername);
-//        solo.enterText(emailTextView, newEmail);
-//
-//        assertEquals(usernameDefault, usernameTextView.getHint().toString());
-//        assertEquals(emailDefault, emailTextView.getHint().toString());
     }
 
 
