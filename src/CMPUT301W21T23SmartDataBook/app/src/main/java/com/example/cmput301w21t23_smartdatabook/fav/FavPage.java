@@ -18,6 +18,7 @@ import com.example.cmput301w21t23_smartdatabook.CardList;
 import com.example.cmput301w21t23_smartdatabook.Experiment;
 import com.example.cmput301w21t23_smartdatabook.R;
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.firestore.FirebaseFirestore;
 
 import java.util.ArrayList;
@@ -38,6 +39,7 @@ public class FavPage extends Fragment implements CallBack {
 
     FirebaseFirestore db = FirebaseFirestore.getInstance();
     FirebaseAuth mAuth = FirebaseAuth.getInstance();
+    FirebaseUser currentUser = mAuth.getCurrentUser();
     Database database;
 
     //Implement interrupted exception throw on database object instantiation
@@ -101,6 +103,7 @@ public class FavPage extends Fragment implements CallBack {
         favAdapter = new CardList(getContext(), favDataList, 2);
         favList.setAdapter(favAdapter);
 
+
         database.fillDataList(new CallBack() {
             @Override
             public void getExpDataList(ArrayList<Experiment> DataList) {
@@ -125,7 +128,7 @@ public class FavPage extends Fragment implements CallBack {
                 });
 
             }//getExpDataList
-        }, favAdapter, db.collection("Users").document(Objects.requireNonNull(mAuth.getUid())).collection("Favorites"));//fillDataList
+        }, favAdapter, db.collection("Users").document(Objects.requireNonNull(currentUser.getUid())).collection("Favorites"));//fillDataList
 
         favList.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override

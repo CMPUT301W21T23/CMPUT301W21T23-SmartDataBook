@@ -3,6 +3,7 @@ package com.example.cmput301w21t23_smartdatabook;
 import android.app.SearchManager;
 import android.content.Context;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
@@ -21,6 +22,7 @@ import com.example.cmput301w21t23_smartdatabook.home.homePage;
 import com.example.cmput301w21t23_smartdatabook.settings.SettingsPage;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.firestore.FirebaseFirestore;
 
 /**
@@ -36,8 +38,9 @@ public class MainActivity extends AppCompatActivity {
 
     BottomNavigationView bottomNavigation;
 
+    FirebaseAuth mAuth = FirebaseAuth.getInstance();
+
     private FirebaseFirestore db;
-    private FirebaseAuth mAuth;
 
     private ActionBar toolbar;
     private boolean searchShow;
@@ -76,13 +79,13 @@ public class MainActivity extends AppCompatActivity {
         bottomNavigation.setOnNavigationItemSelectedListener(mOnNavigationItemSelectedListener);
 
         toolbar.setTitle("Home");
-
         openFragment(homePage.newInstance("", ""));
 //        openFragment(FavPage.newInstance("",""));
 
         //anonymous authentication testing
         Database database = new Database();
         database.authenticateAnon();
+
 
     } //onCreate
 

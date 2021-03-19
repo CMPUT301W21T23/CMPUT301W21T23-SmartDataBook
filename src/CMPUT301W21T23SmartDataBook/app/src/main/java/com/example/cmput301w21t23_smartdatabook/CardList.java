@@ -44,10 +44,11 @@ public class CardList extends ArrayAdapter<Experiment> {
         return experiments;
     }
 
-    Database database = new Database();
-    FirebaseFirestore db = FirebaseFirestore.getInstance();
     FirebaseAuth mAuth = FirebaseAuth.getInstance();
     FirebaseUser currentUser = mAuth.getCurrentUser();
+    Database database = new Database();
+    FirebaseFirestore db = FirebaseFirestore.getInstance();
+
 
     /**
      * Public Constructor for the CardList class
@@ -102,7 +103,6 @@ public class CardList extends ArrayAdapter<Experiment> {
             });
 
             // https://developer.android.com/reference/android/widget/CheckBox
-//            Log.d("test", currentUser.getUid());
             CheckBox follow = view.findViewById(R.id.fav);
 
             DocumentReference ref = db.collection("Users")
@@ -132,58 +132,19 @@ public class CardList extends ArrayAdapter<Experiment> {
                                       .collection("Favorites");
 
                               database.addExperimentToDB(experiment, favExpCollection);
+
                               System.out.println("Checked");
+
                           } else {
-                              ref.get().addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
-                                  @Override
-                                  public void onComplete(@NonNull Task<DocumentSnapshot> task) {
-                                      if (task.isSuccessful()) {
-                                          DocumentSnapshot document = task.getResult();
-                                          if (document.exists()) {
-//                                              follow.setChecked(true);
-                                              if(!currentUser.getUid().equals(experiment.getOwnerUserID())){
-                                                  ref.delete()
-                                                          .addOnSuccessListener(new OnSuccessListener<Void>() {
-                                                              @Override
-                                                              public void onSuccess(Void aVoid) {
-                                                                  Log.d("test", "DocumentSnapshot successfully deleted!");
-                                                              }
-                                                          })
-                                                          .addOnFailureListener(new OnFailureListener() {
-                                                              @Override
-                                                              public void onFailure(@NonNull Exception e) {
-                                                                  Log.w("Test", "Error deleting document", e);
-                                                              }
-                                                          });
 
-                                              }
-                                              else{
-                                                  Toast.makeText(getContext(),"Cannot unfollow owned Experiment",Toast.LENGTH_SHORT).show();
-                                                  follow.setChecked(true);
-                                              }
+                              database.followStatus( ref, experiment, getContext(), follow );
 
-                                          }
-                                      }
-                                  }
-                              });
                               System.out.println("Un-Checked");
                           }
                       }
                   }
             );
-
-//            follow.setOnClickListener(new View.OnClickListener() {
-//                @Override
-//                public void onClick(View v) {
-//                    FirebaseUser currentUser = mAuth.getCurrentUser();
-////                    Log.d("User", "" + currentUser.getUid());
-//                    final CollectionReference favExpCollection = db.collection("Users")
-//                            .document(Objects.requireNonNull(currentUser.getUid()))
-//                            .collection("Favorites");
-//
-//                    database.addExperimentToDB(experiment, favExpCollection);
-//                }
-//            });
+            
             return view;
 
         } else if (index == 2){

@@ -5,6 +5,7 @@ import android.content.Context;
 import android.util.Log;
 import android.view.View;
 import android.widget.ArrayAdapter;
+import android.widget.CheckBox;
 import android.widget.EditText;
 import android.widget.Toast;
 
@@ -65,8 +66,45 @@ public class Database {
      */
     public Database (){};
 
-    //Task will be executed here. Done in the background. Called Asynchronous task.
+    public void followStatus(DocumentReference ref, Experiment experiment, Context context, CheckBox follow) {
+        FirebaseAuth mAuth = FirebaseAuth.getInstance();
+        FirebaseUser currentUser = mAuth.getCurrentUser();
 
+        ref.get().addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
+            @Override
+            public void onComplete(@NonNull Task<DocumentSnapshot> task) {
+                if (task.isSuccessful()) {
+                    DocumentSnapshot document = task.getResult();
+                    if (document.exists()) {
+//                                              follow.setChecked(true);
+                        if(!currentUser.getUid().equals(experiment.getOwnerUserID())){
+                            ref.delete()
+                                    .addOnSuccessListener(new OnSuccessListener<Void>() {
+                                        @Override
+                                        public void onSuccess(Void aVoid) {
+                                            Log.d("test", "DocumentSnapshot successfully deleted!");
+                                        }
+                                    })
+                                    .addOnFailureListener(new OnFailureListener() {
+                                        @Override
+                                        public void onFailure(@NonNull Exception e) {
+                                            Log.w("Test", "Error deleting document", e);
+                                        }
+                                    });
+
+                        }
+                        else{
+                            Toast.makeText(context,"Cannot unfollow owned Experiment",Toast.LENGTH_SHORT).show();
+                            follow.setChecked(true);
+                        }
+
+                    }
+                }
+            }
+        });//ref.get()
+    }
+
+    //Task will be executed here. Done in the background. Called Asynchronous task.
     /**
      * This function delete trials from the database
      * @param experiment
