@@ -115,7 +115,6 @@ public class HomePageTest {
         solo.enterText(0,"Grain");
         solo.sleep(6000);
         // TODO: click an experiment and check the experiment details activity
-
         solo.assertCurrentActivity("Wrong Activity", ExperimentDetails.class);
     }
 
