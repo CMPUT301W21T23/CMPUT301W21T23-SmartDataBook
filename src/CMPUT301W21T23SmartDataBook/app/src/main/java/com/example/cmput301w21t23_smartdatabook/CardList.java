@@ -100,6 +100,7 @@ public class CardList extends ArrayAdapter<Experiment> {
             // https://developer.android.com/reference/android/widget/CheckBox
 //            Log.d("test", currentUser.getUid());
             CheckBox follow = view.findViewById(R.id.fav);
+
             DocumentReference ref = db.collection("Users")
                     .document(currentUser.getUid())
                     .collection("Favorites")
@@ -121,9 +122,10 @@ public class CardList extends ArrayAdapter<Experiment> {
             follow.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-
+                    FirebaseUser currentUser = mAuth.getCurrentUser();
+                    Log.d("User", "" + currentUser.getUid());
                     final CollectionReference favExpCollection = db.collection("Users")
-                            .document(Objects.requireNonNull(mAuth.getUid()))
+                            .document(Objects.requireNonNull(currentUser.getUid()))
                             .collection("Favorites");
 
                     database.addExperimentToDB(experiment, favExpCollection);
