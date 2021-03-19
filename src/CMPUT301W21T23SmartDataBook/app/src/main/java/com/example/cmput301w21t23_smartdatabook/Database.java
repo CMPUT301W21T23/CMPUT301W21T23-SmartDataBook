@@ -119,12 +119,13 @@ public class Database {
                         FirebaseUser currentUser = mAuth.getCurrentUser();
 
                         experimentDataList.clear();
-                            
+
                         String coll1 = db.collection("Experiments").getPath();
 
                         if (task.isSuccessful()) {
                             for (QueryDocumentSnapshot document : task.getResult()) {
-                                if ( (coll1.equals(collection.getPath()) && giveBoolean( document.getData().get("PublicStatus").toString())) || (collection.getPath().equals(db.collection("Users").document(currentUser.getUid()).collection("Favorites").getPath())) ){
+                                if ( (coll1.equals(collection.getPath()) && giveBoolean( document.getData().get("PublicStatus").toString())) ||
+                                        (collection.getPath().equals(db.collection("Users").document(currentUser.getUid()).collection("Favorites").getPath())) ){
                                     experimentDataList.add( new Experiment(
                                             document.getData().get("Name").toString(),
                                             document.getData().get("UUID").toString(),
@@ -384,8 +385,10 @@ public class Database {
 
     }//authenticationAnon
 
+    //Getter for the public status
+    public void getPublicStatus() {
 
-
+    }
 
     public void publicNotPublic(CollectionReference coll, String onOff, Experiment experiment){
         FirebaseAuth mAuth = FirebaseAuth.getInstance();
