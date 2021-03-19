@@ -1,8 +1,11 @@
 package com.example.cmput301w21t23_smartdatabook.home;
 
+import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.LayoutInflater;
+import android.view.Menu;
+import android.view.MenuInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
@@ -156,9 +159,10 @@ public class addExpFragment extends Fragment {
     @Override
     public void onDestroy() {
         super.onDestroy();
-        ((AppCompatActivity) getActivity()).getSupportActionBar().setTitle("Home");
+        AppCompatActivity activity = ((AppCompatActivity) getActivity());
+        activity.getSupportActionBar().setTitle("Home");
 //        getActivity().getSupportFragmentManager().popBackStack();
-        BottomNavigationView bottomNavigation = ((AppCompatActivity) getActivity()).findViewById(R.id.bottom_navigation);
+        BottomNavigationView bottomNavigation = activity.findViewById(R.id.bottom_navigation);
         bottomNavigation.setVisibility(View.VISIBLE);
     }
 

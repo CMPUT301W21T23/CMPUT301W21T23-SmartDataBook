@@ -2,7 +2,6 @@ package com.example.cmput301w21t23_smartdatabook.home;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -11,12 +10,11 @@ import android.widget.ArrayAdapter;
 import android.widget.ListView;
 import android.widget.Toast;
 
-import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentTransaction;
 
-import com.example.cmput301w21t23_smartdatabook.CallBack;
+import com.example.cmput301w21t23_smartdatabook.FillDataCallBack;
 import com.example.cmput301w21t23_smartdatabook.CardList;
 import com.example.cmput301w21t23_smartdatabook.Database;
 import com.example.cmput301w21t23_smartdatabook.Experiment;
@@ -27,10 +25,6 @@ import com.google.firebase.firestore.CollectionReference;
 import com.google.firebase.firestore.FirebaseFirestore;
 
 import java.util.ArrayList;
-import java.util.HashSet;
-import java.util.List;
-import java.util.Set;
-import java.util.stream.Collectors;
 
 /**
  * Class: homePage
@@ -43,7 +37,7 @@ import java.util.stream.Collectors;
  * @see Fragment, Firebase
  */
 
-public class homePage extends Fragment implements CallBack{
+public class homePage extends Fragment implements FillDataCallBack {
 
     private static final String AP1 = "AP1";
     private static final String AP2 = "AP2";
@@ -61,6 +55,15 @@ public class homePage extends Fragment implements CallBack{
         } catch (InterruptedException e) {
             e.printStackTrace();
         }
+    }
+
+    /**
+     * Assigns the experimentDataList with the callback-acquired DataList containing Experiment objects
+     * @param DataList is the Experiment-populated array list found in Database.fillDataList()
+     */
+    @Override
+    public void getExpDataList(ArrayList<Experiment> DataList) {
+        experimentDataList = DataList;
     }
 
     FirebaseFirestore db = FirebaseFirestore.getInstance();
@@ -108,7 +111,7 @@ public class homePage extends Fragment implements CallBack{
 
         //Source: Erwin Kurniawan A; https://stackoverflow.com/users/7693494/erwin-kurniawan-a
         //Code: https://stackoverflow.com/questions/61930061/how-to-return-a-value-from-oncompletelistener-while-creating-user-with-email-and
-        database.fillDataList(new CallBack() {
+        database.fillDataList(new FillDataCallBack() {
             @Override
             public void getExpDataList(ArrayList<Experiment> DataList) {
 
@@ -184,13 +187,5 @@ public class homePage extends Fragment implements CallBack{
 
     }//onActivityResult
 
-    /**
-     * Assigns the experimentDataList with the callback-acquired DataList containing Experiment objects
-     * @param DataList is the Experiment-populated array list found in Database.fillDataList()
-     */
-    @Override
-    public void getExpDataList(ArrayList<Experiment> DataList) {
-        experimentDataList = DataList;
-    }
 
 }//homePage

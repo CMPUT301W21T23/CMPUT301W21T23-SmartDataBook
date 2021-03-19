@@ -38,16 +38,26 @@ import com.google.firebase.firestore.FirebaseFirestore;
  * @Refrences https://androidwave.com/bottom-navigation-bar-android-example/
  */
 
-public class MainActivity extends AppCompatActivity {
+public class MainActivity extends AppCompatActivity implements SignCallBack {
 
     BottomNavigationView bottomNavigation;
 
     FirebaseAuth mAuth = FirebaseAuth.getInstance();
-
     private FirebaseFirestore db;
 
     private ActionBar toolbar;
     private boolean searchShow;
+
+    Database database;
+
+    //Implement interrupted exception throw on database object instantiation
+    {
+        try {
+            database = new Database(this);
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
+    }
 
     // VERY IMPORTANT FUNCTION
     // searchShow is set to false by default
@@ -84,19 +94,23 @@ public class MainActivity extends AppCompatActivity {
 
         toolbar.setTitle("Home");
 
-
         //anonymous authentication testing
-        Database database = new Database();
         database.authenticateAnon();
 
-        openFragment(homePage.newInstance("", ""));
+//        openFragment(homePage.newInstance("", ""));
 //        openFragment(FavPage.newInstance("",""));
 
     } //onCreate
 
+    @Override
+    public void onDestroy() {
+        super.onDestroy();
+        FirebaseAuth.getInstance().getCurrentUser().delete();
+    }
+
 
     /**
-     * THis method set up menu's serach icon
+     * THis method set up menu's search icon
      * @param menu
      * @return
      */
@@ -155,5 +169,13 @@ public class MainActivity extends AppCompatActivity {
                     return false;
                 }
             };
+
+    @Override
+    public void updateHomeScreen() {
+        final FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
+        transaction.replace(R.id.container, homePage.newInstance("", ""));
+        transaction.addToBackStack(null);
+        transaction.commit();
+    }
 
 }//mainActivity
