@@ -3,6 +3,7 @@ package com.example.cmput301w21t23_smartdatabook;
 import android.app.Activity;
 import android.view.View;
 import android.widget.ListView;
+import android.widget.TextView;
 
 import androidx.test.platform.app.InstrumentationRegistry;
 import androidx.test.rule.ActivityTestRule;
@@ -14,6 +15,7 @@ import org.junit.Before;
 import org.junit.Rule;
 import org.junit.Test;
 
+import static org.junit.Assert.*;
 import static org.junit.Assert.assertEquals;
 import static junit.framework.TestCase.assertTrue;
 import static org.junit.Assert.assertFalse;
@@ -72,8 +74,15 @@ public class ExperimentDetailsPageTest {
         solo.assertCurrentActivity("Wrong Acitvity", MainActivity.class);
         solo.clickInList(0);
         solo.assertCurrentActivity("Wrong Activity", ExperimentDetails.class);
-        solo.asserTrue(solo.searchText(experiment.getDate()));
+        assertTrue(experiment.getDate(), solo.searchText(experiment.getDate()));
+        assertTrue(experiment.getDescription(), solo.searchText(experiment.getDescription()));
+        assertTrue(experiment.getOwnerUserID(), solo.searchText(experiment.getOwnerUserID()));
+        assertTrue(String.valueOf(experiment.getMaxTrials()), solo.searchText(String.valueOf(experiment.getMaxTrials())));
+        assertTrue(String.valueOf(experiment.getMinTrials()), solo.searchText(String.valueOf(experiment.getMinTrials())));
+        assertTrue(experiment.getTrialType(), solo.searchText(experiment.getTrialType()));
+
 //        solo.assertFalse(solo.getView(R.id.ClickedExpdate));
 
     }
+
 }
