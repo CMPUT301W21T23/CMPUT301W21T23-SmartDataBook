@@ -150,7 +150,7 @@ public class ExperimentDetails extends AppCompatActivity {
         TextView publish_text = findViewById(R.id.Publish_text);
         publish.setChecked(experiment.isPublic());
         if (currentUser.getUid().equals(experiment.getOwnerUserID()) ){
-            endExp.setVisibility(View.VISIBLE);
+//            endExp.setVisibility(View.VISIBLE);
             publish.setVisibility(View.VISIBLE);
             publish_text.setVisibility(View.VISIBLE);
             // doesn't work
