@@ -9,7 +9,7 @@ import java.util.ArrayList;
  * @see Experiment
  * @author Bosco Chan, Afaq Nabi, Alex Mak, Jaydem Cho, Krutik Soni, Natnail Ghebresilasie
  */
-abstract class User{
+public abstract class User{
     String userName;
     String userContact;
     String userUniqueID;

@@ -42,7 +42,7 @@
 
         </activity>
 
-        <activity android:name=".CommentActivity">
+        <activity android:name=".comments.CommentActivity">
 
         </activity>
 
