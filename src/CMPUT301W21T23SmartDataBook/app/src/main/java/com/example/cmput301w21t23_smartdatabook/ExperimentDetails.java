@@ -129,6 +129,12 @@ public class ExperimentDetails extends AppCompatActivity {
         });
 
         Button endExp = findViewById(R.id.endExp);
+        endExp.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Log.d("Test", "Test");
+            }
+        });
 
 
         CheckBox publish = findViewById(R.id.Publish);
