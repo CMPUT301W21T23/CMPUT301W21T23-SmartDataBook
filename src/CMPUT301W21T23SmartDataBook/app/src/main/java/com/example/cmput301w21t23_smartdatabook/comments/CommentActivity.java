@@ -1,10 +1,13 @@
-package com.example.cmput301w21t23_smartdatabook;
+package com.example.cmput301w21t23_smartdatabook.comments;
 
 import android.os.Bundle;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
 
 import androidx.appcompat.app.AppCompatActivity;
+
+import com.example.cmput301w21t23_smartdatabook.comments.Comment;
+import com.example.cmput301w21t23_smartdatabook.R;
 
 import java.util.ArrayList;
 

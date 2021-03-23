@@ -23,8 +23,8 @@ public class Histogram extends Experiment{
      * @param date
      * @param expID
      */
-    public Histogram(String expName, String ownerUserID, String trialType, String description, boolean regionOn, int minTrials, int maxTrials, boolean isPublic, String date, String expID) {
-        super(expName, ownerUserID, trialType, description, regionOn, minTrials, maxTrials, isPublic, date, expID);
+    public Histogram(String expName, String ownerUserID, String trialType, String description, boolean regionOn, int minTrials, int maxTrials, boolean isPublic, String date, String expID, boolean isEnd) {
+        super(expName, ownerUserID, trialType, description, regionOn, minTrials, maxTrials, isPublic, date, expID, isEnd);
     }
     // will need a xml file for histogram in future
 }

@@ -13,8 +13,8 @@ import androidx.fragment.app.Fragment;
 
 import com.example.cmput301w21t23_smartdatabook.FillDataCallBack;
 import com.example.cmput301w21t23_smartdatabook.Database;
-import com.example.cmput301w21t23_smartdatabook.ExperimentDetails;
-import com.example.cmput301w21t23_smartdatabook.CardList;
+import com.example.cmput301w21t23_smartdatabook.experimentDetails.ExperimentDetails;
+import com.example.cmput301w21t23_smartdatabook.home.CardList;
 import com.example.cmput301w21t23_smartdatabook.Experiment;
 import com.example.cmput301w21t23_smartdatabook.R;
 import com.google.firebase.auth.FirebaseAuth;

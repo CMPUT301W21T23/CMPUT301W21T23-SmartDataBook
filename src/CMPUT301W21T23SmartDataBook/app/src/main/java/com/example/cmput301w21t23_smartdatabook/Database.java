@@ -204,7 +204,10 @@ public class Database {
                                             Integer.parseInt( document.getData().get("Maximum Trials").toString() ),
                                             giveBoolean( document.getData().get("PublicStatus").toString() ),
                                             document.getData().get("Date").toString(),
-                                            document.getData().get("ExpID").toString()));
+                                            document.getData().get("ExpID").toString(),
+                                            giveBoolean(document.getData().get("isEnd").toString())
+                                            )
+                                    );
                                 }
 
                                 Log.d("Success", document.getId() + " => " + document.getData());
@@ -272,6 +275,7 @@ public class Database {
         data.put("Maximum Trials", "" + newExperiment.getMaxTrials());
         data.put("Date", newExperiment.getDate());
         data.put("ExpID", newExperiment.getExpID());
+        data.put("isEnd", giveString(newExperiment.getIsEnd()));
 
         collection
                 .document(newExperiment.getExpID())
@@ -456,8 +460,8 @@ public class Database {
 
     }//authenticationAnon
 
-    public void publicNotPublic(CollectionReference coll, String onOff, Experiment experiment){
-        coll.document(experiment.getExpID()).update("PublicStatus", onOff)
+    public void publicOrEnd(CollectionReference coll, String onOff, Experiment experiment, String status){
+        coll.document(experiment.getExpID()).update(status, onOff)
                 .addOnSuccessListener(new OnSuccessListener<Void>() {
                     @Override
                     public void onSuccess(Void aVoid) {
@@ -471,7 +475,6 @@ public class Database {
                         Log.w("message", "Error updating document", e);
                     }
                 });
-
     }
 
 }//Database

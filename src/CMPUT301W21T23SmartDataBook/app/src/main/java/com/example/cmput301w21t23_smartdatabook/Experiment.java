@@ -27,6 +27,9 @@ public class Experiment implements Serializable {
     private boolean requireLocation = false;
     private Location location;
 
+    // end experiment
+    private boolean isEnd;
+
     /**
      * Public constructor for Experiment without location settings
      * @param expName
@@ -39,7 +42,7 @@ public class Experiment implements Serializable {
      * @param isPublic
      * @param date
      */
-    public Experiment(String expName, String ownerUserID, String trialType, String description, boolean regionOn, int minTrials, int maxTrials, boolean isPublic, String date, String expID) {
+    public Experiment(String expName, String ownerUserID, String trialType, String description, boolean regionOn, int minTrials, int maxTrials, boolean isPublic, String date, String expID, boolean isEnd) {
         this.expName = expName;
         this.ownerUserID = ownerUserID;
         this.trialType = trialType;
@@ -50,6 +53,7 @@ public class Experiment implements Serializable {
         this.isPublic = isPublic;
         this.date = date;
         this.expID = expID;
+        this.isEnd = isEnd;
     }
 
     /**
@@ -66,18 +70,22 @@ public class Experiment implements Serializable {
      * @param requireLocation
      * @param location
      */
-    public Experiment(String expName, String ownerUserID, String trialType, String description, boolean regionOn, int minTrials, int maxTrials, boolean isPublic, String date, boolean requireLocation, Location location) {
-        this.expName = expName;
-        this.ownerUserID = ownerUserID;
-        this.trialType = trialType;
-        this.description = description;
-        this.regionOn = regionOn;
-        this.minTrials = minTrials;
-        this.maxTrials = maxTrials;
-        this.isPublic = isPublic;
-        this.date = date;
-        this.requireLocation = requireLocation;
-        this.location = location;
+//    public Experiment(String expName, String ownerUserID, String trialType, String description, boolean regionOn, int minTrials, int maxTrials, boolean isPublic, String date, boolean requireLocation, Location location) {
+//        this.expName = expName;
+//        this.ownerUserID = ownerUserID;
+//        this.trialType = trialType;
+//        this.description = description;
+//        this.regionOn = regionOn;
+//        this.minTrials = minTrials;
+//        this.maxTrials = maxTrials;
+//        this.isPublic = isPublic;
+//        this.date = date;
+//        this.requireLocation = requireLocation;
+//        this.location = location;
+//    }
+
+    public boolean getIsEnd() {
+        return isEnd;
     }
 
     /**

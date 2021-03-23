@@ -1,5 +1,7 @@
 
-package com.example.cmput301w21t23_smartdatabook;
+package com.example.cmput301w21t23_smartdatabook.comments;
+
+import com.example.cmput301w21t23_smartdatabook.User;
 
 import java.util.ArrayList;
 
@@ -12,6 +14,7 @@ import java.util.ArrayList;
  */
 class Comment extends User{
 
+    private final String userUniqueID;
     String text;
     int commentID;
     Comment question;

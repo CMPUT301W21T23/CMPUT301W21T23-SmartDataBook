@@ -1,4 +1,4 @@
-package com.example.cmput301w21t23_smartdatabook;
+package com.example.cmput301w21t23_smartdatabook.experimentDetails;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -8,19 +8,16 @@ import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.TextView;
 
-import androidx.annotation.NonNull;
 import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
 
-import com.google.android.gms.tasks.OnCompleteListener;
-import com.google.android.gms.tasks.OnFailureListener;
-import com.google.android.gms.tasks.OnSuccessListener;
-import com.google.android.gms.tasks.Task;
+import com.example.cmput301w21t23_smartdatabook.comments.CommentActivity;
+import com.example.cmput301w21t23_smartdatabook.Database;
+import com.example.cmput301w21t23_smartdatabook.Experiment;
+import com.example.cmput301w21t23_smartdatabook.R;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
-import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
-import com.google.firebase.firestore.Source;
 
 /**
  * Class:ExperimentDetails
@@ -31,7 +28,7 @@ import com.google.firebase.firestore.Source;
  * switch button that turns on/ off an experiment's trial location.
  * @author Afaq Nabi, Bosco Chan, Jayden
  * @version 1
- * @see Experiment,
+ * @see Experiment ,
  */
 public class ExperimentDetails extends AppCompatActivity {
 
@@ -46,6 +43,8 @@ public class ExperimentDetails extends AppCompatActivity {
 
         setSupportActionBar(findViewById(R.id.app_toolbar));
         ActionBar toolbar = getSupportActionBar();
+
+        FirebaseFirestore db = FirebaseFirestore.getInstance();
 
         assert toolbar != null;
         toolbar.setDisplayHomeAsUpEnabled(true);
@@ -124,18 +123,39 @@ public class ExperimentDetails extends AppCompatActivity {
         askQns.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                // TODO: new comments activity
+                Intent intent = new Intent(getBaseContext(), CommentActivity.class);
+                startActivity(intent);
             }
         });
 
         Button endExp = findViewById(R.id.endExp);
+        endExp.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                database.publicOrEnd(db.collection("Experiments"), "On", experiment,"isEnd");
+                database.publicOrEnd((db.collection("Users")
+                        .document(currentUser.getUid())
+                        .collection("Favorites")), "On", experiment,"IsEnd");
+                endExp.setVisibility(View.INVISIBLE);
+                Log.d("Tests", "value1: "+database.giveBoolean(database.giveString(experiment.getIsEnd())));
+            }
+        });
+
+
+
+
         CheckBox publish = findViewById(R.id.Publish);
         TextView publish_text = findViewById(R.id.Publish_text);
         publish.setChecked(experiment.isPublic());
-        if (currentUser.getUid().equals(experiment.getOwnerUserID())){
-            endExp.setVisibility(View.VISIBLE);
+        if (currentUser.getUid().equals(experiment.getOwnerUserID()) ){
+//            endExp.setVisibility(View.VISIBLE);
             publish.setVisibility(View.VISIBLE);
             publish_text.setVisibility(View.VISIBLE);
+            // doesn't work
+            if (database.giveBoolean(database.giveString(experiment.getIsEnd()))){
+                Log.d("Tests", "value2: "+database.giveBoolean(database.giveString(experiment.getIsEnd())));
+                endExp.setVisibility(View.INVISIBLE);
+            }
         }
 
         publish.setOnClickListener(new View.OnClickListener() {
@@ -149,11 +169,11 @@ public class ExperimentDetails extends AppCompatActivity {
                     onOff = "Off";
                 }
                 Log.d("ONOFF", onOff);
-                FirebaseFirestore db = FirebaseFirestore.getInstance();
-                database.publicNotPublic(db.collection("Experiments"), onOff, experiment);
-                database.publicNotPublic((db.collection("Users")
+
+                database.publicOrEnd(db.collection("Experiments"), onOff, experiment, "PublicStatus");
+                database.publicOrEnd((db.collection("Users")
                         .document(currentUser.getUid())
-                        .collection("Favorites")),onOff, experiment);
+                        .collection("Favorites")),onOff, experiment,"PublicStatus");
             }
         });
     }

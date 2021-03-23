@@ -1,17 +1,13 @@
 package com.example.cmput301w21t23_smartdatabook;
 
 import android.app.Activity;
-import android.content.ClipData;
-import android.util.Log;
-import android.view.Menu;
-import android.view.MenuItem;
 import android.view.View;
 import android.widget.ListView;
 
 import androidx.test.platform.app.InstrumentationRegistry;
 import androidx.test.rule.ActivityTestRule;
 
-import com.google.android.material.bottomnavigation.BottomNavigationView;
+import com.example.cmput301w21t23_smartdatabook.experimentDetails.ExperimentDetails;
 import com.robotium.solo.Solo;
 
 import junit.framework.TestCase;

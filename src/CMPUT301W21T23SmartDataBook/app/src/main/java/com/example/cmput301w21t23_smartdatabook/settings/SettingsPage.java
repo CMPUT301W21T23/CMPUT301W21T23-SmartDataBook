@@ -17,6 +17,7 @@ import androidx.fragment.app.Fragment;
 
 import com.example.cmput301w21t23_smartdatabook.Database;
 import com.example.cmput301w21t23_smartdatabook.R;
+import com.example.cmput301w21t23_smartdatabook.userIDString;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
@@ -34,11 +35,15 @@ public class SettingsPage extends Fragment {
     private static final String TAG1 = "Your";
     private static final String TAG2 = "Warning";
     private static final String TAG3 = "Exception";
+
     private FirebaseFirestore db;
     private FirebaseAuth mAuth;
+
     public EditText usernameTextField;
     public EditText emailTextField;
+
     public Button saveButtonView;
+
     public FirebaseUser currentUser;
     public Database database = new Database();
 
@@ -76,8 +81,10 @@ public class SettingsPage extends Fragment {
         mAuth.signInAnonymously();
         database.editUser(usernameTextField, emailTextField, saveButtonView, getContext());
 
+//        userIDString uid = null;
+//        String uuid = uid.getCurrentUser();
 
-
+        Log.d("MESSAGE", "UID: "+ currentUser+" Stirng: "+currentUser.getUid());
 
         return view;
     }
