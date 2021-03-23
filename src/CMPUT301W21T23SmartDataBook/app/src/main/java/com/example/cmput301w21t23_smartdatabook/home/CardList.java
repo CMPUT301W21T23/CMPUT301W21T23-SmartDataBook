@@ -1,7 +1,6 @@
-package com.example.cmput301w21t23_smartdatabook;
+package com.example.cmput301w21t23_smartdatabook.home;
 import android.content.Context;
 import android.content.Intent;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -10,7 +9,6 @@ import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.CompoundButton;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import java.util.ArrayList;
 import java.util.Objects;
@@ -18,9 +16,11 @@ import java.util.Objects;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 
+import com.example.cmput301w21t23_smartdatabook.comments.CommentActivity;
+import com.example.cmput301w21t23_smartdatabook.Database;
+import com.example.cmput301w21t23_smartdatabook.Experiment;
+import com.example.cmput301w21t23_smartdatabook.R;
 import com.google.android.gms.tasks.OnCompleteListener;
-import com.google.android.gms.tasks.OnFailureListener;
-import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;

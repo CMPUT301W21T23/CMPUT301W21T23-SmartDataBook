@@ -16,7 +16,6 @@ import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentTransaction;
 
 import com.example.cmput301w21t23_smartdatabook.FillDataCallBack;
-import com.example.cmput301w21t23_smartdatabook.CardList;
 import com.example.cmput301w21t23_smartdatabook.Database;
 import com.example.cmput301w21t23_smartdatabook.Experiment;
 import com.example.cmput301w21t23_smartdatabook.experimentDetails.ExperimentDetails;

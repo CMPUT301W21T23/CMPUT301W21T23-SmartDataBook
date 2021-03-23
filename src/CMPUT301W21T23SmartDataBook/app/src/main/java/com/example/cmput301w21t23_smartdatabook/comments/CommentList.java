@@ -1,4 +1,4 @@
-package com.example.cmput301w21t23_smartdatabook;
+package com.example.cmput301w21t23_smartdatabook.comments;
 
 import android.content.Context;
 import android.view.LayoutInflater;
@@ -9,6 +9,9 @@ import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+
+import com.example.cmput301w21t23_smartdatabook.R;
+import com.example.cmput301w21t23_smartdatabook.comments.Comment;
 
 import java.util.ArrayList;
 
