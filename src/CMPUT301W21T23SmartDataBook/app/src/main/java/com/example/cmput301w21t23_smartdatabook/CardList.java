@@ -1,5 +1,6 @@
 package com.example.cmput301w21t23_smartdatabook;
 import android.content.Context;
+import android.content.Intent;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -103,7 +104,9 @@ public class CardList extends ArrayAdapter<Experiment> {
             comment.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    Log.d("test", experiment.getExpName());
+//                    Log.d("test", experiment.getExpName());
+                    Intent intent = new Intent(getContext(), CommentActivity.class);
+                    context.startActivity(intent);
                 }
             });
 

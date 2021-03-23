@@ -1,4 +1,4 @@
-package com.example.cmput301w21t23_smartdatabook;
+package com.example.cmput301w21t23_smartdatabook.experimentDetails;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -8,19 +8,16 @@ import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.TextView;
 
-import androidx.annotation.NonNull;
 import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
 
-import com.google.android.gms.tasks.OnCompleteListener;
-import com.google.android.gms.tasks.OnFailureListener;
-import com.google.android.gms.tasks.OnSuccessListener;
-import com.google.android.gms.tasks.Task;
+import com.example.cmput301w21t23_smartdatabook.CommentActivity;
+import com.example.cmput301w21t23_smartdatabook.Database;
+import com.example.cmput301w21t23_smartdatabook.Experiment;
+import com.example.cmput301w21t23_smartdatabook.R;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
-import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
-import com.google.firebase.firestore.Source;
 
 /**
  * Class:ExperimentDetails
@@ -31,7 +28,7 @@ import com.google.firebase.firestore.Source;
  * switch button that turns on/ off an experiment's trial location.
  * @author Afaq Nabi, Bosco Chan, Jayden
  * @version 1
- * @see Experiment,
+ * @see Experiment ,
  */
 public class ExperimentDetails extends AppCompatActivity {
 
@@ -126,7 +123,8 @@ public class ExperimentDetails extends AppCompatActivity {
         askQns.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                // TODO: new comments activity
+                Intent intent = new Intent(getBaseContext(), CommentActivity.class);
+                startActivity(intent);
             }
         });
 

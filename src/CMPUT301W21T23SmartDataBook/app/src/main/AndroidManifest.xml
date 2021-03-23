@@ -34,11 +34,15 @@
                        android:resource="@xml/searchable"/>
         </activity>
 
-        <activity android:name=".ExperimentDetails">
+        <activity android:name=".experimentDetails.ExperimentDetails">
 
         </activity>
 
-        <activity android:name=".UploadTrial">
+        <activity android:name=".experimentDetails.UploadTrial">
+
+        </activity>
+
+        <activity android:name=".CommentActivity">
 
         </activity>
 
