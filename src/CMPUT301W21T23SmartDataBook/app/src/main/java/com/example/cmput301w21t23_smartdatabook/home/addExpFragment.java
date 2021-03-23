@@ -138,7 +138,7 @@ public class addExpFragment extends Fragment {
 
                     returnedExperiment = new Experiment(expName, Objects.requireNonNull(mAuth.getCurrentUser()).getUid(),
                             trialType, expDescription, checkLocationOn, minTrials.getValue(), maxTrials.getValue(),
-                            checkPublicOn, currentDate.getDate(), UUID.randomUUID().toString() );
+                            checkPublicOn, currentDate.getDate(), UUID.randomUUID().toString(), false);
 
 
                     //Source: Shweta Chauhan; https://stackoverflow.com/users/6021469/shweta-chauhan

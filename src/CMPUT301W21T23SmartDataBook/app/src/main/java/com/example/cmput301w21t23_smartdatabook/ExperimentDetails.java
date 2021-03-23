@@ -129,6 +129,8 @@ public class ExperimentDetails extends AppCompatActivity {
         });
 
         Button endExp = findViewById(R.id.endExp);
+
+
         CheckBox publish = findViewById(R.id.Publish);
         TextView publish_text = findViewById(R.id.Publish_text);
         publish.setChecked(experiment.isPublic());
