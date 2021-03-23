@@ -333,14 +333,14 @@ public class Database {
                         Log.d(TAG1, "DocumentSnapshot data: " + document.getData());
                         Map<String, Object> data = document.getData();
 
-                        if (data.get("UserName").toString() == ""){
-                            usernameTextField.setText("Enter Username");
+                        if (data.get("UserName").toString().equals("")){
+                            usernameTextField.setHint("Enter Username");
                         }else{
                             usernameTextField.setText(data.get("UserName").toString());
                         }
 
                         if (data.get("Email").toString().equals("")){
-                            emailTextField.setText("Enter Email");
+                            emailTextField.setHint("Enter Email");
                         }else{
                             emailTextField.setText(data.get("Email").toString());
                         }
