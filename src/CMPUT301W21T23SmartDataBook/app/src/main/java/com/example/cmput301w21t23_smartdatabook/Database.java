@@ -38,7 +38,7 @@ import java.util.Map;
 public class Database {
 
     private FillDataCallBack fillDataCallBack;
-    private SignCallBack signCallBack;
+    private SignInCallBack signInCallBack;
     private ArrayList<Experiment> experimentDataList = new ArrayList<>();
     private static final String TAG1 = "Your";
     private static final String TAG2 = "Warning";
@@ -59,8 +59,8 @@ public class Database {
         this.fillDataCallBack = fillDataCallBack;
     }
 
-    public Database(SignCallBack signCallBack) throws InterruptedException {
-        this.signCallBack = signCallBack;
+    public Database(SignInCallBack signInCallBack) throws InterruptedException {
+        this.signInCallBack = signInCallBack;
     }
 
     /**
@@ -400,7 +400,7 @@ public class Database {
                     public void onComplete(@NonNull Task<AuthResult> task) {
                         if (task.isSuccessful()) {
 
-                            signCallBack.updateHomeScreen();
+                            signInCallBack.updateHomeScreen();
 
                             // Sign in success, update UI with the signed-in user's information
                             Log.d("Authentication Success", "signInAnonymously:success: " + mAuth.getUid());

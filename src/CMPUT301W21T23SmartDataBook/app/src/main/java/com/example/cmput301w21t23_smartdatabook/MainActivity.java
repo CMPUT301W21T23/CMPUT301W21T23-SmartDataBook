@@ -2,17 +2,12 @@ package com.example.cmput301w21t23_smartdatabook;
 
 import android.app.SearchManager;
 import android.content.Context;
-import android.graphics.Point;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
-import android.widget.TextView;
-import android.widget.Toast;
 
-import androidx.annotation.Dimension;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
@@ -26,7 +21,6 @@ import com.example.cmput301w21t23_smartdatabook.home.homePage;
 import com.example.cmput301w21t23_smartdatabook.settings.SettingsPage;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.firebase.auth.FirebaseAuth;
-import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.firestore.FirebaseFirestore;
 
 /**
@@ -38,7 +32,7 @@ import com.google.firebase.firestore.FirebaseFirestore;
  * @Refrences https://androidwave.com/bottom-navigation-bar-android-example/
  */
 
-public class MainActivity extends AppCompatActivity implements SignCallBack {
+public class MainActivity extends AppCompatActivity implements SignInCallBack {
 
     BottomNavigationView bottomNavigation;
 
