@@ -47,6 +47,8 @@ public class ExperimentDetails extends AppCompatActivity {
         setSupportActionBar(findViewById(R.id.app_toolbar));
         ActionBar toolbar = getSupportActionBar();
 
+        FirebaseFirestore db = FirebaseFirestore.getInstance();
+
         assert toolbar != null;
         toolbar.setDisplayHomeAsUpEnabled(true);
 
@@ -132,18 +134,30 @@ public class ExperimentDetails extends AppCompatActivity {
         endExp.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Log.d("Test", "Test");
+                database.publicOrEnd(db.collection("Experiments"), "On", experiment,"isEnd");
+                database.publicOrEnd((db.collection("Users")
+                        .document(currentUser.getUid())
+                        .collection("Favorites")), "On", experiment,"IsEnd");
+                endExp.setVisibility(View.INVISIBLE);
+                Log.d("Tests", "value1: "+database.giveBoolean(database.giveString(experiment.getIsEnd())));
             }
         });
+
+
 
 
         CheckBox publish = findViewById(R.id.Publish);
         TextView publish_text = findViewById(R.id.Publish_text);
         publish.setChecked(experiment.isPublic());
-        if (currentUser.getUid().equals(experiment.getOwnerUserID())){
+        if (currentUser.getUid().equals(experiment.getOwnerUserID()) ){
             endExp.setVisibility(View.VISIBLE);
             publish.setVisibility(View.VISIBLE);
             publish_text.setVisibility(View.VISIBLE);
+            // doesn't work
+            if (database.giveBoolean(database.giveString(experiment.getIsEnd()))){
+                Log.d("Tests", "value2: "+database.giveBoolean(database.giveString(experiment.getIsEnd())));
+                endExp.setVisibility(View.INVISIBLE);
+            }
         }
 
         publish.setOnClickListener(new View.OnClickListener() {
@@ -157,11 +171,11 @@ public class ExperimentDetails extends AppCompatActivity {
                     onOff = "Off";
                 }
                 Log.d("ONOFF", onOff);
-                FirebaseFirestore db = FirebaseFirestore.getInstance();
-                database.publicNotPublic(db.collection("Experiments"), onOff, experiment);
-                database.publicNotPublic((db.collection("Users")
+
+                database.publicOrEnd(db.collection("Experiments"), onOff, experiment, "PublicStatus");
+                database.publicOrEnd((db.collection("Users")
                         .document(currentUser.getUid())
-                        .collection("Favorites")),onOff, experiment);
+                        .collection("Favorites")),onOff, experiment,"PublicStatus");
             }
         });
     }

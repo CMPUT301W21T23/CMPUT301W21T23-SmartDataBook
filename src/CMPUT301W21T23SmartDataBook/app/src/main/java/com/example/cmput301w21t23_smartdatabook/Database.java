@@ -460,8 +460,8 @@ public class Database {
 
     }//authenticationAnon
 
-    public void publicNotPublic(CollectionReference coll, String onOff, Experiment experiment){
-        coll.document(experiment.getExpID()).update("PublicStatus", onOff)
+    public void publicOrEnd(CollectionReference coll, String onOff, Experiment experiment, String status){
+        coll.document(experiment.getExpID()).update(status, onOff)
                 .addOnSuccessListener(new OnSuccessListener<Void>() {
                     @Override
                     public void onSuccess(Void aVoid) {
@@ -475,7 +475,6 @@ public class Database {
                         Log.w("message", "Error updating document", e);
                     }
                 });
-
     }
 
 }//Database
