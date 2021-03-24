@@ -111,15 +111,16 @@ CardList extends ArrayAdapter<Experiment> {
             // https://developer.android.com/reference/android/widget/CheckBox
             CheckBox follow = view.findViewById(R.id.fav);
 
+
             db.collection("Users")
-                    .document(experiment.getOwnerUserID())
+                    .document(currentID)
                     .collection("Favorites")
                     .document(experiment.getExpID()).get().addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
                 @Override
                 public void onComplete(@NonNull Task<DocumentSnapshot> task) {
                     if (task.isSuccessful()) {
                         DocumentSnapshot document = task.getResult();
-                        if (document.exists()) {
+                        if ( document.getData().get("UUID").equals(currentID) ) {
                             follow.setChecked(true);
                         }
                     }
