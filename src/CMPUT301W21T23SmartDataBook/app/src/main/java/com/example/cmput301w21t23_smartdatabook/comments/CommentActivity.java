@@ -40,5 +40,7 @@ public class CommentActivity extends AppCompatActivity {
         commentAdapter = new CommentList(this, commentDataList);
         commentList.setAdapter(commentAdapter);
 
+
+
     }
 }

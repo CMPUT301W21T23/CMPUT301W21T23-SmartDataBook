@@ -18,7 +18,6 @@ class Comment extends User implements Serializable {
     private final String userUniqueID;
     String text;
     int commentID;
-    Comment question;
 
     //Contains a list of comment objects that are replying to the 
     //parent comment object.
@@ -26,20 +25,21 @@ class Comment extends User implements Serializable {
 
     /**
      * Public constructor for the Comment class
+     *
      * @param text
      * @param userUniqueID
      * @param commentID
      */
-    public Comment(String text, String userUniqueID, int commentID){
+    public Comment(String text, String userUniqueID, int commentID) {
 //        super(null, null, userUniqueID);
         this.text = text;
         this.userUniqueID = userUniqueID;
         this.commentID = commentID;
-        this.question=question;
     }
 
     /**
      * Getter that returns the String text attribute of the Comment class
+     *
      * @return String
      */
     public String getText() {
@@ -48,6 +48,7 @@ class Comment extends User implements Serializable {
 
     /**
      * Setter for the text attribute of the Comment class
+     *
      * @param text
      */
     public void setText(String text) {
@@ -56,12 +57,16 @@ class Comment extends User implements Serializable {
 
     /**
      * Getter for the commentID attribute of the Comment class
+     *
      * @return int of commentID
      */
-    public int getCommentID() { return commentID; }
+    public int getCommentID() {
+        return commentID;
+    }
 
     /**
      * Setter for commentID attribute of the Comment class
+     *
      * @param commentID
      */
     public void setCommentID(int commentID) {
@@ -70,6 +75,7 @@ class Comment extends User implements Serializable {
 
     /**
      * Returns ArrayList of Comment type which is a collection of Comments
+     *
      * @return replyList, list of replies
      */
     public ArrayList<Comment> getReplyList() {
@@ -78,32 +84,34 @@ class Comment extends User implements Serializable {
 
     /**
      * Setter for the ReplyList for each comment
+     *
      * @param replyList
      */
     public void setReplyList(ArrayList<Comment> replyList) {
         this.replyList = replyList;
     }
 
-    /**
-     * getter for the question
-     * @return question, the question itself
-     */
-    public Comment getQuestion(){
-        return question;
+//    /**
+//     * getter for the question
+//     * @return question, the question itself
+//     */
+//    public Comment getQuestion(){
+//        return question;
+//    }
+
+//    /**
+//     * setter for question
+//     * if set the question only if the reply list is not null
+//     * @param replyList
+//     */
+//     public void setQuestion(ArrayList <Comment> replyList){
+//        // only set the question if the list is not empty
+//        if (!replyList.isEmpty()){
+//            this.question=replyList.get(0);
+//        }
+
+
     }
 
-    /**
-     * setter for question
-     * if set the question only if the reply list is not null
-     * @param replyList
-     */
-     public void setQuestion(ArrayList <Comment> replyList){
-        // only set the question if the list is not empty
-        if (!replyList.isEmpty()){
-            this.question=replyList.get(0);
-        }
 
-    }
-
-}
 
