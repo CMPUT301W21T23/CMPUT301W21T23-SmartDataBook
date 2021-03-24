@@ -18,6 +18,7 @@ import androidx.fragment.app.FragmentTransaction;
 import com.example.cmput301w21t23_smartdatabook.FillDataCallBack;
 import com.example.cmput301w21t23_smartdatabook.Database;
 import com.example.cmput301w21t23_smartdatabook.Experiment;
+import com.example.cmput301w21t23_smartdatabook.MainActivity;
 import com.example.cmput301w21t23_smartdatabook.experimentDetails.ExperimentDetails;
 import com.example.cmput301w21t23_smartdatabook.R;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
@@ -45,6 +46,7 @@ public class homePage extends Fragment implements FillDataCallBack {
     private ListView experimentList;
     private ArrayList<Experiment> experimentDataList;
     private static ArrayAdapter<Experiment> experimentAdapter;
+    private MainActivity mainActivity;
 
     private String currentID;
 
@@ -83,6 +85,7 @@ public class homePage extends Fragment implements FillDataCallBack {
 
     public void doUpdate(String query) {
         Log.d("From_" + this.getClass().getSimpleName(), query);
+        Log.d("From_" + this.getClass().getSimpleName(), mainActivity.test());
     }
 
     @Override
@@ -98,6 +101,7 @@ public class homePage extends Fragment implements FillDataCallBack {
         if (getArguments() != null) {
             currentID = getArguments().getString("UUID");
         }
+        mainActivity = (MainActivity) getActivity();
     }
 
     @Override
