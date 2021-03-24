@@ -11,10 +11,14 @@ import android.widget.CompoundButton;
 import android.widget.TextView;
 
 import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Map;
 import java.util.Objects;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.recyclerview.widget.RecyclerView;
+import androidx.recyclerview.widget.RecyclerView.ViewHolder;
 
 import com.example.cmput301w21t23_smartdatabook.comments.CommentActivity;
 import com.example.cmput301w21t23_smartdatabook.Database;
@@ -38,10 +42,10 @@ import com.google.firebase.firestore.FirebaseFirestore;
 public class
 CardList extends ArrayAdapter<Experiment> {
 
-    private final ArrayList<Experiment> experiments;
-    private final Context context;
-    private final int index;
-    private final String currentID;
+    private ArrayList<Experiment> experiments;
+    private Context context;
+    private int index;
+    private String currentID;
 
     public ArrayList<Experiment> getExperiments() {
         return experiments;
@@ -49,6 +53,7 @@ CardList extends ArrayAdapter<Experiment> {
 
     Database database;
     FirebaseFirestore db;
+    Map<Integer, View> views = new HashMap<Integer, View>();
 
     /**
      * Public Constructor for the CardList class
@@ -71,10 +76,14 @@ CardList extends ArrayAdapter<Experiment> {
      * @param parent
      * @return view
      */
+
+    //Source: Tautvydas; https://stackoverflow.com/users/951894/tautvydas
+    //Code: https://stackoverflow.com/questions/22919417/listview-items-change-position-on-scroll/22919488
     public View getView(int position, @Nullable View convertView, @NonNull ViewGroup parent) {
         View view = convertView;
         View view1 = null;
 
+        LayoutInflater inflater;
         database = new Database();
         db = FirebaseFirestore.getInstance();
 
@@ -82,15 +91,18 @@ CardList extends ArrayAdapter<Experiment> {
 
         if (index == 1) {
 
-            if (view == null){
-                view = LayoutInflater.from(context).inflate(R.layout.card, parent,false);
+            if (views.containsKey(position) ){
+                return views.get(position);
             }
 
-            TextView experimentName = view.findViewById(R.id.experimentName);
-            TextView date = view.findViewById(R.id.dateCreated);
-            TextView ownerName = view.findViewById(R.id.Owner);
-            TextView experimentDescription = view.findViewById(R.id.Experiment_descr);
-            TextView region = view.findViewById(R.id.Region);
+            inflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+            View v = inflater.inflate(R.layout.card, null);
+
+            TextView experimentName = v.findViewById(R.id.experimentName);
+            TextView date = v.findViewById(R.id.dateCreated);
+            TextView ownerName = v.findViewById(R.id.Owner);
+            TextView experimentDescription = v.findViewById(R.id.Experiment_descr);
+            TextView region = v.findViewById(R.id.Region);
 
             experimentName.setText(experiment.getExpName());
             date.setText(experiment.getDate());
@@ -98,19 +110,18 @@ CardList extends ArrayAdapter<Experiment> {
             experimentDescription.setText(experiment.getDescription());
             region.setText(null);
 
-            Button comment = view.findViewById(R.id.comment_btn);
+            Button comment = v.findViewById(R.id.comment_btn);
             comment.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-//                    Log.d("test", experiment.getExpName());
+
                     Intent intent = new Intent(getContext(), CommentActivity.class);
                     context.startActivity(intent);
                 }
             });
 
             // https://developer.android.com/reference/android/widget/CheckBox
-            CheckBox follow = view.findViewById(R.id.fav);
-
+            CheckBox follow = v.findViewById(R.id.fav);
 
             db.collection("Users")
                     .document(currentID)
@@ -121,32 +132,32 @@ CardList extends ArrayAdapter<Experiment> {
                     if (task.isSuccessful()) {
                         DocumentSnapshot document = task.getResult();
                         if(document.exists()){
-                            if (Objects.equals(Objects.requireNonNull(document.getData()).get("UUID"), currentID)) {
-                                follow.setChecked(true);
-                            }
+                            follow.setChecked(true);
                         }
                     }
                 }
             });
 
             follow.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
-                      @Override
-                      public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
-                          if(isChecked){
-                              final CollectionReference favExpCollection = db.collection("Users")
-                                      .document(currentID)
-                                      .collection("Favorites");
+                  @Override
+                  public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+                      if(isChecked){
+                          final CollectionReference favExpCollection = db.collection("Users")
+                                  .document(currentID)
+                                  .collection("Favorites");
 
-                              database.addExperimentToDB(experiment, favExpCollection, currentID);
 
-                              System.out.println("Checked");
+                          database.addExperimentToDB(experiment, favExpCollection, currentID);
 
-                          } else {
+                          System.out.println("Checked");
+
+                      } else {
 
                               final DocumentReference ref = db.collection("Users")
                                       .document(currentID)
                                       .collection("Favorites")
                                       .document(experiment.getExpID());
+
 
                               database.followStatus( ref, experiment, getContext(), follow, currentID );
 
@@ -156,6 +167,85 @@ CardList extends ArrayAdapter<Experiment> {
                   }
             );
 
+            views.put(position, v);
+
+            return v;
+
+//            if (view == null){
+//                view = LayoutInflater.from(context).inflate(R.layout.card, parent,false);
+//            }
+//
+//            TextView experimentName = view.findViewById(R.id.experimentName);
+//            TextView date = view.findViewById(R.id.dateCreated);
+//            TextView ownerName = view.findViewById(R.id.Owner);
+//            TextView experimentDescription = view.findViewById(R.id.Experiment_descr);
+//            TextView region = view.findViewById(R.id.Region);
+//
+//            experimentName.setText(experiment.getExpName());
+//            date.setText(experiment.getDate());
+//            ownerName.setText(experiment.getOwnerUserID());
+//            experimentDescription.setText(experiment.getDescription());
+//            region.setText(null);
+//
+//            Button comment = view.findViewById(R.id.comment_btn);
+//            comment.setOnClickListener(new View.OnClickListener() {
+//                @Override
+//                public void onClick(View v) {
+////                    Log.d("test", experiment.getExpName());
+//                    Intent intent = new Intent(getContext(), CommentActivity.class);
+//                    context.startActivity(intent);
+//                }
+//            });
+//
+//            // https://developer.android.com/reference/android/widget/CheckBox
+//            CheckBox follow = view.findViewById(R.id.fav);
+//
+//            db.collection("Users")
+//                    .document(currentID)
+//                    .collection("Favorites")
+//                    .document(experiment.getExpID()).get().addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
+//                @Override
+//                public void onComplete(@NonNull Task<DocumentSnapshot> task) {
+//                    if (task.isSuccessful()) {
+//                        DocumentSnapshot document = task.getResult();
+//                        if(document.getData() != null){
+//                            if (Objects.equals(Objects.requireNonNull(document.getData()).get("UUID"), currentID)) {
+//                                follow.setChecked(true);
+//                            }else{
+//                                follow.setChecked(false);
+//                            }
+//                        }
+//                    }
+//                }
+//            });
+//
+//            follow.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+//                      @Override
+//                      public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+//                          if(isChecked){
+//                              final CollectionReference favExpCollection = db.collection("Users")
+//                                      .document(experiment.getOwnerUserID())
+//                                      .collection("Favorites");
+//
+//                              database.addExperimentToDB(experiment, favExpCollection, currentID);
+//
+//                              System.out.println("Checked");
+//
+//                          } else {
+//
+//                              final DocumentReference ref = db.collection("Users")
+//                                      .document(experiment.getOwnerUserID())
+//                                      .collection("Favorites")
+//                                      .document(experiment.getExpID());
+//
+//                              database.followStatus( ref, experiment, getContext(), follow, currentID );
+//
+//                              System.out.println("Un-Checked");
+//                          }
+//                      }
+//                  }
+//            );
+//
 //            return view;
 
         } else if (index == 2){

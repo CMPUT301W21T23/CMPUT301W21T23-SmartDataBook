@@ -25,6 +25,8 @@ import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.firestore.FirebaseFirestore;
 
+import java.util.ArrayList;
+
 /**
  * the Purpose of this class is to register the user in the database and initialize the bottom tab navigation
  * functionality of the app

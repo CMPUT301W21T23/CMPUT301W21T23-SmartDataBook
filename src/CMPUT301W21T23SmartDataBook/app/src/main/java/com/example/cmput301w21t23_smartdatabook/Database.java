@@ -70,7 +70,6 @@ public class Database {
     public Database (){};
 
     public void followStatus(DocumentReference ref, Experiment experiment, Context context, CheckBox follow, String currentID) {
-        FirebaseAuth mAuth = FirebaseAuth.getInstance();
 
         ref.get().addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
             @Override
@@ -78,7 +77,7 @@ public class Database {
                 if (task.isSuccessful()) {
                     DocumentSnapshot document = task.getResult();
                     if (document.exists()) {
-//                                              follow.setChecked(true);
+
                         if(!currentID.equals(experiment.getOwnerUserID())){
                             ref.delete()
                                     .addOnSuccessListener(new OnSuccessListener<Void>() {
