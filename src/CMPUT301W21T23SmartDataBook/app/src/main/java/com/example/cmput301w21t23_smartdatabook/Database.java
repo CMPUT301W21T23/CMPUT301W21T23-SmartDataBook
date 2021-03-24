@@ -180,7 +180,6 @@ public class Database {
                     @Override
                     public void onComplete(@NonNull Task<QuerySnapshot> task) {
                         mAuth = FirebaseAuth.getInstance();
-                        FirebaseUser currentUser = mAuth.getCurrentUser();
 
                         experimentDataList.clear();
 

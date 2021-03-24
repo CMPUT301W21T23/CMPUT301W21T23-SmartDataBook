@@ -3,6 +3,7 @@ package com.example.cmput301w21t23_smartdatabook.comments;
 
 import com.example.cmput301w21t23_smartdatabook.User;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 
 /**
@@ -12,7 +13,7 @@ import java.util.ArrayList;
  * @see User
  * @author Krutik Soni, Natnail Ghebresilasie
  */
-class Comment extends User{
+class Comment extends User implements Serializable {
 
     private final String userUniqueID;
     String text;

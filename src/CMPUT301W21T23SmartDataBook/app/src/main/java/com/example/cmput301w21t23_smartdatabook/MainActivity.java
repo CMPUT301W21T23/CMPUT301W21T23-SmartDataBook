@@ -77,6 +77,7 @@ public class MainActivity extends AppCompatActivity implements SignInCallBack {
         invalidateOptionsMenu();
     }
 
+
     public String test() {
         return "This means you can get the attribute of MainActivity, call made from a Fragment";
     }

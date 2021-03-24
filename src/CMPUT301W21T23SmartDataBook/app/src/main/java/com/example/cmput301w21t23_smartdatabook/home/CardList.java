@@ -116,6 +116,8 @@ CardList extends ArrayAdapter<Experiment> {
                 public void onClick(View v) {
 
                     Intent intent = new Intent(getContext(), CommentActivity.class);
+                    intent.putExtra("Experiment", experiment);
+                    intent.putExtra("CurrentID", currentID);
                     context.startActivity(intent);
                 }
             });
@@ -170,83 +172,6 @@ CardList extends ArrayAdapter<Experiment> {
             views.put(position, v);
 
             return v;
-
-//            if (view == null){
-//                view = LayoutInflater.from(context).inflate(R.layout.card, parent,false);
-//            }
-//
-//            TextView experimentName = view.findViewById(R.id.experimentName);
-//            TextView date = view.findViewById(R.id.dateCreated);
-//            TextView ownerName = view.findViewById(R.id.Owner);
-//            TextView experimentDescription = view.findViewById(R.id.Experiment_descr);
-//            TextView region = view.findViewById(R.id.Region);
-//
-//            experimentName.setText(experiment.getExpName());
-//            date.setText(experiment.getDate());
-//            ownerName.setText(experiment.getOwnerUserID());
-//            experimentDescription.setText(experiment.getDescription());
-//            region.setText(null);
-//
-//            Button comment = view.findViewById(R.id.comment_btn);
-//            comment.setOnClickListener(new View.OnClickListener() {
-//                @Override
-//                public void onClick(View v) {
-////                    Log.d("test", experiment.getExpName());
-//                    Intent intent = new Intent(getContext(), CommentActivity.class);
-//                    context.startActivity(intent);
-//                }
-//            });
-//
-//            // https://developer.android.com/reference/android/widget/CheckBox
-//            CheckBox follow = view.findViewById(R.id.fav);
-//
-//            db.collection("Users")
-//                    .document(currentID)
-//                    .collection("Favorites")
-//                    .document(experiment.getExpID()).get().addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
-//                @Override
-//                public void onComplete(@NonNull Task<DocumentSnapshot> task) {
-//                    if (task.isSuccessful()) {
-//                        DocumentSnapshot document = task.getResult();
-//                        if(document.getData() != null){
-//                            if (Objects.equals(Objects.requireNonNull(document.getData()).get("UUID"), currentID)) {
-//                                follow.setChecked(true);
-//                            }else{
-//                                follow.setChecked(false);
-//                            }
-//                        }
-//                    }
-//                }
-//            });
-//
-//            follow.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
-//                      @Override
-//                      public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
-//                          if(isChecked){
-//                              final CollectionReference favExpCollection = db.collection("Users")
-//                                      .document(experiment.getOwnerUserID())
-//                                      .collection("Favorites");
-//
-//                              database.addExperimentToDB(experiment, favExpCollection, currentID);
-//
-//                              System.out.println("Checked");
-//
-//                          } else {
-//
-//                              final DocumentReference ref = db.collection("Users")
-//                                      .document(experiment.getOwnerUserID())
-//                                      .collection("Favorites")
-//                                      .document(experiment.getExpID());
-//
-//                              database.followStatus( ref, experiment, getContext(), follow, currentID );
-//
-//                              System.out.println("Un-Checked");
-//                          }
-//                      }
-//                  }
-//            );
-//
-//            return view;
 
         } else if (index == 2){
 
