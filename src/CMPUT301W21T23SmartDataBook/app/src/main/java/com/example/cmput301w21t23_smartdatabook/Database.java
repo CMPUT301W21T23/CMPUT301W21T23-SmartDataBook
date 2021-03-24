@@ -206,7 +206,9 @@ public class Database {
                                             giveBoolean( document.getData().get("PublicStatus").toString() ),
                                             document.getData().get("Date").toString(),
                                             document.getData().get("ExpID").toString(),
-                                            giveBoolean(document.getData().get("isEnd").toString())
+                                            true
+                                            // Placeholder for fix
+//                                            giveBoolean(document.getData().get("isEnd").toString())
                                             )
                                     );
                                 }
