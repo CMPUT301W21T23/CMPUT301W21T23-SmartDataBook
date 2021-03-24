@@ -81,6 +81,10 @@ public class homePage extends Fragment implements FillDataCallBack {
         return fragment;
     }
 
+    public void doUpdate(String query) {
+        Log.d("From_" + this.getClass().getSimpleName(), query);
+    }
+
     @Override
     public void onResume() {
         super.onResume();

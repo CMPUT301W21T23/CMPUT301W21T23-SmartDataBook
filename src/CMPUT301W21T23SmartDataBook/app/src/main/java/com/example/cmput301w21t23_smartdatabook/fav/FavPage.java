@@ -2,6 +2,7 @@ package com.example.cmput301w21t23_smartdatabook.fav;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -83,6 +84,10 @@ public class FavPage extends Fragment implements FillDataCallBack {
         if (getArguments() != null) {
             currentID = getArguments().getString("UUID");
         }
+    }
+
+    public void doUpdate(String query) {
+        Log.d("From_" + this.getClass().getSimpleName(), query);
     }
 
 //    /**

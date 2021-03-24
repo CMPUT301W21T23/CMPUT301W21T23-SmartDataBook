@@ -3,6 +3,7 @@ package com.example.cmput301w21t23_smartdatabook;
 import android.app.SearchManager;
 import android.content.Context;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
@@ -46,6 +47,9 @@ public class MainActivity extends AppCompatActivity implements SignInCallBack {
     private String currentID;
 
     Database database;
+
+    private Fragment home;
+    private Fragment fav;
 
     //Implement interrupted exception throw on database object instantiation
     {
@@ -125,33 +129,39 @@ public class MainActivity extends AppCompatActivity implements SignInCallBack {
 
             @Override
             public boolean onQueryTextSubmit(String query) {
-                return true;
+                Log.d("Debug", "TextSubmit");
+                return false;
             }
 
+            // This gets called every time text is updated, AND search edittext is clicked
             @Override
             public boolean onQueryTextChange(String newText) {
-                Toast.makeText(getApplicationContext(), "Updated text: " + newText, Toast.LENGTH_SHORT).show();
-                return true;
+                Fragment currentFragment = getSupportFragmentManager().findFragmentById(R.id.container);
+                if (currentFragment != null && currentFragment.isVisible() && !newText.equals("")) {
+                    if (currentFragment instanceof homePage) {
+                        ((homePage)currentFragment).doUpdate(newText);
+                    }
+                    if (currentFragment instanceof FavPage) {
+                        ((FavPage)currentFragment).doUpdate(newText);
+                    }
+                }
+
+                return false;
             }
         });
         return true;
-    }
-
-    @Override
-    public boolean onSearchRequested() {
-        System.out.println("Search requested");
-        return super.onSearchRequested();
     }
 
     /**
      * This function supports opening fragments
      * @param fragment
      */
-    public void openFragment(Fragment fragment) {
+    public Fragment openFragment(Fragment fragment) {
         final FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
-        transaction.replace(R.id.container, fragment);
+        transaction.replace(R.id.container, fragment, fragment.getClass().getSimpleName());
         transaction.addToBackStack(null);
         transaction.commit();
+        return fragment;
     }
 
     BottomNavigationView.OnNavigationItemSelectedListener mOnNavigationItemSelectedListener =
@@ -161,12 +171,12 @@ public class MainActivity extends AppCompatActivity implements SignInCallBack {
                     switch (item.getItemId()) {
                         case R.id.home_nav:
                             toolbar.setTitle("Home");
-                            openFragment(homePage.newInstance(currentID));
+                            home = openFragment(homePage.newInstance(currentID));
                             return true;
 
                         case R.id.fav_nav:
                             toolbar.setTitle("Favorites");
-                            openFragment(FavPage.newInstance(currentID));
+                            fav = openFragment(FavPage.newInstance(currentID));
                             return true;
 
                         case R.id.settings_nav:
