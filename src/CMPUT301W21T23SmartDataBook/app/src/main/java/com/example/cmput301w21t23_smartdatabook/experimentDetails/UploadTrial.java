@@ -3,13 +3,16 @@ package com.example.cmput301w21t23_smartdatabook.experimentDetails;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
+import android.text.InputType;
 import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
+import android.widget.EditText;
 import android.widget.ListView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AlertDialog;
@@ -37,6 +40,7 @@ public class UploadTrial extends AppCompatActivity {
     ArrayList<Trial> trialDataList;
     FirebaseAuth mAuth = FirebaseAuth.getInstance();
     FirebaseUser currentUser = mAuth.getCurrentUser();
+    String expType;
 
     /**
      * This function create the uploadTrial view
@@ -84,7 +88,73 @@ public class UploadTrial extends AppCompatActivity {
         addTrials.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Log.d("Test", "Add Trial Button");
+
+                expType=experiment.getTrialType();
+                Toast toast= Toast.makeText(getApplicationContext(), "text is", Toast.LENGTH_LONG);
+                toast.show();
+                // 1. 4 different cases for dialog
+                // 2. 4 XML diagram associate with the trial type
+                // Go from upload trial to each of trial types
+                // 3. 3 fragments, shows binomial fragment or input fragment, get trial
+//                if statement to deal with experiment.gettype
+//                Log.d("Test", "Add Trial Button");
+
+                // 1st case if binomial is on
+                // I learned about string matching on java from tutorialspoint
+                // URL: https://www.tutorialspoint.com/java/java_string_matches.htm
+                if (expType.matches("Binomial")){
+                    AlertDialog.Builder builder= new AlertDialog.Builder((UploadTrial.this));
+                    builder.setTitle("Add Binomial Trials?");
+                    builder.setNegativeButton("Cancel", null)
+                            .setPositiveButton("Add Trials", new DialogInterface.OnClickListener() {
+                                @Override
+                                public void onClick(DialogInterface dialog, int which) {
+                                    Log.d("Test", "test");
+                                }
+                            }).create().show();
+                }
+                if (expType.matches("Count")){
+                    AlertDialog.Builder builder= new AlertDialog.Builder((UploadTrial.this));
+                    builder.setTitle("Add Count Trials?");
+                    builder.setNegativeButton("Cancel", null)
+                            .setPositiveButton("Add Trials", new DialogInterface.OnClickListener() {
+                                @Override
+                                public void onClick(DialogInterface dialog, int which) {
+                                    Log.d("Test", "test");
+                                }
+                            }).create().show();
+                }
+                if (expType.matches("Non-Negative Count")){
+                    AlertDialog.Builder builder= new AlertDialog.Builder((UploadTrial.this));
+                    builder.setTitle("Add Non-Negative Count Trials?");
+                    builder.setNegativeButton("Cancel", null)
+                            .setPositiveButton("Add trials", new DialogInterface.OnClickListener() {
+                                @Override
+                                public void onClick(DialogInterface dialog, int which) {
+                                    Log.d("Test", "test");
+                                }
+                            }).create().show();
+                }
+                if (expType.matches("Measurement")){
+                    AlertDialog.Builder builder= new AlertDialog.Builder((UploadTrial.this));
+                    builder.setTitle("Add Measurement Trials?");
+                    builder.setMessage("Enter measurement below:");
+                    final EditText measurementInput= new EditText(UploadTrial.this);
+                    measurementInput.setInputType(InputType.TYPE_NUMBER_FLAG_DECIMAL);
+                    builder.setView(measurementInput);
+                    builder.setNegativeButton("Cancel", null)
+                            .setPositiveButton("Add Trials", new DialogInterface.OnClickListener() {
+                                @Override
+                                public void onClick(DialogInterface dialog, int which) {
+                                    // once click add trials, add the trial's outcome, location,
+
+
+                                    Log.d("Test", "test");
+
+                                }
+                            }).create().show();
+                }
+
 
             }
         });
