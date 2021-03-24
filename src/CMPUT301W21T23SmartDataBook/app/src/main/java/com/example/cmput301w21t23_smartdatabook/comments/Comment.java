@@ -8,16 +8,16 @@ import java.util.ArrayList;
 
 /**
  * class: Comment
- * This class constists the comments made by users
+ * This class consists the comments made by users
  * It consists the attributes of the comment text, comment's ID, and question which is a type of a question
  * @see User
  * @author Krutik Soni, Natnail Ghebresilasie
  */
-class Comment extends User implements Serializable {
+public class Comment implements Serializable {
 
-    private final String userUniqueID;
-    String text;
-    int commentID;
+    private String userUniqueID;
+    private String text;
+    private String commentID;
 
     //Contains a list of comment objects that are replying to the 
     //parent comment object.
@@ -30,7 +30,7 @@ class Comment extends User implements Serializable {
      * @param userUniqueID
      * @param commentID
      */
-    public Comment(String text, String userUniqueID, int commentID) {
+    public Comment(String text, String userUniqueID, String commentID) {
 //        super(null, null, userUniqueID);
         this.text = text;
         this.userUniqueID = userUniqueID;
@@ -60,7 +60,7 @@ class Comment extends User implements Serializable {
      *
      * @return int of commentID
      */
-    public int getCommentID() {
+    public String getCommentID() {
         return commentID;
     }
 
@@ -69,7 +69,7 @@ class Comment extends User implements Serializable {
      *
      * @param commentID
      */
-    public void setCommentID(int commentID) {
+    public void setCommentID(String commentID) {
         this.commentID = commentID;
     }
 

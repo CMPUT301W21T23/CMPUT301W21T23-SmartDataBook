@@ -10,7 +10,8 @@ import android.widget.EditText;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
-
+import com.example.cmput301w21t23_smartdatabook.comments.Comment;
+import com.example.cmput301w21t23_smartdatabook.comments.CommentList;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
@@ -28,6 +29,7 @@ import com.google.firebase.firestore.QuerySnapshot;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
+
 
 /**
  * class: Database
@@ -131,23 +133,10 @@ public class Database {
                 });
     }
 
-    /**
-     * This function adds trials from the database
-     * @author Bosco Chan
-     * @param experiment
-     * @param parentCollection
-     */
-    public void addTrialToDB(Experiment experiment, String parentCollection){
 
-        db = FirebaseFirestore.getInstance();
-        final CollectionReference allExpCollection = db.collection(parentCollection);
-        HashMap<String, String> data = new HashMap<>();
+    public void addGenericToDB(DocumentReference genericDocument, HashMap data){
 
-        data.put("Trial Type", experiment.getTrialType());
-        allExpCollection
-                .document("" + experiment.getExpName())
-                .collection("Trials")
-                .document("Trial#1")
+        genericDocument
                 .set(data)
                 .addOnSuccessListener(new OnSuccessListener<Void>() {
                     @Override
@@ -162,6 +151,25 @@ public class Database {
                     }
                 });
     }
+
+    public void fillCommentList(ArrayList<Comment> commentList, ArrayAdapter<Comment> commentAdapter, String currentID) {
+        db.collection("Comments")
+                .get()
+                .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
+                    @Override
+                    public void onComplete(@NonNull Task<QuerySnapshot> task) {
+                        if (task.isSuccessful()) {
+                            for (QueryDocumentSnapshot document : task.getResult()) {
+                                commentList.add(new Comment(document.get("CommentText").toString(), document.get("UserID").toString(), document.get("CommentID").toString()));
+                            }
+
+                            commentAdapter.notifyDataSetChanged();
+                        }
+                    }
+                });
+    }
+
+
 
     /**
      * Get Experiment documents from the database and add its contents to the experimentDataList
