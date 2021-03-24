@@ -1,6 +1,7 @@
 
 package com.example.cmput301w21t23_smartdatabook.comments;
 
+import com.example.cmput301w21t23_smartdatabook.Date;
 import com.example.cmput301w21t23_smartdatabook.User;
 
 import java.io.Serializable;
@@ -18,6 +19,7 @@ public class Comment implements Serializable {
     private String userUniqueID;
     private String text;
     private String commentID;
+    private String date;
 
     //Contains a list of comment objects that are replying to the 
     //parent comment object.
@@ -30,11 +32,29 @@ public class Comment implements Serializable {
      * @param userUniqueID
      * @param commentID
      */
-    public Comment(String text, String userUniqueID, String commentID) {
+    public Comment(String text, String userUniqueID, String commentID, String date) {
 //        super(null, null, userUniqueID);
         this.text = text;
         this.userUniqueID = userUniqueID;
         this.commentID = commentID;
+        this.date = date;
+
+    }
+
+    public String getUserUniqueID() {
+        return userUniqueID;
+    }
+
+    public void setUserUniqueID(String userUniqueID) {
+        this.userUniqueID = userUniqueID;
+    }
+
+    public String getDate() {
+        return date;
+    }
+
+    public void setDate(String date) {
+        this.date = date;
     }
 
     /**

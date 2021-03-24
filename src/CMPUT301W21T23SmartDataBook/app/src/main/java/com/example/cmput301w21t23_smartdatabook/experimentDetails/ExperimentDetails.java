@@ -49,6 +49,8 @@ public class ExperimentDetails extends AppCompatActivity {
         FirebaseAuth mAuth = FirebaseAuth.getInstance();
         FirebaseUser currentUser = mAuth.getCurrentUser();
 
+        String currentID;
+
         setSupportActionBar(findViewById(R.id.app_toolbar));
         ActionBar toolbar = getSupportActionBar();
         assert toolbar != null;
@@ -58,6 +60,7 @@ public class ExperimentDetails extends AppCompatActivity {
 
         Intent intent = getIntent();
         Experiment experiment = (Experiment) intent.getSerializableExtra("experiment"); // get the experiment object
+        currentID = intent.getStringExtra("currentID");
 
         toolbar.setTitle(experiment.getExpName());
 
@@ -131,6 +134,8 @@ public class ExperimentDetails extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(getBaseContext(), CommentActivity.class);
+                intent.putExtra("Experiment", experiment);
+                intent.putExtra("CurrentID", currentID);
                 startActivity(intent);
             }
         });
@@ -141,7 +146,7 @@ public class ExperimentDetails extends AppCompatActivity {
             public void onClick(View v) {
                 database.publicOrEnd(db.collection("Experiments"), "On", experiment,"isEnd");
                 database.publicOrEnd((db.collection("Users")
-                        .document(currentUser.getUid())
+                        .document(currentID)
                         .collection("Favorites")), "On", experiment,"IsEnd");
                 endExp.setVisibility(View.INVISIBLE);
                 experiment.setEnd(true);
@@ -152,7 +157,7 @@ public class ExperimentDetails extends AppCompatActivity {
         CheckBox publish = findViewById(R.id.Publish);
         TextView publish_text = findViewById(R.id.Publish_text);
         publish.setChecked(experiment.isPublic());
-        if (currentUser.getUid().equals(experiment.getOwnerUserID()) ){
+        if (currentID.equals(experiment.getOwnerUserID()) ){
 //            endExp.setVisibility(View.VISIBLE);
             publish.setVisibility(View.VISIBLE);
             publish_text.setVisibility(View.VISIBLE);
@@ -161,7 +166,7 @@ public class ExperimentDetails extends AppCompatActivity {
                 endExp.setVisibility(View.VISIBLE);
             }
 //            db.collection("Users")
-//                    .document(currentUser.getUid())
+//                    .document(currentID)
 //                    .collection("Favorites").document(experiment.getExpID())
 //                    .get()
 //                    .addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
@@ -194,7 +199,7 @@ public class ExperimentDetails extends AppCompatActivity {
 
                 database.publicOrEnd(db.collection("Experiments"), onOff, experiment, "PublicStatus");
                 database.publicOrEnd((db.collection("Users")
-                        .document(currentUser.getUid())
+                        .document(currentID)
                         .collection("Favorites")), onOff, experiment,"PublicStatus");
             }
         });

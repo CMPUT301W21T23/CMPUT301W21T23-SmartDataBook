@@ -46,6 +46,10 @@
 
         </activity>
 
+        <activity android:name=".comments.RepliesActivity">
+
+        </activity>
+
     </application>
 
 </manifest>

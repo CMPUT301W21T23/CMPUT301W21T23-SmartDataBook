@@ -24,6 +24,7 @@ public class CommentList extends ArrayAdapter {
 
     private final ArrayList<Comment> comments;
     private final Context context;
+    private final String currentID;
 
     Date date;
 
@@ -32,10 +33,11 @@ public class CommentList extends ArrayAdapter {
      * @param context
      * @param comments
      */
-    public CommentList (Context context, ArrayList<Comment> comments) {
+    public CommentList (Context context, ArrayList<Comment> comments, String currentID) {
         super(context, 0, comments);
         this.context = context;
         this.comments = comments;
+        this.currentID = currentID;
     }
 
     /**
@@ -58,14 +60,16 @@ public class CommentList extends ArrayAdapter {
         Comment comment = comments.get(position);
 
         TextView commentText = view.findViewById(R.id.commentText);
+        commentText.setText(comment.getText());
+
         TextView commentID = view.findViewById(R.id.commentID);
+        commentID.setText(comment.getCommentID());
+
         TextView commentDate = view.findViewById(R.id.commentDate);
+        commentDate.setText(comment.getDate());
 
-
-        commentText.setText( comment.getText() );
-        commentID.setText( ""+ comment.getCommentID() );
-        commentDate.setText(date.getDate());
-
+        TextView uid = view.findViewById(R.id.comment_user_username);
+        uid.setText(comment.getUserUniqueID());
 
         return view;
     }

@@ -160,7 +160,7 @@ public class Database {
                     public void onComplete(@NonNull Task<QuerySnapshot> task) {
                         if (task.isSuccessful()) {
                             for (QueryDocumentSnapshot document : task.getResult()) {
-                                commentList.add(new Comment(document.get("CommentText").toString(), document.get("UserID").toString(), document.get("CommentID").toString()));
+                                commentList.add(new Comment(document.get("CommentText").toString(), document.get("UserID").toString(), document.get("CommentID").toString(), "TempDate"));
                                 Log.d("Success", document.getId() + " => " + document.getData());
                             }
                             commentAdapter.notifyDataSetChanged();

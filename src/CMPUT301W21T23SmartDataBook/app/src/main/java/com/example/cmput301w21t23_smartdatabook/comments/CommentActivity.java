@@ -6,9 +6,11 @@ import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
+import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.EditText;
 import android.widget.ListView;
+import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AlertDialog;
@@ -51,12 +53,17 @@ public class CommentActivity extends AppCompatActivity {
     FirebaseFirestore db;
     Database database;
 
+    TextView uid;
+    TextView date;
+    TextView commentID;
+    TextView text;
+
 
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.questions);
+        setContentView(R.layout.comment_list);
         View addCommentView = LayoutInflater.from(CommentActivity.this).inflate(R.layout.add_comment, null);
 
         db = FirebaseFirestore.getInstance();
@@ -65,16 +72,35 @@ public class CommentActivity extends AppCompatActivity {
         currentID = getIntent.getExtras().getString("currentID");
         experiment = (Experiment) getIntent.getSerializableExtra("Experiment");
 
-        commentList = findViewById(R.id.followedExpListView);
+        commentList = findViewById(R.id.comment_list);
+
         commentDataList = new ArrayList<>();
-        commentAdapter = new CommentList(this, commentDataList);
+
+        commentDataList.add(new Comment("text",currentID,"12", "03/21/2021"));
+        commentDataList.add(new Comment("text",currentID,"12", "03/21/2021"));
+        commentDataList.add(new Comment("text",currentID,"12", "03/21/2021"));
+        commentDataList.add(new Comment("text",currentID,"12", "03/21/2021"));
+        commentDataList.add(new Comment("text",currentID,"12", "03/21/2021"));
+        commentDataList.add(new Comment("text",currentID,"12", "03/21/2021"));
+        commentDataList.add(new Comment("text",currentID,"12", "03/21/2021"));
+        commentDataList.add(new Comment("text",currentID,"12", "03/21/2021"));
+        commentDataList.add(new Comment("text",currentID,"12", "03/21/2021"));
+        commentDataList.add(new Comment("text",currentID,"12", "03/21/2021"));
+        commentDataList.add(new Comment("text",currentID,"12", "03/21/2021"));
+        commentDataList.add(new Comment("text",currentID,"12", "03/21/2021"));
+
+
+
+        commentAdapter = new CommentList(this, commentDataList, currentID);
+
         commentList.setAdapter(commentAdapter);
 
-        database.fillCommentList(commentDataList,commentAdapter, currentID);
+//        database.fillCommentList(commentDataList, commentAdapter, currentID);
 
         EditText newComment = addCommentView.findViewById(R.id.newComment);
 
-        FloatingActionButton addCommentButton = findViewById(R.id.add_comment_button);
+        FloatingActionButton addCommentButton;
+        addCommentButton = findViewById(R.id.add_comment_button);
         addCommentButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -95,6 +121,16 @@ public class CommentActivity extends AppCompatActivity {
                             }
 
                         }).create().show();
+            }
+        });
+
+        commentList.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                Intent intent = new Intent(getBaseContext(), RepliesActivity.class);
+                intent.putExtra("currentID", currentID);
+                intent.putExtra("Comment", commentDataList.get(position));
+                startActivity(intent);
             }
         });
 
