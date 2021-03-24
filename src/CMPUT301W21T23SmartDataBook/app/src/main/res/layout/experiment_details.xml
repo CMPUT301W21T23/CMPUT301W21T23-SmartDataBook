@@ -115,7 +115,7 @@
             android:layout_height="wrap_content"
             android:text="Publish"
             android:textColor="@color/theme_default"
-            android:visibility="visible"
+            android:visibility="invisible"
             app:layout_constraintBottom_toBottomOf="@+id/Publish"
             app:layout_constraintStart_toEndOf="@+id/Publish"
             app:layout_constraintTop_toTopOf="@+id/Publish">
@@ -129,11 +129,12 @@
             android:layout_marginTop="16dp"
             android:buttonTint="@color/theme_default"
             android:checked="true"
-            android:visibility="visible"
+            android:visibility="invisible"
             app:layout_constraintEnd_toEndOf="@+id/askQuestionsBTN"
             app:layout_constraintHorizontal_bias="0.0"
             app:layout_constraintStart_toStartOf="@+id/askQuestionsBTN"
-            app:layout_constraintTop_toBottomOf="@+id/askQuestionsBTN"></CheckBox>
+            app:layout_constraintTop_toBottomOf="@+id/askQuestionsBTN">
+        </CheckBox>
 
         <Button
             android:id="@+id/UploadTrialsBTN"
@@ -177,7 +178,7 @@
             android:background="@color/theme_default"
             android:text="END EXPERIMENT"
             android:textColor="@color/white"
-            android:visibility="visible"
+            android:visibility="invisible"
             app:backgroundTint="@null"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"

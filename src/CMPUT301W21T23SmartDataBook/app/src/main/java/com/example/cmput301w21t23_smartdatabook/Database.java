@@ -134,7 +134,7 @@ public class Database {
     }
 
 
-    public void addGenericToDB(DocumentReference genericDocument, HashMap data){
+    public void addTrialToDB(DocumentReference genericDocument, HashMap data){
 
         genericDocument
                 .set(data)
@@ -161,8 +161,8 @@ public class Database {
                         if (task.isSuccessful()) {
                             for (QueryDocumentSnapshot document : task.getResult()) {
                                 commentList.add(new Comment(document.get("CommentText").toString(), document.get("UserID").toString(), document.get("CommentID").toString()));
+                                Log.d("Success", document.getId() + " => " + document.getData());
                             }
-
                             commentAdapter.notifyDataSetChanged();
                         }
                     }
@@ -455,7 +455,6 @@ public class Database {
                         } else {
                             // If sign in fails, display a message to the user.
                             Log.w("Authentication Failed", "signInAnonymously:failure", task.getException());
-
                         }//if
                     }
                 });

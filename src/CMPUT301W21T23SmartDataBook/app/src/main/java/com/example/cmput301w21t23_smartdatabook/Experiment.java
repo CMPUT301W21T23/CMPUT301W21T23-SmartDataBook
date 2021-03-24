@@ -84,6 +84,10 @@ public class Experiment implements Serializable {
 //        this.location = location;
 //    }
 
+    public void setEnd(boolean end) {
+        isEnd = end;
+    }
+
     public boolean getIsEnd() {
         return isEnd;
     }

@@ -91,9 +91,7 @@ public class CommentActivity extends AppCompatActivity {
                                 data.put("CommentText", commentText);
                                 data.put("UserID", currentID);
                                 data.put("CommentID", UUID.randomUUID().toString());
-
-                                database.addGenericToDB(db.collection("Comments").document(experiment.getExpID()), data);
-
+                                database.fillCommentList(commentDataList, commentAdapter, currentID);
                             }
 
                         }).create().show();
