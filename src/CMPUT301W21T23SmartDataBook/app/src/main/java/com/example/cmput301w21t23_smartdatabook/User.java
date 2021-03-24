@@ -5,7 +5,7 @@ import java.util.ArrayList;
 
 /**
  * Abstract class user
- * Constrcuts the user
+ * Constructs the user
  * @see Experiment
  * @author Bosco Chan, Afaq Nabi, Alex Mak, Jaydem Cho, Krutik Soni, Natnail Ghebresilasie
  */

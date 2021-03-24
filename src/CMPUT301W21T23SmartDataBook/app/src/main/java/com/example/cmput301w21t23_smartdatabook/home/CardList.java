@@ -35,21 +35,20 @@ import com.google.firebase.firestore.FirebaseFirestore;
  * @return view the view of the card which contains a couple buttons and brief information about the experiment
  */
 
-public class CardList extends ArrayAdapter<Experiment> {
+public class
+CardList extends ArrayAdapter<Experiment> {
 
     private final ArrayList<Experiment> experiments;
     private final Context context;
     private final int index;
+    private final String currentID;
 
     public ArrayList<Experiment> getExperiments() {
         return experiments;
     }
 
     Database database;
-    FirebaseAuth mAuth;
-    FirebaseUser currentUser;
     FirebaseFirestore db;
-
 
     /**
      * Public Constructor for the CardList class
@@ -57,11 +56,12 @@ public class CardList extends ArrayAdapter<Experiment> {
      * @param experiments
      * @param index
      */
-    public CardList(Context context, ArrayList<Experiment> experiments, int index) {
+    public CardList(Context context, ArrayList<Experiment> experiments, int index, String currentID) {
         super(context,0, experiments);
         this.experiments = experiments;
         this.context = context;
         this.index = index;
+        this.currentID = currentID;
     }
 
     /**
@@ -76,8 +76,6 @@ public class CardList extends ArrayAdapter<Experiment> {
         View view1 = null;
 
         database = new Database();
-        mAuth = FirebaseAuth.getInstance();
-        currentUser = mAuth.getCurrentUser();
         db = FirebaseFirestore.getInstance();
 
         Experiment experiment = experiments.get(position);
@@ -113,9 +111,8 @@ public class CardList extends ArrayAdapter<Experiment> {
             // https://developer.android.com/reference/android/widget/CheckBox
             CheckBox follow = view.findViewById(R.id.fav);
 
-            mAuth.signInAnonymously();
             db.collection("Users")
-                    .document(currentUser.getUid())
+                    .document(experiment.getOwnerUserID())
                     .collection("Favorites")
                     .document(experiment.getExpID()).get().addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
                 @Override
@@ -129,28 +126,26 @@ public class CardList extends ArrayAdapter<Experiment> {
                 }
             });
 
-            mAuth.signInAnonymously();
             follow.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
                       @Override
                       public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
                           if(isChecked){
-                              FirebaseUser currentUser = mAuth.getCurrentUser();
                               final CollectionReference favExpCollection = db.collection("Users")
-                                      .document(Objects.requireNonNull(currentUser.getUid()))
+                                      .document(experiment.getOwnerUserID())
                                       .collection("Favorites");
 
-                              database.addExperimentToDB(experiment, favExpCollection);
+                              database.addExperimentToDB(experiment, favExpCollection, currentID);
 
                               System.out.println("Checked");
 
                           } else {
 
                               final DocumentReference ref = db.collection("Users")
-                                      .document(currentUser.getUid())
+                                      .document(experiment.getOwnerUserID())
                                       .collection("Favorites")
                                       .document(experiment.getExpID());
 
-                              database.followStatus( ref, experiment, getContext(), follow );
+                              database.followStatus( ref, experiment, getContext(), follow, currentID );
 
                               System.out.println("Un-Checked");
                           }

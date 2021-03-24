@@ -2,17 +2,13 @@ package com.example.cmput301w21t23_smartdatabook;
 
 import android.app.SearchManager;
 import android.content.Context;
-import android.graphics.Point;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
-import android.widget.TextView;
 import android.widget.Toast;
 
-import androidx.annotation.Dimension;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
@@ -26,7 +22,6 @@ import com.example.cmput301w21t23_smartdatabook.home.homePage;
 import com.example.cmput301w21t23_smartdatabook.settings.SettingsPage;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.firebase.auth.FirebaseAuth;
-import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.firestore.FirebaseFirestore;
 
 /**
@@ -38,7 +33,7 @@ import com.google.firebase.firestore.FirebaseFirestore;
  * @Refrences https://androidwave.com/bottom-navigation-bar-android-example/
  */
 
-public class MainActivity extends AppCompatActivity implements SignCallBack {
+public class MainActivity extends AppCompatActivity implements SignInCallBack {
 
     BottomNavigationView bottomNavigation;
 
@@ -47,6 +42,8 @@ public class MainActivity extends AppCompatActivity implements SignCallBack {
 
     private ActionBar toolbar;
     private boolean searchShow;
+
+    private String currentID;
 
     Database database;
 
@@ -97,9 +94,6 @@ public class MainActivity extends AppCompatActivity implements SignCallBack {
         //anonymous authentication testing
         database.authenticateAnon();
 
-//        openFragment(homePage.newInstance("", ""));
-//        openFragment(FavPage.newInstance("",""));
-
     } //onCreate
 
     @Override
@@ -117,15 +111,29 @@ public class MainActivity extends AppCompatActivity implements SignCallBack {
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         MenuInflater inflater = getMenuInflater();
-        inflater.inflate(R.menu.search_menu, menu);
+        inflater.inflate(R.menu.search_menu, menu); // Make search thing visible
 
-        menu.findItem(R.id.app_bar_search).setVisible(searchShow);
+        menu.findItem(R.id.app_bar_search).setVisible(searchShow); // This is to change visibility of search according to current fragment or status
 
         SearchManager searchManager = (SearchManager) getSystemService(Context.SEARCH_SERVICE);
         SearchView searchView = (SearchView) menu.findItem(R.id.app_bar_search).getActionView();
 
+        // I have no idea
         searchView.setSearchableInfo(searchManager.getSearchableInfo(getComponentName()));
-        searchView.setSubmitButtonEnabled(true);
+
+        searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
+
+            @Override
+            public boolean onQueryTextSubmit(String query) {
+                return true;
+            }
+
+            @Override
+            public boolean onQueryTextChange(String newText) {
+                Toast.makeText(getApplicationContext(), "Updated text: " + newText, Toast.LENGTH_SHORT).show();
+                return true;
+            }
+        });
         return true;
     }
 
@@ -153,17 +161,17 @@ public class MainActivity extends AppCompatActivity implements SignCallBack {
                     switch (item.getItemId()) {
                         case R.id.home_nav:
                             toolbar.setTitle("Home");
-                            openFragment(homePage.newInstance("", ""));
+                            openFragment(homePage.newInstance(currentID));
                             return true;
 
                         case R.id.fav_nav:
                             toolbar.setTitle("Favorites");
-                            openFragment(FavPage.newInstance("", ""));
+                            openFragment(FavPage.newInstance(currentID));
                             return true;
 
                         case R.id.settings_nav:
                             toolbar.setTitle("Settings");
-                            openFragment(SettingsPage.newInstance("", ""));
+                            openFragment(SettingsPage.newInstance(currentID));
                             return true;
                     }
                     return false;
@@ -171,9 +179,11 @@ public class MainActivity extends AppCompatActivity implements SignCallBack {
             };
 
     @Override
-    public void updateHomeScreen() {
+    public void updateHomeScreen(String userID) {
+
+        currentID = userID;
         final FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
-        transaction.replace(R.id.container, homePage.newInstance("", ""));
+        transaction.replace(R.id.container, homePage.newInstance(currentID));
         transaction.addToBackStack(null);
         transaction.commitAllowingStateLoss();
     }

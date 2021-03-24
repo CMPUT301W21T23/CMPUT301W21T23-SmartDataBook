@@ -8,6 +8,7 @@ import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
+import android.widget.Toast;
 
 import androidx.fragment.app.Fragment;
 
@@ -17,6 +18,7 @@ import com.example.cmput301w21t23_smartdatabook.experimentDetails.ExperimentDeta
 import com.example.cmput301w21t23_smartdatabook.home.CardList;
 import com.example.cmput301w21t23_smartdatabook.Experiment;
 import com.example.cmput301w21t23_smartdatabook.R;
+import com.example.cmput301w21t23_smartdatabook.home.homePage;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.firestore.FirebaseFirestore;
@@ -37,9 +39,9 @@ public class FavPage extends Fragment implements FillDataCallBack {
     private static ArrayAdapter<Experiment> favAdapter;
     private static ArrayList<Experiment> favDataList;
 
+    private String currentID;
+
     FirebaseFirestore db = FirebaseFirestore.getInstance();
-    FirebaseAuth mAuth = FirebaseAuth.getInstance();
-    FirebaseUser currentUser = mAuth.getCurrentUser();
     Database database;
 
     //Implement interrupted exception throw on database object instantiation
@@ -54,31 +56,47 @@ public class FavPage extends Fragment implements FillDataCallBack {
     public FavPage(){
     }
 
-    /**
-     * new instance method of FavPage
-     * @param p1
-     * @param p2
-     * @return fragment
-     */
-    public static FavPage newInstance(String p1, String p2){
+    public static FavPage newInstance(String userID) {
         FavPage fragment = new FavPage();
         Bundle args = new Bundle();
+        args.putString("UUID", userID);
         fragment.setArguments(args);
         return fragment;
     }
 
-    /**
-     * oncreate method of FavPage
-     * @param savedInstanceState
-     */
+//    /**
+//     * new instance method of FavPage
+//     * @param p1
+//     * @param p2
+//     * @return fragment
+//     */
+//    public static FavPage newInstance(String p1, String p2){
+//        FavPage fragment = new FavPage();
+//        Bundle args = new Bundle();
+//        fragment.setArguments(args);
+//        return fragment;
+//    }
+
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         if (getArguments() != null) {
-            String mParam1 = getArguments().getString(AP1);
-            String mParam2 = getArguments().getString(AP2);
+            currentID = getArguments().getString("UUID");
         }
     }
+
+//    /**
+//     * oncreate method of FavPage
+//     * @param savedInstanceState
+//     */
+//    @Override
+//    public void onCreate(Bundle savedInstanceState) {
+//        super.onCreate(savedInstanceState);
+//        if (getArguments() != null) {
+//            String mParam1 = getArguments().getString(AP1);
+//            String mParam2 = getArguments().getString(AP2);
+//        }
+//    }
 
     /**
      * this emthod create the view of the user's favouritte experiments page
@@ -92,17 +110,14 @@ public class FavPage extends Fragment implements FillDataCallBack {
         // Inflate the layout for this fragment
 
         View view = inflater.inflate(R.layout.followed_experiments, container, false);
-        // TODO: add code here
 
         favList = view.findViewById(R.id.followedExpListView);
         favDataList = new ArrayList<>();
 
-//        favDataList.add(new Experiment("first", "123", "Binomial", "testtrial", false, 30, 60, true, "03/05/2021"));
-//        favDataList.add(new Experiment("second", "123", "Binomial", "testtrial", false, 30, 60, true, "03/05/2021"));
-
-        favAdapter = new CardList(getContext(), favDataList, 2);
+        favAdapter = new CardList(getContext(), favDataList, 2, currentID);
         favList.setAdapter(favAdapter);
 
+        Toast.makeText(getContext(), "" + currentID, Toast.LENGTH_LONG).show();
 
         database.fillDataList(new FillDataCallBack() {
             @Override
@@ -128,7 +143,7 @@ public class FavPage extends Fragment implements FillDataCallBack {
                 });
 
             }//getExpDataList
-        }, favAdapter, db.collection("Users").document(Objects.requireNonNull(currentUser.getUid())).collection("Favorites"));//fillDataList
+        }, favAdapter, db.collection("Users").document(currentID).collection("Favorites"), currentID);//fillDataList
 
         favList.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
