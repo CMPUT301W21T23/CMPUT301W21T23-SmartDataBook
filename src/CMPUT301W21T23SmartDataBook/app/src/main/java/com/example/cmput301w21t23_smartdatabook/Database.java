@@ -71,7 +71,6 @@ public class Database {
 
     public void followStatus(DocumentReference ref, Experiment experiment, Context context, CheckBox follow, String currentID) {
         FirebaseAuth mAuth = FirebaseAuth.getInstance();
-        FirebaseUser currentUser = mAuth.getCurrentUser();
 
         ref.get().addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
             @Override
@@ -94,13 +93,11 @@ public class Database {
                                             Log.w("Test", "Error deleting document", e);
                                         }
                                     });
-
                         }
                         else{
                             Toast.makeText(context,"Cannot unfollow owned Experiment",Toast.LENGTH_SHORT).show();
                             follow.setChecked(true);
                         }
-
                     }
                 }
             }
@@ -206,9 +203,7 @@ public class Database {
                                             giveBoolean( document.getData().get("PublicStatus").toString() ),
                                             document.getData().get("Date").toString(),
                                             document.getData().get("ExpID").toString(),
-                                            true
-                                            // Placeholder for fix
-//                                            giveBoolean(document.getData().get("isEnd").toString())
+                                            giveBoolean(document.getData().get("isEnd").toString())
                                             )
                                     );
                                 }
@@ -326,8 +321,6 @@ public class Database {
      */
     public void editUser(EditText usernameTextField, EditText emailTextField, View saveButtonView, Context context, String currentID) {
 
-        FirebaseAuth mAuth = FirebaseAuth.getInstance();
-        FirebaseUser currentUser = mAuth.getCurrentUser();
         db = FirebaseFirestore.getInstance();
 
         DocumentReference docRef = db.collection("Users").document(currentID);

@@ -30,7 +30,6 @@ public class CommentActivity extends AppCompatActivity {
 
         commentDataList = new ArrayList<>();
 
-
         commentAdapter = new CommentList(this, commentDataList);
         commentList.setAdapter(commentAdapter);
 
