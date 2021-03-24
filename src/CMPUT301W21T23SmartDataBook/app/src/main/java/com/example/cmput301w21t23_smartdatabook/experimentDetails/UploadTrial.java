@@ -85,6 +85,7 @@ public class UploadTrial extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 Log.d("Test", "Add Trial Button");
+
             }
         });
         // gg
