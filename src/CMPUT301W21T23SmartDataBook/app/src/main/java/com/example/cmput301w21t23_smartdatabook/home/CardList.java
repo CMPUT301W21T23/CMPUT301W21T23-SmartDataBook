@@ -134,7 +134,7 @@ CardList extends ArrayAdapter<Experiment> {
                       public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
                           if(isChecked){
                               final CollectionReference favExpCollection = db.collection("Users")
-                                      .document(experiment.getOwnerUserID())
+                                      .document(currentID)
                                       .collection("Favorites");
 
                               database.addExperimentToDB(experiment, favExpCollection, currentID);
@@ -144,7 +144,7 @@ CardList extends ArrayAdapter<Experiment> {
                           } else {
 
                               final DocumentReference ref = db.collection("Users")
-                                      .document(experiment.getOwnerUserID())
+                                      .document(currentID)
                                       .collection("Favorites")
                                       .document(experiment.getExpID());
 
@@ -156,22 +156,20 @@ CardList extends ArrayAdapter<Experiment> {
                   }
             );
 
-            return view;
+//            return view;
 
         } else if (index == 2){
 
-            if (view1 == null){
-                view1 = LayoutInflater.from(context).inflate(R.layout.followed_experiments_items, parent,false);
-            }
+            view = LayoutInflater.from(context).inflate(R.layout.followed_experiments_items, parent,false);
 
-            assert view1 != null;
-            TextView experimentName = view1.findViewById(R.id.ExpNameTextView);
-            TextView ownerName = view1.findViewById(R.id.ownerTextView);
+            assert view != null;
+            TextView experimentName = view.findViewById(R.id.ExpNameTextView);
+            TextView ownerName = view.findViewById(R.id.ownerTextView);
 
             experimentName.setText(experiment.getExpName());
             ownerName.setText(experiment.getOwnerUserID());
 
-            return view1;
+//            return view1;
 
         }
 
