@@ -47,6 +47,8 @@ public class homePage extends Fragment implements FillDataCallBack {
     private ArrayList<Experiment> experimentDataList;
     private static ArrayAdapter<Experiment> experimentAdapter;
 
+    private String currentID;
+
     Database database;
 
     //Implement interrupted exception throw on database object instantiation
@@ -72,9 +74,10 @@ public class homePage extends Fragment implements FillDataCallBack {
     public homePage() {
     }
 
-    public static homePage newInstance(String p1, String p2) {
+    public static homePage newInstance(String userID) {
         homePage fragment = new homePage();
         Bundle args = new Bundle();
+        args.putString("UUID", userID);
         fragment.setArguments(args);
         return fragment;
     }
@@ -90,12 +93,9 @@ public class homePage extends Fragment implements FillDataCallBack {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         if (getArguments() != null) {
-            String mParam1 = getArguments().getString(AP1);
-            String mParam2 = getArguments().getString(AP2);
+            currentID = getArguments().getString("UUID");
         }
     }
-
-    int i = 0;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -105,10 +105,7 @@ public class homePage extends Fragment implements FillDataCallBack {
         experimentList = view.findViewById(R.id.experiment_list);
         experimentDataList = new ArrayList<>();
 
-//        experimentDataList.add(new Experiment("first", "123", "Binomial", "testtrial", false, 30, 60, true, "03/05/2021"));
-//        experimentDataList.add(new Experiment("second", "123", "Binomial", "testtrial", false, 30, 60, true, "03/05/2021"));
-
-        experimentAdapter = new CardList(getContext(), experimentDataList,1);
+        experimentAdapter = new CardList(getContext(), experimentDataList,1, currentID);
 
         experimentList.setAdapter(experimentAdapter);
 
@@ -122,8 +119,6 @@ public class homePage extends Fragment implements FillDataCallBack {
                 experimentDataList = DataList;
                 experimentAdapter.addAll(experimentDataList);
 
-                Log.d("List"+i, "" + experimentDataList.size());
-
                 experimentAdapter.notifyDataSetChanged();
 
                 experimentList.setOnItemClickListener(new AdapterView.OnItemClickListener() {
@@ -134,21 +129,26 @@ public class homePage extends Fragment implements FillDataCallBack {
                         intent.putExtra("position", position); // pass position to ExperimentDetails class
                         intent.putExtra("experiment", exp); // pass experiment object
                         startActivity(intent);
-
                     }
                 });
 
             }//getExpDataList
-        }, experimentAdapter, db.collection("Experiments"));//fillDataList
+        }, experimentAdapter, db.collection("Experiments"), currentID);//fillDataList
 
         final FloatingActionButton addExperimentButton = view.findViewById(R.id.add_experiment_button);
         addExperimentButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
 
+                Bundle args = new Bundle();
+                args.putString("UUID", currentID);
+
                 //Source: Shweta Chauhan; https://stackoverflow.com/users/6021469/shweta-chauhan
                 //Code: https://stackoverflow.com/questions/40085608/how-to-pass-data-from-one-fragment-to-previous-fragment
                 addExpFragment addExpFrag = new addExpFragment();
+
+                addExpFrag.setArguments(args);
+
                 addExpFrag.setTargetFragment(homePage.this, 0);
                 FragmentTransaction ft = getActivity().getSupportFragmentManager().beginTransaction();
                 ft.replace(R.id.container, addExpFrag, "addExpFragment");
@@ -183,7 +183,7 @@ public class homePage extends Fragment implements FillDataCallBack {
                 Toast.makeText(getActivity(), newExperiment.getExpName() + " " + newExperiment.getDescription(), Toast.LENGTH_SHORT).show();
                 experimentAdapter.add(newExperiment);
                 CollectionReference experimentsCollection = db.collection("Experiments");
-                database.addExperimentToDB(newExperiment, experimentsCollection );
+                database.addExperimentToDB(newExperiment, experimentsCollection, currentID );
                 experimentAdapter.notifyDataSetChanged();
             }
         }

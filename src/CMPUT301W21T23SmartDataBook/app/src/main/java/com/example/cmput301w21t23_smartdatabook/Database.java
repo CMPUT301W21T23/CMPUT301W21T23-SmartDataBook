@@ -69,7 +69,7 @@ public class Database {
      */
     public Database (){};
 
-    public void followStatus(DocumentReference ref, Experiment experiment, Context context, CheckBox follow) {
+    public void followStatus(DocumentReference ref, Experiment experiment, Context context, CheckBox follow, String currentID) {
         FirebaseAuth mAuth = FirebaseAuth.getInstance();
         FirebaseUser currentUser = mAuth.getCurrentUser();
 
@@ -80,7 +80,7 @@ public class Database {
                     DocumentSnapshot document = task.getResult();
                     if (document.exists()) {
 //                                              follow.setChecked(true);
-                        if(!currentUser.getUid().equals(experiment.getOwnerUserID())){
+                        if(!currentID.equals(experiment.getOwnerUserID())){
                             ref.delete()
                                     .addOnSuccessListener(new OnSuccessListener<Void>() {
                                         @Override
@@ -175,7 +175,7 @@ public class Database {
      * @author Bosco Chan
      * @param fillDataCallBack is the callback instance from a synchronous.
      */
-    public void fillDataList(FillDataCallBack fillDataCallBack, ArrayAdapter<Experiment> experimentArrayAdapter, CollectionReference collection) {
+    public void fillDataList(FillDataCallBack fillDataCallBack, ArrayAdapter<Experiment> experimentArrayAdapter, CollectionReference collection, String currentID) {
         db = FirebaseFirestore.getInstance();
 
         collection
@@ -193,7 +193,8 @@ public class Database {
                         if (task.isSuccessful()) {
                             for (QueryDocumentSnapshot document : task.getResult()) {
                                 if ( (coll1.equals(collection.getPath()) && giveBoolean( document.getData().get("PublicStatus").toString())) ||
-                                        (collection.getPath().equals(db.collection("Users").document(currentUser.getUid()).collection("Favorites").getPath())) ){
+                                        (collection.getPath().equals(db.collection("Users").document(currentID).collection("Favorites").getPath())) ){
+
                                     experimentDataList.add( new Experiment(
                                             document.getData().get("Name").toString(),
                                             document.getData().get("UUID").toString(),
@@ -255,7 +256,7 @@ public class Database {
      * @author Bosco Chan
      * @param newExperiment The experiment object that is to be added to the Firebase database
      */
-    public void addExperimentToDB(Experiment newExperiment, CollectionReference collection) {
+    public void addExperimentToDB(Experiment newExperiment, CollectionReference collection, String currentID) {
         mAuth = FirebaseAuth.getInstance();
         FirebaseUser currentUser = mAuth.getCurrentUser();
 
@@ -290,7 +291,7 @@ public class Database {
                 });
 
         db.collection("Users")
-                .document(currentUser.getUid())
+                .document(currentID)
                 .collection("Favorites")
                 .document(newExperiment.getExpID())
                 .set(data)
@@ -317,13 +318,13 @@ public class Database {
      * @param saveButtonView contains the save button view
      * @param context contains the given context from which this function is called from
      */
-    public void editUser(EditText usernameTextField, EditText emailTextField, View saveButtonView, Context context) {
+    public void editUser(EditText usernameTextField, EditText emailTextField, View saveButtonView, Context context, String currentID) {
 
         FirebaseAuth mAuth = FirebaseAuth.getInstance();
         FirebaseUser currentUser = mAuth.getCurrentUser();
         db = FirebaseFirestore.getInstance();
 
-        DocumentReference docRef = db.collection("Users").document(currentUser.getUid());
+        DocumentReference docRef = db.collection("Users").document(currentID);
         docRef.get().addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
             @Override
             public void onComplete(@NonNull Task<DocumentSnapshot> task) {
@@ -400,11 +401,11 @@ public class Database {
                     public void onComplete(@NonNull Task<AuthResult> task) {
                         if (task.isSuccessful()) {
 
-                            signInCallBack.updateHomeScreen();
-
                             // Sign in success, update UI with the signed-in user's information
                             Log.d("Authentication Success", "signInAnonymously:success: " + mAuth.getUid());
                             FirebaseUser currentUser = mAuth.getCurrentUser();
+
+                            signInCallBack.updateHomeScreen(currentUser.getUid());
 
                             FirebaseFirestore db = FirebaseFirestore.getInstance();
                             // Get a top level reference to the collection

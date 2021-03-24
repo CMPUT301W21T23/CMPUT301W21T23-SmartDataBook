@@ -17,6 +17,7 @@ import androidx.fragment.app.Fragment;
 
 import com.example.cmput301w21t23_smartdatabook.Database;
 import com.example.cmput301w21t23_smartdatabook.R;
+import com.example.cmput301w21t23_smartdatabook.home.homePage;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
@@ -39,28 +40,45 @@ public class SettingsPage extends Fragment {
     public EditText usernameTextField;
     public EditText emailTextField;
     public Button saveButtonView;
-    public FirebaseUser currentUser;
+
+    private String currentID;
+
     public Database database = new Database();
 
     public SettingsPage(){
-
     }
 
-    public static SettingsPage newInstance(String p1, String p2){
+    public static SettingsPage newInstance(String userID) {
         SettingsPage fragment = new SettingsPage();
         Bundle args = new Bundle();
+        args.putString("UUID", userID);
         fragment.setArguments(args);
         return fragment;
     }
+
+//    public static SettingsPage newInstance(String p1, String p2){
+//        SettingsPage fragment = new SettingsPage();
+//        Bundle args = new Bundle();
+//        fragment.setArguments(args);
+//        return fragment;
+//    }
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         if (getArguments() != null) {
-            String mParam1 = getArguments().getString(AP1);
-            String mParam2 = getArguments().getString(AP2);
+            currentID = getArguments().getString("UUID");
         }
     }
+
+//    @Override
+//    public void onCreate(Bundle savedInstanceState) {
+//        super.onCreate(savedInstanceState);
+//        if (getArguments() != null) {
+//            String mParam1 = getArguments().getString(AP1);
+//            String mParam2 = getArguments().getString(AP2);
+//        }
+//    }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -69,15 +87,10 @@ public class SettingsPage extends Fragment {
         usernameTextField = (EditText) view.findViewById(R.id.usernameTextField);
         emailTextField = (EditText) view.findViewById(R.id.emailTextField);
         saveButtonView = (Button) view.findViewById(R.id.saveButtonView);
-        db = FirebaseFirestore.getInstance();
-        mAuth = FirebaseAuth.getInstance();
-        currentUser = mAuth.getCurrentUser();
 
-        mAuth.signInAnonymously();
-        database.editUser(usernameTextField, emailTextField, saveButtonView, getContext());
+        Toast.makeText(getContext(), ""+currentID, Toast.LENGTH_LONG).show();
 
-
-
+        database.editUser(usernameTextField, emailTextField, saveButtonView, getContext(), currentID);
 
         return view;
     }

@@ -60,6 +60,10 @@ public class addExpFragment extends Fragment {
         ((AppCompatActivity) getActivity()).getSupportActionBar().setTitle("Add new experiment");
         ((AppCompatActivity) getActivity()).getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
+        String currentID = getArguments().getString("UUID");
+
+        Toast.makeText(getContext(),""+ currentID, Toast.LENGTH_LONG).show();
+
         NumberPicker maxTrials = view.findViewById(R.id.maxTrialsNumberPicker);
         NumberPicker minTrials = view.findViewById(R.id.minTrialsNumberPicker);
 
@@ -136,7 +140,7 @@ public class addExpFragment extends Fragment {
 
                     mAuth = FirebaseAuth.getInstance();
 
-                    returnedExperiment = new Experiment(expName, Objects.requireNonNull(mAuth.getCurrentUser()).getUid(),
+                    returnedExperiment = new Experiment(expName, currentID,
                             trialType, expDescription, checkLocationOn, minTrials.getValue(), maxTrials.getValue(),
                             checkPublicOn, currentDate.getDate(), UUID.randomUUID().toString() );
 
