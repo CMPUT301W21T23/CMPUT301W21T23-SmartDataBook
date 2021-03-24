@@ -48,9 +48,6 @@ public class MainActivity extends AppCompatActivity implements SignInCallBack {
 
     Database database;
 
-    private Fragment home;
-    private Fragment fav;
-
     //Implement interrupted exception throw on database object instantiation
     {
         try {
@@ -76,6 +73,10 @@ public class MainActivity extends AppCompatActivity implements SignInCallBack {
         if (fragment instanceof FavPage) searchShow = true;
         if (fragment instanceof addExpFragment) bottomNavigation.setVisibility(View.GONE);
         invalidateOptionsMenu();
+    }
+
+    public String test() {
+        return "This means you can get the attribute of MainActivity, call made from a Fragment";
     }
 
     /**
@@ -156,12 +157,11 @@ public class MainActivity extends AppCompatActivity implements SignInCallBack {
      * This function supports opening fragments
      * @param fragment
      */
-    public Fragment openFragment(Fragment fragment) {
+    public void openFragment(Fragment fragment) {
         final FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
         transaction.replace(R.id.container, fragment, fragment.getClass().getSimpleName());
         transaction.addToBackStack(null);
         transaction.commit();
-        return fragment;
     }
 
     BottomNavigationView.OnNavigationItemSelectedListener mOnNavigationItemSelectedListener =
@@ -171,12 +171,12 @@ public class MainActivity extends AppCompatActivity implements SignInCallBack {
                     switch (item.getItemId()) {
                         case R.id.home_nav:
                             toolbar.setTitle("Home");
-                            home = openFragment(homePage.newInstance(currentID));
+                            openFragment(homePage.newInstance(currentID));
                             return true;
 
                         case R.id.fav_nav:
                             toolbar.setTitle("Favorites");
-                            fav = openFragment(FavPage.newInstance(currentID));
+                            openFragment(FavPage.newInstance(currentID));
                             return true;
 
                         case R.id.settings_nav:
