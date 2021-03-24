@@ -93,13 +93,11 @@ public class Database {
                                             Log.w("Test", "Error deleting document", e);
                                         }
                                     });
-
                         }
                         else{
                             Toast.makeText(context,"Cannot unfollow owned Experiment",Toast.LENGTH_SHORT).show();
                             follow.setChecked(true);
                         }
-
                     }
                 }
             }

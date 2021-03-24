@@ -120,8 +120,10 @@ CardList extends ArrayAdapter<Experiment> {
                 public void onComplete(@NonNull Task<DocumentSnapshot> task) {
                     if (task.isSuccessful()) {
                         DocumentSnapshot document = task.getResult();
-                        if ( document.getData().get("UUID").equals(currentID) ) {
-                            follow.setChecked(true);
+                        if(document.exists()){
+                            if (Objects.equals(Objects.requireNonNull(document.getData()).get("UUID"), currentID)) {
+                                follow.setChecked(true);
+                            }
                         }
                     }
                 }
