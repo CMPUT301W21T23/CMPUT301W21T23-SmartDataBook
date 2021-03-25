@@ -104,22 +104,14 @@ public class RepliesActivity extends AppCompatActivity {
         repliesDataList.add(new Comment("test replies",currentID,"12", "03/21/2021"));
         repliesDataList.add(new Comment("test replies",currentID,"12", "03/21/2021"));
         repliesDataList.add(new Comment("test replies",currentID,"12", "03/21/2021"));
-
         repliesDataList.add(new Comment("test replies",currentID,"12", "03/21/2021"));
-
         repliesDataList.add(new Comment("test replies",currentID,"12", "03/21/2021"));
-
         repliesDataList.add(new Comment("test replies",currentID,"12", "03/21/2021"));
-
         repliesDataList.add(new Comment("test replies",currentID,"12", "03/21/2021"));
-
         repliesDataList.add(new Comment("test replies",currentID,"12", "03/21/2021"));
-
-
 
         repliesAdapter = new CommentList(this, repliesDataList, currentID);
         repliesList.setAdapter(repliesAdapter);
-
 
     }
 

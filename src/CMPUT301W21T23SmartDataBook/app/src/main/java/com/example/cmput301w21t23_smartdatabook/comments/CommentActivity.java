@@ -89,8 +89,6 @@ public class CommentActivity extends AppCompatActivity {
         commentDataList.add(new Comment("text",currentID,"12", "03/21/2021"));
         commentDataList.add(new Comment("text",currentID,"12", "03/21/2021"));
 
-
-
         commentAdapter = new CommentList(this, commentDataList, currentID);
 
         commentList.setAdapter(commentAdapter);
