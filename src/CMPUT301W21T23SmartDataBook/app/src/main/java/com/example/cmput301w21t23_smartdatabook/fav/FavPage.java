@@ -95,7 +95,7 @@ public class FavPage extends Fragment implements FillDataCallBack {
         favList = view.findViewById(R.id.followedExpListView);
         favDataList = new ArrayList<>();
 
-        favAdapter = new CardList(getContext(), favDataList, 2, user.getUserUniqueID());
+        favAdapter = new CardList(getContext(), favDataList, 2, user);
         favList.setAdapter(favAdapter);
 
         Toast.makeText(getContext(), "" + user.getUserUniqueID(), Toast.LENGTH_LONG).show();

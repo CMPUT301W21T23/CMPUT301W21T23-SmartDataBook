@@ -341,7 +341,7 @@ public class Database {
      * @param saveButtonView contains the save button view
      * @param context contains the given context from which this function is called from
      */
-    public void editUser(EditText usernameTextField, EditText emailTextField, View saveButtonView, Context context, String currentID) {
+    public void editUser(EditText usernameTextField, EditText emailTextField, View saveButtonView, Context context, String currentID, User user) {
 
         db = FirebaseFirestore.getInstance();
 
@@ -372,6 +372,8 @@ public class Database {
                             public void onClick(View v) {
                                 String username = usernameTextField.getText().toString();
                                 String email = emailTextField.getText().toString();
+                                user.setUserName(username);
+                                user.setUserContact(email);
 
                                 docRef
                                         .update("UserName", username)

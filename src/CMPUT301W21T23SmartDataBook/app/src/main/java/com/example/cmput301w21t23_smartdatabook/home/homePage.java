@@ -115,7 +115,7 @@ public class homePage extends Fragment implements FillDataCallBack {
         experimentList = view.findViewById(R.id.experiment_list);
         experimentDataList = new ArrayList<>();
 
-        experimentAdapter = new CardList(getContext(), experimentDataList,1, user.getUserUniqueID());
+        experimentAdapter = new CardList(getContext(), experimentDataList,1, user);
 
         experimentList.setAdapter(experimentAdapter);
 

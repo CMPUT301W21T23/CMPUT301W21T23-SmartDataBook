@@ -69,7 +69,7 @@ public class SettingsPage extends Fragment {
 
 
 		Toast.makeText(getContext(), "" + user.getUserUniqueID(), Toast.LENGTH_LONG).show();
-		database.editUser(usernameTextField, emailTextField, saveButtonView, getContext(), user.getUserUniqueID());
+		database.editUser(usernameTextField, emailTextField, saveButtonView, getContext(), user.getUserUniqueID(), user);
 
 		return view;
 	}

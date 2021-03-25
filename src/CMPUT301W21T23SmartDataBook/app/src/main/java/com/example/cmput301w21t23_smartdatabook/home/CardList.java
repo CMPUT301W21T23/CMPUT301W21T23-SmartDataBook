@@ -20,6 +20,7 @@ import androidx.annotation.Nullable;
 import androidx.recyclerview.widget.RecyclerView;
 import androidx.recyclerview.widget.RecyclerView.ViewHolder;
 
+import com.example.cmput301w21t23_smartdatabook.User;
 import com.example.cmput301w21t23_smartdatabook.comments.CommentActivity;
 import com.example.cmput301w21t23_smartdatabook.Database;
 import com.example.cmput301w21t23_smartdatabook.Experiment;
@@ -45,7 +46,7 @@ CardList extends ArrayAdapter<Experiment> {
     private ArrayList<Experiment> experiments;
     private Context context;
     private int index;
-    private String currentID;
+    private User user;
 
     public ArrayList<Experiment> getExperiments() {
         return experiments;
@@ -61,12 +62,12 @@ CardList extends ArrayAdapter<Experiment> {
      * @param experiments
      * @param index
      */
-    public CardList(Context context, ArrayList<Experiment> experiments, int index, String currentID) {
+    public CardList(Context context, ArrayList<Experiment> experiments, int index, User user) {
         super(context,0, experiments);
         this.experiments = experiments;
         this.context = context;
         this.index = index;
-        this.currentID = currentID;
+        this.user = user;
     }
 
     /**
@@ -106,7 +107,7 @@ CardList extends ArrayAdapter<Experiment> {
 
             experimentName.setText(experiment.getExpName());
             date.setText(experiment.getDate());
-            ownerName.setText("User - "+experiment.getOwnerUserID().substring(0,4));
+            ownerName.setText(user.getUserName());
             experimentDescription.setText(experiment.getDescription());
             region.setText(null);
 
@@ -117,7 +118,7 @@ CardList extends ArrayAdapter<Experiment> {
 
                     Intent intent = new Intent(getContext(), CommentActivity.class);
                     intent.putExtra("Experiment", experiment);
-                    intent.putExtra("CurrentID", currentID);
+                    intent.putExtra("CurrentID", user.getUserUniqueID());
                     context.startActivity(intent);
                 }
             });
@@ -126,7 +127,7 @@ CardList extends ArrayAdapter<Experiment> {
             CheckBox follow = v.findViewById(R.id.fav);
 
             db.collection("Users")
-                    .document(currentID)
+                    .document(user.getUserUniqueID())
                     .collection("Favorites")
                     .document(experiment.getExpID()).get().addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
                 @Override
@@ -145,23 +146,23 @@ CardList extends ArrayAdapter<Experiment> {
                   public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
                       if(isChecked){
                           final CollectionReference favExpCollection = db.collection("Users")
-                                  .document(currentID)
+                                  .document(user.getUserUniqueID())
                                   .collection("Favorites");
 
 
-                          database.addExperimentToDB(experiment, favExpCollection, currentID);
+                          database.addExperimentToDB(experiment, favExpCollection, user.getUserUniqueID());
 
                           System.out.println("Checked");
 
                       } else {
 
                               final DocumentReference ref = db.collection("Users")
-                                      .document(currentID)
+                                      .document(user.getUserUniqueID())
                                       .collection("Favorites")
                                       .document(experiment.getExpID());
 
 
-                              database.followStatus( ref, experiment, getContext(), follow, currentID );
+                              database.followStatus( ref, experiment, getContext(), follow, user.getUserUniqueID() );
 
                               System.out.println("Un-Checked");
                           }
