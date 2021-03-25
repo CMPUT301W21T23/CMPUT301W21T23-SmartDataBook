@@ -3,6 +3,7 @@ package com.example.cmput301w21t23_smartdatabook.comments;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
+import android.text.method.ScrollingMovementMethod;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -20,6 +21,7 @@ import com.example.cmput301w21t23_smartdatabook.Experiment;
 import com.example.cmput301w21t23_smartdatabook.R;
 import com.example.cmput301w21t23_smartdatabook.User;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
+import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.FirebaseFirestore;
 
 import java.util.ArrayList;
@@ -30,6 +32,7 @@ public class RepliesActivity extends AppCompatActivity {
 
     ArrayAdapter<Comment> repliesAdapter;
     ArrayList<Comment> repliesDataList;
+    ListView repliesList;
 
     private String currentID;
     private Experiment experiment;
@@ -42,7 +45,9 @@ public class RepliesActivity extends AppCompatActivity {
     TextView date;
     TextView commentID;
     TextView commentText;
-    ListView repliesList;
+
+    private User user = User.getUser();
+
     FloatingActionButton addReply;
     Date curDate = new Date();
 
@@ -56,9 +61,10 @@ public class RepliesActivity extends AppCompatActivity {
 
         View addCommentView = LayoutInflater.from(RepliesActivity.this).inflate(R.layout.add_comment, null);
 
+        db = FirebaseFirestore.getInstance();
+
         Intent intent = getIntent();
         parentComment = (Comment) intent.getSerializableExtra("Comment");
-        User user = (User) intent.getSerializableExtra("user");
 
         owner = findViewById(R.id.comment_owner_username);
         owner.setText(parentComment.getUserUniqueID());
@@ -73,6 +79,8 @@ public class RepliesActivity extends AppCompatActivity {
         commentText.setText(parentComment.getText());
 
         EditText newComment = addCommentView.findViewById(R.id.newComment);
+//        newComment.setMovementMethod(new ScrollingMovementMethod());
+
         addReply = findViewById(R.id.add_replies_button);
         addReply.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -103,6 +111,10 @@ public class RepliesActivity extends AppCompatActivity {
 
         repliesAdapter = new CommentList(this, repliesDataList);
         repliesList.setAdapter(repliesAdapter);
+
+        database.fillCommentList(db.collection("Replies")
+                .document(parentComment.getCommentID())
+                .collection("Answers"), repliesDataList, repliesAdapter);
 
     }
 

@@ -3,6 +3,7 @@ package com.example.cmput301w21t23_smartdatabook.comments;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
+import android.text.method.ScrollingMovementMethod;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -83,6 +84,7 @@ public class CommentActivity extends AppCompatActivity {
                 .collection("Questions"), commentDataList, commentAdapter);
 
         EditText newComment = addCommentView.findViewById(R.id.newComment);
+//        newComment.setMovementMethod(new ScrollingMovementMethod());
 
         FloatingActionButton addCommentButton;
         addCommentButton = findViewById(R.id.add_comment_button);
@@ -114,7 +116,6 @@ public class CommentActivity extends AppCompatActivity {
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 Intent intent = new Intent(getBaseContext(), RepliesActivity.class);
                 intent.putExtra("Comment", commentDataList.get(position));
-                intent.putExtra("user", user);
                 startActivity(intent);
             }
         });
