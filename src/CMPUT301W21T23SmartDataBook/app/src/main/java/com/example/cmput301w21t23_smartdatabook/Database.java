@@ -152,6 +152,22 @@ public class Database {
                 });
     }
 
+    public void addCommentToDB(DocumentReference DocRef, HashMap data){
+        DocRef.set(data);
+//                .addOnSuccessListener(new OnSuccessListener<Void>() {
+//                    @Override
+//                    public void onSuccess(Void aVoid) {
+//                        Log.d("Success", "Trial has been added successfully");
+//                    }
+//                })
+//                .addOnFailureListener(new OnFailureListener() {
+//                    @Override
+//                    public void onFailure(@NonNull Exception e) {
+//                        Log.d("Failure", "Data storing failed");
+//                    }
+//                });
+    }
+
     public void fillCommentList(ArrayList<Comment> commentList, ArrayAdapter<Comment> commentAdapter, String currentID) {
         db.collection("Comments")
                 .get()
@@ -160,7 +176,7 @@ public class Database {
                     public void onComplete(@NonNull Task<QuerySnapshot> task) {
                         if (task.isSuccessful()) {
                             for (QueryDocumentSnapshot document : task.getResult()) {
-                                commentList.add(new Comment(document.get("CommentText").toString(), document.get("UserID").toString(), document.get("CommentID").toString(), "TempDate"));
+                                commentList.add(new Comment(document.get("CommentText").toString(), document.get("UserID").toString(), document.get("CommentID").toString(), document.get("Date").toString()));
                                 Log.d("Success", document.getId() + " => " + document.getData());
                             }
                             commentAdapter.notifyDataSetChanged();
@@ -462,20 +478,7 @@ public class Database {
     }//authenticationAnon
 
     public void publicOrEnd(CollectionReference coll, String onOff, Experiment experiment, String status){
-        coll.document(experiment.getExpID()).update(status, onOff)
-                .addOnSuccessListener(new OnSuccessListener<Void>() {
-                    @Override
-                    public void onSuccess(Void aVoid) {
-                        Log.d("Message", "DocumentSnapshot successfully updated!");
-
-                    }
-                })
-                .addOnFailureListener(new OnFailureListener() {
-                    @Override
-                    public void onFailure(@NonNull Exception e) {
-                        Log.w("message", "Error updating document", e);
-                    }
-                });
+        coll.document(experiment.getExpID()).update(status, onOff);
     }
 
 }//Database

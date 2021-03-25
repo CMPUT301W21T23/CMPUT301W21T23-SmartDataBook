@@ -76,18 +76,21 @@ public class CommentActivity extends AppCompatActivity {
 
         commentDataList = new ArrayList<>();
 
+        Date date = new Date();
+
+
         commentDataList.add(new Comment("text",currentID,"12", "03/21/2021"));
         commentDataList.add(new Comment("text",currentID,"12", "03/21/2021"));
         commentDataList.add(new Comment("text",currentID,"12", "03/21/2021"));
         commentDataList.add(new Comment("text",currentID,"12", "03/21/2021"));
-        commentDataList.add(new Comment("text",currentID,"12", "03/21/2021"));
-        commentDataList.add(new Comment("text",currentID,"12", "03/21/2021"));
-        commentDataList.add(new Comment("text",currentID,"12", "03/21/2021"));
-        commentDataList.add(new Comment("text",currentID,"12", "03/21/2021"));
-        commentDataList.add(new Comment("text",currentID,"12", "03/21/2021"));
-        commentDataList.add(new Comment("text",currentID,"12", "03/21/2021"));
-        commentDataList.add(new Comment("text",currentID,"12", "03/21/2021"));
-        commentDataList.add(new Comment("text",currentID,"12", "03/21/2021"));
+//        commentDataList.add(new Comment("text",currentID,"12", "03/21/2021"));
+//        commentDataList.add(new Comment("text",currentID,"12", "03/21/2021"));
+//        commentDataList.add(new Comment("text",currentID,"12", "03/21/2021"));
+//        commentDataList.add(new Comment("text",currentID,"12", "03/21/2021"));
+//        commentDataList.add(new Comment("text",currentID,"12", "03/21/2021"));
+//        commentDataList.add(new Comment("text",currentID,"12", "03/21/2021"));
+//        commentDataList.add(new Comment("text",currentID,"12", "03/21/2021"));
+//        commentDataList.add(new Comment("text",currentID,"12", "03/21/2021"));
 
         commentAdapter = new CommentList(this, commentDataList, currentID);
 
@@ -111,11 +114,15 @@ public class CommentActivity extends AppCompatActivity {
                             public void onClick(DialogInterface dialog, int which) {
                                 String commentText = newComment.getText().toString();
 
+
                                 HashMap<String, String> data = new HashMap<>();
+
                                 data.put("CommentText", commentText);
                                 data.put("UserID", currentID);
                                 data.put("CommentID", UUID.randomUUID().toString());
-                                database.fillCommentList(commentDataList, commentAdapter, currentID);
+                                data.put("Date", date.getDate());
+//                                database.addCommentToDB(db.collection("Comments").document(experiment.getExpID()),data);
+
                             }
 
                         }).create().show();

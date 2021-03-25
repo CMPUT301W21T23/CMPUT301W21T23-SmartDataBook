@@ -8,6 +8,7 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.ActionBar;
@@ -144,13 +145,19 @@ public class ExperimentDetails extends AppCompatActivity {
         endExp.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                database.publicOrEnd(db.collection("Experiments"), "On", experiment,"isEnd");
-                database.publicOrEnd((db.collection("Users")
-                        .document(currentID)
-                        .collection("Favorites")), "On", experiment,"IsEnd");
-                endExp.setVisibility(View.INVISIBLE);
-                experiment.setEnd(true);
-                Log.d("Tests", "value1: "+ experiment.getIsEnd());
+                if (!experiment.getIsEnd()){
+                    experiment.setEnd(true);
+                    database.publicOrEnd(db.collection("Experiments"), "On", experiment,"isEnd");
+                    database.publicOrEnd((db.collection("Users")
+                            .document(currentID)
+                            .collection("Favorites")), "On", experiment,"isEnd");
+                    Toast.makeText(getBaseContext(), "Experiment has been ended this action cannot be undone",Toast.LENGTH_SHORT).show();
+                    Log.d("Tests", "value1: "+ experiment.getIsEnd());
+                }
+                else{
+                    Toast.makeText(getBaseContext(), "Experiment is ended already!!",Toast.LENGTH_SHORT).show();
+
+                }
             }
         });
 
@@ -158,31 +165,10 @@ public class ExperimentDetails extends AppCompatActivity {
         TextView publish_text = findViewById(R.id.Publish_text);
         publish.setChecked(experiment.isPublic());
         if (currentID.equals(experiment.getOwnerUserID()) ){
-//            endExp.setVisibility(View.VISIBLE);
+            endExp.setVisibility(View.VISIBLE);
             publish.setVisibility(View.VISIBLE);
             publish_text.setVisibility(View.VISIBLE);
-            // wont work for some reason
-            if (!experiment.getIsEnd()){
-                endExp.setVisibility(View.VISIBLE);
-            }
-//            db.collection("Users")
-//                    .document(currentID)
-//                    .collection("Favorites").document(experiment.getExpID())
-//                    .get()
-//                    .addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
-//                @Override
-//                public void onComplete(@NonNull Task<DocumentSnapshot> task) {
-//                    if (task.isSuccessful()) {
-//                        DocumentSnapshot document = task.getResult();
-//                        if (document.exists()) {
-//                            if (database.giveBoolean(Objects.requireNonNull(Objects.requireNonNull(document.getData()).get("isEnd")).toString())){
-//                                endExp.setVisibility(View.INVISIBLE);
-//                                Log.d("Test", "Test"+ database.giveBoolean(Objects.requireNonNull(Objects.requireNonNull(document.getData()).get("isEnd")).toString()));
-//                            }
-//                        }
-//                    }
-//                }
-//                    });
+
         }
 
         publish.setOnClickListener(new View.OnClickListener() {

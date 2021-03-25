@@ -150,17 +150,6 @@ public class FavPage extends Fragment implements FillDataCallBack {
             }//getExpDataList
         }, favAdapter, db.collection("Users").document(currentID).collection("Favorites"), currentID);//fillDataList
 
-        favList.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-            @Override
-            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                Experiment exp = favDataList.get(position); // get the experiment from list
-                Intent intent = new Intent(getActivity(), ExperimentDetails.class);
-                intent.putExtra("position", position); // pass position to ExperimentDetails class
-                intent.putExtra("experiment", exp); // pass experiment object
-                startActivity(intent);
-            }
-        });
-
         return view;
     }//onCreateView
 
@@ -171,6 +160,12 @@ public class FavPage extends Fragment implements FillDataCallBack {
     @Override
     public void getExpDataList(ArrayList<Experiment> DataList) {
         favDataList = DataList;
+    }
+
+    @Override
+    public void onResume(){
+        super.onResume();
+        favAdapter.notifyDataSetChanged();
     }
 
 }
