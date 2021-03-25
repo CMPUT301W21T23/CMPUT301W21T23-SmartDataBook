@@ -77,7 +77,7 @@ public class addExpFragment extends Fragment {
         RadioButton measurement = view.findViewById(R.id.measurmentRadioButton);
 
         SwitchMaterial LocationToggle = view.findViewById(R.id.newExperimentLocationToggleSwitch);
-        SwitchMaterial PublicPrivateToggle = view.findViewById(R.id.newExperimentLocationPublicPrivateToggleSwitch);
+        SwitchMaterial PublicPrivateToggle = view.findViewById(R.id.newExperimentLocationPublishToggleSwitch);
 
         //Source: user; https://stackoverflow.com/users/493939/user
         //Code: https://stackoverflow.com/questions/10356733/getcheckedradiobuttonid-returning-useless-inthttps://stackoverflow.com/questions/10356733/getcheckedradiobuttonid-returning-useless-int
