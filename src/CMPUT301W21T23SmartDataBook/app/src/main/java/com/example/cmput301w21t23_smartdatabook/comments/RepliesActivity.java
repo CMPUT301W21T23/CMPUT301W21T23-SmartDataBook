@@ -28,6 +28,11 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.UUID;
 
+/**
+ * Class: Replies Activity
+ * shows the activity of the comments
+ * @author Bosco Chan Afaq Nabi
+ */
 public class RepliesActivity extends AppCompatActivity {
 
     ArrayAdapter<Comment> repliesAdapter;

@@ -36,7 +36,7 @@ import java.util.UUID;
  * class: Database
  * This class consists database, it has the attributes call back which handles synchronous and asychronous functions, and an arraylist of experiment
  * It passes/ takes information to firestore
- * @author Bosco Chan
+ * @author Bosco Chan Afaq Nabi
  */
 public class Database {
 

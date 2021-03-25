@@ -42,7 +42,7 @@ import java.util.UUID;
 /**
  * Class: CommentActivity
  * shows the activity of the comments
- * @author Bosco Chan
+ * @author Bosco Chan Afaq Nabi
  */
 public class CommentActivity extends AppCompatActivity {
     ListView commentList;
