@@ -426,6 +426,7 @@ public class Database {
                             Log.d("Authentication Success", "signInAnonymously:success: " + mAuth.getUid());
                             FirebaseUser currentUser = mAuth.getCurrentUser();
 
+                            assert currentUser != null;
                             signInCallBack.updateHomeScreen(currentUser.getUid());
 
                             FirebaseFirestore db = FirebaseFirestore.getInstance();
@@ -436,7 +437,6 @@ public class Database {
                             //Source: Firebase, firebase.google.com
                             //License: Creative Commons Attribution 4.0 License, Apache 2.0 License
                             //Code: https://firebase.google.com/docs/firestore/query-data/get-data#java_
-                            assert currentUser != null;
                             DocumentReference userDoc = allUsersCollection.document(currentUser.getUid());
                             userDoc.get().addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
                                 @Override

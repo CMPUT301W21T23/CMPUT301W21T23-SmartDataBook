@@ -52,7 +52,7 @@ public class MainActivity extends AppCompatActivity implements SignInCallBack {
 
     Database database;
 
-    public User user = new User("User - "+currentID.substring(0,4), "", currentID);
+    public User user;
 
     //Implement interrupted exception throw on database object instantiation
     {
@@ -203,8 +203,10 @@ public class MainActivity extends AppCompatActivity implements SignInCallBack {
 
     @Override
     public void updateHomeScreen(String userID) {
-
         currentID = userID;
+        user = new User("User - ", "", currentID);
+        Log.d("USER", ""+user.getUserUniqueID());
+        Log.d("USERID", currentID);
         final FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
         transaction.replace(R.id.container, homePage.newInstance(user));
         transaction.addToBackStack(null);

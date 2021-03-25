@@ -68,8 +68,8 @@ public class SettingsPage extends Fragment {
 		usernameTextField.setHint(user.getUserName());
 
 
-		Toast.makeText(getContext(), "" + currentID, Toast.LENGTH_LONG).show();
-		database.editUser(usernameTextField, emailTextField, saveButtonView, getContext(), currentID);
+		Toast.makeText(getContext(), "" + user.getUserUniqueID(), Toast.LENGTH_LONG).show();
+		database.editUser(usernameTextField, emailTextField, saveButtonView, getContext(), user.getUserUniqueID());
 
 		return view;
 	}
