@@ -100,6 +100,7 @@ public class RepliesActivity extends AppCompatActivity {
                                         .document(UUID.randomUUID().toString()), comment);
 
                                 repliesAdapter.notifyDataSetChanged();
+                                recreate();
                             }
                         }).create().show();
                 Log.d("Test", "add replies button clicked");

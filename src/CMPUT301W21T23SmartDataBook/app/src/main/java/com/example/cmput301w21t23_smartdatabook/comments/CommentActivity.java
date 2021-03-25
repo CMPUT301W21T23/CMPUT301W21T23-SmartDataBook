@@ -109,6 +109,9 @@ public class CommentActivity extends AppCompatActivity {
                                         .document(UUID.randomUUID().toString()), comment);
 
                                 commentAdapter.notifyDataSetChanged();
+                                recreate();
+//                                finish();
+//                                startActivity(getIntent());
                             }
                         }).create().show();
             }
