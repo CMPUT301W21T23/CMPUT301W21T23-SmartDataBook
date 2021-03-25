@@ -51,9 +51,6 @@ public class RepliesActivity extends AppCompatActivity {
     FloatingActionButton addReply;
     Date curDate = new Date();
 
-//    https://stackoverflow.com/questions/19826693/how-can-i-make-a-textview-automatically-scroll-as-i-add-more-lines-of-text
-//    outputText.setMovementMethod(new ScrollingMovementMethod());
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -73,11 +70,12 @@ public class RepliesActivity extends AppCompatActivity {
         date.setText((CharSequence) parentComment.getDate());
 
         commentID = findViewById(R.id.commentID);
-        commentID.setText(parentComment.getCommentID());
+        commentID.setText(parentComment.getCommentID().substring(0,6));
 
         commentText = findViewById(R.id.commentText);
         commentText.setText(parentComment.getText());
 
+        //    https://stackoverflow.com/questions/19826693/how-can-i-make-a-textview-automatically-scroll-as-i-add-more-lines-of-text
         EditText newComment = addCommentView.findViewById(R.id.newComment);
 //        newComment.setMovementMethod(new ScrollingMovementMethod());
 
@@ -100,6 +98,8 @@ public class RepliesActivity extends AppCompatActivity {
                                         .document(parentComment.getCommentID())
                                         .collection("Answers")
                                         .document(UUID.randomUUID().toString()), comment);
+
+                                repliesAdapter.notifyDataSetChanged();
                             }
                         }).create().show();
                 Log.d("Test", "add replies button clicked");

@@ -8,12 +8,14 @@
 
     <EditText
         android:id="@+id/newComment"
+        android:lines="8"
         android:layout_width="291dp"
         android:layout_height="214dp"
         android:ems="10"
-        android:inputType="textPersonName"
+        android:inputType="textMultiLine"
         android:maxLines="20"
         android:text="newCommentText"
+        android:scrollbars="vertical"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />

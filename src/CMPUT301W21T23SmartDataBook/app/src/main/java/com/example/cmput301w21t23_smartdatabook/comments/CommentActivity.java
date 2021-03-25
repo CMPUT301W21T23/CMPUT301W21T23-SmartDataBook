@@ -83,6 +83,7 @@ public class CommentActivity extends AppCompatActivity {
                 .document(experiment.getExpID())
                 .collection("Questions"), commentDataList, commentAdapter);
 
+        //    https://stackoverflow.com/questions/19826693/how-can-i-make-a-textview-automatically-scroll-as-i-add-more-lines-of-text
         EditText newComment = addCommentView.findViewById(R.id.newComment);
 //        newComment.setMovementMethod(new ScrollingMovementMethod());
 
@@ -106,6 +107,8 @@ public class CommentActivity extends AppCompatActivity {
                                         .document(experiment.getExpID())
                                         .collection("Questions")
                                         .document(UUID.randomUUID().toString()), comment);
+
+                                commentAdapter.notifyDataSetChanged();
                             }
                         }).create().show();
             }
