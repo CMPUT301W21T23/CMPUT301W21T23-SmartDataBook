@@ -1,6 +1,7 @@
 
 package com.example.cmput301w21t23_smartdatabook;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 
 /**
@@ -9,13 +10,19 @@ import java.util.ArrayList;
  * @see Experiment
  * @author Bosco Chan, Afaq Nabi, Alex Mak, Jaydem Cho, Krutik Soni, Natnail Ghebresilasie
  */
-public abstract class User{
+public class User implements Serializable {
     String userName;
     String userContact;
     String userUniqueID;
 
     ArrayList<Experiment> ownedExperimentList;
     ArrayList<Experiment> favoriteExperimentList;
+
+    public User(String userName, String userContact, String userUniqueID) {
+        this.userName = userName;
+        this.userContact = userContact;
+        this.userUniqueID = userUniqueID;
+    }
 
     /**
      * method that obtains the user's unique ID

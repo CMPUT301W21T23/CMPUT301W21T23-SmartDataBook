@@ -19,6 +19,7 @@ import com.example.cmput301w21t23_smartdatabook.FillDataCallBack;
 import com.example.cmput301w21t23_smartdatabook.Database;
 import com.example.cmput301w21t23_smartdatabook.Experiment;
 import com.example.cmput301w21t23_smartdatabook.MainActivity;
+import com.example.cmput301w21t23_smartdatabook.User;
 import com.example.cmput301w21t23_smartdatabook.experimentDetails.ExperimentDetails;
 import com.example.cmput301w21t23_smartdatabook.R;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
@@ -49,6 +50,7 @@ public class homePage extends Fragment implements FillDataCallBack {
     private MainActivity mainActivity;
 
     private String currentID;
+    private User user;
 
     Database database;
 
@@ -75,10 +77,10 @@ public class homePage extends Fragment implements FillDataCallBack {
     public homePage() {
     }
 
-    public static homePage newInstance(String userID) {
+    public static homePage newInstance(User user) {
         homePage fragment = new homePage();
         Bundle args = new Bundle();
-        args.putString("UUID", userID);
+        args.putSerializable("user", user);
         fragment.setArguments(args);
         return fragment;
     }
@@ -99,7 +101,7 @@ public class homePage extends Fragment implements FillDataCallBack {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         if (getArguments() != null) {
-            currentID = getArguments().getString("UUID");
+            user = (User) getArguments().getSerializable("user");
         }
         mainActivity = (MainActivity) getActivity();
     }

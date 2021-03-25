@@ -12,6 +12,7 @@ import androidx.fragment.app.Fragment;
 
 import com.example.cmput301w21t23_smartdatabook.Database;
 import com.example.cmput301w21t23_smartdatabook.R;
+import com.example.cmput301w21t23_smartdatabook.User;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.firestore.FirebaseFirestore;
 
@@ -31,42 +32,30 @@ public class SettingsPage extends Fragment {
 	public Button saveButtonView;
 	private String currentID;
 
+	private User user;
+
 	public Database database = new Database();
 
 	public SettingsPage() {
 	}
 
-	public static SettingsPage newInstance(String userID) {
+	public static SettingsPage newInstance(User user) {
 		SettingsPage fragment = new SettingsPage();
 		Bundle args = new Bundle();
-		args.putString("UUID", userID);
+		args.putSerializable("user", user);
 		fragment.setArguments(args);
 		return fragment;
 	}
 
-//    public static SettingsPage newInstance(String p1, String p2){
-//        SettingsPage fragment = new SettingsPage();
-//        Bundle args = new Bundle();
-//        fragment.setArguments(args);
-//        return fragment;
-//    }
 
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		if (getArguments() != null) {
-			currentID = getArguments().getString("UUID");
+			user = (User) getArguments().getSerializable("user");
 		}
 	}
 
-//    @Override
-//    public void onCreate(Bundle savedInstanceState) {
-//        super.onCreate(savedInstanceState);
-//        if (getArguments() != null) {
-//            String mParam1 = getArguments().getString(AP1);
-//            String mParam2 = getArguments().getString(AP2);
-//        }
-//    }
 
 	@Override
 	public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -75,6 +64,8 @@ public class SettingsPage extends Fragment {
 		usernameTextField = (EditText) view.findViewById(R.id.usernameTextField);
 		emailTextField = (EditText) view.findViewById(R.id.emailTextField);
 		saveButtonView = (Button) view.findViewById(R.id.saveButtonView);
+
+		usernameTextField.setHint(user.getUserName());
 
 
 		Toast.makeText(getContext(), "" + currentID, Toast.LENGTH_LONG).show();

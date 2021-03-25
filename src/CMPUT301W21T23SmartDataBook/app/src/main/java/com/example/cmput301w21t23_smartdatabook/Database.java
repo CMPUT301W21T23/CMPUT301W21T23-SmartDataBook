@@ -445,7 +445,7 @@ public class Database {
                                         DocumentSnapshot document = task.getResult();
                                         assert document != null;
                                         if (!document.exists()) {
-                                            data.put("UserName", "");
+                                            data.put("UserName", "User - "+currentUser.getUid().substring(0,4));
                                             data.put("Email", "");
                                             data.put("UUID", currentUser.getUid());
 

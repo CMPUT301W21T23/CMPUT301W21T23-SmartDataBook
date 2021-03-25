@@ -17,10 +17,12 @@ import androidx.appcompat.widget.SearchView;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentTransaction;
 
+import com.example.cmput301w21t23_smartdatabook.archives.ArchivePage;
 import com.example.cmput301w21t23_smartdatabook.fav.FavPage;
 import com.example.cmput301w21t23_smartdatabook.home.addExpFragment;
 import com.example.cmput301w21t23_smartdatabook.home.homePage;
 import com.example.cmput301w21t23_smartdatabook.settings.SettingsPage;
+import com.example.cmput301w21t23_smartdatabook.User;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.firestore.FirebaseFirestore;
@@ -49,6 +51,8 @@ public class MainActivity extends AppCompatActivity implements SignInCallBack {
     private String currentID;
 
     Database database;
+
+    public User user = new User("User - "+currentID.substring(0,4), "", currentID);
 
     //Implement interrupted exception throw on database object instantiation
     {
@@ -167,6 +171,8 @@ public class MainActivity extends AppCompatActivity implements SignInCallBack {
         transaction.commit();
     }
 
+//    user.setUserUniqueID(currentID);
+
     BottomNavigationView.OnNavigationItemSelectedListener mOnNavigationItemSelectedListener =
             new BottomNavigationView.OnNavigationItemSelectedListener() {
                 @Override
@@ -174,17 +180,21 @@ public class MainActivity extends AppCompatActivity implements SignInCallBack {
                     switch (item.getItemId()) {
                         case R.id.home_nav:
                             toolbar.setTitle("Home");
-                            openFragment(homePage.newInstance(currentID));
+                            openFragment(homePage.newInstance(user));
                             return true;
 
                         case R.id.fav_nav:
                             toolbar.setTitle("Favorites");
-                            openFragment(FavPage.newInstance(currentID));
+                            openFragment(FavPage.newInstance(user));
                             return true;
 
                         case R.id.settings_nav:
                             toolbar.setTitle("Settings");
-                            openFragment(SettingsPage.newInstance(currentID));
+                            openFragment(SettingsPage.newInstance(user));
+                            return true;
+                        case R.id.archived_nav:
+                            toolbar.setTitle("Archived");
+                            openFragment(ArchivePage.newInstance(user));
                             return true;
                     }
                     return false;
@@ -196,7 +206,7 @@ public class MainActivity extends AppCompatActivity implements SignInCallBack {
 
         currentID = userID;
         final FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
-        transaction.replace(R.id.container, homePage.newInstance(currentID));
+        transaction.replace(R.id.container, homePage.newInstance(user));
         transaction.addToBackStack(null);
         transaction.commitAllowingStateLoss();
     }

@@ -15,6 +15,7 @@ import androidx.fragment.app.Fragment;
 
 import com.example.cmput301w21t23_smartdatabook.FillDataCallBack;
 import com.example.cmput301w21t23_smartdatabook.Database;
+import com.example.cmput301w21t23_smartdatabook.User;
 import com.example.cmput301w21t23_smartdatabook.experimentDetails.ExperimentDetails;
 import com.example.cmput301w21t23_smartdatabook.home.CardList;
 import com.example.cmput301w21t23_smartdatabook.Experiment;
@@ -41,6 +42,7 @@ public class FavPage extends Fragment implements FillDataCallBack {
     private static ArrayList<Experiment> favDataList;
 
     private String currentID;
+    private User user;
 
     FirebaseFirestore db = FirebaseFirestore.getInstance();
     Database database;
@@ -57,51 +59,25 @@ public class FavPage extends Fragment implements FillDataCallBack {
     public FavPage(){
     }
 
-    public static FavPage newInstance(String userID) {
+    public static FavPage newInstance(User user) {
         FavPage fragment = new FavPage();
         Bundle args = new Bundle();
-        args.putString("UUID", userID);
+        args.putSerializable("user", user);
         fragment.setArguments(args);
         return fragment;
     }
-
-//    /**
-//     * new instance method of FavPage
-//     * @param p1
-//     * @param p2
-//     * @return fragment
-//     */
-//    public static FavPage newInstance(String p1, String p2){
-//        FavPage fragment = new FavPage();
-//        Bundle args = new Bundle();
-//        fragment.setArguments(args);
-//        return fragment;
-//    }
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         if (getArguments() != null) {
-            currentID = getArguments().getString("UUID");
+            user = (User) getArguments().getSerializable("user");
         }
     }
 
     public void doUpdate(String query) {
         Log.d("From_" + this.getClass().getSimpleName(), query);
     }
-
-//    /**
-//     * oncreate method of FavPage
-//     * @param savedInstanceState
-//     */
-//    @Override
-//    public void onCreate(Bundle savedInstanceState) {
-//        super.onCreate(savedInstanceState);
-//        if (getArguments() != null) {
-//            String mParam1 = getArguments().getString(AP1);
-//            String mParam2 = getArguments().getString(AP2);
-//        }
-//    }
 
     /**
      * this emthod create the view of the user's favouritte experiments page
