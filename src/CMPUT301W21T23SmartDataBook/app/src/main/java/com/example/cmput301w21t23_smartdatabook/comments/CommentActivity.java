@@ -110,8 +110,6 @@ public class CommentActivity extends AppCompatActivity {
 
                                 commentAdapter.notifyDataSetChanged();
                                 recreate();
-//                                finish();
-//                                startActivity(getIntent());
                             }
                         }).create().show();
             }
