@@ -165,12 +165,12 @@
             tools:ignore="MissingConstraints" />
 
         <com.google.android.material.switchmaterial.SwitchMaterial
-            android:id="@+id/newExperimentLocationPublicPrivateToggleSwitch"
+            android:id="@+id/newExperimentLocationPublishToggleSwitch"
             android:layout_width="144dp"
             android:layout_height="42dp"
             android:layout_marginTop="4dp"
             android:checked="true"
-            android:text="Public"
+            android:text="Publish"
             android:textColor="@color/theme_default"
             android:textStyle="bold"
             app:thumbTint="@color/theme_default"
