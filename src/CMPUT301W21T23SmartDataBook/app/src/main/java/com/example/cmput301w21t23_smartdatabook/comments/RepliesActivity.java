@@ -15,8 +15,10 @@ import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.example.cmput301w21t23_smartdatabook.Database;
+import com.example.cmput301w21t23_smartdatabook.Date;
 import com.example.cmput301w21t23_smartdatabook.Experiment;
 import com.example.cmput301w21t23_smartdatabook.R;
+import com.example.cmput301w21t23_smartdatabook.User;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.firebase.firestore.FirebaseFirestore;
 
@@ -34,7 +36,7 @@ public class RepliesActivity extends AppCompatActivity {
     private Comment parentComment;
 
     FirebaseFirestore db;
-    Database database;
+    Database database = new Database();
 
     TextView owner;
     TextView date;
@@ -42,6 +44,7 @@ public class RepliesActivity extends AppCompatActivity {
     TextView commentText;
     ListView repliesList;
     FloatingActionButton addReply;
+    Date curDate = new Date();
 
 //    https://stackoverflow.com/questions/19826693/how-can-i-make-a-textview-automatically-scroll-as-i-add-more-lines-of-text
 //    outputText.setMovementMethod(new ScrollingMovementMethod());
@@ -54,8 +57,8 @@ public class RepliesActivity extends AppCompatActivity {
         View addCommentView = LayoutInflater.from(RepliesActivity.this).inflate(R.layout.add_comment, null);
 
         Intent intent = getIntent();
-        currentID = intent.getStringExtra("currentID");
         parentComment = (Comment) intent.getSerializableExtra("Comment");
+        User user = (User) intent.getSerializableExtra("user");
 
         owner = findViewById(R.id.comment_owner_username);
         owner.setText(parentComment.getUserUniqueID());
@@ -83,13 +86,13 @@ public class RepliesActivity extends AppCompatActivity {
                             public void onClick(DialogInterface dialog, int which) {
                                 String commentText = newComment.getText().toString();
 
-                                HashMap<String, String> data = new HashMap<>();
-                                data.put("CommentText", commentText);
-                                data.put("UserID", currentID);
-                                data.put("CommentID", UUID.randomUUID().toString());
-                                database.fillCommentList(repliesDataList, repliesAdapter, currentID);
-                            }
+                                Comment comment = new Comment(commentText, user.getUserUniqueID(), UUID.randomUUID().toString(), curDate.getDate());
 
+                                database.addCommentToDB(db.collection("Replies")
+                                        .document(parentComment.getCommentID())
+                                        .collection("Answers")
+                                        .document(UUID.randomUUID().toString()), comment);
+                            }
                         }).create().show();
                 Log.d("Test", "add replies button clicked");
             }
@@ -98,19 +101,7 @@ public class RepliesActivity extends AppCompatActivity {
         repliesList = findViewById(R.id.replies_list);
         repliesDataList = new ArrayList<>();
 
-        repliesDataList.add(new Comment("test replies",currentID,"12", "03/21/2021"));
-        repliesDataList.add(new Comment("test replies",currentID,"12", "03/21/2021"));
-        repliesDataList.add(new Comment("test replies",currentID,"12", "03/21/2021"));
-        repliesDataList.add(new Comment("test replies",currentID,"12", "03/21/2021"));
-        repliesDataList.add(new Comment("test replies",currentID,"12", "03/21/2021"));
-        repliesDataList.add(new Comment("test replies",currentID,"12", "03/21/2021"));
-        repliesDataList.add(new Comment("test replies",currentID,"12", "03/21/2021"));
-        repliesDataList.add(new Comment("test replies",currentID,"12", "03/21/2021"));
-        repliesDataList.add(new Comment("test replies",currentID,"12", "03/21/2021"));
-        repliesDataList.add(new Comment("test replies",currentID,"12", "03/21/2021"));
-        repliesDataList.add(new Comment("test replies",currentID,"12", "03/21/2021"));
-
-        repliesAdapter = new CommentList(this, repliesDataList, currentID);
+        repliesAdapter = new CommentList(this, repliesDataList);
         repliesList.setAdapter(repliesAdapter);
 
     }

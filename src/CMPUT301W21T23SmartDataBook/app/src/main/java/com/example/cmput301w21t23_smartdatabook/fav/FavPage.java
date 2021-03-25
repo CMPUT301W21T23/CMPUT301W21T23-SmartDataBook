@@ -41,7 +41,6 @@ public class FavPage extends Fragment implements FillDataCallBack {
     private static ArrayAdapter<Experiment> favAdapter;
     private static ArrayList<Experiment> favDataList;
 
-    private String currentID;
     private User user;
 
     FirebaseFirestore db = FirebaseFirestore.getInstance();
@@ -59,10 +58,10 @@ public class FavPage extends Fragment implements FillDataCallBack {
     public FavPage(){
     }
 
-    public static FavPage newInstance(User user) {
+    public static FavPage newInstance(String user) {
         FavPage fragment = new FavPage();
         Bundle args = new Bundle();
-        args.putSerializable("user", user);
+        args.putString("", user);
         fragment.setArguments(args);
         return fragment;
     }
@@ -70,8 +69,9 @@ public class FavPage extends Fragment implements FillDataCallBack {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+//        user = User.getUser();
         if (getArguments() != null) {
-            user = (User) getArguments().getSerializable("user");
+            user = User.getUser();
         }
     }
 
@@ -95,7 +95,7 @@ public class FavPage extends Fragment implements FillDataCallBack {
         favList = view.findViewById(R.id.followedExpListView);
         favDataList = new ArrayList<>();
 
-        favAdapter = new CardList(getContext(), favDataList, 2, user);
+        favAdapter = new CardList(getContext(), favDataList, 2);
         favList.setAdapter(favAdapter);
 
         Toast.makeText(getContext(), "" + user.getUserUniqueID(), Toast.LENGTH_LONG).show();

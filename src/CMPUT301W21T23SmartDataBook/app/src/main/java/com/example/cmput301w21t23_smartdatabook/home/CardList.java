@@ -40,13 +40,12 @@ import com.google.firebase.firestore.FirebaseFirestore;
  * @return view the view of the card which contains a couple buttons and brief information about the experiment
  */
 
-public class
-CardList extends ArrayAdapter<Experiment> {
+public class CardList extends ArrayAdapter<Experiment> {
 
     private ArrayList<Experiment> experiments;
     private Context context;
     private int index;
-    private User user;
+    private User user = User.getUser();
 
     public ArrayList<Experiment> getExperiments() {
         return experiments;
@@ -62,12 +61,11 @@ CardList extends ArrayAdapter<Experiment> {
      * @param experiments
      * @param index
      */
-    public CardList(Context context, ArrayList<Experiment> experiments, int index, User user) {
+    public CardList(Context context, ArrayList<Experiment> experiments, int index) {
         super(context,0, experiments);
         this.experiments = experiments;
         this.context = context;
         this.index = index;
-        this.user = user;
     }
 
     /**
@@ -119,6 +117,7 @@ CardList extends ArrayAdapter<Experiment> {
                     Intent intent = new Intent(getContext(), CommentActivity.class);
                     intent.putExtra("Experiment", experiment);
                     intent.putExtra("CurrentID", user.getUserUniqueID());
+                    intent.putExtra("user", user);
                     context.startActivity(intent);
                 }
             });

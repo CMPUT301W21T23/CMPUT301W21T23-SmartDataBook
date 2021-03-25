@@ -52,6 +52,7 @@ public class homePage extends Fragment implements FillDataCallBack {
     private String currentID;
     private User user;
 
+
     Database database;
 
     //Implement interrupted exception throw on database object instantiation
@@ -77,10 +78,10 @@ public class homePage extends Fragment implements FillDataCallBack {
     public homePage() {
     }
 
-    public static homePage newInstance(User user) {
+    public static homePage newInstance(String user) {
         homePage fragment = new homePage();
         Bundle args = new Bundle();
-        args.putSerializable("user", user);
+        args.putString("", user);
         fragment.setArguments(args);
         return fragment;
     }
@@ -102,7 +103,8 @@ public class homePage extends Fragment implements FillDataCallBack {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         if (getArguments() != null) {
-            user = (User) getArguments().getSerializable("user");
+//            user = (User) getArguments().getSerializable("user");
+            user = User.getUser();
         }
         mainActivity = (MainActivity) getActivity();
     }
@@ -115,7 +117,7 @@ public class homePage extends Fragment implements FillDataCallBack {
         experimentList = view.findViewById(R.id.experiment_list);
         experimentDataList = new ArrayList<>();
 
-        experimentAdapter = new CardList(getContext(), experimentDataList,1, user);
+        experimentAdapter = new CardList(getContext(), experimentDataList,1);
 
         experimentList.setAdapter(experimentAdapter);
 

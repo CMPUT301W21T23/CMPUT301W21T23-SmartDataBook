@@ -15,6 +15,7 @@ import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.app.NavUtils;
 
+import com.example.cmput301w21t23_smartdatabook.User;
 import com.example.cmput301w21t23_smartdatabook.comments.CommentActivity;
 import com.example.cmput301w21t23_smartdatabook.Database;
 import com.example.cmput301w21t23_smartdatabook.Experiment;
@@ -40,6 +41,7 @@ import java.util.Objects;
  * @see Experiment ,
  */
 public class ExperimentDetails extends AppCompatActivity {
+    User user = User.getUser();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -137,6 +139,7 @@ public class ExperimentDetails extends AppCompatActivity {
                 Intent intent = new Intent(getBaseContext(), CommentActivity.class);
                 intent.putExtra("Experiment", experiment);
                 intent.putExtra("CurrentID", currentID);
+                intent.putExtra("user", user);
                 startActivity(intent);
             }
         });

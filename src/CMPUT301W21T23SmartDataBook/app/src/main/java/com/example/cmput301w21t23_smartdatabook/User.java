@@ -11,9 +11,19 @@ import java.util.ArrayList;
  * @author Bosco Chan, Afaq Nabi, Alex Mak, Jaydem Cho, Krutik Soni, Natnail Ghebresilasie
  */
 public class User implements Serializable {
-    String userName;
-    String userContact;
-    String userUniqueID;
+    private static User user;
+    public String userName;
+    public String userContact;
+    public String userUniqueID;
+
+    private User(){}
+
+    public static User getUser(){
+        if (user == null){
+            user = new User();
+        }
+        return user;
+    }
 
     ArrayList<Experiment> ownedExperimentList;
     ArrayList<Experiment> favoriteExperimentList;

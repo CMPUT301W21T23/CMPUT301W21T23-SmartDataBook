@@ -12,6 +12,7 @@ import androidx.annotation.Nullable;
 
 import com.example.cmput301w21t23_smartdatabook.R;
 import com.example.cmput301w21t23_smartdatabook.Trial;
+import com.example.cmput301w21t23_smartdatabook.User;
 
 import java.util.ArrayList;
 
@@ -24,6 +25,7 @@ import java.util.ArrayList;
 public class TrialList extends ArrayAdapter<Trial> {
     private final ArrayList<Trial> trials;
     private final Context context;
+    private User user = User.getUser();
 
     /**
      * TrialList's public constructor

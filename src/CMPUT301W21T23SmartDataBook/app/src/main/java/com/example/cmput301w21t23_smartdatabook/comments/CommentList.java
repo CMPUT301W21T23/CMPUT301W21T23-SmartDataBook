@@ -12,6 +12,7 @@ import androidx.annotation.Nullable;
 
 import com.example.cmput301w21t23_smartdatabook.Date;
 import com.example.cmput301w21t23_smartdatabook.R;
+import com.example.cmput301w21t23_smartdatabook.User;
 import com.example.cmput301w21t23_smartdatabook.comments.Comment;
 
 import java.util.ArrayList;
@@ -24,7 +25,7 @@ public class CommentList extends ArrayAdapter {
 
     private final ArrayList<Comment> comments;
     private final Context context;
-    private final String currentID;
+    User user = User.getUser();
 
     Date date;
 
@@ -33,11 +34,10 @@ public class CommentList extends ArrayAdapter {
      * @param context
      * @param comments
      */
-    public CommentList (Context context, ArrayList<Comment> comments, String currentID) {
+    public CommentList (Context context, ArrayList<Comment> comments) {
         super(context, 0, comments);
         this.context = context;
         this.comments = comments;
-        this.currentID = currentID;
     }
 
     /**
@@ -59,6 +59,9 @@ public class CommentList extends ArrayAdapter {
 
         Comment comment = comments.get(position);
 
+        TextView owner = view.findViewById(R.id.comment_user_username);
+        owner.setText(user.getUserName());
+
         TextView commentText = view.findViewById(R.id.commentText);
         commentText.setText(comment.getText());
 
@@ -67,9 +70,6 @@ public class CommentList extends ArrayAdapter {
 
         TextView commentDate = view.findViewById(R.id.commentDate);
         commentDate.setText(comment.getDate());
-
-        TextView uid = view.findViewById(R.id.comment_user_username);
-        uid.setText(comment.getUserUniqueID());
 
         return view;
     }

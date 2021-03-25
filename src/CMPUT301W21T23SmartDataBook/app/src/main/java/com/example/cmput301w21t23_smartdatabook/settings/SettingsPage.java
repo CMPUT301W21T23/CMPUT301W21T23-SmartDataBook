@@ -39,10 +39,10 @@ public class SettingsPage extends Fragment {
 	public SettingsPage() {
 	}
 
-	public static SettingsPage newInstance(User user) {
+	public static SettingsPage newInstance(String user) {
 		SettingsPage fragment = new SettingsPage();
 		Bundle args = new Bundle();
-		args.putSerializable("user", user);
+		args.putString("", user);
 		fragment.setArguments(args);
 		return fragment;
 	}
@@ -52,7 +52,8 @@ public class SettingsPage extends Fragment {
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		if (getArguments() != null) {
-			user = (User) getArguments().getSerializable("user");
+//			user = (User) getArguments().getSerializable("user");
+			user = User.getUser();
 		}
 	}
 

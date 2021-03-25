@@ -22,6 +22,7 @@ import com.example.cmput301w21t23_smartdatabook.Database;
 import com.example.cmput301w21t23_smartdatabook.Experiment;
 import com.example.cmput301w21t23_smartdatabook.R;
 import com.example.cmput301w21t23_smartdatabook.Trial;
+import com.example.cmput301w21t23_smartdatabook.User;
 import com.example.cmput301w21t23_smartdatabook.trials.TrialList;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
@@ -41,6 +42,7 @@ public class UploadTrial extends AppCompatActivity {
     FirebaseAuth mAuth = FirebaseAuth.getInstance();
     FirebaseUser currentUser = mAuth.getCurrentUser();
     String expType;
+    User user = User.getUser();
 
     /**
      * This function create the uploadTrial view

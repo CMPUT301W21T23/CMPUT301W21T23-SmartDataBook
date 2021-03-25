@@ -13,16 +13,16 @@ import com.example.cmput301w21t23_smartdatabook.User;
 public class ArchivePage extends Fragment {
     private static final String AP1 = "AP1";
     private static final String AP2 = "AP2";
-    private User user;
+    private User user = User.getUser();
 
 
     public ArchivePage() {
     }
 
-    public static ArchivePage newInstance(User user) {
+    public static ArchivePage newInstance(String user) {
         ArchivePage fragment = new ArchivePage();
         Bundle args = new Bundle();
-        args.putSerializable("user", user);
+        args.putSerializable("", user);
         fragment.setArguments(args);
         return fragment;
     }

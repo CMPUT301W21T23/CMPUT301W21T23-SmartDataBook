@@ -47,7 +47,7 @@
         android:layout_alignParentTop="true"
         android:layout_marginStart="21dp"
         android:layout_marginTop="20dp"
-        android:textColor="@color/theme_default"
+        android:textColor="@color/purple_500"
         android:text="user" />
 
 </RelativeLayout>

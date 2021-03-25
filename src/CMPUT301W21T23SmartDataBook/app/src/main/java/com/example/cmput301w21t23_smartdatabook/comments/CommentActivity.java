@@ -19,6 +19,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import com.example.cmput301w21t23_smartdatabook.Database;
 import com.example.cmput301w21t23_smartdatabook.Date;
 import com.example.cmput301w21t23_smartdatabook.Experiment;
+import com.example.cmput301w21t23_smartdatabook.User;
 import com.example.cmput301w21t23_smartdatabook.comments.Comment;
 import com.example.cmput301w21t23_smartdatabook.R;
 import com.example.cmput301w21t23_smartdatabook.experimentDetails.UploadTrial;
@@ -51,13 +52,8 @@ public class CommentActivity extends AppCompatActivity {
     private Experiment experiment;
 
     FirebaseFirestore db;
-    Database database;
-
-    TextView uid;
-    TextView date;
-    TextView commentID;
-    TextView text;
-
+    Database database = new Database();
+    User user = User.getUser();
 
 
     @Override
@@ -78,25 +74,13 @@ public class CommentActivity extends AppCompatActivity {
 
         Date date = new Date();
 
-
-        commentDataList.add(new Comment("text",currentID,"12", "03/21/2021"));
-        commentDataList.add(new Comment("text",currentID,"12", "03/21/2021"));
-        commentDataList.add(new Comment("text",currentID,"12", "03/21/2021"));
-        commentDataList.add(new Comment("text",currentID,"12", "03/21/2021"));
-//        commentDataList.add(new Comment("text",currentID,"12", "03/21/2021"));
-//        commentDataList.add(new Comment("text",currentID,"12", "03/21/2021"));
-//        commentDataList.add(new Comment("text",currentID,"12", "03/21/2021"));
-//        commentDataList.add(new Comment("text",currentID,"12", "03/21/2021"));
-//        commentDataList.add(new Comment("text",currentID,"12", "03/21/2021"));
-//        commentDataList.add(new Comment("text",currentID,"12", "03/21/2021"));
-//        commentDataList.add(new Comment("text",currentID,"12", "03/21/2021"));
-//        commentDataList.add(new Comment("text",currentID,"12", "03/21/2021"));
-
-        commentAdapter = new CommentList(this, commentDataList, currentID);
+        commentAdapter = new CommentList(this, commentDataList);
 
         commentList.setAdapter(commentAdapter);
 
-//        database.fillCommentList(commentDataList, commentAdapter, currentID);
+        database.fillCommentList(db.collection("Comments")
+                .document(experiment.getExpID())
+                .collection("Questions"), commentDataList, commentAdapter);
 
         EditText newComment = addCommentView.findViewById(R.id.newComment);
 
@@ -105,26 +89,22 @@ public class CommentActivity extends AppCompatActivity {
         addCommentButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                AlertDialog.Builder builder= new AlertDialog.Builder(CommentActivity.this);
+                AlertDialog.Builder builder = new AlertDialog.Builder(CommentActivity.this);
                 builder.setView(addCommentView);
-                builder.setTitle("New Comment");
+                builder.setTitle("New Rpely");
                 builder.setNegativeButton("Cancel", null)
                         .setPositiveButton("Add Comment", new DialogInterface.OnClickListener() {
                             @Override
                             public void onClick(DialogInterface dialog, int which) {
                                 String commentText = newComment.getText().toString();
 
+                                Comment comment = new Comment(commentText, user.getUserUniqueID(), UUID.randomUUID().toString(), date.getDate());
 
-                                HashMap<String, String> data = new HashMap<>();
-
-                                data.put("CommentText", commentText);
-                                data.put("UserID", currentID);
-                                data.put("CommentID", UUID.randomUUID().toString());
-                                data.put("Date", date.getDate());
-//                                database.addCommentToDB(db.collection("Comments").document(experiment.getExpID()),data);
-
+                                database.addCommentToDB(db.collection("Comments")
+                                        .document(experiment.getExpID())
+                                        .collection("Questions")
+                                        .document(UUID.randomUUID().toString()), comment);
                             }
-
                         }).create().show();
             }
         });
@@ -133,8 +113,8 @@ public class CommentActivity extends AppCompatActivity {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 Intent intent = new Intent(getBaseContext(), RepliesActivity.class);
-                intent.putExtra("currentID", currentID);
                 intent.putExtra("Comment", commentDataList.get(position));
+                intent.putExtra("user", user);
                 startActivity(intent);
             }
         });

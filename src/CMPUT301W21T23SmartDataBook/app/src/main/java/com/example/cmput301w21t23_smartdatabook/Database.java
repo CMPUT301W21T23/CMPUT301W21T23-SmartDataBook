@@ -29,6 +29,7 @@ import com.google.firebase.firestore.QuerySnapshot;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.UUID;
 
 
 /**
@@ -45,6 +46,8 @@ public class Database {
     private static final String TAG1 = "Your";
     private static final String TAG2 = "Warning";
     private static final String TAG3 = "Exception";
+
+    private User user = User.getUser();
 
     FirebaseAuth mAuth;
     FirebaseFirestore db;
@@ -70,6 +73,7 @@ public class Database {
      * @author Bosco Chan
      */
     public Database (){};
+
 
     public void followStatus(DocumentReference ref, Experiment experiment, Context context, CheckBox follow, String currentID) {
 
@@ -104,6 +108,7 @@ public class Database {
             }
         });//ref.get()
     }
+
 
     //Task will be executed here. Done in the background. Called Asynchronous task.
     /**
@@ -152,31 +157,30 @@ public class Database {
                 });
     }
 
-    public void addCommentToDB(DocumentReference DocRef, HashMap data){
+
+    public void addCommentToDB(DocumentReference DocRef, Comment comment){
+        HashMap<String, String> data = new HashMap<>();
+        data.put("CommentText", comment.getText());
+        data.put("UserID", comment.getUserUniqueID());
+        data.put("CommentID", comment.getCommentID());
+        data.put("Date", comment.getDate());
         DocRef.set(data);
-//                .addOnSuccessListener(new OnSuccessListener<Void>() {
-//                    @Override
-//                    public void onSuccess(Void aVoid) {
-//                        Log.d("Success", "Trial has been added successfully");
-//                    }
-//                })
-//                .addOnFailureListener(new OnFailureListener() {
-//                    @Override
-//                    public void onFailure(@NonNull Exception e) {
-//                        Log.d("Failure", "Data storing failed");
-//                    }
-//                });
     }
 
-    public void fillCommentList(ArrayList<Comment> commentList, ArrayAdapter<Comment> commentAdapter, String currentID) {
-        db.collection("Comments")
+
+    public void fillCommentList(CollectionReference coll, ArrayList<Comment> commentList, ArrayAdapter<Comment> commentAdapter) {
+        coll
                 .get()
                 .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
                     @Override
                     public void onComplete(@NonNull Task<QuerySnapshot> task) {
                         if (task.isSuccessful()) {
                             for (QueryDocumentSnapshot document : task.getResult()) {
-                                commentList.add(new Comment(document.get("CommentText").toString(), document.get("UserID").toString(), document.get("CommentID").toString(), document.get("Date").toString()));
+                                commentList.add(new Comment(
+                                        document.get("CommentText").toString(),
+                                        document.get("UserID").toString(),
+                                        document.get("CommentID").toString(),
+                                        document.get("Date").toString()));
                                 Log.d("Success", document.getId() + " => " + document.getData());
                             }
                             commentAdapter.notifyDataSetChanged();
@@ -184,7 +188,6 @@ public class Database {
                     }
                 });
     }
-
 
 
     /**

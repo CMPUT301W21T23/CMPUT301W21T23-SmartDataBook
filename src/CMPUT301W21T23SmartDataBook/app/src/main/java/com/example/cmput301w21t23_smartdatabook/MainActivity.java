@@ -180,21 +180,21 @@ public class MainActivity extends AppCompatActivity implements SignInCallBack {
                     switch (item.getItemId()) {
                         case R.id.home_nav:
                             toolbar.setTitle("Home");
-                            openFragment(homePage.newInstance(user));
+                            openFragment(homePage.newInstance(""));
                             return true;
 
                         case R.id.fav_nav:
                             toolbar.setTitle("Favorites");
-                            openFragment(FavPage.newInstance(user));
+                            openFragment(FavPage.newInstance(""));
                             return true;
 
                         case R.id.settings_nav:
                             toolbar.setTitle("Settings");
-                            openFragment(SettingsPage.newInstance(user));
+                            openFragment(SettingsPage.newInstance(""));
                             return true;
                         case R.id.archived_nav:
                             toolbar.setTitle("Archived");
-                            openFragment(ArchivePage.newInstance(user));
+                            openFragment(ArchivePage.newInstance(""));
                             return true;
                     }
                     return false;
@@ -204,11 +204,13 @@ public class MainActivity extends AppCompatActivity implements SignInCallBack {
     @Override
     public void updateHomeScreen(String userID) {
         currentID = userID;
-        user = new User("User - ", "", currentID);
-        Log.d("USER", ""+user.getUserUniqueID());
-        Log.d("USERID", currentID);
+        User user = User.getUser();
+        user.setUserName("User - " + currentID.substring(0,4));
+        user.setUserContact("");
+        user.setUserUniqueID(currentID);
+//        user = new User("User - "+currentID.substring(0,4), "", currentID);
         final FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
-        transaction.replace(R.id.container, homePage.newInstance(user));
+        transaction.replace(R.id.container, homePage.newInstance(""));
         transaction.addToBackStack(null);
         transaction.commitAllowingStateLoss();
     }

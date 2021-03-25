@@ -21,6 +21,7 @@ import androidx.fragment.app.Fragment;
 import com.example.cmput301w21t23_smartdatabook.Date;
 import com.example.cmput301w21t23_smartdatabook.Experiment;
 import com.example.cmput301w21t23_smartdatabook.R;
+import com.example.cmput301w21t23_smartdatabook.User;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.android.material.switchmaterial.SwitchMaterial;
 import com.google.android.material.textfield.TextInputLayout;
@@ -52,6 +53,8 @@ public class addExpFragment extends Fragment {
     private boolean checkPublicOn = true;
 
     private Experiment returnedExperiment;
+
+    private User user = User.getUser();
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -143,7 +146,6 @@ public class addExpFragment extends Fragment {
                     returnedExperiment = new Experiment(expName, currentID,
                             trialType, expDescription, checkLocationOn, minTrials.getValue(), maxTrials.getValue(),
                             checkPublicOn, currentDate.getDate(), UUID.randomUUID().toString(), false);
-
 
                     //Source: Shweta Chauhan; https://stackoverflow.com/users/6021469/shweta-chauhan
                     //Code: https://stackoverflow.com/questions/40085608/how-to-pass-data-from-one-fragment-to-previous-fragment
