@@ -13,20 +13,16 @@ import android.widget.Toast;
 
 import androidx.fragment.app.Fragment;
 
-import com.example.cmput301w21t23_smartdatabook.FillDataCallBack;
-import com.example.cmput301w21t23_smartdatabook.Database;
-import com.example.cmput301w21t23_smartdatabook.User;
+import com.example.cmput301w21t23_smartdatabook.database.FillDataCallBack;
+import com.example.cmput301w21t23_smartdatabook.database.Database;
+import com.example.cmput301w21t23_smartdatabook.user.User;
 import com.example.cmput301w21t23_smartdatabook.experimentDetails.ExperimentDetails;
 import com.example.cmput301w21t23_smartdatabook.home.CardList;
 import com.example.cmput301w21t23_smartdatabook.Experiment;
 import com.example.cmput301w21t23_smartdatabook.R;
-import com.example.cmput301w21t23_smartdatabook.home.homePage;
-import com.google.firebase.auth.FirebaseAuth;
-import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.firestore.FirebaseFirestore;
 
 import java.util.ArrayList;
-import java.util.Objects;
 
 /**
  * class: FavPage

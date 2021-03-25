@@ -10,9 +10,9 @@ import android.widget.Toast;
 
 import androidx.fragment.app.Fragment;
 
-import com.example.cmput301w21t23_smartdatabook.Database;
+import com.example.cmput301w21t23_smartdatabook.database.Database;
 import com.example.cmput301w21t23_smartdatabook.R;
-import com.example.cmput301w21t23_smartdatabook.User;
+import com.example.cmput301w21t23_smartdatabook.user.User;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.firestore.FirebaseFirestore;
 

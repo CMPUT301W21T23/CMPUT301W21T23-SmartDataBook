@@ -15,11 +15,11 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentTransaction;
 
-import com.example.cmput301w21t23_smartdatabook.FillDataCallBack;
-import com.example.cmput301w21t23_smartdatabook.Database;
+import com.example.cmput301w21t23_smartdatabook.database.FillDataCallBack;
+import com.example.cmput301w21t23_smartdatabook.database.Database;
 import com.example.cmput301w21t23_smartdatabook.Experiment;
-import com.example.cmput301w21t23_smartdatabook.MainActivity;
-import com.example.cmput301w21t23_smartdatabook.User;
+import com.example.cmput301w21t23_smartdatabook.mainController.MainActivity;
+import com.example.cmput301w21t23_smartdatabook.user.User;
 import com.example.cmput301w21t23_smartdatabook.experimentDetails.ExperimentDetails;
 import com.example.cmput301w21t23_smartdatabook.R;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;

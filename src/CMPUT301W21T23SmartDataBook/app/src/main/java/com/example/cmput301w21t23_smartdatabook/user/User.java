@@ -1,12 +1,15 @@
 
-package com.example.cmput301w21t23_smartdatabook;
+package com.example.cmput301w21t23_smartdatabook.user;
+
+import com.example.cmput301w21t23_smartdatabook.Experiment;
 
 import java.io.Serializable;
 import java.util.ArrayList;
 
 /**
- * Abstract class user
- * Constructs the user
+ * Singleton User class
+ * this class can be accessed anywhere in the code
+ * only need to set the user once per run
  * @see Experiment
  * @author Bosco Chan, Afaq Nabi, Alex Mak, Jaydem Cho, Krutik Soni, Natnail Ghebresilasie
  */

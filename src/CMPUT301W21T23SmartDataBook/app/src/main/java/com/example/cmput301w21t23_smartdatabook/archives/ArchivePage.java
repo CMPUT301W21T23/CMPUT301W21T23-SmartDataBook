@@ -8,7 +8,7 @@ import android.view.ViewGroup;
 import androidx.fragment.app.Fragment;
 
 import com.example.cmput301w21t23_smartdatabook.R;
-import com.example.cmput301w21t23_smartdatabook.User;
+import com.example.cmput301w21t23_smartdatabook.user.User;
 
 public class ArchivePage extends Fragment {
     private static final String AP1 = "AP1";

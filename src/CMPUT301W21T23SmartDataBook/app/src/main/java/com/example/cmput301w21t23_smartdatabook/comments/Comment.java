@@ -1,8 +1,7 @@
 
 package com.example.cmput301w21t23_smartdatabook.comments;
 
-import com.example.cmput301w21t23_smartdatabook.Date;
-import com.example.cmput301w21t23_smartdatabook.User;
+import com.example.cmput301w21t23_smartdatabook.user.User;
 
 import java.io.Serializable;
 import java.util.ArrayList;

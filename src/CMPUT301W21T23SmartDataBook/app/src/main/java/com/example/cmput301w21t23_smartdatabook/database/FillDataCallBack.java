@@ -1,4 +1,6 @@
-package com.example.cmput301w21t23_smartdatabook;
+package com.example.cmput301w21t23_smartdatabook.database;
+
+import com.example.cmput301w21t23_smartdatabook.Experiment;
 
 import java.util.ArrayList;
 

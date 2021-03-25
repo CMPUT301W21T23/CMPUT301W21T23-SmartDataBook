@@ -1,15 +1,13 @@
 package com.example.cmput301w21t23_smartdatabook;
 
 import android.app.Activity;
-import android.util.Log;
 import android.view.View;
 import android.widget.EditText;
-import android.widget.TextView;
 
 import androidx.test.platform.app.InstrumentationRegistry;
 import androidx.test.rule.ActivityTestRule;
 
-import com.google.android.material.textfield.TextInputLayout;
+import com.example.cmput301w21t23_smartdatabook.mainController.MainActivity;
 import com.robotium.solo.Solo;
 
 import org.junit.After;

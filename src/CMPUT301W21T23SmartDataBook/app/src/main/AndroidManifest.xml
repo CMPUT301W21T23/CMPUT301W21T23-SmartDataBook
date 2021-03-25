@@ -5,6 +5,7 @@
 
     <dist:module dist:instant="true" />
     <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE"/>
 
     <application
             android:allowBackup="true"
@@ -17,7 +18,7 @@
         <meta-data android:name="android.app.default_searchable"
                 android:value=".SearchableActivity"/>
 
-        <activity android:name=".MainActivity">
+        <activity android:name=".mainController.MainActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
@@ -25,7 +26,7 @@
             </intent-filter>
         </activity>
 
-        <activity android:name=".SearchableActivity"
+        <activity android:name=".search.SearchableActivity"
                 android:launchMode="singleTop">
             <intent-filter>
                 <action android:name="android.intent.action.SEARCH" />
@@ -38,7 +39,7 @@
 
         </activity>
 
-        <activity android:name=".experimentDetails.UploadTrial">
+        <activity android:name=".trials.UploadTrial">
 
         </activity>
 

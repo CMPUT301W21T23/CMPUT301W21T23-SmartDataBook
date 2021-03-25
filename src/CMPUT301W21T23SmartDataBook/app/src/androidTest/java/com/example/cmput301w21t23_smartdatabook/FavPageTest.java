@@ -8,6 +8,7 @@ import androidx.test.platform.app.InstrumentationRegistry;
 import androidx.test.rule.ActivityTestRule;
 
 import com.example.cmput301w21t23_smartdatabook.experimentDetails.ExperimentDetails;
+import com.example.cmput301w21t23_smartdatabook.mainController.MainActivity;
 import com.robotium.solo.Solo;
 
 import junit.framework.TestCase;
