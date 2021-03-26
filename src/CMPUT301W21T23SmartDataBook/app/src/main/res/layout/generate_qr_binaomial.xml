@@ -4,37 +4,10 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="vertical">
+    android:orientation="vertical"
+    android:layout_marginTop="100dp">
 
-    <RelativeLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginBottom="50dp">
 
-        <com.google.android.material.appbar.AppBarLayout
-            android:layout_width="match_parent"
-            android:layout_height="60dp"
-            android:background="@color/theme_default"
-            tools:ignore="MissingConstraints">
-
-            <androidx.appcompat.widget.AppCompatImageButton
-                android:id="@+id/binomialTrialBackButtonView"
-                android:layout_width="60dp"
-                android:layout_height="match_parent"
-                android:background="@color/theme_default"
-                android:src="@drawable/ic_back_button" />
-        </com.google.android.material.appbar.AppBarLayout>
-
-        <TextView
-            android:id="@+id/binomialTrialTxtView"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_centerHorizontal="true"
-            android:layout_marginBottom="40dp"
-            android:text="Binomial Trial"
-            android:textColor="@color/white"
-            android:textSize="40dp" />
-    </RelativeLayout>
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="300dp">
@@ -64,30 +37,25 @@
             android:gravity="center"
             android:orientation="horizontal">
 
-            <Button
-                android:id="@+id/fail_btn"
-                android:layout_width="120dp"
-                android:layout_height="55dp"
-                android:layout_marginRight="50dp"
-                android:text="FAIL"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintHorizontal_bias="0.716"
-                app:layout_constraintStart_toEndOf="@+id/pass_btn"
-                app:layout_constraintVertical_bias="0.619" />
+            <EditText
+                android:id="@+id/passesEditTextBinomialQR"
+                android:layout_width="110dp"
+                android:layout_height="wrap_content"
+                android:layout_marginRight="40dp"
+                android:hint="# pass"
+                android:textColorHint="@color/theme_opaque"
+                android:backgroundTint="@color/theme_default"
+                android:textAlignment="center"/>
 
-            <Button
-                android:id="@+id/pass_btn"
-                android:layout_width="120dp"
-                android:layout_height="55dp"
-                android:layout_toRightOf="@+id/fail_btn"
-                android:text="PASS"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintHorizontal_bias="0.176"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent"
-                app:layout_constraintVertical_bias="0.654" />
+            <EditText
+                android:id="@+id/failsEditTextBinomialQR"
+                android:layout_width="110dp"
+                android:layout_height="wrap_content"
+                android:hint="# fail"
+                android:layout_marginRight="20dp"
+                android:textAlignment="center"
+                android:textColorHint="@color/theme_opaque"
+                android:backgroundTint="@color/theme_default"/>
         </LinearLayout>
 
         <LinearLayout
@@ -96,21 +64,36 @@
             android:layout_gravity="center">
 
             <CheckBox
-                android:id="@+id/binomialTrialCheckBox"
+                android:id="@+id/binomialTrialLocationCheckBox"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_below="@+id/buttonLinearLayout"
                 android:text="add location to QR code"
                 tools:layout_editor_absoluteX="116dp"
-                tools:layout_editor_absoluteY="395dp" />
+                tools:layout_editor_absoluteY="395dp"
+                android:clickable="true"
+                android:checked="true"
+                android:buttonTint="@color/theme_default"/>
         </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center">
+            <com.google.android.material.button.MaterialButton
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Generate"
+                android:id="@+id/generateCodeBTNBinomial"/>
+        </LinearLayout>
+
 
         <RelativeLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content">
 
             <androidx.appcompat.widget.AppCompatImageButton
-                android:id="@+id/qrScanImageButtonView"
+                android:id="@+id/qrScanImageButtonViewBinomialBinomial"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_centerHorizontal="true"
@@ -121,7 +104,7 @@
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_below="@id/qrScanImageButtonView"
+                android:layout_below="@id/qrScanImageButtonViewBinomialBinomial"
                 android:layout_centerHorizontal="true"
                 android:text="SCAN QR CODE"
                 android:textColor="@color/theme_default"
