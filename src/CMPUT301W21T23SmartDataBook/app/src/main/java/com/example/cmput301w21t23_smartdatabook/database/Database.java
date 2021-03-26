@@ -215,7 +215,7 @@ public class Database {
 
                         if (task.isSuccessful()) {
                             for (QueryDocumentSnapshot document : task.getResult()) {
-                                if ( (coll1.equals(collection.getPath()) && giveBoolean( document.getData().get("PublicStatus").toString())) ||
+                                if ( (coll1.equals(collection.getPath()) && document.getData().get("ExpID") != null && giveBoolean( document.getData().get("PublicStatus").toString())) ||
                                         (collection.getPath().equals(db.collection("Users").document(currentID).collection("Favorites").getPath())) ){
 
                                     experimentDataList.add( new Experiment(
