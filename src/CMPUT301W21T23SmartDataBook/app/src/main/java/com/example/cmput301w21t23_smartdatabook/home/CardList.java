@@ -166,6 +166,7 @@ public class CardList extends ArrayAdapter<Experiment> {
                   }
             );
 
+
             View userInfoView = LayoutInflater.from(getContext()).inflate(R.layout.view_profile, null);
 
             TextView username = userInfoView.findViewById(R.id.expOwner);
@@ -177,9 +178,17 @@ public class CardList extends ArrayAdapter<Experiment> {
             ownerName.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
+
+                    //Source: Johnny Five; https://stackoverflow.com/users/6325722/johnny-five
+                    //Code: https://stackoverflow.com/questions/28071349/the-specified-child-already-has-a-parent-you-must-call-removeview-on-the-chil
+                    if (userInfoView.getParent() != null) {
+                        ((ViewGroup) userInfoView.getParent()).removeView(userInfoView);
+                    }
+
                     AlertDialog.Builder builder = new AlertDialog.Builder(getContext());
                     builder.setView(userInfoView)
                             .setNegativeButton("Close", null).create().show();
+
                 }
             });
 
