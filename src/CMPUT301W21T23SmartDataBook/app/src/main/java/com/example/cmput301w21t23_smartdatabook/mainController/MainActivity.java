@@ -132,25 +132,37 @@ public class MainActivity extends AppCompatActivity implements SignInCallBack {
 
             @Override
             public boolean onQueryTextSubmit(String query) {
-                Log.d("Debug", "TextSubmit");
+                Fragment currentFragment = getSupportFragmentManager().findFragmentById(R.id.container);
+                if (currentFragment != null && currentFragment.isVisible() && !query.equals("")) {
+                    if (currentFragment instanceof homePage) {
+                        ((homePage)currentFragment).doUpdate(query, currentFragment);
+                    }
+                    if (currentFragment instanceof FavPage) {
+                        ((FavPage)currentFragment).doUpdate(query);
+                    }
+                }
+
+
                 return false;
             }
 
             // This gets called every time text is updated, AND search edittext is clicked
             @Override
             public boolean onQueryTextChange(String newText) {
-                Fragment currentFragment = getSupportFragmentManager().findFragmentById(R.id.container);
-                if (currentFragment != null && currentFragment.isVisible() && !newText.equals("")) {
-                    if (currentFragment instanceof homePage) {
-                        ((homePage)currentFragment).doUpdate(newText);
-                    }
-                    if (currentFragment instanceof FavPage) {
-                        ((FavPage)currentFragment).doUpdate(newText);
-                    }
-                }
+//                Fragment currentFragment = getSupportFragmentManager().findFragmentById(R.id.container);
+//                if (currentFragment != null && currentFragment.isVisible() && !newText.equals("")) {
+//                    if (currentFragment instanceof homePage) {
+//                        ((homePage)currentFragment).doUpdate(newText);
+//                    }
+//                    if (currentFragment instanceof FavPage) {
+//                        ((FavPage)currentFragment).doUpdate(newText);
+//                    }
+//                }
 
                 return false;
             }
+
+
         });
         return true;
     }

@@ -43,9 +43,6 @@ import java.util.Hashtable;
 
 public class homePage extends Fragment implements FillDataCallBack {
 
-    private static final String AP1 = "AP1";
-    private static final String AP2 = "AP2";
-
     private ListView experimentList;
     private ArrayList<Experiment> experimentDataList;
     private static ArrayAdapter<Experiment> experimentAdapter;
@@ -53,6 +50,9 @@ public class homePage extends Fragment implements FillDataCallBack {
 
     private User user;
     private Database database;
+
+    private String currentQuery;
+    private ArrayList<Experiment> searchDataList;
 
     //Implement interrupted exception throw on database object instantiation
     {
@@ -86,9 +86,23 @@ public class homePage extends Fragment implements FillDataCallBack {
     }
 
 
-    public void doUpdate(String query) {
-        Log.d("From_" + this.getClass().getSimpleName(), query);
-        Log.d("From_" + this.getClass().getSimpleName(), mainActivity.test());
+    public void doUpdate(String query, Fragment currentFragment) {
+
+//        Log.d("From_" + this.getClass().getSimpleName(), query);
+//        Log.d("From_" + this.getClass().getSimpleName(), mainActivity.test());
+
+        currentQuery = query;
+
+        if (currentQuery != null){
+            //Source: Michele Lacorte; https://stackoverflow.com/users/4529790/michele-lacorte
+            //Code: https://stackoverflow.com/questions/32359727/method-to-refresh-fragment-content-when-data-changed-like-recall-oncreateview
+            //Refresh the current fragment after assigning a the currentQuery
+            FragmentTransaction fragmentTransaction = getFragmentManager().beginTransaction();
+            fragmentTransaction.detach(currentFragment);
+            fragmentTransaction.attach(currentFragment);
+            fragmentTransaction.commit();
+        }
+
     }
 
     @Override
@@ -102,7 +116,6 @@ public class homePage extends Fragment implements FillDataCallBack {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         if (getArguments() != null) {
-//            user = (User) getArguments().getSerializable("user");
             user = User.getUser();
         }
         mainActivity = (MainActivity) getActivity();
@@ -113,8 +126,12 @@ public class homePage extends Fragment implements FillDataCallBack {
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.home_page, container, false);
 
+        Log.d("Hello", "CHECK--------------");
+
         experimentList = view.findViewById(R.id.experiment_list);
+
         experimentDataList = new ArrayList<>();
+        searchDataList = new ArrayList<>();
 
         experimentAdapter = new CardList(getContext(), experimentDataList,1);
 
@@ -124,7 +141,6 @@ public class homePage extends Fragment implements FillDataCallBack {
 
         //Source: Erwin Kurniawan A; https://stackoverflow.com/users/7693494/erwin-kurniawan-a
         //Code: https://stackoverflow.com/questions/61930061/how-to-return-a-value-from-oncompletelistener-while-creating-user-with-email-and
-
         database.fillUserName(new FillUserCallBack() {
             @Override
             public void getUserTable(Hashtable<String, String> UserName) {
@@ -132,9 +148,35 @@ public class homePage extends Fragment implements FillDataCallBack {
                     @Override
                     public void getExpDataList(ArrayList<Experiment> DataList) {
 
+                        //Reset the experiment adapter for every onCreateView call
+                        experimentAdapter.clear();
+                        searchDataList.clear();
+
                         //experimentDataList with added items ONLY exist inside the scope of this getExpDataList function
                         experimentDataList = DataList;
-                        experimentAdapter.addAll(experimentDataList);
+
+                        //Create a new searchDataList depending on the query
+                        if (currentQuery != null) {
+                            for (Experiment experiment : experimentDataList) {
+                                if (experiment.getExpName().equals(currentQuery) ||
+                                        experiment.getOwnerUserName().equals(currentQuery) ||
+                                        experiment.getDate().equals(currentQuery) ||
+                                        experiment.getDescription().contains(currentQuery)) {
+
+                                    Log.d("experiment", ""+ experiment.getExpName());
+                                    searchDataList.add(experiment);
+
+                                }
+                            }
+
+                            experimentAdapter.clear();
+                            experimentAdapter.addAll(searchDataList);
+
+                            Log.d("search", ""+searchDataList.size());
+
+                        }else{
+                            experimentAdapter.addAll(experimentDataList);
+                        }
 
                         experimentAdapter.notifyDataSetChanged();
 
@@ -148,6 +190,8 @@ public class homePage extends Fragment implements FillDataCallBack {
                                 startActivity(intent);
                             }
                         });
+
+                        Log.d("QueryCheck", ""+currentQuery);
 
                     }//getExpDataList
                 }, experimentAdapter, db.collection("Experiments"), user.getUserUniqueID(), UserName);//fillDataList
