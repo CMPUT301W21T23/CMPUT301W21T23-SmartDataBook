@@ -117,12 +117,16 @@ public class UploadTrial extends AppCompatActivity {
                             Trial trial = new Trial(experiment.getRegionOn(),
                                     experiment.getTrialType(),
                                     true,
-                                    experiment.getOwnerUserID());
-                            database.addTrialToDB(db
-                                    .collection("Experiments")
-                                    .document(experiment.getExpID())
-                                    .collection("Trials")
-                                    .document(UUID.randomUUID().toString()), trial);
+                                    experiment.getOwnerUserID(),
+                                    UUID.randomUUID().toString());
+                            for (int i = 0; i<Integer.parseInt(numBinomial.getText().toString()); i++){
+                                database.addTrialToDB(db
+                                        .collection("Experiments")
+                                        .document(experiment.getExpID())
+                                        .collection("Trials")
+                                        .document(trial.getTrialID()), trial);
+                            }
+                            recreate();
                         }
                     })
                             .setNegativeButton("Add failure", new DialogInterface.OnClickListener() {
@@ -131,13 +135,16 @@ public class UploadTrial extends AppCompatActivity {
                                 Trial trial = new Trial(experiment.getRegionOn(),
                                         experiment.getTrialType(),
                                         false,
-                                        experiment.getOwnerUserID());
-                                database.addTrialToDB(db
-                                        .collection("Experiments")
-                                        .document(experiment.getExpID())
-                                        .collection("Trials")
-                                        .document(UUID.randomUUID().toString()), trial);
-
+                                        experiment.getOwnerUserID(),
+                                        UUID.randomUUID().toString());
+                                for (int i = 0; i<Integer.parseInt(numBinomial.getText().toString()); i++){
+                                    database.addTrialToDB(db
+                                            .collection("Experiments")
+                                            .document(experiment.getExpID())
+                                            .collection("Trials")
+                                            .document(trial.getTrialID()), trial);
+                                }
+                                recreate();
                                 Log.d("Test", "test");
                             }})
                             .setPositiveButton("Cancel", null).create().show();
@@ -159,18 +166,19 @@ public class UploadTrial extends AppCompatActivity {
                                 public void onClick(DialogInterface dialog, int which) {
                                     Trial trial = new Trial(experiment.getRegionOn(),
                                             experiment.getTrialType(),
-                                            Integer.parseInt(numCount.getText().toString()),
-                                            experiment.getOwnerUserID());
+                                            numCount.getText().toString(),
+                                            experiment.getOwnerUserID(),
+                                            UUID.randomUUID().toString());
                                     database.addTrialToDB(db
                                             .collection("Experiments")
                                             .document(experiment.getExpID())
                                             .collection("Trials")
-                                            .document(UUID.randomUUID().toString()), trial);
+                                            .document(trial.getTrialID()), trial);
                                     // include 0 as well
 
                                     // save the data
                                     Log.d("Test", "test");
-
+                                    recreate();
                                 }
                             }).create().show();
                 }
@@ -195,14 +203,16 @@ public class UploadTrial extends AppCompatActivity {
                                         // save the data
                                         Trial trial = new Trial(experiment.getRegionOn(),
                                                 experiment.getTrialType(),
-                                                Integer.parseInt(numNonNegCount.getText().toString()),
-                                                experiment.getOwnerUserID());
+                                                numNonNegCount.getText().toString(),
+                                                experiment.getOwnerUserID(),
+                                                UUID.randomUUID().toString());
                                         database.addTrialToDB(db
                                                 .collection("Experiments")
                                                 .document(experiment.getExpID())
                                                 .collection("Trials")
-                                                .document(UUID.randomUUID().toString()), trial);
+                                                .document(trial.getTrialID()), trial);
                                     }
+                                    recreate();
                                 }
                             }).create().show();
                 }
@@ -226,14 +236,16 @@ public class UploadTrial extends AppCompatActivity {
                                     // check input for
                                     Trial trial = new Trial(experiment.getRegionOn(),
                                             experiment.getTrialType(),
-                                            Integer.parseInt(measurementInput.getText().toString()),
-                                            experiment.getOwnerUserID());
+                                            measurementInput.getText().toString(),
+                                            experiment.getOwnerUserID(),
+                                            UUID.randomUUID().toString());
                                     database.addTrialToDB(db
                                             .collection("Experiments")
                                             .document(experiment.getExpID())
                                             .collection("Trials")
-                                            .document(UUID.randomUUID().toString()), trial);
+                                            .document(trial.getTrialID()), trial);
                                     Log.d("Test", "test");
+                                    recreate();
                                 }
                             }).create().show();
                 }
@@ -248,6 +260,11 @@ public class UploadTrial extends AppCompatActivity {
 
         trialArrayAdapter = new TrialList( trialDataList, getBaseContext());
         trialsList.setAdapter(trialArrayAdapter);
+        database.fillTrialList(db
+                        .collection("Experiments")
+                        .document(experiment.getExpID())
+                        .collection("Trials")
+                ,trialDataList,trialArrayAdapter);
 
         trialsList.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
@@ -259,6 +276,13 @@ public class UploadTrial extends AppCompatActivity {
                             @Override
                             public void onClick(DialogInterface dialog, int which) {
                                 Log.d("Test","test");
+                                Trial trial = trialDataList.get(position);
+                                database.deleteTrialFromDB(db
+                                        .collection("Experiments")
+                                        .document(experiment.getExpID())
+                                        .collection("Trials")
+                                        .document(trial.getTrialID()));
+                                recreate();
                             }
                         }).create().show();
             }

@@ -15,12 +15,15 @@ public class Trial {
     private String expType;
     private Object value;
     private String uid;
+    private String trialID;
 
-    public Trial(boolean geoLocationSettingOn, String expType, Object value, String uid) {
+    public Trial(boolean geoLocationSettingOn, String expType, Object value, String uid, String trialID) {
         this.geoLocationSettingOn = geoLocationSettingOn;
         this.expType = expType;
         this.value = value;
         this.uid = uid;
+        this.trialID = trialID;
+
     }
 
     public boolean isGeoLocationSettingOn() {
@@ -53,5 +56,13 @@ public class Trial {
 
     public void setUid(String uid) {
         this.uid = uid;
+    }
+
+    public String getTrialID() {
+        return trialID;
+    }
+
+    public void setTrialID(String trialID) {
+        this.trialID = trialID;
     }
 }

@@ -119,24 +119,44 @@ public class Database {
      * @param experiment
      * @param parentCollection
      */
-    public void deleteTrialFromDB(Experiment experiment, String parentCollection){
-        db = FirebaseFirestore.getInstance();
-        final CollectionReference allExpCollection = db.collection(parentCollection);
-        allExpCollection
-                .document(experiment.getExpID())
-                .collection("Trials")
-                .document("Trial#1")
-                .delete();
+    public void deleteTrialFromDB(DocumentReference DocRef){
+        DocRef.delete();
 
     }
 
     public void addTrialToDB(DocumentReference genericDocument, Trial trial){
         HashMap<String, Object> data = new HashMap<>();
-        data.put("Region On", giveString(trial.isGeoLocationSettingOn()));
+        data.put("Region On", trial.isGeoLocationSettingOn());
         data.put("Trial Type", trial.getExpType());
         data.put("Trial Value", trial.getValue());
         data.put("UUID", trial.getUid());
+        data.put("TrialID", trial.getTrialID());
         genericDocument.set(data);
+    }
+
+    public void fillTrialList(CollectionReference coll, ArrayList<Trial> trialDataList, ArrayAdapter<Trial> trialArrayAdapter){
+        coll.get()
+                .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
+                    @Override
+                    public void onComplete(@NonNull Task<QuerySnapshot> task) {
+                        if (task.isSuccessful()){
+                            for (QueryDocumentSnapshot document : task.getResult()){
+                                trialDataList.add(new Trial(
+                                        (Boolean) document.get("Region On"),
+                                        document.get("Trial Type").toString(),
+                                        document.get("Trial Value"),
+                                        document.get("UUID").toString(),
+                                        document.get("TrialID").toString())
+                                );
+                            }
+                            Log.d("Trials list", ""+trialDataList.size());
+                            trialArrayAdapter.notifyDataSetChanged();
+                        }
+                        else {
+                            Log.d("Failure", "fail");
+                        }
+                    }
+                });
     }
 
 
@@ -170,6 +190,8 @@ public class Database {
                     }
                 });
     }
+
+
 
     public void fillUserName(FillUserCallBack fillUserCallBack) {
         db = FirebaseFirestore.getInstance();

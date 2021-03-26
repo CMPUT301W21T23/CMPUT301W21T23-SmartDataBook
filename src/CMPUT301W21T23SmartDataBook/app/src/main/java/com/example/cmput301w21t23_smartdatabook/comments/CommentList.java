@@ -20,7 +20,7 @@ import java.util.ArrayList;
  * Class: commentList
  * @author Bosco Chan
  */
-public class CommentList extends ArrayAdapter {
+public class CommentList extends ArrayAdapter<Comment> {
 
     private final ArrayList<Comment> comments;
     private final Context context;

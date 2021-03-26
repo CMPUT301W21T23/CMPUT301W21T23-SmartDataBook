@@ -51,7 +51,17 @@ public class TrialList extends ArrayAdapter<Trial> {
             convertView = LayoutInflater.from(context).inflate(R.layout.trial_card, parent,false);
         }
         TextView trialValue = convertView.findViewById(R.id.trial_value);
-//        trialValue.setText(trial.getTrialValue());
+        if (trial.getExpType().equals("Binomial")){
+            Boolean val = (Boolean) trial.getValue();
+            trialValue.setText(val.toString());
+        }
+//        else if (trial.getExpType().equals("Count") || trial.getExpType().equals("Non-Negative Count")){
+//
+//            trialValue.setText((String) trial.getValue());
+//        }
+        else {
+            trialValue.setText((String) trial.getValue());
+        }
         return convertView;
     }
 }
