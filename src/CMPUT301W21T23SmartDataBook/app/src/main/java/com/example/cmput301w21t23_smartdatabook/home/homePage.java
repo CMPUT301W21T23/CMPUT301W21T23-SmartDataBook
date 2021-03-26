@@ -49,7 +49,6 @@ public class homePage extends Fragment implements FillDataCallBack {
     private static ArrayAdapter<Experiment> experimentAdapter;
     private MainActivity mainActivity;
 
-    private String currentID;
     private User user;
 
 

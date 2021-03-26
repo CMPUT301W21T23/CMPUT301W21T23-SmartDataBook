@@ -30,7 +30,6 @@ public class SettingsPage extends Fragment {
 	public EditText emailTextField;
 
 	public Button saveButtonView;
-	private String currentID;
 
 	private User user;
 
@@ -52,7 +51,6 @@ public class SettingsPage extends Fragment {
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		if (getArguments() != null) {
-//			user = (User) getArguments().getSerializable("user");
 			user = User.getUser();
 		}
 	}
@@ -60,6 +58,7 @@ public class SettingsPage extends Fragment {
 
 	@Override
 	public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
+
 		// Inflate the layout for this fragment
 		View view = inflater.inflate(R.layout.settings, container, false);
 		usernameTextField = (EditText) view.findViewById(R.id.usernameTextField);

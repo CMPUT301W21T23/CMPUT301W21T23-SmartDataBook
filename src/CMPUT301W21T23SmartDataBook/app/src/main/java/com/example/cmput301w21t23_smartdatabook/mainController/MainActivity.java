@@ -205,7 +205,7 @@ public class MainActivity extends AppCompatActivity implements SignInCallBack {
     public void updateHomeScreen(String userID) {
         currentID = userID;
         User user = User.getUser();
-        user.setUserName("User - " + currentID.substring(0,4));
+        user.setUserName("User - " + userID.substring(0,4));
         user.setUserContact("");
         user.setUserUniqueID(currentID);
 //        user = new User("User - "+currentID.substring(0,4), "", currentID);
