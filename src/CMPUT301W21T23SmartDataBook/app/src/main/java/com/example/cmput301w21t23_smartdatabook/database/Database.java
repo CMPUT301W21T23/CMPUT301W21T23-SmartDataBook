@@ -12,6 +12,10 @@ import android.widget.Toast;
 import androidx.annotation.NonNull;
 
 import com.example.cmput301w21t23_smartdatabook.Experiment;
+import com.example.cmput301w21t23_smartdatabook.trials.BinomialTrial;
+import com.example.cmput301w21t23_smartdatabook.trials.CountTrial;
+import com.example.cmput301w21t23_smartdatabook.trials.MeasurementTrial;
+import com.example.cmput301w21t23_smartdatabook.trials.Trial;
 import com.example.cmput301w21t23_smartdatabook.user.User;
 import com.example.cmput301w21t23_smartdatabook.comments.Comment;
 import com.google.android.gms.tasks.OnCompleteListener;
@@ -93,19 +97,7 @@ public class Database {
                     if (document.exists()) {
 
                         if(!currentID.equals(experiment.getOwnerUserID())){
-                            ref.delete()
-                                    .addOnSuccessListener(new OnSuccessListener<Void>() {
-                                        @Override
-                                        public void onSuccess(Void aVoid) {
-                                            Log.d("test", "DocumentSnapshot successfully deleted!");
-                                        }
-                                    })
-                                    .addOnFailureListener(new OnFailureListener() {
-                                        @Override
-                                        public void onFailure(@NonNull Exception e) {
-                                            Log.w("Test", "Error deleting document", e);
-                                        }
-                                    });
+                            ref.delete();
                         }
                         else{
                             Toast.makeText(context,"Cannot unfollow owned Experiment",Toast.LENGTH_SHORT).show();
@@ -131,38 +123,34 @@ public class Database {
                 .document(experiment.getExpID())
                 .collection("Trials")
                 .document("Trial#1")
-                .delete()
-                .addOnSuccessListener(new OnSuccessListener<Void>() {
-                    @Override
-                    public void onSuccess(Void aVoid) {
-                        Log.d("Success", "Trial has been deleted");
-                    }
-                })
-                .addOnFailureListener(new OnFailureListener() {
-                    @Override
-                    public void onFailure(@NonNull Exception e) {
-                        Log.d("Failure", "Data storing failed");
-                    }
-                });
+                .delete();
+
+    }
+
+    public void addCountTrialToDB(DocumentReference DocRef, CountTrial trial){
+        HashMap<String, String> data = new HashMap<>();
+        data.put("Region On", giveString(trial.isGeoLocationSettingOn()));
+        data.put("Trial Type", trial.getExpType());
+        data.put("Value", trial.getNum());
+        DocRef.set(data);
+    }
+
+    public void addMeasurmentTrialToDB(DocumentReference DocRef, MeasurementTrial trial){
+        HashMap<String, String> data = new HashMap<>();
+        data.put("Region On", giveString(trial.isGeoLocationSettingOn()));
+        data.put("Trial Type", trial.getExpType());
+        data.put("Value", trial.getNum());
+        DocRef.set(data);
     }
 
 
-    public void addTrialToDB(DocumentReference genericDocument, HashMap data){
-
-        genericDocument
-                .set(data)
-                .addOnSuccessListener(new OnSuccessListener<Void>() {
-                    @Override
-                    public void onSuccess(Void aVoid) {
-                        Log.d("Success", "Trial has been added successfully");
-                    }
-                })
-                .addOnFailureListener(new OnFailureListener() {
-                    @Override
-                    public void onFailure(@NonNull Exception e) {
-                        Log.d("Failure", "Data storing failed");
-                    }
-                });
+    public void addBinomialTrialToDB(DocumentReference genericDocument, BinomialTrial trial){
+        HashMap<String, String> data = new HashMap<>();
+        data.put("Region On", giveString(trial.isGeoLocationSettingOn()));
+        data.put("Trial Type", trial.getExpType());
+        data.put("Trial Value", giveString(trial.isTrialValue()));
+        data.put("Number", trial.getNum());
+        genericDocument.set(data);
     }
 
 
@@ -309,37 +297,13 @@ public class Database {
 
         collection
                 .document(newExperiment.getExpID())
-                .set(data)
-                .addOnSuccessListener(new OnSuccessListener<Void>() {
-                    @Override
-                    public void onSuccess(Void aVoid) {
-                        Log.d("Success", "Experiment has been added successfully");
-                    }
-                })
-                .addOnFailureListener(new OnFailureListener() {
-                    @Override
-                    public void onFailure(@NonNull Exception e) {
-                        Log.d("Failure", "Data storing failed");
-                    }
-                });
+                .set(data);
 
         db.collection("Users")
                 .document(currentID)
                 .collection("Favorites")
                 .document(newExperiment.getExpID())
-                .set(data)
-                .addOnSuccessListener(new OnSuccessListener<Void>() {
-                    @Override
-                    public void onSuccess(Void aVoid) {
-                        Log.d("Success", "Experiment has been added successfully");
-                    }
-                })
-                .addOnFailureListener(new OnFailureListener() {
-                    @Override
-                    public void onFailure(@NonNull Exception e) {
-                        Log.d("Failure", "Data storing failed");
-                    }
-                });
+                .set(data);
 
     }//addExperimentToDB
 

@@ -24,8 +24,10 @@ import com.example.cmput301w21t23_smartdatabook.R;
 import com.example.cmput301w21t23_smartdatabook.user.User;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.firestore.FirebaseFirestore;
 
 import java.util.ArrayList;
+import java.util.UUID;
 
 /**
  * Class: UploadTrial activity
@@ -41,6 +43,8 @@ public class UploadTrial extends AppCompatActivity {
     FirebaseUser currentUser = mAuth.getCurrentUser();
     String expType;
     User user = User.getUser();
+    Database database = Database.getDataBase();
+    FirebaseFirestore db = FirebaseFirestore.getInstance();
 
     /**
      * This function create the uploadTrial view
@@ -50,8 +54,6 @@ public class UploadTrial extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.upload_trial);
-
-        Database db = new Database();
 
         setSupportActionBar(findViewById(R.id.app_toolbar));
         ActionBar toolbar = getSupportActionBar();
@@ -90,14 +92,10 @@ public class UploadTrial extends AppCompatActivity {
             public void onClick(View v) {
 
                 expType=experiment.getTrialType();
-//                Toast toast= Toast.makeText(getApplicationContext(), "text is", Toast.LENGTH_LONG);
-//                toast.show();
                 // 1. 4 different cases for dialog
                 // 2. 4 XML diagram associate with the trial type
                 // Go from upload trial to each of trial types
                 // 3. 3 fragments, shows binomial fragment or input fragment, get trial
-//                if statement to deal with experiment.gettype
-//                Log.d("Test", "Add Trial Button");
 
                 // 1st case: if the experiment's trial type is binomial, incomplete
                 // I learned about string matching on java from tutorialspoint
@@ -106,25 +104,42 @@ public class UploadTrial extends AppCompatActivity {
                 if (expType.matches("Binomial")){
                     AlertDialog.Builder builder= new AlertDialog.Builder((UploadTrial.this));
                     builder.setTitle("Add Binomial Trials?");
-                    final EditText numBinomial= new EditText(UploadTrial.this);
+                    final EditText numBinomial = new EditText(UploadTrial.this);
                     // set input to be integer and positives only
                     numBinomial.setInputType(InputType.TYPE_CLASS_NUMBER);
                     numBinomial.setHint("Enter positive number of passes/failures");
                     builder.setView(numBinomial);
-
                     builder
                             .setNeutralButton("Add passes", new DialogInterface.OnClickListener() {
                         @Override
                         public void onClick(DialogInterface dialog, int which) {
-                            Log.d("Test", "test");
+//                            Log.d("Test", "test");
+                            BinomialTrial trial = new BinomialTrial(experiment.getRegionOn(),
+                                    experiment.getTrialType(),
+                                    true,
+                                    numBinomial.getText().toString());
+                            database.addBinomialTrialToDB(db
+                                    .collection("Experiments")
+                                    .document(experiment.getExpID())
+                                    .collection("Trials")
+                                    .document(UUID.randomUUID().toString()), trial);
                         }
                     })
                             .setNegativeButton("Add failure", new DialogInterface.OnClickListener() {
                             @Override
                             public void onClick(DialogInterface dialog, int which) {
+                                BinomialTrial trial = new BinomialTrial(experiment.getRegionOn(),
+                                        experiment.getTrialType(),
+                                        false,
+                                        numBinomial.getText().toString());
+                                database.addBinomialTrialToDB(db
+                                        .collection("Experiments")
+                                        .document(experiment.getExpID())
+                                        .collection("Trials")
+                                        .document(UUID.randomUUID().toString()), trial);
+
                                 Log.d("Test", "test");
-                            }
-                            })
+                            }})
                             .setPositiveButton("Cancel", null).create().show();
                 }
                 // 2nd case: if the experiment's trial type is count, incomplete
@@ -142,6 +157,13 @@ public class UploadTrial extends AppCompatActivity {
                             .setPositiveButton("Add Trials", new DialogInterface.OnClickListener() {
                                 @Override
                                 public void onClick(DialogInterface dialog, int which) {
+                                    CountTrial trial = new CountTrial(experiment.getRegionOn(),
+                                            experiment.getTrialType(),
+                                            numCount.getText().toString());
+                                    database.addCountTrialToDB(db.collection("Experiments")
+                                            .document(experiment.getExpID())
+                                            .collection("Trials")
+                                            .document(UUID.randomUUID().toString()),trial);
                                     // include 0 as well
 
                                     // save the data
@@ -169,6 +191,13 @@ public class UploadTrial extends AppCompatActivity {
                                     // include 0 as well
                                     if (Integer.parseInt(numNonNegCount.getText().toString())>=0){
                                         // save the data
+                                        CountTrial trial = new CountTrial(experiment.getRegionOn(),
+                                                experiment.getTrialType(),
+                                                numNonNegCount.getText().toString());
+                                        database.addCountTrialToDB(db.collection("Experiments")
+                                                .document(experiment.getExpID())
+                                                .collection("Trials")
+                                                .document(UUID.randomUUID().toString()),trial);
                                         Log.d("Test", "test");
                                     }
                                 }
@@ -179,7 +208,7 @@ public class UploadTrial extends AppCompatActivity {
                     AlertDialog.Builder builder= new AlertDialog.Builder((UploadTrial.this));
                     builder.setTitle("Add Measurement Trials?");
                     builder.setMessage("Enter measurement below:");
-                    final EditText measurementInput= new EditText(UploadTrial.this);
+                    final EditText measurementInput = new EditText(UploadTrial.this);
                     measurementInput.setHint("In Integers or Floats");
                     // set input to be exclusively integer and decimal
                     measurementInput.setInputType(InputType.TYPE_CLASS_NUMBER  | InputType.TYPE_NUMBER_FLAG_DECIMAL| InputType.TYPE_NUMBER_FLAG_SIGNED);
@@ -192,17 +221,17 @@ public class UploadTrial extends AppCompatActivity {
                                     // Q1: check editText value
                                     // Q2: how to save information
                                     // check input for
-
-                                    // include 0 as well
-
-                                    // save the data
+                                    MeasurementTrial trial = new MeasurementTrial(experiment.getRegionOn(),
+                                            experiment.getTrialType(),
+                                            measurementInput.getText().toString());
+                                    database.addMeasurmentTrialToDB(db.collection("Experiments")
+                                            .document(experiment.getExpID())
+                                            .collection("Trials")
+                                            .document(UUID.randomUUID().toString()),trial);
                                     Log.d("Test", "test");
-
                                 }
                             }).create().show();
                 }
-
-
             }
         });
         // gg
@@ -210,7 +239,7 @@ public class UploadTrial extends AppCompatActivity {
         trialsList = findViewById(R.id.uploaded_trials);
         trialDataList = new ArrayList<>();
 
-        trialDataList.add(new Trial("123","1234"));
+//        trialDataList.add(new Trial("123","1234"));
 
         trialArrayAdapter = new TrialList( trialDataList, getBaseContext());
         trialsList.setAdapter(trialArrayAdapter);

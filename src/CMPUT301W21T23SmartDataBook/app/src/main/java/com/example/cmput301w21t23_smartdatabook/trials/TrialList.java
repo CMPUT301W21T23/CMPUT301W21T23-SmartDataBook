@@ -51,7 +51,7 @@ public class TrialList extends ArrayAdapter<Trial> {
             convertView = LayoutInflater.from(context).inflate(R.layout.trial_card, parent,false);
         }
         TextView trialValue = convertView.findViewById(R.id.trial_value);
-        trialValue.setText(trial.getTrialValue());
+//        trialValue.setText(trial.getTrialValue());
         return convertView;
     }
 }
