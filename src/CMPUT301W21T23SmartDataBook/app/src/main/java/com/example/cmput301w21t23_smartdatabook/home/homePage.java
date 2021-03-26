@@ -50,9 +50,7 @@ public class homePage extends Fragment implements FillDataCallBack {
     private MainActivity mainActivity;
 
     private User user;
-
-
-    Database database;
+    private Database database;
 
     //Implement interrupted exception throw on database object instantiation
     {
@@ -119,6 +117,8 @@ public class homePage extends Fragment implements FillDataCallBack {
         experimentAdapter = new CardList(getContext(), experimentDataList,1);
 
         experimentList.setAdapter(experimentAdapter);
+
+        Toast.makeText(getContext(), "" + user.getUserName(), Toast.LENGTH_LONG).show();
 
         //Source: Erwin Kurniawan A; https://stackoverflow.com/users/7693494/erwin-kurniawan-a
         //Code: https://stackoverflow.com/questions/61930061/how-to-return-a-value-from-oncompletelistener-while-creating-user-with-email-and

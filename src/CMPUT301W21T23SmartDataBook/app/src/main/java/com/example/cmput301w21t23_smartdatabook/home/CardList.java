@@ -9,6 +9,7 @@ import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.CompoundButton;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -119,7 +120,6 @@ public class CardList extends ArrayAdapter<Experiment> {
 
             // https://developer.android.com/reference/android/widget/CheckBox
             CheckBox follow = v.findViewById(R.id.fav);
-
             db.collection("Users")
                     .document(user.getUserUniqueID())
                     .collection("Favorites")
@@ -143,7 +143,6 @@ public class CardList extends ArrayAdapter<Experiment> {
                                   .document(user.getUserUniqueID())
                                   .collection("Favorites");
 
-
                           database.addExperimentToDB(experiment, favExpCollection, user.getUserUniqueID());
 
                           System.out.println("Checked");
@@ -155,7 +154,6 @@ public class CardList extends ArrayAdapter<Experiment> {
                                       .collection("Favorites")
                                       .document(experiment.getExpID());
 
-
                               database.followStatus( ref, experiment, getContext(), follow, user.getUserUniqueID() );
 
                               System.out.println("Un-Checked");
@@ -163,6 +161,14 @@ public class CardList extends ArrayAdapter<Experiment> {
                       }
                   }
             );
+
+            ownerName.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    
+                }
+            });
+
 
             views.put(position, v);
 
