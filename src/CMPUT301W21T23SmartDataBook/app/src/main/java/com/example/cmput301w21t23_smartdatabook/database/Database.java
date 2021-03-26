@@ -383,23 +383,10 @@ public class Database {
                                 user.setUserName(username);
                                 user.setUserContact(email);
 
-                                docRef
-                                        .update("UserName", username)
-                                        .addOnSuccessListener(new OnSuccessListener<Void>() {
-                                            @Override
-                                            public void onSuccess(Void aVoid) {
-                                                Toast.makeText(context, "Successfully Updated!", Toast.LENGTH_SHORT).show();
-                                            }
-                                        });
+                                docRef.update("UserName", username);
 
-                                docRef
-                                        .update("Email", email)
-                                        .addOnSuccessListener(new OnSuccessListener<Void>() {
-                                            @Override
-                                            public void onSuccess(Void aVoid) {
-                                                Toast.makeText(context, "Successfully Updated!" , Toast.LENGTH_SHORT).show();
-                                            }
-                                        });
+                                docRef.update("Email", email);
+
                             }
                         });
 
@@ -461,19 +448,7 @@ public class Database {
 
                                             allUsersCollection
                                                     .document(currentUser.getUid())
-                                                    .set(data)
-                                                    .addOnSuccessListener(new OnSuccessListener<Void>() {
-                                                        @Override
-                                                        public void onSuccess(Void aVoid) {
-                                                            Log.d("UsernameSaveSuccessful", "Username saved successfully: " + mAuth.getUid());
-                                                        }
-                                                    })
-                                                    .addOnFailureListener(new OnFailureListener() {
-                                                        @Override
-                                                        public void onFailure(@NonNull Exception e) {
-                                                            Log.d("UsernameSaveFailed", "Username saving failed.");
-                                                        }
-                                                    });
+                                                    .set(data);
                                         }
                                     }
                                 }
