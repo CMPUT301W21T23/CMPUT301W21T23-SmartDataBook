@@ -9,6 +9,6 @@
             app:actionViewClass="androidx.appcompat.widget.SearchView"
             app:showAsAction="always|collapseActionView"
             android:enabled="true"
-            android:actionLayout="@layout/activity_main" />
+            android:actionLayout="@layout/activity_main"/>
 
 </menu>

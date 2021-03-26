@@ -27,6 +27,7 @@
             android:backgroundTint="@color/theme_default"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
-            app:srcCompat="@android:drawable/ic_input_add" />
+            app:srcCompat="@android:drawable/ic_input_add"
+            app:tint="@color/white"/>
 
 </androidx.constraintlayout.widget.ConstraintLayout>
