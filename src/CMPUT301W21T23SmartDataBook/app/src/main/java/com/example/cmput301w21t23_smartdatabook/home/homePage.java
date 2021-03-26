@@ -143,7 +143,7 @@ public class homePage extends Fragment implements FillDataCallBack {
                             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                                 Experiment exp = experimentDataList.get(position); // get the experiment from list
                                 Intent intent = new Intent(getActivity(), ExperimentDetails.class);
-                                intent.putExtra("currentID", user.getUserUniqueID()); // pass position to ExperimentDetails class
+//                                intent.putExtra("currentID", user.getUserUniqueID()); // pass position to ExperimentDetails class
                                 intent.putExtra("experiment", exp); // pass experiment object
                                 startActivity(intent);
                             }
