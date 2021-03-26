@@ -2,6 +2,8 @@ package com.example.cmput301w21t23_smartdatabook;
 
 import android.location.Location;
 
+import com.example.cmput301w21t23_smartdatabook.user.User;
+
 import java.io.Serializable;
 
 /**
@@ -10,9 +12,14 @@ import java.io.Serializable;
  * @author Afaq Nabi, Bosco Chan
  */
 public class Experiment implements Serializable {
+    private User user;
     private String expID;
     private String expName;
     private String ownerUserID;
+
+
+
+    private String ownerUserName;
     private String trialType;
     private String description;
     private boolean regionOn;
@@ -42,9 +49,15 @@ public class Experiment implements Serializable {
      * @param isPublic
      * @param date
      */
-    public Experiment(String expName, String ownerUserID, String trialType, String description, boolean regionOn, int minTrials, int maxTrials, boolean isPublic, String date, String expID, boolean isEnd) {
+    public Experiment(String expName, String ownerUserID,
+                      String trialType, String description, boolean regionOn,
+                      int minTrials, int maxTrials, boolean isPublic, String date,
+                      String expID, boolean isEnd) {
+
+        user = User.getUser();
         this.expName = expName;
         this.ownerUserID = ownerUserID;
+        this.ownerUserName = user.getUserName();
         this.trialType = trialType;
         this.description = description;
         this.regionOn = regionOn;
@@ -83,6 +96,14 @@ public class Experiment implements Serializable {
 //        this.requireLocation = requireLocation;
 //        this.location = location;
 //    }
+
+    public String getOwnerUserName() {
+        return ownerUserName;
+    }
+
+    public void setOwnerUserName(String ownerUserName) {
+        this.ownerUserName = ownerUserName;
+    }
 
     public void setEnd(boolean end) {
         isEnd = end;
