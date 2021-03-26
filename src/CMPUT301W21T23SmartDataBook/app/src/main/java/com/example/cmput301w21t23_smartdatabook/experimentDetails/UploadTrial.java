@@ -90,8 +90,8 @@ public class UploadTrial extends AppCompatActivity {
             public void onClick(View v) {
 
                 expType=experiment.getTrialType();
-                Toast toast= Toast.makeText(getApplicationContext(), "text is", Toast.LENGTH_LONG);
-                toast.show();
+//                Toast toast= Toast.makeText(getApplicationContext(), "text is", Toast.LENGTH_LONG);
+//                toast.show();
                 // 1. 4 different cases for dialog
                 // 2. 4 XML diagram associate with the trial type
                 // Go from upload trial to each of trial types
@@ -99,56 +99,103 @@ public class UploadTrial extends AppCompatActivity {
 //                if statement to deal with experiment.gettype
 //                Log.d("Test", "Add Trial Button");
 
-                // 1st case if binomial is on
+                // 1st case: if the experiment's trial type is binomial, incomplete
                 // I learned about string matching on java from tutorialspoint
                 // URL: https://www.tutorialspoint.com/java/java_string_matches.htm
+                // Q1: how to take input?
                 if (expType.matches("Binomial")){
                     AlertDialog.Builder builder= new AlertDialog.Builder((UploadTrial.this));
                     builder.setTitle("Add Binomial Trials?");
-                    builder.setNegativeButton("Cancel", null)
-                            .setPositiveButton("Add Trials", new DialogInterface.OnClickListener() {
-                                @Override
-                                public void onClick(DialogInterface dialog, int which) {
-                                    Log.d("Test", "test");
-                                }
-                            }).create().show();
+                    final EditText numBinomial= new EditText(UploadTrial.this);
+                    // set input to be integer and positives only
+                    numBinomial.setInputType(InputType.TYPE_CLASS_NUMBER);
+                    numBinomial.setHint("Enter positive number of passes/failures");
+                    builder.setView(numBinomial);
+
+                    builder
+                            .setNeutralButton("Add passes", new DialogInterface.OnClickListener() {
+                        @Override
+                        public void onClick(DialogInterface dialog, int which) {
+                            Log.d("Test", "test");
+                        }
+                    })
+                            .setNegativeButton("Add failure", new DialogInterface.OnClickListener() {
+                            @Override
+                            public void onClick(DialogInterface dialog, int which) {
+                                Log.d("Test", "test");
+                            }
+                            })
+                            .setPositiveButton("Cancel", null).create().show();
                 }
+                // 2nd case: if the experiment's trial type is count, incomplete
+                // Q1: how to take input?
                 if (expType.matches("Count")){
                     AlertDialog.Builder builder= new AlertDialog.Builder((UploadTrial.this));
                     builder.setTitle("Add Count Trials?");
+                    final EditText numCount= new EditText(UploadTrial.this);
+                    // set input to be any integer
+                    numCount.setInputType(InputType.TYPE_CLASS_NUMBER| InputType.TYPE_NUMBER_FLAG_SIGNED);
+                    numCount.setHint("Enter positive/negative number of counts");
+                    builder.setView(numCount);
+
                     builder.setNegativeButton("Cancel", null)
                             .setPositiveButton("Add Trials", new DialogInterface.OnClickListener() {
                                 @Override
                                 public void onClick(DialogInterface dialog, int which) {
+                                    // include 0 as well
+
+                                    // save the data
                                     Log.d("Test", "test");
+
                                 }
                             }).create().show();
                 }
+                // 3rd case: if the experiment's trial type is non-negative count, incomplete
+                // Q1: how to take input?
                 if (expType.matches("Non-Negative Count")){
                     AlertDialog.Builder builder= new AlertDialog.Builder((UploadTrial.this));
                     builder.setTitle("Add Non-Negative Count Trials?");
+                    final EditText numNonNegCount= new EditText(UploadTrial.this);
+                    // set input to be integer and positives only
+                    numNonNegCount.setInputType(InputType.TYPE_CLASS_NUMBER);
+                    numNonNegCount.setHint("Enter a positive number");
+                    builder.setView(numNonNegCount);
+
+
                     builder.setNegativeButton("Cancel", null)
                             .setPositiveButton("Add trials", new DialogInterface.OnClickListener() {
                                 @Override
                                 public void onClick(DialogInterface dialog, int which) {
-                                    Log.d("Test", "test");
+                                    // include 0 as well
+                                    if (Integer.parseInt(numNonNegCount.getText().toString())>=0){
+                                        // save the data
+                                        Log.d("Test", "test");
+                                    }
                                 }
                             }).create().show();
                 }
+                // 4th case: if the experiment's trial type is measurement, partial complete,
                 if (expType.matches("Measurement")){
                     AlertDialog.Builder builder= new AlertDialog.Builder((UploadTrial.this));
                     builder.setTitle("Add Measurement Trials?");
                     builder.setMessage("Enter measurement below:");
                     final EditText measurementInput= new EditText(UploadTrial.this);
-                    measurementInput.setInputType(InputType.TYPE_NUMBER_FLAG_DECIMAL);
+                    measurementInput.setHint("In Integers or Floats");
+                    // set input to be exclusively integer and decimal
+                    measurementInput.setInputType(InputType.TYPE_CLASS_NUMBER  | InputType.TYPE_NUMBER_FLAG_DECIMAL| InputType.TYPE_NUMBER_FLAG_SIGNED);
                     builder.setView(measurementInput);
                     builder.setNegativeButton("Cancel", null)
                             .setPositiveButton("Add Trials", new DialogInterface.OnClickListener() {
                                 @Override
                                 public void onClick(DialogInterface dialog, int which) {
-                                    // once click add trials, add the trial's outcome, location,
+                                    // once click add trials, add the trial's outcome, location
+                                    // Q1: check editText value
+                                    // Q2: how to save information
+                                    // check input for
 
+                                    // include 0 as well
 
+                                    // save the data
                                     Log.d("Test", "test");
 
                                 }
