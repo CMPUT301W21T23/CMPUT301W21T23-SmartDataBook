@@ -1,5 +1,7 @@
 package com.example.cmput301w21t23_smartdatabook.home;
+import android.app.AlertDialog;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -105,6 +107,16 @@ public class CardList extends ArrayAdapter<Experiment> {
             experimentDescription.setText(experiment.getDescription());
             region.setText(null);
 
+            ownerName.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    new AlertDialog.Builder(getContext())
+                            .setView(R.layout.view_profile)
+                            .setNegativeButton("Close", null)
+                            .show();
+                }
+            });
+
             Button comment = v.findViewById(R.id.comment_btn);
             comment.setOnClickListener(new View.OnClickListener() {
                 @Override
@@ -118,7 +130,8 @@ public class CardList extends ArrayAdapter<Experiment> {
                 }
             });
 
-            // https://developer.android.com/reference/android/widget/CheckBox
+            //Source: developers; https://developer.android.com/
+            //Code: https://developer.android.com/reference/android/widget/CheckBox
             CheckBox follow = v.findViewById(R.id.fav);
             db.collection("Users")
                     .document(user.getUserUniqueID())
@@ -161,14 +174,6 @@ public class CardList extends ArrayAdapter<Experiment> {
                       }
                   }
             );
-
-            ownerName.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    
-                }
-            });
-
 
             views.put(position, v);
 
