@@ -1,4 +1,5 @@
 package com.example.cmput301w21t23_smartdatabook.home;
+import android.app.AlertDialog;
 import android.content.Context;
 import android.content.Intent;
 import android.view.LayoutInflater;
@@ -101,7 +102,8 @@ public class CardList extends ArrayAdapter<Experiment> {
 
             experimentName.setText(experiment.getExpName());
             date.setText(experiment.getDate());
-            ownerName.setText("User - " + experiment.getOwnerUserID().substring(0,4));
+//            ownerName.setText("User - " + experiment.getOwnerUserID().substring(0,4));
+            ownerName.setText(experiment.getOwnerUserName());
             experimentDescription.setText(experiment.getDescription());
             region.setText(null);
 
@@ -165,7 +167,10 @@ public class CardList extends ArrayAdapter<Experiment> {
             ownerName.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-
+                    new AlertDialog.Builder(getContext())
+                            .setView(R.layout.view_profile)
+                            .setNegativeButton("Close", null)
+                            .show();
                 }
             });
 

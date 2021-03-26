@@ -139,7 +139,7 @@ public class addExpFragment extends Fragment {
 
                     mAuth = FirebaseAuth.getInstance();
 
-                    returnedExperiment = new Experiment(expName, currentID,
+                    returnedExperiment = new Experiment(expName, currentID, "please refresh",
                             trialType, expDescription, checkLocationOn, minTrials.getValue(), maxTrials.getValue(),
                             checkPublicOn, currentDate.getDate(), UUID.randomUUID().toString(), false);
 
