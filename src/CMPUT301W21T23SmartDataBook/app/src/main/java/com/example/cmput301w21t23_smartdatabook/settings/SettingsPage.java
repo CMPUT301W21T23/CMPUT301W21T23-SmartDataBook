@@ -10,8 +10,9 @@ import android.widget.Toast;
 
 import androidx.fragment.app.Fragment;
 
-import com.example.cmput301w21t23_smartdatabook.Database;
+import com.example.cmput301w21t23_smartdatabook.database.Database;
 import com.example.cmput301w21t23_smartdatabook.R;
+import com.example.cmput301w21t23_smartdatabook.user.User;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.firestore.FirebaseFirestore;
 
@@ -29,56 +30,45 @@ public class SettingsPage extends Fragment {
 	public EditText emailTextField;
 
 	public Button saveButtonView;
-	private String currentID;
+
+	private User user;
 
 	public Database database = new Database();
 
 	public SettingsPage() {
 	}
 
-	public static SettingsPage newInstance(String userID) {
+	public static SettingsPage newInstance(String user) {
 		SettingsPage fragment = new SettingsPage();
 		Bundle args = new Bundle();
-		args.putString("UUID", userID);
+		args.putString("", user);
 		fragment.setArguments(args);
 		return fragment;
 	}
 
-//    public static SettingsPage newInstance(String p1, String p2){
-//        SettingsPage fragment = new SettingsPage();
-//        Bundle args = new Bundle();
-//        fragment.setArguments(args);
-//        return fragment;
-//    }
 
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		if (getArguments() != null) {
-			currentID = getArguments().getString("UUID");
+			user = User.getUser();
 		}
 	}
 
-//    @Override
-//    public void onCreate(Bundle savedInstanceState) {
-//        super.onCreate(savedInstanceState);
-//        if (getArguments() != null) {
-//            String mParam1 = getArguments().getString(AP1);
-//            String mParam2 = getArguments().getString(AP2);
-//        }
-//    }
 
 	@Override
 	public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
+
 		// Inflate the layout for this fragment
 		View view = inflater.inflate(R.layout.settings, container, false);
 		usernameTextField = (EditText) view.findViewById(R.id.usernameTextField);
 		emailTextField = (EditText) view.findViewById(R.id.emailTextField);
 		saveButtonView = (Button) view.findViewById(R.id.saveButtonView);
 
+		usernameTextField.setHint(user.getUserName());
 
-		Toast.makeText(getContext(), "" + currentID, Toast.LENGTH_LONG).show();
-		database.editUser(usernameTextField, emailTextField, saveButtonView, getContext(), currentID);
+		Toast.makeText(getContext(), "" + user.getUserUniqueID(), Toast.LENGTH_LONG).show();
+		database.editUser(usernameTextField, emailTextField, saveButtonView, getContext(), user.getUserUniqueID(), user);
 
 		return view;
 	}

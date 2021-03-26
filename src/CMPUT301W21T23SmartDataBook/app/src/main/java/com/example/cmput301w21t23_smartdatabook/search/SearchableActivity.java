@@ -1,4 +1,4 @@
-package com.example.cmput301w21t23_smartdatabook;
+package com.example.cmput301w21t23_smartdatabook.search;
 
 import android.app.SearchManager;
 import android.content.Intent;

@@ -7,14 +7,17 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
 
+import com.example.cmput301w21t23_smartdatabook.user.User;
 import com.example.cmput301w21t23_smartdatabook.comments.CommentActivity;
-import com.example.cmput301w21t23_smartdatabook.Database;
+import com.example.cmput301w21t23_smartdatabook.database.Database;
 import com.example.cmput301w21t23_smartdatabook.Experiment;
 import com.example.cmput301w21t23_smartdatabook.R;
+import com.example.cmput301w21t23_smartdatabook.trials.UploadTrial;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.firestore.FirebaseFirestore;
@@ -31,23 +34,20 @@ import com.google.firebase.firestore.FirebaseFirestore;
  * @see Experiment ,
  */
 public class ExperimentDetails extends AppCompatActivity {
+    User user = User.getUser();
+    Database database = Database.getDataBase();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.experiment_details);
 
-        Database database = new Database();
-        FirebaseAuth mAuth = FirebaseAuth.getInstance();
-        FirebaseUser currentUser = mAuth.getCurrentUser();
-
         setSupportActionBar(findViewById(R.id.app_toolbar));
         ActionBar toolbar = getSupportActionBar();
-
-        FirebaseFirestore db = FirebaseFirestore.getInstance();
-
         assert toolbar != null;
         toolbar.setDisplayHomeAsUpEnabled(true);
+
+        FirebaseFirestore db = FirebaseFirestore.getInstance();
 
         Intent intent = getIntent();
         Experiment experiment = (Experiment) intent.getSerializableExtra("experiment"); // get the experiment object
@@ -124,6 +124,8 @@ public class ExperimentDetails extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(getBaseContext(), CommentActivity.class);
+                intent.putExtra("Experiment", experiment);
+                intent.putExtra("user", user);
                 startActivity(intent);
             }
         });
@@ -132,30 +134,30 @@ public class ExperimentDetails extends AppCompatActivity {
         endExp.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                database.publicOrEnd(db.collection("Experiments"), "On", experiment,"isEnd");
-                database.publicOrEnd((db.collection("Users")
-                        .document(currentUser.getUid())
-                        .collection("Favorites")), "On", experiment,"IsEnd");
-                endExp.setVisibility(View.INVISIBLE);
-                Log.d("Tests", "value1: "+database.giveBoolean(database.giveString(experiment.getIsEnd())));
+                if (!experiment.getIsEnd()){
+                    experiment.setEnd(true);
+                    database.publicOrEnd(db.collection("Experiments"), "On", experiment,"isEnd");
+                    database.publicOrEnd((db.collection("Users")
+                            .document(user.getUserUniqueID())
+                            .collection("Favorites")), "On", experiment,"isEnd");
+                    Toast.makeText(getBaseContext(), "Experiment has been ended this action cannot be undone",Toast.LENGTH_SHORT).show();
+                    Log.d("Tests", "value1: "+ experiment.getIsEnd());
+                }
+                else{
+                    Toast.makeText(getBaseContext(), "Experiment is ended already!!",Toast.LENGTH_SHORT).show();
+
+                }
             }
         });
-
-
-
 
         CheckBox publish = findViewById(R.id.Publish);
         TextView publish_text = findViewById(R.id.Publish_text);
         publish.setChecked(experiment.isPublic());
-        if (currentUser.getUid().equals(experiment.getOwnerUserID()) ){
-//            endExp.setVisibility(View.VISIBLE);
+        if (user.getUserUniqueID().equals(experiment.getOwnerUserID()) ){
+            endExp.setVisibility(View.VISIBLE);
             publish.setVisibility(View.VISIBLE);
             publish_text.setVisibility(View.VISIBLE);
-            // doesn't work
-            if (database.giveBoolean(database.giveString(experiment.getIsEnd()))){
-                Log.d("Tests", "value2: "+database.giveBoolean(database.giveString(experiment.getIsEnd())));
-                endExp.setVisibility(View.INVISIBLE);
-            }
+
         }
 
         publish.setOnClickListener(new View.OnClickListener() {
@@ -172,8 +174,8 @@ public class ExperimentDetails extends AppCompatActivity {
 
                 database.publicOrEnd(db.collection("Experiments"), onOff, experiment, "PublicStatus");
                 database.publicOrEnd((db.collection("Users")
-                        .document(currentUser.getUid())
-                        .collection("Favorites")),onOff, experiment,"PublicStatus");
+                        .document(user.getUserUniqueID())
+                        .collection("Favorites")), onOff, experiment,"PublicStatus");
             }
         });
     }

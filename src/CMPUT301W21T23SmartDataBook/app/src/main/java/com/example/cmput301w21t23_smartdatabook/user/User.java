@@ -1,21 +1,41 @@
 
-package com.example.cmput301w21t23_smartdatabook;
+package com.example.cmput301w21t23_smartdatabook.user;
 
+import com.example.cmput301w21t23_smartdatabook.Experiment;
+
+import java.io.Serializable;
 import java.util.ArrayList;
 
 /**
- * Abstract class user
- * Constructs the user
+ * Singleton User class
+ * this class can be accessed anywhere in the code
+ * only need to set the user once per run
  * @see Experiment
  * @author Bosco Chan, Afaq Nabi, Alex Mak, Jaydem Cho, Krutik Soni, Natnail Ghebresilasie
  */
-public abstract class User{
-    String userName;
-    String userContact;
-    String userUniqueID;
+public class User implements Serializable {
+    private static User user;
+    public String userName = "";
+    public String userContact = "";
+    public String userUniqueID;
+
+    private User(){}
+
+    public static User getUser(){
+        if (user == null){
+            user = new User();
+        }
+        return user;
+    }
 
     ArrayList<Experiment> ownedExperimentList;
     ArrayList<Experiment> favoriteExperimentList;
+
+    public User(String userName, String userContact, String userUniqueID) {
+        this.userName = userName;
+        this.userContact = userContact;
+        this.userUniqueID = userUniqueID;
+    }
 
     /**
      * method that obtains the user's unique ID

@@ -1,11 +1,8 @@
 package com.example.cmput301w21t23_smartdatabook.home;
 
-import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.LayoutInflater;
-import android.view.Menu;
-import android.view.MenuInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
@@ -21,12 +18,12 @@ import androidx.fragment.app.Fragment;
 import com.example.cmput301w21t23_smartdatabook.Date;
 import com.example.cmput301w21t23_smartdatabook.Experiment;
 import com.example.cmput301w21t23_smartdatabook.R;
+import com.example.cmput301w21t23_smartdatabook.user.User;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.android.material.switchmaterial.SwitchMaterial;
 import com.google.android.material.textfield.TextInputLayout;
 import com.google.firebase.auth.FirebaseAuth;
 
-import java.util.Objects;
 import java.util.UUID;
 
 /**
@@ -53,6 +50,8 @@ public class addExpFragment extends Fragment {
 
     private Experiment returnedExperiment;
 
+    private User user = User.getUser();
+
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         // Inflate the layout for this fragment
@@ -77,7 +76,7 @@ public class addExpFragment extends Fragment {
         RadioButton measurement = view.findViewById(R.id.measurmentRadioButton);
 
         SwitchMaterial LocationToggle = view.findViewById(R.id.newExperimentLocationToggleSwitch);
-        SwitchMaterial PublicPrivateToggle = view.findViewById(R.id.newExperimentLocationPublicPrivateToggleSwitch);
+        SwitchMaterial PublicPrivateToggle = view.findViewById(R.id.newExperimentLocationPublishToggleSwitch);
 
         //Source: user; https://stackoverflow.com/users/493939/user
         //Code: https://stackoverflow.com/questions/10356733/getcheckedradiobuttonid-returning-useless-inthttps://stackoverflow.com/questions/10356733/getcheckedradiobuttonid-returning-useless-int
@@ -143,7 +142,6 @@ public class addExpFragment extends Fragment {
                     returnedExperiment = new Experiment(expName, currentID,
                             trialType, expDescription, checkLocationOn, minTrials.getValue(), maxTrials.getValue(),
                             checkPublicOn, currentDate.getDate(), UUID.randomUUID().toString(), false);
-
 
                     //Source: Shweta Chauhan; https://stackoverflow.com/users/6021469/shweta-chauhan
                     //Code: https://stackoverflow.com/questions/40085608/how-to-pass-data-from-one-fragment-to-previous-fragment

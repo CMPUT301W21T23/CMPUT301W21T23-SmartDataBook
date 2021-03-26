@@ -15,9 +15,11 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentTransaction;
 
-import com.example.cmput301w21t23_smartdatabook.FillDataCallBack;
-import com.example.cmput301w21t23_smartdatabook.Database;
+import com.example.cmput301w21t23_smartdatabook.database.FillDataCallBack;
+import com.example.cmput301w21t23_smartdatabook.database.Database;
 import com.example.cmput301w21t23_smartdatabook.Experiment;
+import com.example.cmput301w21t23_smartdatabook.mainController.MainActivity;
+import com.example.cmput301w21t23_smartdatabook.user.User;
 import com.example.cmput301w21t23_smartdatabook.experimentDetails.ExperimentDetails;
 import com.example.cmput301w21t23_smartdatabook.R;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
@@ -45,10 +47,10 @@ public class homePage extends Fragment implements FillDataCallBack {
     private ListView experimentList;
     private ArrayList<Experiment> experimentDataList;
     private static ArrayAdapter<Experiment> experimentAdapter;
+    private MainActivity mainActivity;
 
-    private String currentID;
-
-    Database database;
+    private User user;
+    private Database database;
 
     //Implement interrupted exception throw on database object instantiation
     {
@@ -73,16 +75,18 @@ public class homePage extends Fragment implements FillDataCallBack {
     public homePage() {
     }
 
-    public static homePage newInstance(String userID) {
+    public static homePage newInstance(String user) {
         homePage fragment = new homePage();
         Bundle args = new Bundle();
-        args.putString("UUID", userID);
+        args.putString("", user);
         fragment.setArguments(args);
         return fragment;
     }
 
+
     public void doUpdate(String query) {
         Log.d("From_" + this.getClass().getSimpleName(), query);
+        Log.d("From_" + this.getClass().getSimpleName(), mainActivity.test());
     }
 
     @Override
@@ -96,8 +100,10 @@ public class homePage extends Fragment implements FillDataCallBack {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         if (getArguments() != null) {
-            currentID = getArguments().getString("UUID");
+//            user = (User) getArguments().getSerializable("user");
+            user = User.getUser();
         }
+        mainActivity = (MainActivity) getActivity();
     }
 
     @Override
@@ -108,9 +114,11 @@ public class homePage extends Fragment implements FillDataCallBack {
         experimentList = view.findViewById(R.id.experiment_list);
         experimentDataList = new ArrayList<>();
 
-        experimentAdapter = new CardList(getContext(), experimentDataList,1, currentID);
+        experimentAdapter = new CardList(getContext(), experimentDataList,1);
 
         experimentList.setAdapter(experimentAdapter);
+
+        Toast.makeText(getContext(), "" + user.getUserName(), Toast.LENGTH_LONG).show();
 
         //Source: Erwin Kurniawan A; https://stackoverflow.com/users/7693494/erwin-kurniawan-a
         //Code: https://stackoverflow.com/questions/61930061/how-to-return-a-value-from-oncompletelistener-while-creating-user-with-email-and
@@ -129,14 +137,14 @@ public class homePage extends Fragment implements FillDataCallBack {
                     public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                         Experiment exp = experimentDataList.get(position); // get the experiment from list
                         Intent intent = new Intent(getActivity(), ExperimentDetails.class);
-                        intent.putExtra("position", position); // pass position to ExperimentDetails class
+                        intent.putExtra("currentID", user.getUserUniqueID()); // pass position to ExperimentDetails class
                         intent.putExtra("experiment", exp); // pass experiment object
                         startActivity(intent);
                     }
                 });
 
             }//getExpDataList
-        }, experimentAdapter, db.collection("Experiments"), currentID);//fillDataList
+        }, experimentAdapter, db.collection("Experiments"), user.getUserUniqueID());//fillDataList
 
         final FloatingActionButton addExperimentButton = view.findViewById(R.id.add_experiment_button);
         addExperimentButton.setOnClickListener(new View.OnClickListener() {
@@ -144,7 +152,7 @@ public class homePage extends Fragment implements FillDataCallBack {
             public void onClick(View view) {
 
                 Bundle args = new Bundle();
-                args.putString("UUID", currentID);
+                args.putString("UUID", user.getUserUniqueID());
 
                 //Source: Shweta Chauhan; https://stackoverflow.com/users/6021469/shweta-chauhan
                 //Code: https://stackoverflow.com/questions/40085608/how-to-pass-data-from-one-fragment-to-previous-fragment
@@ -186,7 +194,7 @@ public class homePage extends Fragment implements FillDataCallBack {
                 Toast.makeText(getActivity(), newExperiment.getExpName() + " " + newExperiment.getDescription(), Toast.LENGTH_SHORT).show();
                 experimentAdapter.add(newExperiment);
                 CollectionReference experimentsCollection = db.collection("Experiments");
-                database.addExperimentToDB(newExperiment, experimentsCollection, currentID );
+                database.addExperimentToDB(newExperiment, experimentsCollection, user.getUserUniqueID() );
                 experimentAdapter.notifyDataSetChanged();
             }
         }

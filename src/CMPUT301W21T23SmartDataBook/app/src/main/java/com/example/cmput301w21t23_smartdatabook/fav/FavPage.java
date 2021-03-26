@@ -13,19 +13,16 @@ import android.widget.Toast;
 
 import androidx.fragment.app.Fragment;
 
-import com.example.cmput301w21t23_smartdatabook.FillDataCallBack;
-import com.example.cmput301w21t23_smartdatabook.Database;
+import com.example.cmput301w21t23_smartdatabook.database.FillDataCallBack;
+import com.example.cmput301w21t23_smartdatabook.database.Database;
+import com.example.cmput301w21t23_smartdatabook.user.User;
 import com.example.cmput301w21t23_smartdatabook.experimentDetails.ExperimentDetails;
 import com.example.cmput301w21t23_smartdatabook.home.CardList;
 import com.example.cmput301w21t23_smartdatabook.Experiment;
 import com.example.cmput301w21t23_smartdatabook.R;
-import com.example.cmput301w21t23_smartdatabook.home.homePage;
-import com.google.firebase.auth.FirebaseAuth;
-import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.firestore.FirebaseFirestore;
 
 import java.util.ArrayList;
-import java.util.Objects;
 
 /**
  * class: FavPage
@@ -40,10 +37,11 @@ public class FavPage extends Fragment implements FillDataCallBack {
     private static ArrayAdapter<Experiment> favAdapter;
     private static ArrayList<Experiment> favDataList;
 
-    private String currentID;
+    private User user;
+    private Database database;
 
     FirebaseFirestore db = FirebaseFirestore.getInstance();
-    Database database;
+
 
     //Implement interrupted exception throw on database object instantiation
     {
@@ -57,51 +55,25 @@ public class FavPage extends Fragment implements FillDataCallBack {
     public FavPage(){
     }
 
-    public static FavPage newInstance(String userID) {
+    public static FavPage newInstance(String user) {
         FavPage fragment = new FavPage();
         Bundle args = new Bundle();
-        args.putString("UUID", userID);
+        args.putString("", user);
         fragment.setArguments(args);
         return fragment;
     }
-
-//    /**
-//     * new instance method of FavPage
-//     * @param p1
-//     * @param p2
-//     * @return fragment
-//     */
-//    public static FavPage newInstance(String p1, String p2){
-//        FavPage fragment = new FavPage();
-//        Bundle args = new Bundle();
-//        fragment.setArguments(args);
-//        return fragment;
-//    }
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         if (getArguments() != null) {
-            currentID = getArguments().getString("UUID");
+            user = User.getUser();
         }
     }
 
     public void doUpdate(String query) {
         Log.d("From_" + this.getClass().getSimpleName(), query);
     }
-
-//    /**
-//     * oncreate method of FavPage
-//     * @param savedInstanceState
-//     */
-//    @Override
-//    public void onCreate(Bundle savedInstanceState) {
-//        super.onCreate(savedInstanceState);
-//        if (getArguments() != null) {
-//            String mParam1 = getArguments().getString(AP1);
-//            String mParam2 = getArguments().getString(AP2);
-//        }
-//    }
 
     /**
      * this emthod create the view of the user's favouritte experiments page
@@ -119,10 +91,10 @@ public class FavPage extends Fragment implements FillDataCallBack {
         favList = view.findViewById(R.id.followedExpListView);
         favDataList = new ArrayList<>();
 
-        favAdapter = new CardList(getContext(), favDataList, 2, currentID);
+        favAdapter = new CardList(getContext(), favDataList, 2);
         favList.setAdapter(favAdapter);
 
-        Toast.makeText(getContext(), "" + currentID, Toast.LENGTH_LONG).show();
+        Toast.makeText(getContext(), "" + user.getUserUniqueID(), Toast.LENGTH_SHORT).show();
 
         database.fillDataList(new FillDataCallBack() {
             @Override
@@ -141,25 +113,14 @@ public class FavPage extends Fragment implements FillDataCallBack {
                     public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                         Experiment exp = favDataList.get(position); // get the experiment from list
                         Intent intent = new Intent(getActivity(), ExperimentDetails.class);
-                        intent.putExtra("position", position); // pass position to ExperimentDetails class
+                        intent.putExtra("currentID", user.getUserUniqueID()); // pass position to ExperimentDetails class
                         intent.putExtra("experiment", exp); // pass experiment object
                         startActivity(intent);
                     }
                 });
 
             }//getExpDataList
-        }, favAdapter, db.collection("Users").document(currentID).collection("Favorites"), currentID);//fillDataList
-
-        favList.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-            @Override
-            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                Experiment exp = favDataList.get(position); // get the experiment from list
-                Intent intent = new Intent(getActivity(), ExperimentDetails.class);
-                intent.putExtra("position", position); // pass position to ExperimentDetails class
-                intent.putExtra("experiment", exp); // pass experiment object
-                startActivity(intent);
-            }
-        });
+        }, favAdapter, db.collection("Users").document(user.getUserUniqueID()).collection("Favorites"), user.getUserUniqueID());//fillDataList
 
         return view;
     }//onCreateView
@@ -171,6 +132,12 @@ public class FavPage extends Fragment implements FillDataCallBack {
     @Override
     public void getExpDataList(ArrayList<Experiment> DataList) {
         favDataList = DataList;
+    }
+
+    @Override
+    public void onResume(){
+        super.onResume();
+        favAdapter.notifyDataSetChanged();
     }
 
 }

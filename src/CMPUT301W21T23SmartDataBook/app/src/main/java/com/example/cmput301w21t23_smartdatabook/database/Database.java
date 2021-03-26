@@ -1,5 +1,5 @@
 
-package com.example.cmput301w21t23_smartdatabook;
+package com.example.cmput301w21t23_smartdatabook.database;
 
 import android.content.Context;
 import android.util.Log;
@@ -11,6 +11,9 @@ import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 
+import com.example.cmput301w21t23_smartdatabook.Experiment;
+import com.example.cmput301w21t23_smartdatabook.user.User;
+import com.example.cmput301w21t23_smartdatabook.comments.Comment;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
@@ -29,11 +32,12 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 
+
 /**
  * class: Database
  * This class consists database, it has the attributes call back which handles synchronous and asychronous functions, and an arraylist of experiment
  * It passes/ takes information to firestore
- * @author Bosco Chan
+ * @author Bosco Chan Afaq Nabi
  */
 public class Database {
 
@@ -44,10 +48,11 @@ public class Database {
     private static final String TAG2 = "Warning";
     private static final String TAG3 = "Exception";
 
+    private User user = User.getUser();
+    private static Database database;
+
     FirebaseAuth mAuth;
     FirebaseFirestore db;
-
-    int expID = 0;
 
     /**
      * Constructor of the database class
@@ -69,8 +74,16 @@ public class Database {
      */
     public Database (){};
 
+    //Singleton implementation
+    public static Database getDataBase(){
+        if (database == null){
+            database = new Database();
+        }
+        return database;
+    }
+
+
     public void followStatus(DocumentReference ref, Experiment experiment, Context context, CheckBox follow, String currentID) {
-        FirebaseAuth mAuth = FirebaseAuth.getInstance();
 
         ref.get().addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
             @Override
@@ -78,7 +91,7 @@ public class Database {
                 if (task.isSuccessful()) {
                     DocumentSnapshot document = task.getResult();
                     if (document.exists()) {
-//                                              follow.setChecked(true);
+
                         if(!currentID.equals(experiment.getOwnerUserID())){
                             ref.delete()
                                     .addOnSuccessListener(new OnSuccessListener<Void>() {
@@ -103,6 +116,7 @@ public class Database {
             }
         });//ref.get()
     }
+
 
     //Task will be executed here. Done in the background. Called Asynchronous task.
     /**
@@ -132,23 +146,10 @@ public class Database {
                 });
     }
 
-    /**
-     * This function adds trials from the database
-     * @author Bosco Chan
-     * @param experiment
-     * @param parentCollection
-     */
-    public void addTrialToDB(Experiment experiment, String parentCollection){
 
-        db = FirebaseFirestore.getInstance();
-        final CollectionReference allExpCollection = db.collection(parentCollection);
-        HashMap<String, String> data = new HashMap<>();
+    public void addTrialToDB(DocumentReference genericDocument, HashMap data){
 
-        data.put("Trial Type", experiment.getTrialType());
-        allExpCollection
-                .document("" + experiment.getExpName())
-                .collection("Trials")
-                .document("Trial#1")
+        genericDocument
                 .set(data)
                 .addOnSuccessListener(new OnSuccessListener<Void>() {
                     @Override
@@ -163,6 +164,39 @@ public class Database {
                     }
                 });
     }
+
+
+    public void addCommentToDB(DocumentReference DocRef, Comment comment){
+        HashMap<String, String> data = new HashMap<>();
+        data.put("CommentText", comment.getText());
+        data.put("UserID", comment.getUserUniqueID());
+        data.put("CommentID", comment.getCommentID());
+        data.put("Date", comment.getDate());
+        DocRef.set(data);
+    }
+
+
+    public void fillCommentList(CollectionReference coll, ArrayList<Comment> commentList, ArrayAdapter<Comment> commentAdapter) {
+        coll
+                .get()
+                .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
+                    @Override
+                    public void onComplete(@NonNull Task<QuerySnapshot> task) {
+                        if (task.isSuccessful()) {
+                            for (QueryDocumentSnapshot document : task.getResult()) {
+                                commentList.add(new Comment(
+                                        document.get("CommentText").toString(),
+                                        document.get("UserID").toString(),
+                                        document.get("CommentID").toString(),
+                                        document.get("Date").toString()));
+                                Log.d("Success", document.getId() + " => " + document.getData());
+                            }
+                            commentAdapter.notifyDataSetChanged();
+                        }
+                    }
+                });
+    }
+
 
     /**
      * Get Experiment documents from the database and add its contents to the experimentDataList
@@ -181,7 +215,6 @@ public class Database {
                     @Override
                     public void onComplete(@NonNull Task<QuerySnapshot> task) {
                         mAuth = FirebaseAuth.getInstance();
-                        FirebaseUser currentUser = mAuth.getCurrentUser();
 
                         experimentDataList.clear();
 
@@ -189,7 +222,7 @@ public class Database {
 
                         if (task.isSuccessful()) {
                             for (QueryDocumentSnapshot document : task.getResult()) {
-                                if ( (coll1.equals(collection.getPath()) && giveBoolean( document.getData().get("PublicStatus").toString())) ||
+                                if ( (coll1.equals(collection.getPath()) && document.getData().get("ExpID") != null && giveBoolean( document.getData().get("PublicStatus").toString())) ||
                                         (collection.getPath().equals(db.collection("Users").document(currentID).collection("Favorites").getPath())) ){
 
                                     experimentDataList.add( new Experiment(
@@ -258,7 +291,6 @@ public class Database {
      */
     public void addExperimentToDB(Experiment newExperiment, CollectionReference collection, String currentID) {
         mAuth = FirebaseAuth.getInstance();
-        FirebaseUser currentUser = mAuth.getCurrentUser();
 
         db = FirebaseFirestore.getInstance();
         HashMap<String, String> data = new HashMap<>();
@@ -319,7 +351,7 @@ public class Database {
      * @param saveButtonView contains the save button view
      * @param context contains the given context from which this function is called from
      */
-    public void editUser(EditText usernameTextField, EditText emailTextField, View saveButtonView, Context context, String currentID) {
+    public void editUser(EditText usernameTextField, EditText emailTextField, View saveButtonView, Context context, String currentID, User user) {
 
         db = FirebaseFirestore.getInstance();
 
@@ -350,6 +382,8 @@ public class Database {
                             public void onClick(View v) {
                                 String username = usernameTextField.getText().toString();
                                 String email = emailTextField.getText().toString();
+                                user.setUserName(username);
+                                user.setUserContact(email);
 
                                 docRef
                                         .update("UserName", username)
@@ -404,6 +438,7 @@ public class Database {
                             Log.d("Authentication Success", "signInAnonymously:success: " + mAuth.getUid());
                             FirebaseUser currentUser = mAuth.getCurrentUser();
 
+                            assert currentUser != null;
                             signInCallBack.updateHomeScreen(currentUser.getUid());
 
                             FirebaseFirestore db = FirebaseFirestore.getInstance();
@@ -414,7 +449,6 @@ public class Database {
                             //Source: Firebase, firebase.google.com
                             //License: Creative Commons Attribution 4.0 License, Apache 2.0 License
                             //Code: https://firebase.google.com/docs/firestore/query-data/get-data#java_
-                            assert currentUser != null;
                             DocumentReference userDoc = allUsersCollection.document(currentUser.getUid());
                             userDoc.get().addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
                                 @Override
@@ -423,7 +457,7 @@ public class Database {
                                         DocumentSnapshot document = task.getResult();
                                         assert document != null;
                                         if (!document.exists()) {
-                                            data.put("UserName", "");
+                                            data.put("UserName", "User - "+currentUser.getUid().substring(0,4));
                                             data.put("Email", "");
                                             data.put("UUID", currentUser.getUid());
 
@@ -449,7 +483,6 @@ public class Database {
                         } else {
                             // If sign in fails, display a message to the user.
                             Log.w("Authentication Failed", "signInAnonymously:failure", task.getException());
-
                         }//if
                     }
                 });
@@ -457,20 +490,7 @@ public class Database {
     }//authenticationAnon
 
     public void publicOrEnd(CollectionReference coll, String onOff, Experiment experiment, String status){
-        coll.document(experiment.getExpID()).update(status, onOff)
-                .addOnSuccessListener(new OnSuccessListener<Void>() {
-                    @Override
-                    public void onSuccess(Void aVoid) {
-                        Log.d("Message", "DocumentSnapshot successfully updated!");
-
-                    }
-                })
-                .addOnFailureListener(new OnFailureListener() {
-                    @Override
-                    public void onFailure(@NonNull Exception e) {
-                        Log.w("message", "Error updating document", e);
-                    }
-                });
+        coll.document(experiment.getExpID()).update(status, onOff);
     }
 
 }//Database
