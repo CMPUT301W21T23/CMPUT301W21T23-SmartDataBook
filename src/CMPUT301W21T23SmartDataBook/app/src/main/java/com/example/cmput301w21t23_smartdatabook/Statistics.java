@@ -22,8 +22,8 @@ public class Statistics extends Experiment{
      * @param date
      * @param expID
      */
-    public Statistics(String expName, String ownerUserID, String trialType, String description, boolean isEnd, boolean regionOn, int minTrials, int maxTrials, boolean isPublic, String date, String expID) {
-        super(expName, ownerUserID, trialType, description, regionOn, minTrials, maxTrials, isPublic, date, expID, isEnd);
+    public Statistics(String expName, String ownerUserID, String ownerUserName, String trialType, String description, boolean isEnd, boolean regionOn, int minTrials, int maxTrials, boolean isPublic, String date, String expID) {
+        super(expName, ownerUserID, ownerUserName, trialType, description, regionOn, minTrials, maxTrials, isPublic, date, expID, isEnd);
     }
 
     // this file will not be needed if we are expressing our statistics through histogram/plots

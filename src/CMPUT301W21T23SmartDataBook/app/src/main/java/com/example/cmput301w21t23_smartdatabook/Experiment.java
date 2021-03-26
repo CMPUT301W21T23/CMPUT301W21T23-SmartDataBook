@@ -47,13 +47,14 @@ public class Experiment implements Serializable {
      * @param isPublic
      * @param date
      */
-    public Experiment(String expName, String ownerUserID,
+    public Experiment(String expName, String ownerUserID, String ownerUserName,
                       String trialType, String description, boolean regionOn,
                       int minTrials, int maxTrials, boolean isPublic, String date,
                       String expID, boolean isEnd) {
 
         this.expName = expName;
         this.ownerUserID = ownerUserID;
+        this.ownerUserName = ownerUserName;
         this.trialType = trialType;
         this.description = description;
         this.regionOn = regionOn;
@@ -63,6 +64,10 @@ public class Experiment implements Serializable {
         this.date = date;
         this.expID = expID;
         this.isEnd = isEnd;
+    }
+
+    public String getOwnerUserName() {
+        return ownerUserName;
     }
 
     /**

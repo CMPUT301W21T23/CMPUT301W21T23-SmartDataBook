@@ -206,27 +206,27 @@ public class Database {
         Hashtable<String, String> userNames = new Hashtable<String, String>();
 
         db.collection("Users")
-                .get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
+            .get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
 
-                     @Override
-                     public void onComplete(@NonNull Task<QuerySnapshot> task) {
-                         mAuth = FirebaseAuth.getInstance();
+                 @Override
+                 public void onComplete(@NonNull Task<QuerySnapshot> task) {
+                     mAuth = FirebaseAuth.getInstance();
 
-                         String path = db.collection("Users").getPath();
+                     String path = db.collection("Users").getPath();
 
-                         if (task.isSuccessful()) {
-                             for (QueryDocumentSnapshot document : task.getResult()) {
-                                 if (document.getData().get("UUID") != null && document.getData().get("UserName") != null) {
-                                     userNames.put(document.getData().get("UUID").toString(), document.getData().get("UserName").toString());
-                                     Log.d("Getting_user", "Success");
-                                 }
+                     if (task.isSuccessful()) {
+                         for (QueryDocumentSnapshot document : task.getResult()) {
+                             if (document.getData().get("UUID") != null && document.getData().get("UserName") != null) {
+                                 userNames.put(document.getData().get("UUID").toString(), document.getData().get("UserName").toString());
+                                 Log.d("Getting_user", "Success");
                              }
-                             fillUserCallBack.getUserTable(userNames);
-                         } else {
-                             fillUserCallBack.getUserTable(new Hashtable<String, String>());
                          }
+                         fillUserCallBack.getUserTable(userNames);
+                     } else {
+                         fillUserCallBack.getUserTable(new Hashtable<String, String>());
                      }
-                 });
+                 }
+         });
     }
 
 
@@ -261,6 +261,7 @@ public class Database {
                                     experimentDataList.add( new Experiment(
                                             document.getData().get("Name").toString(),
                                             document.getData().get("UUID").toString(),
+                                            userNames.get(document.getData().get("UUID").toString()),
                                             document.getData().get("Trial Type").toString(),
                                             document.getData().get("Description").toString(),
                                             giveBoolean( document.getData().get("LocationStatus").toString() ),
