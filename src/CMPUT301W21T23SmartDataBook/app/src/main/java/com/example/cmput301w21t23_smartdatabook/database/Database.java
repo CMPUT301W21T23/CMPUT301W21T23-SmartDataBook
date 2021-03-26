@@ -301,7 +301,6 @@ public class Database {
         data.put("LocationStatus", giveString(newExperiment.getRegionOn()));
         data.put("PublicStatus", giveString(newExperiment.isPublic()));
         data.put("UUID", newExperiment.getOwnerUserID());
-        data.put("UserName", user.getUserName());
         data.put("Minimum Trials", "" + newExperiment.getMinTrials());
         data.put("Maximum Trials", "" + newExperiment.getMaxTrials());
         data.put("Date", newExperiment.getDate());

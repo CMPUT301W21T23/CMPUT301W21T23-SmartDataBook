@@ -12,12 +12,10 @@ import java.io.Serializable;
  * @author Afaq Nabi, Bosco Chan
  */
 public class Experiment implements Serializable {
-    private User user;
+
     private String expID;
     private String expName;
     private String ownerUserID;
-
-
 
     private String ownerUserName;
     private String trialType;
@@ -54,10 +52,8 @@ public class Experiment implements Serializable {
                       int minTrials, int maxTrials, boolean isPublic, String date,
                       String expID, boolean isEnd) {
 
-        user = User.getUser();
         this.expName = expName;
         this.ownerUserID = ownerUserID;
-        this.ownerUserName = user.getUserName();
         this.trialType = trialType;
         this.description = description;
         this.regionOn = regionOn;
@@ -97,13 +93,6 @@ public class Experiment implements Serializable {
 //        this.location = location;
 //    }
 
-    public String getOwnerUserName() {
-        return ownerUserName;
-    }
-
-    public void setOwnerUserName(String ownerUserName) {
-        this.ownerUserName = ownerUserName;
-    }
 
     public void setEnd(boolean end) {
         isEnd = end;
