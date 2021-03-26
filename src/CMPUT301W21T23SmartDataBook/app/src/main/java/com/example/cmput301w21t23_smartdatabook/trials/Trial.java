@@ -13,10 +13,14 @@ public class Trial {
     private boolean geoLocationSettingOn;
 //    private Location location;
     private String expType;
+    private Object value;
+    private String uid;
 
-    public Trial(boolean geoLocationSettingOn, String expType) {
+    public Trial(boolean geoLocationSettingOn, String expType, Object value, String uid) {
         this.geoLocationSettingOn = geoLocationSettingOn;
         this.expType = expType;
+        this.value = value;
+        this.uid = uid;
     }
 
     public boolean isGeoLocationSettingOn() {
@@ -35,4 +39,19 @@ public class Trial {
         this.expType = expType;
     }
 
+    public Object getValue() {
+        return value;
+    }
+
+    public void setValue(Object value) {
+        this.value = value;
+    }
+
+    public String getUid() {
+        return uid;
+    }
+
+    public void setUid(String uid) {
+        this.uid = uid;
+    }
 }

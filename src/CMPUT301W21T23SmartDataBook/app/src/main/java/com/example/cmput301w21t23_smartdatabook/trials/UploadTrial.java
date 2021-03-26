@@ -114,11 +114,11 @@ public class UploadTrial extends AppCompatActivity {
                         @Override
                         public void onClick(DialogInterface dialog, int which) {
 //                            Log.d("Test", "test");
-                            BinomialTrial trial = new BinomialTrial(experiment.getRegionOn(),
+                            Trial trial = new Trial(experiment.getRegionOn(),
                                     experiment.getTrialType(),
                                     true,
-                                    numBinomial.getText().toString());
-                            database.addBinomialTrialToDB(db
+                                    experiment.getOwnerUserID());
+                            database.addTrialToDB(db
                                     .collection("Experiments")
                                     .document(experiment.getExpID())
                                     .collection("Trials")
@@ -128,11 +128,11 @@ public class UploadTrial extends AppCompatActivity {
                             .setNegativeButton("Add failure", new DialogInterface.OnClickListener() {
                             @Override
                             public void onClick(DialogInterface dialog, int which) {
-                                BinomialTrial trial = new BinomialTrial(experiment.getRegionOn(),
+                                Trial trial = new Trial(experiment.getRegionOn(),
                                         experiment.getTrialType(),
                                         false,
-                                        numBinomial.getText().toString());
-                                database.addBinomialTrialToDB(db
+                                        experiment.getOwnerUserID());
+                                database.addTrialToDB(db
                                         .collection("Experiments")
                                         .document(experiment.getExpID())
                                         .collection("Trials")
@@ -157,13 +157,15 @@ public class UploadTrial extends AppCompatActivity {
                             .setPositiveButton("Add Trials", new DialogInterface.OnClickListener() {
                                 @Override
                                 public void onClick(DialogInterface dialog, int which) {
-                                    CountTrial trial = new CountTrial(experiment.getRegionOn(),
+                                    Trial trial = new Trial(experiment.getRegionOn(),
                                             experiment.getTrialType(),
-                                            numCount.getText().toString());
-                                    database.addCountTrialToDB(db.collection("Experiments")
+                                            Integer.parseInt(numCount.getText().toString()),
+                                            experiment.getOwnerUserID());
+                                    database.addTrialToDB(db
+                                            .collection("Experiments")
                                             .document(experiment.getExpID())
                                             .collection("Trials")
-                                            .document(UUID.randomUUID().toString()),trial);
+                                            .document(UUID.randomUUID().toString()), trial);
                                     // include 0 as well
 
                                     // save the data
@@ -191,14 +193,15 @@ public class UploadTrial extends AppCompatActivity {
                                     // include 0 as well
                                     if (Integer.parseInt(numNonNegCount.getText().toString())>=0){
                                         // save the data
-                                        CountTrial trial = new CountTrial(experiment.getRegionOn(),
+                                        Trial trial = new Trial(experiment.getRegionOn(),
                                                 experiment.getTrialType(),
-                                                numNonNegCount.getText().toString());
-                                        database.addCountTrialToDB(db.collection("Experiments")
+                                                Integer.parseInt(numNonNegCount.getText().toString()),
+                                                experiment.getOwnerUserID());
+                                        database.addTrialToDB(db
+                                                .collection("Experiments")
                                                 .document(experiment.getExpID())
                                                 .collection("Trials")
-                                                .document(UUID.randomUUID().toString()),trial);
-                                        Log.d("Test", "test");
+                                                .document(UUID.randomUUID().toString()), trial);
                                     }
                                 }
                             }).create().show();
@@ -221,13 +224,15 @@ public class UploadTrial extends AppCompatActivity {
                                     // Q1: check editText value
                                     // Q2: how to save information
                                     // check input for
-                                    MeasurementTrial trial = new MeasurementTrial(experiment.getRegionOn(),
+                                    Trial trial = new Trial(experiment.getRegionOn(),
                                             experiment.getTrialType(),
-                                            measurementInput.getText().toString());
-                                    database.addMeasurmentTrialToDB(db.collection("Experiments")
+                                            Integer.parseInt(measurementInput.getText().toString()),
+                                            experiment.getOwnerUserID());
+                                    database.addTrialToDB(db
+                                            .collection("Experiments")
                                             .document(experiment.getExpID())
                                             .collection("Trials")
-                                            .document(UUID.randomUUID().toString()),trial);
+                                            .document(UUID.randomUUID().toString()), trial);
                                     Log.d("Test", "test");
                                 }
                             }).create().show();

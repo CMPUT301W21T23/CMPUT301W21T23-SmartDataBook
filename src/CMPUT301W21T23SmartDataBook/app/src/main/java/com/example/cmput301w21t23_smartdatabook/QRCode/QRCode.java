@@ -14,8 +14,7 @@ public class QRCode {
     QRCodeWriter writer = new QRCodeWriter();
 //    Bitmap myBitmap = QRCode.from("www").bitmap();
 
-    public void generate(){
-        String content= "m";
+    public void generate(String content){
         BitMatrix bitMatrix = null;
 
         try {

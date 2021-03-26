@@ -12,9 +12,9 @@ import android.widget.Toast;
 import androidx.annotation.NonNull;
 
 import com.example.cmput301w21t23_smartdatabook.Experiment;
-import com.example.cmput301w21t23_smartdatabook.trials.BinomialTrial;
-import com.example.cmput301w21t23_smartdatabook.trials.CountTrial;
-import com.example.cmput301w21t23_smartdatabook.trials.MeasurementTrial;
+//import com.example.cmput301w21t23_smartdatabook.trials.BinomialTrial;
+//import com.example.cmput301w21t23_smartdatabook.trials.CountTrial;
+//import com.example.cmput301w21t23_smartdatabook.trials.MeasurementTrial;
 import com.example.cmput301w21t23_smartdatabook.trials.Trial;
 import com.example.cmput301w21t23_smartdatabook.user.User;
 import com.example.cmput301w21t23_smartdatabook.comments.Comment;
@@ -130,29 +130,12 @@ public class Database {
 
     }
 
-    public void addCountTrialToDB(DocumentReference DocRef, CountTrial trial){
-        HashMap<String, String> data = new HashMap<>();
+    public void addTrialToDB(DocumentReference genericDocument, Trial trial){
+        HashMap<String, Object> data = new HashMap<>();
         data.put("Region On", giveString(trial.isGeoLocationSettingOn()));
         data.put("Trial Type", trial.getExpType());
-        data.put("Value", trial.getNum());
-        DocRef.set(data);
-    }
-
-    public void addMeasurmentTrialToDB(DocumentReference DocRef, MeasurementTrial trial){
-        HashMap<String, String> data = new HashMap<>();
-        data.put("Region On", giveString(trial.isGeoLocationSettingOn()));
-        data.put("Trial Type", trial.getExpType());
-        data.put("Value", trial.getNum());
-        DocRef.set(data);
-    }
-
-
-    public void addBinomialTrialToDB(DocumentReference genericDocument, BinomialTrial trial){
-        HashMap<String, String> data = new HashMap<>();
-        data.put("Region On", giveString(trial.isGeoLocationSettingOn()));
-        data.put("Trial Type", trial.getExpType());
-        data.put("Trial Value", giveString(trial.isTrialValue()));
-        data.put("Number", trial.getNum());
+        data.put("Trial Value", trial.getValue());
+        data.put("UUID", trial.getUid());
         genericDocument.set(data);
     }
 
