@@ -15,8 +15,8 @@ import java.util.ArrayList;
  */
 public class User implements Serializable {
     private static User user;
-    public String userName;
-    public String userContact;
+    public String userName = "";
+    public String userContact = "";
     public String userUniqueID;
 
     private User(){}

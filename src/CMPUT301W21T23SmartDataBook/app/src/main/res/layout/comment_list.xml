@@ -5,14 +5,12 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".mainController.MainActivity"
-    android:id="@+id/frameLayout"
-    android:paddingLeft="10dp"
-    android:paddingRight="10dp">
+    android:id="@+id/frameLayout">
 
 
     <ListView
         android:id="@+id/comment_list"
-        android:layout_width="385dp"
+        android:layout_width="wrap_content"
         android:layout_height="572dp"
         android:layout_marginTop="76dp"
         app:layout_constraintEnd_toEndOf="parent"
@@ -28,10 +26,12 @@
         android:layout_height="wrap_content"
         android:layout_marginEnd="12dp"
         android:layout_marginBottom="16dp"
-        android:backgroundTint="@color/theme_opaque"
+        android:backgroundTint="@color/theme_default"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:srcCompat="@android:drawable/ic_input_add" />
+        app:srcCompat="@android:drawable/ic_input_add"
+        app:tint="@color/white"
+        />
 
     <TextView
         android:id="@+id/textView3"

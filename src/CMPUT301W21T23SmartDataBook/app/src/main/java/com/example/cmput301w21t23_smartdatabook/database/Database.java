@@ -49,11 +49,10 @@ public class Database {
     private static final String TAG3 = "Exception";
 
     private User user = User.getUser();
+    private static Database database;
 
     FirebaseAuth mAuth;
     FirebaseFirestore db;
-
-    int expID = 0;
 
     /**
      * Constructor of the database class
@@ -74,6 +73,14 @@ public class Database {
      * @author Bosco Chan
      */
     public Database (){};
+
+    //Singleton implementation
+    public static Database getDataBase(){
+        if (database == null){
+            database = new Database();
+        }
+        return database;
+    }
 
 
     public void followStatus(DocumentReference ref, Experiment experiment, Context context, CheckBox follow, String currentID) {
@@ -284,7 +291,6 @@ public class Database {
      */
     public void addExperimentToDB(Experiment newExperiment, CollectionReference collection, String currentID) {
         mAuth = FirebaseAuth.getInstance();
-        FirebaseUser currentUser = mAuth.getCurrentUser();
 
         db = FirebaseFirestore.getInstance();
         HashMap<String, String> data = new HashMap<>();
