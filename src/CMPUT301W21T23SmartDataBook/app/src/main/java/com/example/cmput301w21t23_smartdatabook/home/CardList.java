@@ -19,6 +19,7 @@ import java.util.Map;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 
+import com.example.cmput301w21t23_smartdatabook.experimentDetails.ExperimentDetails;
 import com.example.cmput301w21t23_smartdatabook.user.User;
 import com.example.cmput301w21t23_smartdatabook.comments.CommentActivity;
 import com.example.cmput301w21t23_smartdatabook.database.Database;
@@ -100,6 +101,7 @@ public class CardList extends ArrayAdapter<Experiment> {
             TextView experimentDescription = v.findViewById(R.id.Experiment_descr);
             TextView region = v.findViewById(R.id.Region);
 
+
             experimentName.setText(experiment.getExpName());
             date.setText(experiment.getDate());
 //            ownerName.setText("User - " + experiment.getOwnerUserID().substring(0,4));
@@ -164,13 +166,20 @@ public class CardList extends ArrayAdapter<Experiment> {
                   }
             );
 
+            View userInfoView = LayoutInflater.from(getContext()).inflate(R.layout.view_profile, null);
+
+            TextView username = userInfoView.findViewById(R.id.expOwner);
+            username.setText("Username: " + user.getUserName());
+
+            TextView email = userInfoView.findViewById(R.id.expContact);;
+            email.setText("Email: " + user.getUserContact());
+
             ownerName.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    new AlertDialog.Builder(getContext())
-                            .setView(R.layout.view_profile)
-                            .setNegativeButton("Close", null)
-                            .show();
+                    AlertDialog.Builder builder = new AlertDialog.Builder(getContext());
+                    builder.setView(userInfoView)
+                            .setNegativeButton("Close", null).create().show();
                 }
             });
 

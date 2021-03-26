@@ -1,17 +1,21 @@
 package com.example.cmput301w21t23_smartdatabook.experimentDetails;
 
+import android.app.AlertDialog;
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.Button;
 import android.widget.CheckBox;
+import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
 
+import com.example.cmput301w21t23_smartdatabook.BuildConfig;
 import com.example.cmput301w21t23_smartdatabook.user.User;
 import com.example.cmput301w21t23_smartdatabook.comments.CommentActivity;
 import com.example.cmput301w21t23_smartdatabook.database.Database;
@@ -54,12 +58,23 @@ public class ExperimentDetails extends AppCompatActivity {
 
         toolbar.setTitle(experiment.getExpName());
 
+        View userInfoView = LayoutInflater.from(ExperimentDetails.this).inflate(R.layout.view_profile, null);
+
+        TextView username = userInfoView.findViewById(R.id.expOwner);
+        username.setText("Username: " + user.getUserName());
+
+        TextView email = userInfoView.findViewById(R.id.expContact);;
+        email.setText("Email: " + user.getUserContact());
+
         TextView Owner = findViewById(R.id.owner);
-        Owner.setText(experiment.getOwnerUserID());
+        Owner.setText(experiment.getOwnerUserName());
         Owner.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 // TODO: new user details activity
+                AlertDialog.Builder builder = new AlertDialog.Builder(ExperimentDetails.this);
+                builder.setView(userInfoView)
+                        .setNegativeButton("Close", null).create().show();
             }
         });
 
@@ -73,10 +88,10 @@ public class ExperimentDetails extends AppCompatActivity {
         region.setText("some location???");
 
         TextView minTrials = findViewById(R.id.MinTrials);
-        minTrials.setText("Min Trials: "+ Integer.toString(experiment.getMinTrials()));
+        minTrials.setText("Min Trials: " + Integer.toString(experiment.getMinTrials()));
 
         TextView maxTrials = findViewById(R.id.MaxTrials);
-        maxTrials.setText("Max Trials: "+Integer.toString(experiment.getMaxTrials()));
+        maxTrials.setText("Max Trials: " + Integer.toString(experiment.getMaxTrials()));
 
         TextView type = findViewById(R.id.ExpType);
         type.setText(experiment.getTrialType());
@@ -134,17 +149,16 @@ public class ExperimentDetails extends AppCompatActivity {
         endExp.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if (!experiment.getIsEnd()){
+                if (!experiment.getIsEnd()) {
                     experiment.setEnd(true);
-                    database.publicOrEnd(db.collection("Experiments"), "On", experiment,"isEnd");
+                    database.publicOrEnd(db.collection("Experiments"), "On", experiment, "isEnd");
                     database.publicOrEnd((db.collection("Users")
                             .document(user.getUserUniqueID())
-                            .collection("Favorites")), "On", experiment,"isEnd");
-                    Toast.makeText(getBaseContext(), "Experiment has been ended this action cannot be undone",Toast.LENGTH_SHORT).show();
-                    Log.d("Tests", "value1: "+ experiment.getIsEnd());
-                }
-                else{
-                    Toast.makeText(getBaseContext(), "Experiment is ended already!!",Toast.LENGTH_SHORT).show();
+                            .collection("Favorites")), "On", experiment, "isEnd");
+                    Toast.makeText(getBaseContext(), "Experiment has been ended this action cannot be undone", Toast.LENGTH_SHORT).show();
+                    Log.d("Tests", "value1: " + experiment.getIsEnd());
+                } else {
+                    Toast.makeText(getBaseContext(), "Experiment is ended already!!", Toast.LENGTH_SHORT).show();
 
                 }
             }
@@ -153,7 +167,7 @@ public class ExperimentDetails extends AppCompatActivity {
         CheckBox publish = findViewById(R.id.Publish);
         TextView publish_text = findViewById(R.id.Publish_text);
         publish.setChecked(experiment.isPublic());
-        if (user.getUserUniqueID().equals(experiment.getOwnerUserID()) ){
+        if (user.getUserUniqueID().equals(experiment.getOwnerUserID())) {
             endExp.setVisibility(View.VISIBLE);
             publish.setVisibility(View.VISIBLE);
             publish_text.setVisibility(View.VISIBLE);
@@ -164,10 +178,9 @@ public class ExperimentDetails extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 String onOff;
-                if (publish.isChecked()){
+                if (publish.isChecked()) {
                     onOff = "On";
-                }
-                else{
+                } else {
                     onOff = "Off";
                 }
                 Log.d("ONOFF", onOff);
@@ -175,7 +188,7 @@ public class ExperimentDetails extends AppCompatActivity {
                 database.publicOrEnd(db.collection("Experiments"), onOff, experiment, "PublicStatus");
                 database.publicOrEnd((db.collection("Users")
                         .document(user.getUserUniqueID())
-                        .collection("Favorites")), onOff, experiment,"PublicStatus");
+                        .collection("Favorites")), onOff, experiment, "PublicStatus");
             }
         });
     }

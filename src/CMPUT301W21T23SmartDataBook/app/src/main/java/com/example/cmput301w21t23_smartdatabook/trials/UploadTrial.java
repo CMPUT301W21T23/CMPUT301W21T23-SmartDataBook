@@ -120,8 +120,8 @@ public class UploadTrial extends AppCompatActivity {
                                     experiment.getOwnerUserID(),
                                     UUID.randomUUID().toString());
                             for (int i = 0; i<Integer.parseInt(numBinomial.getText().toString()); i++){
-                                database.addTrialToDB(db
-                                        .collection("Experiments")
+                                Log.d("Integer i: ", String.valueOf(i));
+                                database.addTrialToDB(db.collection("Experiments")
                                         .document(experiment.getExpID())
                                         .collection("Trials")
                                         .document(trial.getTrialID()), trial);
@@ -138,6 +138,7 @@ public class UploadTrial extends AppCompatActivity {
                                         experiment.getOwnerUserID(),
                                         UUID.randomUUID().toString());
                                 for (int i = 0; i<Integer.parseInt(numBinomial.getText().toString()); i++){
+                                    Log.d("Integer i: ", String.valueOf(i));
                                     database.addTrialToDB(db
                                             .collection("Experiments")
                                             .document(experiment.getExpID())
@@ -145,7 +146,7 @@ public class UploadTrial extends AppCompatActivity {
                                             .document(trial.getTrialID()), trial);
                                 }
                                 recreate();
-                                Log.d("Test", "test");
+//                                Log.d("Test", "test");
                             }})
                             .setPositiveButton("Cancel", null).create().show();
                 }
@@ -174,10 +175,6 @@ public class UploadTrial extends AppCompatActivity {
                                             .document(experiment.getExpID())
                                             .collection("Trials")
                                             .document(trial.getTrialID()), trial);
-                                    // include 0 as well
-
-                                    // save the data
-                                    Log.d("Test", "test");
                                     recreate();
                                 }
                             }).create().show();
