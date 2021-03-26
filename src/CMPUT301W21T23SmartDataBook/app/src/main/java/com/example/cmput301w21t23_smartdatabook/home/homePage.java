@@ -18,6 +18,7 @@ import androidx.fragment.app.FragmentTransaction;
 import com.example.cmput301w21t23_smartdatabook.database.FillDataCallBack;
 import com.example.cmput301w21t23_smartdatabook.database.Database;
 import com.example.cmput301w21t23_smartdatabook.Experiment;
+import com.example.cmput301w21t23_smartdatabook.database.FillUserCallBack;
 import com.example.cmput301w21t23_smartdatabook.mainController.MainActivity;
 import com.example.cmput301w21t23_smartdatabook.user.User;
 import com.example.cmput301w21t23_smartdatabook.experimentDetails.ExperimentDetails;
@@ -27,6 +28,7 @@ import com.google.firebase.firestore.CollectionReference;
 import com.google.firebase.firestore.FirebaseFirestore;
 
 import java.util.ArrayList;
+import java.util.Hashtable;
 
 /**
  * Class: homePage
@@ -122,29 +124,36 @@ public class homePage extends Fragment implements FillDataCallBack {
 
         //Source: Erwin Kurniawan A; https://stackoverflow.com/users/7693494/erwin-kurniawan-a
         //Code: https://stackoverflow.com/questions/61930061/how-to-return-a-value-from-oncompletelistener-while-creating-user-with-email-and
-        database.fillDataList(new FillDataCallBack() {
+
+        database.fillUserName(new FillUserCallBack() {
             @Override
-            public void getExpDataList(ArrayList<Experiment> DataList) {
-
-                //experimentDataList with added items ONLY exist inside the scope of this getExpDataList function
-                experimentDataList = DataList;
-                experimentAdapter.addAll(experimentDataList);
-
-                experimentAdapter.notifyDataSetChanged();
-
-                experimentList.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            public void getUserTable(Hashtable<String, String> UserName) {
+                database.fillDataList(new FillDataCallBack() {
                     @Override
-                    public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                        Experiment exp = experimentDataList.get(position); // get the experiment from list
-                        Intent intent = new Intent(getActivity(), ExperimentDetails.class);
-                        intent.putExtra("currentID", user.getUserUniqueID()); // pass position to ExperimentDetails class
-                        intent.putExtra("experiment", exp); // pass experiment object
-                        startActivity(intent);
-                    }
-                });
+                    public void getExpDataList(ArrayList<Experiment> DataList) {
 
-            }//getExpDataList
-        }, experimentAdapter, db.collection("Experiments"), user.getUserUniqueID());//fillDataList
+                        //experimentDataList with added items ONLY exist inside the scope of this getExpDataList function
+                        experimentDataList = DataList;
+                        experimentAdapter.addAll(experimentDataList);
+
+                        experimentAdapter.notifyDataSetChanged();
+
+                        experimentList.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+                            @Override
+                            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                                Experiment exp = experimentDataList.get(position); // get the experiment from list
+                                Intent intent = new Intent(getActivity(), ExperimentDetails.class);
+                                intent.putExtra("currentID", user.getUserUniqueID()); // pass position to ExperimentDetails class
+                                intent.putExtra("experiment", exp); // pass experiment object
+                                startActivity(intent);
+                            }
+                        });
+
+                    }//getExpDataList
+                }, experimentAdapter, db.collection("Experiments"), user.getUserUniqueID(), UserName);//fillDataList
+            }
+        });
+
 
         final FloatingActionButton addExperimentButton = view.findViewById(R.id.add_experiment_button);
         addExperimentButton.setOnClickListener(new View.OnClickListener() {

@@ -18,6 +18,7 @@ import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
+import com.google.android.gms.tasks.Tasks;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
@@ -30,7 +31,9 @@ import com.google.firebase.firestore.QuerySnapshot;
 
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.Hashtable;
 import java.util.Map;
+import java.util.concurrent.ExecutionException;
 
 
 /**
@@ -197,6 +200,35 @@ public class Database {
                 });
     }
 
+    public void fillUserName(FillUserCallBack fillUserCallBack) {
+        db = FirebaseFirestore.getInstance();
+
+        Hashtable<String, String> userNames = new Hashtable<String, String>();
+
+        db.collection("Users")
+                .get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
+
+                     @Override
+                     public void onComplete(@NonNull Task<QuerySnapshot> task) {
+                         mAuth = FirebaseAuth.getInstance();
+
+                         String path = db.collection("Users").getPath();
+
+                         if (task.isSuccessful()) {
+                             for (QueryDocumentSnapshot document : task.getResult()) {
+                                 if (document.getData().get("UUID") != null && document.getData().get("UserName") != null) {
+                                     userNames.put(document.getData().get("UUID").toString(), document.getData().get("UserName").toString());
+                                     Log.d("Getting_user", "Success");
+                                 }
+                             }
+                             fillUserCallBack.getUserTable(userNames);
+                         } else {
+                             fillUserCallBack.getUserTable(new Hashtable<String, String>());
+                         }
+                     }
+                 });
+    }
+
 
     /**
      * Get Experiment documents from the database and add its contents to the experimentDataList
@@ -206,8 +238,9 @@ public class Database {
      * @author Bosco Chan
      * @param fillDataCallBack is the callback instance from a synchronous.
      */
-    public void fillDataList(FillDataCallBack fillDataCallBack, ArrayAdapter<Experiment> experimentArrayAdapter, CollectionReference collection, String currentID) {
+    public void fillDataList(FillDataCallBack fillDataCallBack, ArrayAdapter<Experiment> experimentArrayAdapter, CollectionReference collection, String currentID, Hashtable<String, String> userNames) {
         db = FirebaseFirestore.getInstance();
+        Log.d("USER_SIZE", String.valueOf(userNames.size()));
 
         collection
                 .get()
