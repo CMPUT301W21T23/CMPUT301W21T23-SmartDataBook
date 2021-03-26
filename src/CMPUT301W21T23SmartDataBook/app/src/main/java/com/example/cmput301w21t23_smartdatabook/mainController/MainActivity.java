@@ -8,6 +8,7 @@ import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.ActionBar;
@@ -27,7 +28,6 @@ import com.example.cmput301w21t23_smartdatabook.settings.SettingsPage;
 import com.example.cmput301w21t23_smartdatabook.user.User;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.firebase.auth.FirebaseAuth;
-import com.google.firebase.firestore.FirebaseFirestore;
 
 /**
  * the Purpose of this class is to register the user in the database and initialize the bottom tab navigation
@@ -42,15 +42,10 @@ public class MainActivity extends AppCompatActivity implements SignInCallBack {
 
     BottomNavigationView bottomNavigation;
 
-    FirebaseAuth mAuth = FirebaseAuth.getInstance();
-    private FirebaseFirestore db;
-
     private ActionBar toolbar;
     private boolean searchShow;
 
-    private String currentID;
-
-    Database database;
+    public Database database;
 
     public User user;
 
@@ -203,16 +198,22 @@ public class MainActivity extends AppCompatActivity implements SignInCallBack {
 
     @Override
     public void updateHomeScreen(String userID) {
-        currentID = userID;
-        User user = User.getUser();
-        user.setUserName("User - " + userID.substring(0,4));
-        user.setUserContact("");
-        user.setUserUniqueID(currentID);
-//        user = new User("User - "+currentID.substring(0,4), "", currentID);
+
+        database = Database.getDataBase();
+
+        user = User.getUser();
+        user.setUserUniqueID(userID);
+
+        if (user.getUserName().length() == 0){
+            user.setUserName("User - " + userID.substring(0,4));
+        }
+
         final FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
         transaction.replace(R.id.container, homePage.newInstance(""));
         transaction.addToBackStack(null);
         transaction.commitAllowingStateLoss();
+
+
     }
 
 }//mainActivity

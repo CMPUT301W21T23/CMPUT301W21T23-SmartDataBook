@@ -12,24 +12,23 @@
 
     <TextView
         android:id="@+id/experimentName"
-        android:layout_width="339dp"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:padding="10dp"
         android:text="ExperimentName"
-        android:textSize="30sp"
-        >
-    </TextView>
+        android:textSize="30sp"></TextView>
 
     <TextView
         android:id="@+id/Owner"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
+        android:layout_width="278dp"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="10dp"
+        android:layout_marginTop="0dp"
+        android:clickable="true"
+        android:onClick="onClick"
         android:text="Owner Name"
         android:textColor="@color/purple_500"
-        android:textSize="20sp"
-        android:layout_marginTop="-15dp"
-        android:layout_marginLeft="10dp"
-        >
+        android:textSize="20sp">
 
     </TextView>
 
@@ -83,9 +82,9 @@
         android:id="@+id/follow"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginLeft="1.7in"
+        android:layout_marginLeft="1.5in"
         android:layout_marginTop="-36dp"
-        android:text="follow"
+        android:text="Subscribe"
         android:textSize="20dp" />
 
 

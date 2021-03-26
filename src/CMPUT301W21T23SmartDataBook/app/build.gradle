@@ -54,8 +54,8 @@ dependencies {
     implementation 'androidx.navigation:navigation-ui:2.3.4'
     testImplementation 'junit:junit:4.13.2'
 
-//    implementation 'androidmads.library.qrgenearator:QRGenearator:1.0.3'
-//
+    implementation 'androidmads.library.qrgenearator:QRGenearator:1.0.3'
+
 //    // https://github.com/kenglxn/QRGen
 //    implementation 'com.github.kenglxn.QRGen:android:2.6.0'
 //    implementation 'com.github.kenglxn.QRGen:javase:2.6.0'

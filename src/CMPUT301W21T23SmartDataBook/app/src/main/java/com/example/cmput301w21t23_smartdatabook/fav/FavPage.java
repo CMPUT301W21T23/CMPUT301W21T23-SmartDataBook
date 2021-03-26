@@ -38,9 +38,10 @@ public class FavPage extends Fragment implements FillDataCallBack {
     private static ArrayList<Experiment> favDataList;
 
     private User user;
+    private Database database;
 
     FirebaseFirestore db = FirebaseFirestore.getInstance();
-    Database database;
+
 
     //Implement interrupted exception throw on database object instantiation
     {
@@ -65,7 +66,6 @@ public class FavPage extends Fragment implements FillDataCallBack {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-//        user = User.getUser();
         if (getArguments() != null) {
             user = User.getUser();
         }
@@ -94,7 +94,7 @@ public class FavPage extends Fragment implements FillDataCallBack {
         favAdapter = new CardList(getContext(), favDataList, 2);
         favList.setAdapter(favAdapter);
 
-        Toast.makeText(getContext(), "" + user.getUserUniqueID(), Toast.LENGTH_LONG).show();
+        Toast.makeText(getContext(), "" + user.getUserUniqueID(), Toast.LENGTH_SHORT).show();
 
         database.fillDataList(new FillDataCallBack() {
             @Override

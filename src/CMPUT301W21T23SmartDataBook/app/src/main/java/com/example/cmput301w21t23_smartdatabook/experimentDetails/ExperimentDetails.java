@@ -35,17 +35,12 @@ import com.google.firebase.firestore.FirebaseFirestore;
  */
 public class ExperimentDetails extends AppCompatActivity {
     User user = User.getUser();
+    Database database = Database.getDataBase();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.experiment_details);
-
-        Database database = new Database();
-        FirebaseAuth mAuth = FirebaseAuth.getInstance();
-        FirebaseUser currentUser = mAuth.getCurrentUser();
-
-        String currentID;
 
         setSupportActionBar(findViewById(R.id.app_toolbar));
         ActionBar toolbar = getSupportActionBar();
@@ -56,7 +51,6 @@ public class ExperimentDetails extends AppCompatActivity {
 
         Intent intent = getIntent();
         Experiment experiment = (Experiment) intent.getSerializableExtra("experiment"); // get the experiment object
-        currentID = intent.getStringExtra("currentID");
 
         toolbar.setTitle(experiment.getExpName());
 
@@ -131,7 +125,6 @@ public class ExperimentDetails extends AppCompatActivity {
             public void onClick(View v) {
                 Intent intent = new Intent(getBaseContext(), CommentActivity.class);
                 intent.putExtra("Experiment", experiment);
-                intent.putExtra("CurrentID", currentID);
                 intent.putExtra("user", user);
                 startActivity(intent);
             }
@@ -145,7 +138,7 @@ public class ExperimentDetails extends AppCompatActivity {
                     experiment.setEnd(true);
                     database.publicOrEnd(db.collection("Experiments"), "On", experiment,"isEnd");
                     database.publicOrEnd((db.collection("Users")
-                            .document(currentID)
+                            .document(user.getUserUniqueID())
                             .collection("Favorites")), "On", experiment,"isEnd");
                     Toast.makeText(getBaseContext(), "Experiment has been ended this action cannot be undone",Toast.LENGTH_SHORT).show();
                     Log.d("Tests", "value1: "+ experiment.getIsEnd());
@@ -160,7 +153,7 @@ public class ExperimentDetails extends AppCompatActivity {
         CheckBox publish = findViewById(R.id.Publish);
         TextView publish_text = findViewById(R.id.Publish_text);
         publish.setChecked(experiment.isPublic());
-        if (currentID.equals(experiment.getOwnerUserID()) ){
+        if (user.getUserUniqueID().equals(experiment.getOwnerUserID()) ){
             endExp.setVisibility(View.VISIBLE);
             publish.setVisibility(View.VISIBLE);
             publish_text.setVisibility(View.VISIBLE);
@@ -181,7 +174,7 @@ public class ExperimentDetails extends AppCompatActivity {
 
                 database.publicOrEnd(db.collection("Experiments"), onOff, experiment, "PublicStatus");
                 database.publicOrEnd((db.collection("Users")
-                        .document(currentID)
+                        .document(user.getUserUniqueID())
                         .collection("Favorites")), onOff, experiment,"PublicStatus");
             }
         });
