@@ -41,7 +41,7 @@ import com.google.firebase.auth.FirebaseAuth;
  * @Refrences https://androidwave.com/bottom-navigation-bar-android-example/
  */
 
-public class MainActivity extends AppCompatActivity implements SignInCallBack {
+public class MainActivity extends AppCompatActivity{
 
     BottomNavigationView bottomNavigation;
 
@@ -52,14 +52,14 @@ public class MainActivity extends AppCompatActivity implements SignInCallBack {
 
     public User user;
 
-    //Implement interrupted exception throw on database object instantiation
-    {
-        try {
-            database = new Database(this);
-        } catch (InterruptedException e) {
-            e.printStackTrace();
-        }
-    }
+//    //Implement interrupted exception throw on database object instantiation
+//    {
+//        try {
+//            database = new Database(this);
+//        } catch (InterruptedException e) {
+//            e.printStackTrace();
+//        }
+//    }
 
     // VERY IMPORTANT FUNCTION
     // searchShow is set to false by default
@@ -95,6 +95,7 @@ public class MainActivity extends AppCompatActivity implements SignInCallBack {
 
         setSupportActionBar(findViewById(R.id.app_toolbar));
         toolbar = getSupportActionBar();
+        database = new Database();
 
         bottomNavigation = findViewById(R.id.bottom_navigation);
         bottomNavigation.setOnNavigationItemSelectedListener(mOnNavigationItemSelectedListener);
@@ -102,7 +103,27 @@ public class MainActivity extends AppCompatActivity implements SignInCallBack {
         toolbar.setTitle("Home");
 
         //anonymous authentication testing
-        database.authenticateAnon();
+        database.authenticateAnon(new GeneralDataCallBack() {
+            @Override
+            public void onDataReturn(Object returnedData) {
+                String userID = (String) returnedData;
+                database = Database.getDataBase();
+
+                user = User.getUser();
+                user.setUserUniqueID(userID);
+
+                if (user.getUserName().length() == 0){
+                    user.setUserName("User - " + userID.substring(0,4));
+                }
+
+                final FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
+                transaction.replace(R.id.container, homePage.newInstance(""));
+                transaction.addToBackStack(null);
+                transaction.commitAllowingStateLoss();
+
+
+            }
+        });
 
     } //onCreate
 
@@ -224,25 +245,5 @@ public class MainActivity extends AppCompatActivity implements SignInCallBack {
                     return false;
                 }
             };
-
-    @Override
-    public void updateHomeScreen(String userID) {
-
-        database = Database.getDataBase();
-
-        user = User.getUser();
-        user.setUserUniqueID(userID);
-
-        if (user.getUserName().length() == 0){
-            user.setUserName("User - " + userID.substring(0,4));
-        }
-
-        final FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
-        transaction.replace(R.id.container, homePage.newInstance(""));
-        transaction.addToBackStack(null);
-        transaction.commitAllowingStateLoss();
-
-
-    }
 
 }//mainActivity
