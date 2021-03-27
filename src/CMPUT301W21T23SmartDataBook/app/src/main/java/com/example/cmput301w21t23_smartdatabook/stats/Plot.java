@@ -1,4 +1,6 @@
-package com.example.cmput301w21t23_smartdatabook;
+package com.example.cmput301w21t23_smartdatabook.stats;
+
+import com.example.cmput301w21t23_smartdatabook.Experiment;
 
 /**
  * Class: Plot:

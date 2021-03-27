@@ -131,20 +131,28 @@ public class homePage extends Fragment implements FillDataCallBack {
         experimentDataList = new ArrayList<>();
         searchDataList = new ArrayList<>();
 
-        experimentAdapter = new CardList(getContext(), experimentDataList,1);
+        experimentAdapter = new CardList(getContext(), experimentDataList, new Hashtable<String, User>(), 1);
 
-        experimentList.setAdapter(experimentAdapter);
-
-        Toast.makeText(getContext(), "" + user.getUserName(), Toast.LENGTH_LONG).show();
+//        experimentAdapter = new CardList(getContext(), experimentDataList,1);
+//
+//        experimentList.setAdapter(experimentAdapter);
+//
+//        Toast.makeText(getContext(), "" + user.getUserName(), Toast.LENGTH_LONG).show();
 
         //Source: Erwin Kurniawan A; https://stackoverflow.com/users/7693494/erwin-kurniawan-a
         //Code: https://stackoverflow.com/questions/61930061/how-to-return-a-value-from-oncompletelistener-while-creating-user-with-email-and
         database.fillUserName(new FillUserCallBack() {
             @Override
-            public void getUserTable(Hashtable<String, String> UserName) {
+            public void getUserTable(Hashtable<String, User> UserName) {
                 database.fillDataList(new FillDataCallBack() {
                     @Override
                     public void getExpDataList(ArrayList<Experiment> DataList) {
+
+                        experimentAdapter = new CardList(getContext(), experimentDataList, UserName, 1);
+
+                        experimentList.setAdapter(experimentAdapter);
+
+                        Toast.makeText(getContext(), "" + user.getUserName(), Toast.LENGTH_LONG).show();
 
                         //Reset the experiment adapter for every onCreateView call
                         experimentAdapter.clear();
@@ -183,7 +191,6 @@ public class homePage extends Fragment implements FillDataCallBack {
                             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                                 Experiment exp = experimentDataList.get(position); // get the experiment from list
                                 Intent intent = new Intent(getActivity(), ExperimentDetails.class);
-//                                intent.putExtra("currentID", user.getUserUniqueID()); // pass position to ExperimentDetails class
                                 intent.putExtra("experiment", exp); // pass experiment object
                                 startActivity(intent);
                             }

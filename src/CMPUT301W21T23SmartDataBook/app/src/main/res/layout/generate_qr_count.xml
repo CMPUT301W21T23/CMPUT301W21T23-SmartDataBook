@@ -41,10 +41,10 @@
                 android:id="@+id/typeOfTrialEditText"
                 android:layout_width="110dp"
                 android:layout_height="wrap_content"
-                android:hint="Type of Trial"
-                android:textColorHint="@color/theme_opaque"
                 android:backgroundTint="@color/theme_default"
-                android:textAlignment="center"/>
+                android:hint="Type value"
+                android:textAlignment="center"
+                android:textColorHint="@color/theme_opaque" />
 
 
         </LinearLayout>

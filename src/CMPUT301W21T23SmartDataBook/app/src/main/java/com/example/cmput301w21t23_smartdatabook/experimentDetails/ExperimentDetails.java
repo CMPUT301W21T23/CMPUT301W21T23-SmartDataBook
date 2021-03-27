@@ -16,6 +16,7 @@ import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.example.cmput301w21t23_smartdatabook.BuildConfig;
+import com.example.cmput301w21t23_smartdatabook.QRCode.QRCodeActivity;
 import com.example.cmput301w21t23_smartdatabook.user.User;
 import com.example.cmput301w21t23_smartdatabook.comments.CommentActivity;
 import com.example.cmput301w21t23_smartdatabook.database.Database;
@@ -131,6 +132,9 @@ public class ExperimentDetails extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 // TODO: new QRCode activity
+                Intent intent = new Intent(ExperimentDetails.this, QRCodeActivity.class);
+                intent.putExtra("experiment", experiment);
+                startActivity(intent);
             }
         });
 

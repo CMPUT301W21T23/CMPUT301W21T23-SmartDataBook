@@ -33,8 +33,6 @@ import java.util.Hashtable;
  * @author Afaq Nabi, Bosco Chan
  */
 public class FavPage extends Fragment implements FillDataCallBack {
-    private static final String AP1 = "AP1";
-    private static final String AP2 = "AP2";
 
     private ListView favList;
     private static ArrayAdapter<Experiment> favAdapter;
@@ -58,8 +56,7 @@ public class FavPage extends Fragment implements FillDataCallBack {
         }
     }
 
-    public FavPage(){
-    }
+    public FavPage(){}
 
     public static FavPage newInstance(String user) {
         FavPage fragment = new FavPage();
@@ -78,6 +75,7 @@ public class FavPage extends Fragment implements FillDataCallBack {
     }
 
     public void doUpdate(String query, Fragment currentFragment) {
+
         currentQuery = query;
 
         if (currentQuery != null){
@@ -92,7 +90,7 @@ public class FavPage extends Fragment implements FillDataCallBack {
     }
 
     /**
-     * this emthod create the view of the user's favouritte experiments page
+     * this emthod create the view of the user's favourite experiments page
      * @param inflater
      * @param container
      * @param savedInstanceState
@@ -108,17 +106,20 @@ public class FavPage extends Fragment implements FillDataCallBack {
         favDataList = new ArrayList<>();
         searchDataList = new ArrayList<>();
 
-        favAdapter = new CardList(getContext(), favDataList, 2);
+        favAdapter = new CardList(getContext(), favDataList, new Hashtable<String, User>(), 1);
 
-        favList.setAdapter(favAdapter);
-
-        Toast.makeText(getContext(), "" + user.getUserUniqueID(), Toast.LENGTH_SHORT).show();
         database.fillUserName(new FillUserCallBack() {
             @Override
-            public void getUserTable(Hashtable<String, String> UserName) {
+            public void getUserTable(Hashtable<String, User> UserName) {
                 database.fillDataList(new FillDataCallBack() {
                     @Override
                     public void getExpDataList(ArrayList<Experiment> DataList) {
+
+                        favAdapter = new CardList(getContext(), favDataList, UserName,2);
+
+                        favList.setAdapter(favAdapter);
+
+                        Toast.makeText(getContext(), "" + user.getUserUniqueID(), Toast.LENGTH_SHORT).show();
 
                         //Reset the experiment adapter for every onCreateView call
                         favAdapter.clear();
@@ -126,8 +127,6 @@ public class FavPage extends Fragment implements FillDataCallBack {
 
                         //experimentDataList with added items ONLY exist inside the scope of this getExpDataList function
                         favDataList = DataList;
-
-                        //                Log.d("List", "" + favDataList.get(0).getExpName());
 
                         //Create a new searchDataList depending on the query
                         if (currentQuery != null) {
