@@ -50,6 +50,9 @@
         <activity android:name=".comments.RepliesActivity">
 
         </activity>
+        <activity android:name=".QRCode.QRCodeActivity">
+
+        </activity>
 
     </application>
 

@@ -28,14 +28,14 @@ public class QRCodeActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.generate_qr_binaomial);
 
-        setSupportActionBar(findViewById(R.id.app_toolbar));
-        ActionBar toolbar = getSupportActionBar();
-        assert toolbar != null;
+//        setSupportActionBar(findViewById(R.id.app_toolbar));
+//        ActionBar toolbar = getSupportActionBar();
+//        assert toolbar != null;
 
         Intent intent = getIntent();
         Experiment experiment = (Experiment) intent.getSerializableExtra("experiment");
 
-        toolbar.setTitle(experiment.getExpName());
+//        toolbar.setTitle(experiment.getExpName());
 
         EditText value = findViewById(R.id.passesEditTextBinomialQR);
         Switch toggle = findViewById(R.id.passFail);
@@ -52,7 +52,7 @@ public class QRCodeActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 String QRCodeMessage = experiment.getExpID()+","+user.getUserUniqueID()+","+value.getText().toString();
-                
+
                 value.setHint("# value");
 
                 ImageView QRCode = findViewById(R.id.binomialReplaceImageQrCode);
