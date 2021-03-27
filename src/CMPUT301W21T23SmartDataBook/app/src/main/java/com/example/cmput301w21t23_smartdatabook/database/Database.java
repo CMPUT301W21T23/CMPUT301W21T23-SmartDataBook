@@ -48,7 +48,7 @@ import java.util.concurrent.ExecutionException;
  */
 public class Database {
 
-    private FillDataCallBack fillDataCallBack;
+//    private FillDataCallBack fillDataCallBack;
     private SignInCallBack signInCallBack;
     private ArrayList<Experiment> experimentDataList = new ArrayList<>();
     private static final String TAG1 = "Your";
@@ -61,16 +61,16 @@ public class Database {
     FirebaseAuth mAuth;
     FirebaseFirestore db;
 
-    /**
-     * Constructor of the database class
-     * @param fillDataCallBack
-     * @throws InterruptedException
-     * @author Bosco Chan
-     */
-    public Database(FillDataCallBack fillDataCallBack) throws InterruptedException {
-        this.fillDataCallBack = fillDataCallBack;
-    }
-
+//    /**
+//     * Constructor of the database class
+//     * @param fillDataCallBack
+//     * @throws InterruptedException
+//     * @author Bosco Chan
+//     */
+//    public Database(FillDataCallBack fillDataCallBack) throws InterruptedException {
+//        this.fillDataCallBack = fillDataCallBack;
+//    }
+//
     public Database(SignInCallBack signInCallBack) throws InterruptedException {
         this.signInCallBack = signInCallBack;
     }
@@ -191,7 +191,7 @@ public class Database {
 
 
 
-    public void fillUserName(FillUserCallBack fillUserCallBack) {
+    public void fillUserName(GeneralDataCallBack generalDataCallBack) {
         db = FirebaseFirestore.getInstance();
 
         Hashtable<String, User> userNames = new Hashtable<String, User>();
@@ -218,9 +218,9 @@ public class Database {
                                  Log.d("Getting_user", "Success");
                              }
                          }
-                         fillUserCallBack.getUserTable(userNames);
+                         generalDataCallBack.onDataReturn(userNames);
                      } else {
-                         fillUserCallBack.getUserTable(new Hashtable<String, User>());
+                         generalDataCallBack.onDataReturn(new Hashtable<String, User>());
                      }
                  }
          });
@@ -233,9 +233,9 @@ public class Database {
      * (All experiments added to the experimentDataList ONLY exist in the SCOPE of the "onComplete()").
      * (Since ArrayAdapter<Experiment> experimentAdapter
      * @author Bosco Chan
-     * @param fillDataCallBack is the callback instance from a synchronous.
+     * @param generalDataCallBack is the callback instance from a synchronous.
      */
-    public void fillDataList(FillDataCallBack fillDataCallBack, ArrayAdapter<Experiment> experimentArrayAdapter, CollectionReference collection, String currentID, Hashtable<String, User> userNames) {
+    public void fillDataList(GeneralDataCallBack generalDataCallBack, ArrayAdapter<Experiment> experimentArrayAdapter, CollectionReference collection, String currentID, Hashtable<String, User> userNames) {
         db = FirebaseFirestore.getInstance();
         Log.d("USER_SIZE", String.valueOf(userNames.size()));
 
@@ -277,12 +277,12 @@ public class Database {
                             }
 
                             //Get callback to grab the populated dataList
-                            fillDataCallBack.getExpDataList(experimentDataList);
+                            generalDataCallBack.onDataReturn(experimentDataList);
                             experimentArrayAdapter.notifyDataSetChanged();
 
                         } else {
                             Log.d("Failure", "Error getting documents: ", task.getException());
-                            fillDataCallBack.getExpDataList(new ArrayList<>());
+                            generalDataCallBack.onDataReturn(new ArrayList<>());
                         }
                     }
                 });
