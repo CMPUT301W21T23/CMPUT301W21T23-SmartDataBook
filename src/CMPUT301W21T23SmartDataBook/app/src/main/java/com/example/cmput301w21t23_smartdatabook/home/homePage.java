@@ -126,8 +126,6 @@ public class homePage extends Fragment implements FillDataCallBack {
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.home_page, container, false);
 
-        Log.d("Hello", "CHECK--------------");
-
         experimentList = view.findViewById(R.id.experiment_list);
 
         experimentDataList = new ArrayList<>();

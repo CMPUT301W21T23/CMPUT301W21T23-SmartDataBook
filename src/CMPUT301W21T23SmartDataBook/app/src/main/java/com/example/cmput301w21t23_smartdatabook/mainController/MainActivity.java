@@ -138,7 +138,7 @@ public class MainActivity extends AppCompatActivity implements SignInCallBack {
                         ((homePage)currentFragment).doUpdate(query, currentFragment);
                     }
                     if (currentFragment instanceof FavPage) {
-                        ((FavPage)currentFragment).doUpdate(query);
+                        ((FavPage)currentFragment).doUpdate(query, currentFragment);
                     }
                 }
 

@@ -12,6 +12,7 @@ import android.widget.ListView;
 import android.widget.Toast;
 
 import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentTransaction;
 
 import com.example.cmput301w21t23_smartdatabook.database.FillDataCallBack;
 import com.example.cmput301w21t23_smartdatabook.database.Database;
@@ -38,9 +39,12 @@ public class FavPage extends Fragment implements FillDataCallBack {
     private ListView favList;
     private static ArrayAdapter<Experiment> favAdapter;
     private static ArrayList<Experiment> favDataList;
+    private static ArrayList<Experiment> searchDataList;
 
     private User user;
     private Database database;
+
+    private String currentQuery;
 
     FirebaseFirestore db = FirebaseFirestore.getInstance();
 
@@ -73,8 +77,18 @@ public class FavPage extends Fragment implements FillDataCallBack {
         }
     }
 
-    public void doUpdate(String query) {
-        Log.d("From_" + this.getClass().getSimpleName(), query);
+    public void doUpdate(String query, Fragment currentFragment) {
+        currentQuery = query;
+
+        if (currentQuery != null){
+            //Source: Michele Lacorte; https://stackoverflow.com/users/4529790/michele-lacorte
+            //Code: https://stackoverflow.com/questions/32359727/method-to-refresh-fragment-content-when-data-changed-like-recall-oncreateview
+            //Refresh the current fragment after assigning a the currentQuery
+            FragmentTransaction fragmentTransaction = getFragmentManager().beginTransaction();
+            fragmentTransaction.detach(currentFragment);
+            fragmentTransaction.attach(currentFragment);
+            fragmentTransaction.commit();
+        }
     }
 
     /**
@@ -92,8 +106,10 @@ public class FavPage extends Fragment implements FillDataCallBack {
 
         favList = view.findViewById(R.id.followedExpListView);
         favDataList = new ArrayList<>();
+        searchDataList = new ArrayList<>();
 
         favAdapter = new CardList(getContext(), favDataList, 2);
+
         favList.setAdapter(favAdapter);
 
         Toast.makeText(getContext(), "" + user.getUserUniqueID(), Toast.LENGTH_SHORT).show();
@@ -104,11 +120,37 @@ public class FavPage extends Fragment implements FillDataCallBack {
                     @Override
                     public void getExpDataList(ArrayList<Experiment> DataList) {
 
+                        //Reset the experiment adapter for every onCreateView call
+                        favAdapter.clear();
+                        searchDataList.clear();
+
                         //experimentDataList with added items ONLY exist inside the scope of this getExpDataList function
                         favDataList = DataList;
-                        favAdapter.addAll(DataList);
 
                         //                Log.d("List", "" + favDataList.get(0).getExpName());
+
+                        //Create a new searchDataList depending on the query
+                        if (currentQuery != null) {
+                            for (Experiment experiment : favDataList) {
+                                if (experiment.getExpName().equals(currentQuery) ||
+                                        experiment.getOwnerUserName().equals(currentQuery) ||
+                                        experiment.getDate().equals(currentQuery) ||
+                                        experiment.getDescription().contains(currentQuery)) {
+
+                                    Log.d("experiment", ""+ experiment.getExpName());
+                                    searchDataList.add(experiment);
+
+                                }
+                            }
+
+                            favAdapter.clear();
+                            favAdapter.addAll(searchDataList);
+
+                            Log.d("search", ""+searchDataList.size());
+
+                        }else{
+                            favAdapter.addAll(favDataList);
+                        }
 
                         favAdapter.notifyDataSetChanged();
 
