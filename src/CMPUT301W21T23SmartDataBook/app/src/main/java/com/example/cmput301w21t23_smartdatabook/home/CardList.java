@@ -212,8 +212,6 @@ public class CardList extends ArrayAdapter<Experiment> {
             experimentName.setText(experiment.getExpName());
             ownerName.setText(experiment.getOwnerUserID());
 
-//            return view1;
-
         }
 
         return view;

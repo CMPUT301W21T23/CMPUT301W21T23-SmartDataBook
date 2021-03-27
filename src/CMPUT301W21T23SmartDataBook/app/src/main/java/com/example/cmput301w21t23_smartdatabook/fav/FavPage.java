@@ -128,8 +128,6 @@ public class FavPage extends Fragment implements FillDataCallBack {
                         //experimentDataList with added items ONLY exist inside the scope of this getExpDataList function
                         favDataList = DataList;
 
-                        //                Log.d("List", "" + favDataList.get(0).getExpName());
-
                         //Create a new searchDataList depending on the query
                         if (currentQuery != null) {
                             for (Experiment experiment : favDataList) {
