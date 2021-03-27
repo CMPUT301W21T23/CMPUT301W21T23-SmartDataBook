@@ -2,7 +2,6 @@ package com.example.cmput301w21t23_smartdatabook.QRCode;
 
 import android.graphics.Bitmap;
 import android.graphics.Color;
-import android.widget.ImageView;
 
 import com.google.zxing.BarcodeFormat;
 import com.google.zxing.WriterException;
@@ -12,9 +11,8 @@ import com.google.zxing.qrcode.QRCodeWriter;
 // https://stackoverflow.com/questions/8800919/how-to-generate-a-qr-code-for-an-android-application
 public class QRCode {
     QRCodeWriter writer = new QRCodeWriter();
-//    Bitmap myBitmap = QRCode.from("www").bitmap();
 
-    public void generate(String content){
+    public Bitmap generate(String content){
         BitMatrix bitMatrix = null;
 
         try {
@@ -32,7 +30,7 @@ public class QRCode {
             }
         }
 //        ((ImageView) findViewById(R.id.img_result_qr)).setImageBitmap(bmp);
-
+        return bmp;
     }
 
 //    try {

@@ -42,20 +42,19 @@
                 android:layout_width="110dp"
                 android:layout_height="wrap_content"
                 android:layout_marginRight="40dp"
-                android:hint="# pass"
-                android:textColorHint="@color/theme_opaque"
                 android:backgroundTint="@color/theme_default"
-                android:textAlignment="center"/>
-
-            <EditText
-                android:id="@+id/failsEditTextBinomialQR"
-                android:layout_width="110dp"
-                android:layout_height="wrap_content"
-                android:hint="# fail"
-                android:layout_marginRight="20dp"
+                android:hint="# pass"
                 android:textAlignment="center"
-                android:textColorHint="@color/theme_opaque"
-                android:backgroundTint="@color/theme_default"/>
+                android:textColorHint="@color/theme_opaque" />
+
+            <Switch
+                android:id="@+id/passFail"
+                android:layout_width="174dp"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:text="Switch"
+                android:visibility="invisible" />
+
         </LinearLayout>
 
         <LinearLayout
@@ -80,11 +79,12 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center">
+
             <com.google.android.material.button.MaterialButton
+                android:id="@+id/generateCodeBTNBinomial"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Generate"
-                android:id="@+id/generateCodeBTNBinomial"/>
+                android:text="Generate" />
         </LinearLayout>
 
 
