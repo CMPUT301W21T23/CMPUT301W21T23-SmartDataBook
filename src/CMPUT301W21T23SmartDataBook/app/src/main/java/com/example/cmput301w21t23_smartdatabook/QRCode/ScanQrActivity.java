@@ -2,6 +2,7 @@ package com.example.cmput301w21t23_smartdatabook.QRCode;
 
 import android.Manifest;
 import android.os.Bundle;
+import android.util.Log;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
@@ -53,7 +54,8 @@ public class ScanQrActivity extends AppCompatActivity implements ZXingScannerVie
 
 	@Override
 	public void handleResult(Result rawResult) {
-//		String data=rawResult.getText().toString();
+		String data=rawResult.getText().toString();
+		Log.d("Test", data);
 
 //		dbref.push().setValue(data)
 //				.addOnCompleteListener(new OnCompleteListener<Void>() {
@@ -75,7 +77,7 @@ public class ScanQrActivity extends AppCompatActivity implements ZXingScannerVie
 	protected void onResume() {
 		super.onResume();
 		scannerView.setResultHandler(this);
-		scannerView.startCamera();
+//		scannerView.startCamera();
 	}
 }
 
