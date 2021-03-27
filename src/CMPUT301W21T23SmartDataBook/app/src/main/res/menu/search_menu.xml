@@ -10,5 +10,9 @@
             app:showAsAction="always|collapseActionView"
             android:enabled="true"
             android:actionLayout="@layout/activity_main"/>
+    <item
+            android:title="Item"
+            app:showAsAction="always"
+            android:icon="@drawable/baseline_qr_code_scanner_white_48" />
 
 </menu>
