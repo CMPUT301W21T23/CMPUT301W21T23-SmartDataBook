@@ -14,6 +14,7 @@ import android.widget.Toast;
 
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.Hashtable;
 import java.util.Map;
 
 import androidx.annotation.NonNull;
@@ -45,6 +46,8 @@ public class CardList extends ArrayAdapter<Experiment> {
     private int index;
     private User user = User.getUser();
 
+    private Hashtable<String, User> UserName;
+
     public ArrayList<Experiment> getExperiments() {
         return experiments;
     }
@@ -59,11 +62,12 @@ public class CardList extends ArrayAdapter<Experiment> {
      * @param experiments
      * @param index
      */
-    public CardList(Context context, ArrayList<Experiment> experiments, int index) {
+    public CardList(Context context, ArrayList<Experiment> experiments, Hashtable<String, User> UserName, int index) {
         super(context,0, experiments);
         this.experiments = experiments;
         this.context = context;
         this.index = index;
+        this.UserName = UserName;
     }
 
     /**
@@ -170,10 +174,10 @@ public class CardList extends ArrayAdapter<Experiment> {
             View userInfoView = LayoutInflater.from(getContext()).inflate(R.layout.view_profile, null);
 
             TextView username = userInfoView.findViewById(R.id.expOwner);
-            username.setText("Username: " + user.getUserName());
+            username.setText("Username: " + experiment.getOwnerUserName());
 
             TextView email = userInfoView.findViewById(R.id.expContact);;
-            email.setText("Email: " + user.getUserContact());
+            email.setText("Email: " + UserName.get(experiment.getOwnerUserID()).getUserContact() );
 
             ownerName.setOnClickListener(new View.OnClickListener() {
                 @Override

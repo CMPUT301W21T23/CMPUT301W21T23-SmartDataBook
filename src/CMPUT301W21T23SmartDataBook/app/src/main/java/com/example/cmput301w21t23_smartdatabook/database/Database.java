@@ -116,8 +116,6 @@ public class Database {
     //Task will be executed here. Done in the background. Called Asynchronous task.
     /**
      * This function delete trials from the database
-     * @param experiment
-     * @param parentCollection
      */
     public void deleteTrialFromDB(DocumentReference DocRef){
         DocRef.delete();
@@ -196,7 +194,7 @@ public class Database {
     public void fillUserName(FillUserCallBack fillUserCallBack) {
         db = FirebaseFirestore.getInstance();
 
-        Hashtable<String, String> userNames = new Hashtable<String, String>();
+        Hashtable<String, User> userNames = new Hashtable<String, User>();
 
         db.collection("Users")
             .get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
@@ -210,13 +208,19 @@ public class Database {
                      if (task.isSuccessful()) {
                          for (QueryDocumentSnapshot document : task.getResult()) {
                              if (document.getData().get("UUID") != null && document.getData().get("UserName") != null) {
-                                 userNames.put(document.getData().get("UUID").toString(), document.getData().get("UserName").toString());
+
+                                 User user = new User(document.getData().get("UserName").toString(),
+                                         document.getData().get("Email").toString(),
+                                         document.getData().get("UUID").toString());
+
+                                 userNames.put(document.getData().get("UUID").toString(), user );
+
                                  Log.d("Getting_user", "Success");
                              }
                          }
                          fillUserCallBack.getUserTable(userNames);
                      } else {
-                         fillUserCallBack.getUserTable(new Hashtable<String, String>());
+                         fillUserCallBack.getUserTable(new Hashtable<String, User>());
                      }
                  }
          });
@@ -231,7 +235,7 @@ public class Database {
      * @author Bosco Chan
      * @param fillDataCallBack is the callback instance from a synchronous.
      */
-    public void fillDataList(FillDataCallBack fillDataCallBack, ArrayAdapter<Experiment> experimentArrayAdapter, CollectionReference collection, String currentID, Hashtable<String, String> userNames) {
+    public void fillDataList(FillDataCallBack fillDataCallBack, ArrayAdapter<Experiment> experimentArrayAdapter, CollectionReference collection, String currentID, Hashtable<String, User> userNames) {
         db = FirebaseFirestore.getInstance();
         Log.d("USER_SIZE", String.valueOf(userNames.size()));
 
@@ -254,7 +258,7 @@ public class Database {
                                     experimentDataList.add( new Experiment(
                                             document.getData().get("Name").toString(),
                                             document.getData().get("UUID").toString(),
-                                            userNames.get(document.getData().get("UUID").toString()),
+                                            userNames.get(document.getData().get("UUID").toString()).getUserName(),
                                             document.getData().get("Trial Type").toString(),
                                             document.getData().get("Description").toString(),
                                             giveBoolean( document.getData().get("LocationStatus").toString() ),

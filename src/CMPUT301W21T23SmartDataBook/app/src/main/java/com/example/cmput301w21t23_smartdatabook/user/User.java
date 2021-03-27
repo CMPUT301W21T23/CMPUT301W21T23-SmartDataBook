@@ -19,7 +19,7 @@ public class User implements Serializable {
     public String userContact = "";
     public String userUniqueID;
 
-    private User(){}
+    public User(){}
 
     public static User getUser(){
         if (user == null){
