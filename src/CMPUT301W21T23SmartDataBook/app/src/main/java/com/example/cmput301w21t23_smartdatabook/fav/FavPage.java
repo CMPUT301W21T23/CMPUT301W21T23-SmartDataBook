@@ -14,9 +14,8 @@ import android.widget.Toast;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentTransaction;
 
-import com.example.cmput301w21t23_smartdatabook.database.FillDataCallBack;
 import com.example.cmput301w21t23_smartdatabook.database.Database;
-import com.example.cmput301w21t23_smartdatabook.database.FillUserCallBack;
+import com.example.cmput301w21t23_smartdatabook.database.GeneralDataCallBack;
 import com.example.cmput301w21t23_smartdatabook.user.User;
 import com.example.cmput301w21t23_smartdatabook.experimentDetails.ExperimentDetails;
 import com.example.cmput301w21t23_smartdatabook.home.CardList;
@@ -32,7 +31,7 @@ import java.util.Hashtable;
  * This class consists the page of the user's favourite experiments
  * @author Afaq Nabi, Bosco Chan
  */
-public class FavPage extends Fragment implements FillDataCallBack {
+public class FavPage extends Fragment {
 
     private ListView favList;
     private static ArrayAdapter<Experiment> favAdapter;
@@ -47,14 +46,14 @@ public class FavPage extends Fragment implements FillDataCallBack {
     FirebaseFirestore db = FirebaseFirestore.getInstance();
 
 
-    //Implement interrupted exception throw on database object instantiation
-    {
-        try {
-            database = new Database(this);
-        } catch (InterruptedException e) {
-            e.printStackTrace();
-        }
-    }
+//    //Implement interrupted exception throw on database object instantiation
+//    {
+//        try {
+//            database = new Database(this);
+//        } catch (InterruptedException e) {
+//            e.printStackTrace();
+//        }
+//    }
 
     public FavPage(){}
 
@@ -105,15 +104,18 @@ public class FavPage extends Fragment implements FillDataCallBack {
         favList = view.findViewById(R.id.followedExpListView);
         favDataList = new ArrayList<>();
         searchDataList = new ArrayList<>();
+        database = new Database();
 
         favAdapter = new CardList(getContext(), favDataList, new Hashtable<String, User>(), 1);
 
-        database.fillUserName(new FillUserCallBack() {
+        database.fillUserName(new GeneralDataCallBack() {
             @Override
-            public void getUserTable(Hashtable<String, User> UserName) {
-                database.fillDataList(new FillDataCallBack() {
+            public void onDataReturn(Object returnedData) {
+                Hashtable<String, User> UserName = (Hashtable<String, User>) returnedData;
+                database.fillDataList(new GeneralDataCallBack() {
                     @Override
-                    public void getExpDataList(ArrayList<Experiment> DataList) {
+                    public void onDataReturn(Object returnedData) {
+                        ArrayList<Experiment> DataList = (ArrayList<Experiment>) returnedData;
 
                         favAdapter = new CardList(getContext(), favDataList, UserName,2);
 
@@ -171,14 +173,14 @@ public class FavPage extends Fragment implements FillDataCallBack {
         return view;
     }//onCreateView
 
-    /**
-     * Assigns the experimentDataList with the callback-acquired DataList containing Experiment objects
-     * @param DataList is the Experiment-populated array list found in Database.fillDataList()
-     */
-    @Override
-    public void getExpDataList(ArrayList<Experiment> DataList) {
-        favDataList = DataList;
-    }
+//    /**
+//     * Assigns the experimentDataList with the callback-acquired DataList containing Experiment objects
+//     * @param DataList is the Experiment-populated array list found in Database.fillDataList()
+//     */
+//    @Override
+//    public void getExpDataList(ArrayList<Experiment> DataList) {
+//        favDataList = DataList;
+//    }
 
     @Override
     public void onResume(){

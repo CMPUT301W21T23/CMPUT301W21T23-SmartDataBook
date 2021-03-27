@@ -15,10 +15,9 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentTransaction;
 
-import com.example.cmput301w21t23_smartdatabook.database.FillDataCallBack;
 import com.example.cmput301w21t23_smartdatabook.database.Database;
 import com.example.cmput301w21t23_smartdatabook.Experiment;
-import com.example.cmput301w21t23_smartdatabook.database.FillUserCallBack;
+import com.example.cmput301w21t23_smartdatabook.database.GeneralDataCallBack;
 import com.example.cmput301w21t23_smartdatabook.mainController.MainActivity;
 import com.example.cmput301w21t23_smartdatabook.user.User;
 import com.example.cmput301w21t23_smartdatabook.experimentDetails.ExperimentDetails;
@@ -41,7 +40,7 @@ import java.util.Hashtable;
  * @see Fragment, Firebase
  */
 
-public class homePage extends Fragment implements FillDataCallBack {
+public class homePage extends Fragment {
 
     private ListView experimentList;
     private ArrayList<Experiment> experimentDataList;
@@ -54,23 +53,23 @@ public class homePage extends Fragment implements FillDataCallBack {
     private String currentQuery;
     private ArrayList<Experiment> searchDataList;
 
-    //Implement interrupted exception throw on database object instantiation
-    {
-        try {
-            database = new Database(this);
-        } catch (InterruptedException e) {
-            e.printStackTrace();
-        }
-    }
+//    //Implement interrupted exception throw on database object instantiation
+//    {
+//        try {
+//            database = new Database();
+//        } catch (InterruptedException e) {
+//            e.printStackTrace();
+//        }
+//    }
 
-    /**
-     * Assigns the experimentDataList with the callback-acquired DataList containing Experiment objects
-     * @param DataList is the Experiment-populated array list found in Database.fillDataList()
-     */
-    @Override
-    public void getExpDataList(ArrayList<Experiment> DataList) {
-        experimentDataList = DataList;
-    }
+//    /**
+//     * Assigns the experimentDataList with the callback-acquired DataList containing Experiment objects
+//     * @param DataList is the Experiment-populated array list found in Database.fillDataList()
+//     */
+//    @Override
+//    public void getExpDataList(ArrayList<Experiment> DataList) {
+//        experimentDataList = DataList;
+//    }
 
     FirebaseFirestore db = FirebaseFirestore.getInstance();
 
@@ -119,6 +118,7 @@ public class homePage extends Fragment implements FillDataCallBack {
             user = User.getUser();
         }
         mainActivity = (MainActivity) getActivity();
+        database = new Database();
     }
 
     @Override
@@ -141,12 +141,14 @@ public class homePage extends Fragment implements FillDataCallBack {
 
         //Source: Erwin Kurniawan A; https://stackoverflow.com/users/7693494/erwin-kurniawan-a
         //Code: https://stackoverflow.com/questions/61930061/how-to-return-a-value-from-oncompletelistener-while-creating-user-with-email-and
-        database.fillUserName(new FillUserCallBack() {
+        database.fillUserName(new GeneralDataCallBack() {
             @Override
-            public void getUserTable(Hashtable<String, User> UserName) {
-                database.fillDataList(new FillDataCallBack() {
+            public void onDataReturn(Object returnedObject) {
+                Hashtable<String, User> UserName = (Hashtable<String, User>) returnedObject;
+                database.fillDataList(new GeneralDataCallBack() {
                     @Override
-                    public void getExpDataList(ArrayList<Experiment> DataList) {
+                    public void onDataReturn(Object returnedObject) {
+                        ArrayList<Experiment> DataList = (ArrayList<Experiment>) returnedObject;
 
                         experimentAdapter = new CardList(getContext(), experimentDataList, UserName, 1);
 
