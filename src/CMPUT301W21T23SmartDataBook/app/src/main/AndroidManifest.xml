@@ -53,6 +53,9 @@
         <activity android:name=".QRCode.QRCodeActivity">
 
         </activity>
+        <activity android:name=".QRCode.ScanQrActivity">
+
+        </activity>
 
     </application>
 

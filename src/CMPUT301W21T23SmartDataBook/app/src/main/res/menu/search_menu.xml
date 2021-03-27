@@ -13,6 +13,7 @@
     <item
             android:title="Item"
             app:showAsAction="always"
-            android:icon="@drawable/baseline_qr_code_scanner_white_48" />
+            android:icon="@drawable/baseline_qr_code_scanner_white_48"
+            android:id="@+id/app_bar_qr" />
 
 </menu>

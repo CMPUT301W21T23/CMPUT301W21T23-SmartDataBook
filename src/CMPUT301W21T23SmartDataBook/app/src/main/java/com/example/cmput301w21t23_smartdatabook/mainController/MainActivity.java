@@ -2,6 +2,7 @@ package com.example.cmput301w21t23_smartdatabook.mainController;
 
 import android.app.SearchManager;
 import android.content.Context;
+import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.Menu;
@@ -17,6 +18,7 @@ import androidx.appcompat.widget.SearchView;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentTransaction;
 
+import com.example.cmput301w21t23_smartdatabook.QRCode.ScanQrActivity;
 import com.example.cmput301w21t23_smartdatabook.R;
 import com.example.cmput301w21t23_smartdatabook.archives.ArchivePage;
 import com.example.cmput301w21t23_smartdatabook.database.Database;
@@ -109,6 +111,19 @@ public class MainActivity extends AppCompatActivity implements SignInCallBack {
         FirebaseAuth.getInstance().getCurrentUser().delete();
     }
 
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch (item.getItemId()) {
+            case R.id.app_bar_qr:
+                startActivity(new Intent(this, ScanQrActivity.class));
+                break;
+            default:
+                super.onOptionsItemSelected(item);
+        }
+
+        return true;
+    }
+
 
     /**
      * THis method set up menu's search icon
@@ -124,6 +139,7 @@ public class MainActivity extends AppCompatActivity implements SignInCallBack {
 
         SearchManager searchManager = (SearchManager) getSystemService(Context.SEARCH_SERVICE);
         SearchView searchView = (SearchView) menu.findItem(R.id.app_bar_search).getActionView();
+
 
         // I have no idea
         searchView.setSearchableInfo(searchManager.getSearchableInfo(getComponentName()));
