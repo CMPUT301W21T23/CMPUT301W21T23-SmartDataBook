@@ -53,7 +53,7 @@ public class QRCodeActivity extends AppCompatActivity {
             public void onClick(View v) {
                 String QRCodeMessage = experiment.getExpID()+","+user.getUserUniqueID()+","+value.getText().toString();
 
-                value.setHint("# value");
+                value.setText("");
 
                 ImageView QRCode = findViewById(R.id.binomialReplaceImageQrCode);
 

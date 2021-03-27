@@ -43,7 +43,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginRight="40dp"
                 android:backgroundTint="@color/theme_default"
-                android:hint="# pass"
+                android:hint="# value"
                 android:textAlignment="center"
                 android:textColorHint="@color/theme_opaque" />
 
