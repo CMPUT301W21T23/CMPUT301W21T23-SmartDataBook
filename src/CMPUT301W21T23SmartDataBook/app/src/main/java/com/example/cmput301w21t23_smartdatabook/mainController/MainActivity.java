@@ -24,7 +24,6 @@ import com.example.cmput301w21t23_smartdatabook.R;
 import com.example.cmput301w21t23_smartdatabook.archives.ArchivePage;
 import com.example.cmput301w21t23_smartdatabook.database.Database;
 import com.example.cmput301w21t23_smartdatabook.database.GeneralDataCallBack;
-import com.example.cmput301w21t23_smartdatabook.database.SignInCallBack;
 import com.example.cmput301w21t23_smartdatabook.fav.FavPage;
 import com.example.cmput301w21t23_smartdatabook.home.addExpFragment;
 import com.example.cmput301w21t23_smartdatabook.home.homePage;
