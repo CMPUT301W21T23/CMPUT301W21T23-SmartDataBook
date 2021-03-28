@@ -154,7 +154,7 @@ public class homePage extends Fragment {
 
                         experimentList.setAdapter(experimentAdapter);
 
-                        Toast.makeText(getContext(), "" + user.getUserName(), Toast.LENGTH_LONG).show();
+//                        Toast.makeText(getContext(), "" + user.getUserName(), Toast.LENGTH_LONG).show();
 
                         //Reset the experiment adapter for every onCreateView call
                         experimentAdapter.clear();
