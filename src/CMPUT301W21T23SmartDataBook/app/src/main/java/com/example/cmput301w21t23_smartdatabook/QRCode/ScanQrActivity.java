@@ -18,6 +18,7 @@ import com.google.android.gms.tasks.Task;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.zxing.Result;
 import com.karumi.dexter.Dexter;
+import com.karumi.dexter.DexterBuilder;
 import com.karumi.dexter.PermissionToken;
 import com.karumi.dexter.listener.PermissionDeniedResponse;
 import com.karumi.dexter.listener.PermissionGrantedResponse;
@@ -37,6 +38,7 @@ public class ScanQrActivity extends AppCompatActivity implements ZXingScannerVie
 		super.onCreate(savedInstanceState);
 		scannerView = new ZXingScannerView(this);
 		setContentView(scannerView);
+
 		Dexter.withContext(getApplicationContext())
 				.withPermission(Manifest.permission.CAMERA)
 				.withListener(new PermissionListener() {
@@ -46,7 +48,6 @@ public class ScanQrActivity extends AppCompatActivity implements ZXingScannerVie
 					}
 					@Override
 					public void onPermissionDenied(PermissionDeniedResponse permissionDeniedResponse) {
-
 						Toast.makeText(getBaseContext(), ""+permissionDeniedResponse.isPermanentlyDenied(),  Toast.LENGTH_SHORT).show();
 
 						//Source: Opeyemi, https://stackoverflow.com/users/8226150/opeyemi
@@ -79,7 +80,6 @@ public class ScanQrActivity extends AppCompatActivity implements ZXingScannerVie
 							finish();
 						}
 
-
 					}
 					@Override
 					public void onPermissionRationaleShouldBeShown(PermissionRequest permissionRequest, PermissionToken permissionToken) {
@@ -94,17 +94,17 @@ public class ScanQrActivity extends AppCompatActivity implements ZXingScannerVie
 	public void handleResult(Result rawResult) {
 
 		HashMap<String, String> data = new HashMap<>();
-		data.put("QRValue",rawResult.getText());
-//		dbref.push().setValue(data)
-//				.addOnCompleteListener(new OnCompleteListener<Void>() {
-//					@Override
-//					public void onComplete(@NonNull Task<Void> task) {
-//						MainActivity.qrtext.setText("Data inserted Successfully");
-//						onBackPressed();
-//					}
-//				});
 
-		FirebaseFirestore.getInstance().collection("QR").document(UUID.randomUUID().toString())
+		String[] values = rawResult.getText().split(",");
+
+		String trialUUID = UUID.randomUUID().toString();
+		data.put("Region On", values[4]);
+		data.put("Trial Type", values[3]);
+		data.put("Trial Value", values[2]);
+		data.put("TrialID", ""+trialUUID);
+		data.put("UUID", values[1]);
+
+		FirebaseFirestore.getInstance().collection("Experiments").document(values[0]).collection("Trials").document(""+trialUUID)
 				.set(data)
 				.addOnCompleteListener(new OnCompleteListener<Void>() {
 					@Override

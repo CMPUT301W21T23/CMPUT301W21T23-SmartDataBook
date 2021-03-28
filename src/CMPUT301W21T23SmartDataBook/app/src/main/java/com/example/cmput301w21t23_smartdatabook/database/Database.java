@@ -145,6 +145,7 @@ public class Database {
     }
 
     public void fillTrialList(CollectionReference coll, ArrayList<Trial> trialDataList, ArrayAdapter<Trial> trialArrayAdapter){
+
         coll.get()
                 .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
                     @Override

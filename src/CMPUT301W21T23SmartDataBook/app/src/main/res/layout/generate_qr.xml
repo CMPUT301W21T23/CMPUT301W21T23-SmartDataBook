@@ -43,6 +43,7 @@
                 android:layout_height="wrap_content"
                 android:backgroundTint="@color/theme_default"
                 android:hint="# value"
+                android:inputType="numberSigned"
                 android:textAlignment="center"
                 android:textColorHint="@color/theme_opaque" />
 
@@ -51,32 +52,33 @@
         </LinearLayout>
 
 
-
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="horizontal"
             android:gravity="center"
+            android:orientation="horizontal"
             android:paddingLeft="30dp">
 
             <RadioGroup
-                android:id="@+id/radioGroup"
-                android:checkedButton="@+id/pass_radio_button"
+                android:id="@+id/binoRadioGroup"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:checkedButton="@+id/pass_radio_button"
                 android:clickable="true">
+
                 <RadioButton
                     android:id="@+id/pass_radio_button"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
-                    android:text="Pass"
-                    android:buttonTint="@color/theme_default"/>
+                    android:buttonTint="@color/theme_default"
+                    android:text="Pass" />
+
                 <RadioButton
                     android:id="@+id/fail_radio_button"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
-                    android:text="Fail"
-                    android:buttonTint="@color/theme_default"/>
+                    android:buttonTint="@color/theme_default"
+                    android:text="Fail" />
             </RadioGroup>
 
         </LinearLayout>
