@@ -13,6 +13,9 @@ import android.widget.Toast;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.Task;
+import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.zxing.Result;
 import com.karumi.dexter.Dexter;
 import com.karumi.dexter.PermissionToken;
@@ -21,12 +24,14 @@ import com.karumi.dexter.listener.PermissionGrantedResponse;
 import com.karumi.dexter.listener.PermissionRequest;
 import com.karumi.dexter.listener.single.PermissionListener;
 
+import java.util.HashMap;
+import java.util.UUID;
+
 import me.dm7.barcodescanner.zxing.ZXingScannerView;
 
 public class ScanQrActivity extends AppCompatActivity implements ZXingScannerView.ResultHandler{
 	ZXingScannerView scannerView;
 
-	public static String CameraPermission;
 	@Override
     protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
@@ -39,9 +44,9 @@ public class ScanQrActivity extends AppCompatActivity implements ZXingScannerVie
 					public void onPermissionGranted(PermissionGrantedResponse permissionGrantedResponse) {
 						scannerView.startCamera();
 					}
-
 					@Override
 					public void onPermissionDenied(PermissionDeniedResponse permissionDeniedResponse) {
+
 						Toast.makeText(getBaseContext(), ""+permissionDeniedResponse.isPermanentlyDenied(),  Toast.LENGTH_SHORT).show();
 
 						//Source: Opeyemi, https://stackoverflow.com/users/8226150/opeyemi
@@ -76,7 +81,6 @@ public class ScanQrActivity extends AppCompatActivity implements ZXingScannerVie
 
 
 					}
-
 					@Override
 					public void onPermissionRationaleShouldBeShown(PermissionRequest permissionRequest, PermissionToken permissionToken) {
 						permissionToken.continuePermissionRequest();
@@ -84,13 +88,31 @@ public class ScanQrActivity extends AppCompatActivity implements ZXingScannerVie
 					}
 				}).check();
 
-
 	}
 
 	@Override
 	public void handleResult(Result rawResult) {
-		String data=rawResult.getText().toString();
-		Log.d("Test", data);
+
+		HashMap<String, String> data = new HashMap<>();
+		data.put("QRValue",rawResult.getText());
+//		dbref.push().setValue(data)
+//				.addOnCompleteListener(new OnCompleteListener<Void>() {
+//					@Override
+//					public void onComplete(@NonNull Task<Void> task) {
+//						MainActivity.qrtext.setText("Data inserted Successfully");
+//						onBackPressed();
+//					}
+//				});
+
+		FirebaseFirestore.getInstance().collection("QR").document(UUID.randomUUID().toString())
+				.set(data)
+				.addOnCompleteListener(new OnCompleteListener<Void>() {
+					@Override
+					public void onComplete(@NonNull Task<Void> task) {
+						Toast.makeText(getBaseContext(), "Successfully saved QR value",  Toast.LENGTH_SHORT).show();
+						onBackPressed();
+					}
+				});
 
 	}
 
@@ -104,7 +126,13 @@ public class ScanQrActivity extends AppCompatActivity implements ZXingScannerVie
 	protected void onResume() {
 		super.onResume();
 		scannerView.setResultHandler(this);
-//		scannerView.startCamera();
 	}
+
+	@Override
+	protected void onDestroy() {
+		super.onDestroy();
+		scannerView.stopCamera();
+	}
+
 }
 
