@@ -84,12 +84,13 @@ public class QRCodeActivity extends AppCompatActivity {
         generate.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                String QRCodeMessage;
 
+                String QRCodeMessage;
                 value.setText("");
+
                 if (experiment.getTrialType().equals("Binomial")){
 
-                    QRCodeMessage = experiment.getExpID()+","+user.getUserUniqueID()+"," + findBinoType(binoChoice.getCheckedRadioButtonId()) +","+experiment.getTrialType()+","+experiment.getRegionOn();
+                    QRCodeMessage = experiment.getExpID()+","+user.getUserUniqueID()+"," + value.getText().toString() +","+experiment.getTrialType()+","+experiment.getRegionOn() + "," + findBinoType(binoChoice.getCheckedRadioButtonId());
 
 //                    if ( findBinoType(binoChoice.getCheckedRadioButtonId()) ){
 //                        QRCodeMessage+=",true";

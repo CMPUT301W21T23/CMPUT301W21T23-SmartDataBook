@@ -96,23 +96,37 @@ public class ScanQrActivity extends AppCompatActivity implements ZXingScannerVie
 		HashMap<String, String> data = new HashMap<>();
 
 		String[] values = rawResult.getText().split(",");
-
 		String trialUUID = UUID.randomUUID().toString();
-		data.put("Region On", values[4]);
-		data.put("Trial Type", values[3]);
-		data.put("Trial Value", values[2]);
-		data.put("TrialID", ""+trialUUID);
-		data.put("UUID", values[1]);
 
-		FirebaseFirestore.getInstance().collection("Experiments").document(values[0]).collection("Trials").document(""+trialUUID)
-				.set(data)
-				.addOnCompleteListener(new OnCompleteListener<Void>() {
-					@Override
-					public void onComplete(@NonNull Task<Void> task) {
-						Toast.makeText(getBaseContext(), "Successfully saved QR value",  Toast.LENGTH_SHORT).show();
-						onBackPressed();
-					}
-				});
+		if (values[3].equals("Binomial")){
+			//Need to add in given number of binomial trials
+//			FirebaseFirestore.getInstance().collection("Experiments").document(values[0]).collection("Trials").document(""+trialUUID)
+//					.set(data)
+//					.addOnCompleteListener(new OnCompleteListener<Void>() {
+//						@Override
+//						public void onComplete(@NonNull Task<Void> task) {
+//							Toast.makeText(getBaseContext(), "Successfully saved QR value",  Toast.LENGTH_SHORT).show();
+//							onBackPressed();
+//						}
+//					});
+		}else{
+			data.put("Region On", values[4]);
+			data.put("Trial Type", values[3]);
+			data.put("Trial Value", values[2]);
+			data.put("TrialID", ""+trialUUID);
+			data.put("UUID", values[1]);
+
+			FirebaseFirestore.getInstance().collection("Experiments").document(values[0]).collection("Trials").document(""+trialUUID)
+					.set(data)
+					.addOnCompleteListener(new OnCompleteListener<Void>() {
+						@Override
+						public void onComplete(@NonNull Task<Void> task) {
+							Toast.makeText(getBaseContext(), "Successfully saved QR value",  Toast.LENGTH_SHORT).show();
+							onBackPressed();
+						}
+					});
+		}
+
 
 	}
 
