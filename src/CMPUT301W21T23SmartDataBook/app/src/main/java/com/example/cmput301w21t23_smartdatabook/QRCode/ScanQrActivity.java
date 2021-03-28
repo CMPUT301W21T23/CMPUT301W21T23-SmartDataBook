@@ -30,7 +30,7 @@ public class ScanQrActivity extends AppCompatActivity implements ZXingScannerVie
 	@Override
     protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
-		scannerView=new ZXingScannerView(this);
+		scannerView = new ZXingScannerView(this);
 		setContentView(scannerView);
 		Dexter.withContext(getApplicationContext())
 				.withPermission(Manifest.permission.CAMERA)
@@ -57,14 +57,6 @@ public class ScanQrActivity extends AppCompatActivity implements ZXingScannerVie
 		String data=rawResult.getText().toString();
 		Log.d("Test", data);
 
-//		dbref.push().setValue(data)
-//				.addOnCompleteListener(new OnCompleteListener<Void>() {
-//					@Override
-//					public void onComplete(@NonNull Task<Void> task) {
-//						MainActivity.qrtext.setText("Data inserted Successfully");
-//						onBackPressed();
-//					}
-//				});
 	}
 
 	@Override

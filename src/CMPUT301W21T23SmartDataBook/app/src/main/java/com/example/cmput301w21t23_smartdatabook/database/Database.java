@@ -129,7 +129,19 @@ public class Database {
         data.put("Trial Value", trial.getValue());
         data.put("UUID", trial.getUid());
         data.put("TrialID", trial.getTrialID());
-        genericDocument.set(data);
+        genericDocument.set(data)
+                .addOnSuccessListener(new OnSuccessListener<Void>() {
+                    @Override
+                    public void onSuccess(Void aVoid) {
+                        Log.d("Trial!@#: ", "Trial added");
+                    }
+                })
+                .addOnFailureListener(new OnFailureListener() {
+                    @Override
+                    public void onFailure(@NonNull Exception e) {
+                        Log.d("Trial addition Fails: ", "trial");
+                    }
+                });
     }
 
     public void fillTrialList(CollectionReference coll, ArrayList<Trial> trialDataList, ArrayAdapter<Trial> trialArrayAdapter){

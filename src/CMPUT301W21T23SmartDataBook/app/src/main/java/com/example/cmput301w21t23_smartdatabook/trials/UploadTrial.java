@@ -114,13 +114,13 @@ public class UploadTrial extends AppCompatActivity {
                         @Override
                         public void onClick(DialogInterface dialog, int which) {
 //                            Log.d("Test", "test");
-                            Trial trial = new Trial(experiment.getRegionOn(),
-                                    experiment.getTrialType(),
-                                    true,
-                                    experiment.getOwnerUserID(),
-                                    UUID.randomUUID().toString());
                             for (int i = 0; i<Integer.parseInt(numBinomial.getText().toString()); i++){
                                 Log.d("Integer i: ", String.valueOf(i));
+                                Trial trial = new Trial(experiment.getRegionOn(),
+                                        experiment.getTrialType(),
+                                        true,
+                                        experiment.getOwnerUserID(),
+                                        UUID.randomUUID().toString());
                                 database.addTrialToDB(db.collection("Experiments")
                                         .document(experiment.getExpID())
                                         .collection("Trials")
@@ -132,13 +132,14 @@ public class UploadTrial extends AppCompatActivity {
                             .setNegativeButton("Add failure", new DialogInterface.OnClickListener() {
                             @Override
                             public void onClick(DialogInterface dialog, int which) {
-                                Trial trial = new Trial(experiment.getRegionOn(),
-                                        experiment.getTrialType(),
-                                        false,
-                                        experiment.getOwnerUserID(),
-                                        UUID.randomUUID().toString());
+                                
                                 for (int i = 0; i<Integer.parseInt(numBinomial.getText().toString()); i++){
                                     Log.d("Integer i: ", String.valueOf(i));
+                                    Trial trial = new Trial(experiment.getRegionOn(),
+                                            experiment.getTrialType(),
+                                            false,
+                                            experiment.getOwnerUserID(),
+                                            UUID.randomUUID().toString());
                                     database.addTrialToDB(db
                                             .collection("Experiments")
                                             .document(experiment.getExpID())
