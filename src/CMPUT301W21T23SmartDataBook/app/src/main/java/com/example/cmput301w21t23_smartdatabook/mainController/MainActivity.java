@@ -1,5 +1,6 @@
 package com.example.cmput301w21t23_smartdatabook.mainController;
 
+import android.Manifest;
 import android.app.SearchManager;
 import android.content.Context;
 import android.content.Intent;
@@ -31,6 +32,16 @@ import com.example.cmput301w21t23_smartdatabook.settings.SettingsPage;
 import com.example.cmput301w21t23_smartdatabook.user.User;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.firebase.auth.FirebaseAuth;
+import com.karumi.dexter.Dexter;
+import com.karumi.dexter.MultiplePermissionsReport;
+import com.karumi.dexter.PermissionToken;
+import com.karumi.dexter.listener.PermissionDeniedResponse;
+import com.karumi.dexter.listener.PermissionGrantedResponse;
+import com.karumi.dexter.listener.PermissionRequest;
+import com.karumi.dexter.listener.multi.MultiplePermissionsListener;
+import com.karumi.dexter.listener.single.PermissionListener;
+
+import java.util.List;
 
 /**
  * the Purpose of this class is to register the user in the database and initialize the bottom tab navigation
