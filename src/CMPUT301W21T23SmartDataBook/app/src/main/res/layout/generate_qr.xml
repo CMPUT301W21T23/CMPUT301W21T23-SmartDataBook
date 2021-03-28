@@ -5,7 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    android:layout_marginTop="100dp">
+    android:layout_marginTop="70dp">
 
 
     <androidx.constraintlayout.widget.ConstraintLayout
@@ -13,7 +13,7 @@
         android:layout_height="300dp">
 
         <ImageView
-            android:id="@+id/countReplaceImageQrCode"
+            android:id="@+id/ReplaceImageQrCode"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:src="@drawable/ic_generate_qr"
@@ -27,7 +27,7 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="20dp"
+        android:layout_marginTop="0dp"
         android:orientation="vertical">
 
         <LinearLayout
@@ -38,30 +38,62 @@
             android:orientation="horizontal">
 
             <EditText
-                android:id="@+id/typeOfTrialEditText"
+                android:id="@+id/passesEditTextQR"
                 android:layout_width="110dp"
                 android:layout_height="wrap_content"
                 android:backgroundTint="@color/theme_default"
-                android:hint="Type value"
+                android:hint="# value"
+                android:inputType="numberSigned"
                 android:textAlignment="center"
                 android:textColorHint="@color/theme_opaque" />
 
 
+
+        </LinearLayout>
+
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:orientation="horizontal"
+            android:paddingLeft="30dp">
+
+            <RadioGroup
+                android:id="@+id/binoRadioGroup"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:checkedButton="@+id/pass_radio_button"
+                android:clickable="true">
+
+                <RadioButton
+                    android:id="@+id/pass_radio_button"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:buttonTint="@color/theme_default"
+                    android:text="Pass" />
+
+                <RadioButton
+                    android:id="@+id/fail_radio_button"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:buttonTint="@color/theme_default"
+                    android:text="Fail" />
+            </RadioGroup>
+
         </LinearLayout>
 
         <LinearLayout
-            android:layout_width="wrap_content"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_gravity="center">
+            android:orientation="horizontal"
+            android:paddingLeft="30dp">
 
             <CheckBox
-                android:id="@+id/binomialTrialCheckBox"
+                android:id="@+id/TrialLocationCheckBox"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_below="@+id/buttonLinearLayout"
-                android:text="add location to QR code"
-                tools:layout_editor_absoluteX="116dp"
-                tools:layout_editor_absoluteY="395dp"
+                android:text="add location to QR"
                 android:clickable="true"
                 android:checked="true"
                 android:buttonTint="@color/theme_default"/>
@@ -71,31 +103,31 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center">
+
             <com.google.android.material.button.MaterialButton
-                android:id="@+id/generateCodeBTNCount"
+                android:id="@+id/generateCodeBTN"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Generate"/>
+                android:text="Generate" />
         </LinearLayout>
-
 
         <RelativeLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content">
 
             <androidx.appcompat.widget.AppCompatImageButton
-                android:id="@+id/qrScanImageButtonViewCount"
+                android:id="@+id/qrScanImageButtonView"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_centerHorizontal="true"
-                android:layout_marginTop="90dp"
+                android:layout_marginTop="50dp"
                 android:background="@color/white"
                 android:src="@drawable/ic_qr_image" />
 
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_below="@id/qrScanImageButtonViewCount"
+                android:layout_below="@id/qrScanImageButtonView"
                 android:layout_centerHorizontal="true"
                 android:text="SCAN QR CODE"
                 android:textColor="@color/theme_default"
