@@ -49,7 +49,7 @@ import java.util.concurrent.ExecutionException;
 public class Database {
 
 //    private FillDataCallBack fillDataCallBack;
-    private SignInCallBack signInCallBack;
+//    private SignInCallBack signInCallBack;
     private ArrayList<Experiment> experimentDataList = new ArrayList<>();
     private static final String TAG1 = "Your";
     private static final String TAG2 = "Warning";
@@ -71,9 +71,9 @@ public class Database {
 //        this.fillDataCallBack = fillDataCallBack;
 //    }
 //
-    public Database(SignInCallBack signInCallBack) throws InterruptedException {
-        this.signInCallBack = signInCallBack;
-    }
+//    public Database(SignInCallBack signInCallBack) throws InterruptedException {
+//        this.signInCallBack = signInCallBack;
+//    }
 
     /**
      * Main function does most of database's tasks
@@ -431,7 +431,7 @@ public class Database {
      * containing their respective "username and contact".
      * @author Bosco Chan
      */
-    public void authenticateAnon() {
+    public void authenticateAnon(GeneralDataCallBack generalDataCallBack) {
 
         FirebaseAuth mAuth = FirebaseAuth.getInstance();
         mAuth.signInAnonymously()
@@ -445,7 +445,7 @@ public class Database {
                             FirebaseUser currentUser = mAuth.getCurrentUser();
 
                             assert currentUser != null;
-                            signInCallBack.updateHomeScreen(currentUser.getUid());
+                            generalDataCallBack.onDataReturn(currentUser.getUid());
 
                             FirebaseFirestore db = FirebaseFirestore.getInstance();
                             // Get a top level reference to the collection
