@@ -50,16 +50,14 @@ public class QRCodeActivity extends AppCompatActivity {
 
         EditText value = findViewById(R.id.passesEditTextQR);
 
-        Log.d("type", ""+experiment.getTrialType());
-        if (experiment.getTrialType().equals("Count") || experiment.getTrialType().equals("Non-Negative Count")){
-            value.setInputType(4098);
+        int inputType = InputType.TYPE_CLASS_NUMBER;
+
+        if (experiment.getTrialType().equals("Count")){
+            inputType += InputType.TYPE_NUMBER_FLAG_SIGNED;
         } else if (experiment.getTrialType().equals("Measurement")){
-            value.setInputType(8194);
+            inputType += InputType.TYPE_NUMBER_FLAG_DECIMAL;
         }
-
-        Log.d("type", ""+value.getInputType());
-
-
+        value.setInputType(inputType);
 
         RadioGroup binoChoice = findViewById(R.id.binoRadioGroup);
         RadioButton pass = findViewById(R.id.pass_radio_button);
