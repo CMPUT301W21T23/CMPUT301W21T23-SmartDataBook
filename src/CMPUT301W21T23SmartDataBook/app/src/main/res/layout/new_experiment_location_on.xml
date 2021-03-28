@@ -162,7 +162,7 @@
             android:textStyle="bold"
             app:thumbTint="@color/theme_default"
             app:trackTint="@color/theme_opaque"
-            tools:ignore="MissingConstraints" />
+            tools:ignore="MissingConstraints"/>
 
         <com.google.android.material.switchmaterial.SwitchMaterial
             android:id="@+id/newExperimentLocationPublishToggleSwitch"
