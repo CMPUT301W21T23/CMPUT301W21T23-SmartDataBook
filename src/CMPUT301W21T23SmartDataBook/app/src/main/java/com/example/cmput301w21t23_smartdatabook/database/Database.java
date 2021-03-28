@@ -336,7 +336,7 @@ public class Database {
         mAuth = FirebaseAuth.getInstance();
 
         db = FirebaseFirestore.getInstance();
-        HashMap<String, String> data = new HashMap<>();
+        HashMap<String, Object> data = new HashMap<>();
         // If there’s some data in the EditText field, then we create a new key-value pair.
         data.put("Name", newExperiment.getExpName());
         data.put("Description", newExperiment.getDescription());
