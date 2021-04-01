@@ -3,6 +3,7 @@ package com.example.cmput301w21t23_smartdatabook;
 import android.location.Location;
 
 import com.example.cmput301w21t23_smartdatabook.user.User;
+import com.google.android.gms.maps.model.LatLng;
 
 import java.io.Serializable;
 
@@ -30,7 +31,7 @@ public class Experiment implements Serializable {
     // private Trial Array<Trial>;
     private String date;
     private boolean requireLocation = false;
-    private Location location;
+    private LatLng latlng;
 
     // end experiment
     private boolean isEnd;
@@ -64,12 +65,14 @@ public class Experiment implements Serializable {
         this.date = date;
         this.expID = expID;
         this.isEnd = isEnd;
+        this.latlng = null;
     }
 
     public String getOwnerUserName() {
         return ownerUserName;
     }
 
+    // TODO: update following method description
     /**
      * Public constructor for the Experiment with location settings
      * @param expName
@@ -81,22 +84,26 @@ public class Experiment implements Serializable {
      * @param maxTrials
      * @param isPublic
      * @param date
-     * @param requireLocation
-     * @param location
      */
-//    public Experiment(String expName, String ownerUserID, String trialType, String description, boolean regionOn, int minTrials, int maxTrials, boolean isPublic, String date, boolean requireLocation, Location location) {
-//        this.expName = expName;
-//        this.ownerUserID = ownerUserID;
-//        this.trialType = trialType;
-//        this.description = description;
-//        this.regionOn = regionOn;
-//        this.minTrials = minTrials;
-//        this.maxTrials = maxTrials;
-//        this.isPublic = isPublic;
-//        this.date = date;
-//        this.requireLocation = requireLocation;
-//        this.location = location;
-//    }
+    public Experiment(String expName, String ownerUserID, String ownerUserName,
+                      String trialType, String description, boolean regionOn,
+                      int minTrials, int maxTrials, boolean isPublic, String date,
+                      String expID, boolean isEnd, LatLng latlng) {
+
+        this.expName = expName;
+        this.ownerUserID = ownerUserID;
+        this.ownerUserName = ownerUserName;
+        this.trialType = trialType;
+        this.description = description;
+        this.regionOn = regionOn;
+        this.minTrials = minTrials;
+        this.maxTrials = maxTrials;
+        this.isPublic = isPublic;
+        this.date = date;
+        this.expID = expID;
+        this.isEnd = isEnd;
+        this.latlng = latlng;
+    }
 
 
     public void setEnd(boolean end) {
@@ -273,16 +280,16 @@ public class Experiment implements Serializable {
      * Getter for the location of the experiment
      * @return Location object
      */
-    public Location getLocation() {
-        return location;
+    public LatLng getLatLng() {
+        return this.latlng;
     }
 
     /**
      * Setter for the location of the experiment using a Location object
-     * @param location
+     * @param latlng
      */
-    public void setLocation(Location location) {
-        this.location = location;
+    public void setLocation(LatLng latlng) {
+        this.latlng = latlng;
     }
 
     public String getExpID() {
