@@ -70,14 +70,16 @@
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:buttonTint="@color/theme_default"
-                    android:text="Pass" />
+                    android:text="Pass"
+                    android:visibility="invisible"/>
 
                 <RadioButton
                     android:id="@+id/fail_radio_button"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:buttonTint="@color/theme_default"
-                    android:text="Fail" />
+                    android:text="Fail"
+                    android:visibility="invisible"/>
             </RadioGroup>
 
         </LinearLayout>

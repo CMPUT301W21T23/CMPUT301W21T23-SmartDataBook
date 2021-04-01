@@ -49,6 +49,13 @@ public class QRCodeActivity extends AppCompatActivity {
 
         EditText value = findViewById(R.id.passesEditTextQR);
 
+        RadioGroup binoChoice = findViewById(R.id.binoRadioGroup);
+        RadioButton pass = findViewById(R.id.pass_radio_button);
+        RadioButton fail = findViewById(R.id.fail_radio_button);
+
+        pass.setId(passID);
+        fail.setId(failID);
+
         int inputType = InputType.TYPE_CLASS_NUMBER;
 
         if (experiment.getTrialType().equals("Count")){
@@ -56,14 +63,11 @@ public class QRCodeActivity extends AppCompatActivity {
         } else if (experiment.getTrialType().equals("Measurement")){
             inputType += InputType.TYPE_NUMBER_FLAG_DECIMAL;
         }
+        else if (experiment.getTrialType().equals("Binomial")){
+            pass.setVisibility(View.VISIBLE);
+            fail.setVisibility(View.VISIBLE);
+        }
         value.setInputType(inputType);
-
-        RadioGroup binoChoice = findViewById(R.id.binoRadioGroup);
-        RadioButton pass = findViewById(R.id.pass_radio_button);
-        RadioButton fail = findViewById(R.id.fail_radio_button);
-
-        pass.setId(passID);
-        fail.setId(failID);
 
         CheckBox location = findViewById(R.id.TrialLocationCheckBox);
 
