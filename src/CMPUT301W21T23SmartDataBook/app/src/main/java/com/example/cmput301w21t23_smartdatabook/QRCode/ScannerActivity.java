@@ -120,7 +120,7 @@ public class ScannerActivity extends AppCompatActivity implements ZXingScannerVi
 			}
 			onBackPressed();
 
-		}else{
+		} else{
 			Trial trial = new Trial( Boolean.parseBoolean(values[4]),
 					values[3],
 					Float.parseFloat(values[2]),
@@ -130,19 +130,7 @@ public class ScannerActivity extends AppCompatActivity implements ZXingScannerVi
 					.document(values[0])
 					.collection("Trials")
 					.document(trial.getTrialID()), trial);
-
-//			FirebaseFirestore.getInstance().collection("Experiments").document(values[0]).collection("Trials").document(""+trialUUID)
-//					.set(data)
-//					.addOnCompleteListener(new OnCompleteListener<Void>() {
-//						@Override
-//						public void onComplete(@NonNull Task<Void> task) {
-//							Toast.makeText(getBaseContext(), "Successfully saved QR value",  Toast.LENGTH_SHORT).show();
-//							onBackPressed();
-//						}
-//					});
 		}
-
-
 	}
 
 	@Override
