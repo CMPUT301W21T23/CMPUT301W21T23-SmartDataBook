@@ -7,7 +7,6 @@ import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
 import android.provider.Settings;
-import android.util.Log;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
@@ -20,7 +19,6 @@ import com.google.android.gms.tasks.Task;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.zxing.Result;
 import com.karumi.dexter.Dexter;
-import com.karumi.dexter.DexterBuilder;
 import com.karumi.dexter.PermissionToken;
 import com.karumi.dexter.listener.PermissionDeniedResponse;
 import com.karumi.dexter.listener.PermissionGrantedResponse;
@@ -32,7 +30,7 @@ import java.util.UUID;
 
 import me.dm7.barcodescanner.zxing.ZXingScannerView;
 
-public class ScanQrActivity extends AppCompatActivity implements ZXingScannerView.ResultHandler{
+public class ScannerActivity extends AppCompatActivity implements ZXingScannerView.ResultHandler{
 	ZXingScannerView scannerView;
 	Database database = Database.getDataBase();
 	FirebaseFirestore db = FirebaseFirestore.getInstance();
@@ -58,7 +56,7 @@ public class ScanQrActivity extends AppCompatActivity implements ZXingScannerVie
 						//Code: https://stackoverflow.com/questions/50639292/detecting-wether-a-permission-can-be-requested-or-is-permanently-denied
 						if (permissionDeniedResponse.isPermanentlyDenied()){
 							//permission is permanently denied navigate to user setting
-							new AlertDialog.Builder(ScanQrActivity.this)
+							new AlertDialog.Builder(ScannerActivity.this)
 									.setTitle("Camera permission was denied permanently.")
 									.setMessage("Allow Camera access through your settings.")
 									.setPositiveButton("Go To Settings", new DialogInterface.OnClickListener() {
@@ -102,11 +100,11 @@ public class ScanQrActivity extends AppCompatActivity implements ZXingScannerVie
 		String[] values = rawResult.getText().split(",");
 		String trialUUID = UUID.randomUUID().toString();
 
-		data.put("Region On", values[4]);
-		data.put("Trial Type", values[3]);
-		data.put("Trial Value", values[2]);
-		data.put("TrialID", ""+trialUUID);
-		data.put("UUID", values[1]);
+//		data.put("Region On", values[4]);
+//		data.put("Trial Type", values[3]);
+//		data.put("Trial Value", values[2]);
+//		data.put("TrialID", ""+trialUUID);
+//		data.put("UUID", values[1]);
 
 		if (values[3].equals("Binomial")){
 			//Need to add in given number of binomial trials
@@ -125,15 +123,25 @@ public class ScanQrActivity extends AppCompatActivity implements ZXingScannerVie
 
 		}else{
 
-			FirebaseFirestore.getInstance().collection("Experiments").document(values[0]).collection("Trials").document(""+trialUUID)
-					.set(data)
-					.addOnCompleteListener(new OnCompleteListener<Void>() {
-						@Override
-						public void onComplete(@NonNull Task<Void> task) {
-							Toast.makeText(getBaseContext(), "Successfully saved QR value",  Toast.LENGTH_SHORT).show();
-							onBackPressed();
-						}
-					});
+			Trial trial = new Trial( Boolean.parseBoolean(values[4]),
+					values[3],
+					true,
+					values[1],
+					UUID.randomUUID().toString());
+			database.addTrialToDB(db.collection("Experiments")
+					.document(values[0])
+					.collection("Trials")
+					.document(trial.getTrialID()), trial);
+
+//			FirebaseFirestore.getInstance().collection("Experiments").document(values[0]).collection("Trials").document(""+trialUUID)
+//					.set(data)
+//					.addOnCompleteListener(new OnCompleteListener<Void>() {
+//						@Override
+//						public void onComplete(@NonNull Task<Void> task) {
+//							Toast.makeText(getBaseContext(), "Successfully saved QR value",  Toast.LENGTH_SHORT).show();
+//							onBackPressed();
+//						}
+//					});
 		}
 
 

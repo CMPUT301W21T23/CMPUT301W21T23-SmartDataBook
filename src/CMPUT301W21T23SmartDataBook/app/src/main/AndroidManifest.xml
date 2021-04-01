@@ -54,7 +54,7 @@
         <activity android:name=".QRCode.QRCodeActivity">
 
         </activity>
-        <activity android:name=".QRCode.ScanQrActivity">
+        <activity android:name=".QRCode.ScannerActivity">
 
         </activity>
 

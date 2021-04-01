@@ -117,7 +117,7 @@ public class FavPage extends Fragment {
                     public void onDataReturn(Object returnedData) {
                         ArrayList<Experiment> DataList = (ArrayList<Experiment>) returnedData;
 
-                        favAdapter = new CardList(getContext(), favDataList, UserName,2);
+                        favAdapter = new CardList(getContext(), favDataList, UserName,1);
 
                         favList.setAdapter(favAdapter);
 
