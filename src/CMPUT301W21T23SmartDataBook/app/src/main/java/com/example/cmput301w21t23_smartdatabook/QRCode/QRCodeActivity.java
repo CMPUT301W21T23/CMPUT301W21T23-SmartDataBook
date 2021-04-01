@@ -29,7 +29,6 @@ import java.util.regex.Pattern;
 
 public class QRCodeActivity extends AppCompatActivity {
     User user = User.getUser();
-    Database database = Database.getDataBase();
     QRCode QRcode = new QRCode();
     private static final int passID = 1;
     private static final int failID = 0;
@@ -86,7 +85,7 @@ public class QRCodeActivity extends AppCompatActivity {
             public void onClick(View v) {
 
                 String QRCodeMessage;
-                value.setText("");
+                Log.d("Value", "" + value.getText().toString());
 
                 if (experiment.getTrialType().equals("Binomial")){
 
@@ -106,8 +105,8 @@ public class QRCodeActivity extends AppCompatActivity {
                 }
 
                 ImageView QRCode = findViewById(R.id.ReplaceImageQrCode);
-
                 QRCode.setImageBitmap(QRcode.generate(QRCodeMessage));
+                value.setText("");
             }
         });
 

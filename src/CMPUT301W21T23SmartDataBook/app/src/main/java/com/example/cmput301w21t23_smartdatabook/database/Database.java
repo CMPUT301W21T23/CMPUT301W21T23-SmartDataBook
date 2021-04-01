@@ -89,7 +89,6 @@ public class Database {
         return database;
     }
 
-
     public void followStatus(DocumentReference ref, Experiment experiment, Context context, CheckBox follow, String currentID) {
 
         ref.get().addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
@@ -180,7 +179,6 @@ public class Database {
         DocRef.set(data);
     }
 
-
     public void fillCommentList(CollectionReference coll, ArrayList<Comment> commentList, ArrayAdapter<Comment> commentAdapter) {
         coll
                 .get()
@@ -201,8 +199,6 @@ public class Database {
                     }
                 });
     }
-
-
 
     public void fillUserName(GeneralDataCallBack generalDataCallBack) {
         db = FirebaseFirestore.getInstance();

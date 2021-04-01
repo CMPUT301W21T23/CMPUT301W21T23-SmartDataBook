@@ -63,7 +63,6 @@
                 android:id="@+id/binoRadioGroup"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:checkedButton="@+id/pass_radio_button"
                 android:clickable="true">
 
                 <RadioButton

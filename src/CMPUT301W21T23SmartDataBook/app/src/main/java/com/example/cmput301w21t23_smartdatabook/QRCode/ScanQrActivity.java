@@ -13,6 +13,8 @@ import android.widget.Toast;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
+import com.example.cmput301w21t23_smartdatabook.database.Database;
+import com.example.cmput301w21t23_smartdatabook.trials.Trial;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.firestore.FirebaseFirestore;
@@ -32,6 +34,8 @@ import me.dm7.barcodescanner.zxing.ZXingScannerView;
 
 public class ScanQrActivity extends AppCompatActivity implements ZXingScannerView.ResultHandler{
 	ZXingScannerView scannerView;
+	Database database = Database.getDataBase();
+	FirebaseFirestore db = FirebaseFirestore.getInstance();
 
 	@Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -98,23 +102,28 @@ public class ScanQrActivity extends AppCompatActivity implements ZXingScannerVie
 		String[] values = rawResult.getText().split(",");
 		String trialUUID = UUID.randomUUID().toString();
 
+		data.put("Region On", values[4]);
+		data.put("Trial Type", values[3]);
+		data.put("Trial Value", values[2]);
+		data.put("TrialID", ""+trialUUID);
+		data.put("UUID", values[1]);
+
 		if (values[3].equals("Binomial")){
 			//Need to add in given number of binomial trials
-//			FirebaseFirestore.getInstance().collection("Experiments").document(values[0]).collection("Trials").document(""+trialUUID)
-//					.set(data)
-//					.addOnCompleteListener(new OnCompleteListener<Void>() {
-//						@Override
-//						public void onComplete(@NonNull Task<Void> task) {
-//							Toast.makeText(getBaseContext(), "Successfully saved QR value",  Toast.LENGTH_SHORT).show();
-//							onBackPressed();
-//						}
-//					});
+			for (int i = 1; i <= Integer.parseInt(values[2]); i++ ){
+				Trial trial = new Trial( Boolean.parseBoolean(values[4]),
+						values[3],
+						true,
+						values[1],
+						UUID.randomUUID().toString());
+				database.addTrialToDB(db.collection("Experiments")
+						.document(values[0])
+						.collection("Trials")
+						.document(trial.getTrialID()), trial);
+			}
+			onBackPressed();
+
 		}else{
-			data.put("Region On", values[4]);
-			data.put("Trial Type", values[3]);
-			data.put("Trial Value", values[2]);
-			data.put("TrialID", ""+trialUUID);
-			data.put("UUID", values[1]);
 
 			FirebaseFirestore.getInstance().collection("Experiments").document(values[0]).collection("Trials").document(""+trialUUID)
 					.set(data)
