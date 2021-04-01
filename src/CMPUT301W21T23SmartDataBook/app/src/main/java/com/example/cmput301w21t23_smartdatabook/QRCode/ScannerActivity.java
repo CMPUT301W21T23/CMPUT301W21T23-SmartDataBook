@@ -98,7 +98,6 @@ public class ScannerActivity extends AppCompatActivity implements ZXingScannerVi
 		HashMap<String, String> data = new HashMap<>();
 
 		String[] values = rawResult.getText().split(",");
-		String trialUUID = UUID.randomUUID().toString();
 
 //		data.put("Region On", values[4]);
 //		data.put("Trial Type", values[3]);
@@ -111,7 +110,7 @@ public class ScannerActivity extends AppCompatActivity implements ZXingScannerVi
 			for (int i = 1; i <= Integer.parseInt(values[2]); i++ ){
 				Trial trial = new Trial( Boolean.parseBoolean(values[4]),
 						values[3],
-						true,
+						Boolean.parseBoolean(values[5]),
 						values[1],
 						UUID.randomUUID().toString());
 				database.addTrialToDB(db.collection("Experiments")
@@ -122,10 +121,9 @@ public class ScannerActivity extends AppCompatActivity implements ZXingScannerVi
 			onBackPressed();
 
 		}else{
-
 			Trial trial = new Trial( Boolean.parseBoolean(values[4]),
 					values[3],
-					true,
+					Float.parseFloat(values[2]),
 					values[1],
 					UUID.randomUUID().toString());
 			database.addTrialToDB(db.collection("Experiments")

@@ -168,7 +168,7 @@ public class UploadTrial extends AppCompatActivity {
                                 public void onClick(DialogInterface dialog, int which) {
                                     Trial trial = new Trial(experiment.getRegionOn(),
                                             experiment.getTrialType(),
-                                            numCount.getText().toString(),
+                                            Integer.parseInt(numCount.getText().toString()),
                                             experiment.getOwnerUserID(),
                                             UUID.randomUUID().toString());
                                     database.addTrialToDB(db
@@ -201,7 +201,7 @@ public class UploadTrial extends AppCompatActivity {
                                         // save the data
                                         Trial trial = new Trial(experiment.getRegionOn(),
                                                 experiment.getTrialType(),
-                                                numNonNegCount.getText().toString(),
+                                                Integer.parseInt(numNonNegCount.getText().toString()),
                                                 experiment.getOwnerUserID(),
                                                 UUID.randomUUID().toString());
                                         database.addTrialToDB(db
@@ -234,7 +234,7 @@ public class UploadTrial extends AppCompatActivity {
                                     // check input for
                                     Trial trial = new Trial(experiment.getRegionOn(),
                                             experiment.getTrialType(),
-                                            measurementInput.getText().toString(),
+                                            Float.parseFloat(measurementInput.getText().toString()),
                                             experiment.getOwnerUserID(),
                                             UUID.randomUUID().toString());
                                     database.addTrialToDB(db

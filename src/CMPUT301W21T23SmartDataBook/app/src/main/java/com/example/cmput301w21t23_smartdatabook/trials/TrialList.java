@@ -60,7 +60,7 @@ public class TrialList extends ArrayAdapter<Trial> {
 //            trialValue.setText((String) trial.getValue());
 //        }
         else {
-            trialValue.setText((String) trial.getValue());
+            trialValue.setText( trial.getValue().toString());
         }
         return convertView;
     }
