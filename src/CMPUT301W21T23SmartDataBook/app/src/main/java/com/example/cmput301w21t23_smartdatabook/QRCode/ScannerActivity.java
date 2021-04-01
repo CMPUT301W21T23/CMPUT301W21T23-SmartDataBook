@@ -7,7 +7,6 @@ import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
 import android.provider.Settings;
-import android.util.Log;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
@@ -20,7 +19,6 @@ import com.google.android.gms.tasks.Task;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.zxing.Result;
 import com.karumi.dexter.Dexter;
-import com.karumi.dexter.DexterBuilder;
 import com.karumi.dexter.PermissionToken;
 import com.karumi.dexter.listener.PermissionDeniedResponse;
 import com.karumi.dexter.listener.PermissionGrantedResponse;
@@ -32,7 +30,7 @@ import java.util.UUID;
 
 import me.dm7.barcodescanner.zxing.ZXingScannerView;
 
-public class ScanQrActivity extends AppCompatActivity implements ZXingScannerView.ResultHandler{
+public class ScannerActivity extends AppCompatActivity implements ZXingScannerView.ResultHandler{
 	ZXingScannerView scannerView;
 	Database database = Database.getDataBase();
 	FirebaseFirestore db = FirebaseFirestore.getInstance();
@@ -58,7 +56,7 @@ public class ScanQrActivity extends AppCompatActivity implements ZXingScannerVie
 						//Code: https://stackoverflow.com/questions/50639292/detecting-wether-a-permission-can-be-requested-or-is-permanently-denied
 						if (permissionDeniedResponse.isPermanentlyDenied()){
 							//permission is permanently denied navigate to user setting
-							new AlertDialog.Builder(ScanQrActivity.this)
+							new AlertDialog.Builder(ScannerActivity.this)
 									.setTitle("Camera permission was denied permanently.")
 									.setMessage("Allow Camera access through your settings.")
 									.setPositiveButton("Go To Settings", new DialogInterface.OnClickListener() {
