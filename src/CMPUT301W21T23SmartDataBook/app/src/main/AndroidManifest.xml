@@ -60,6 +60,10 @@
 
         </activity>
 
+        <activity android:name=".maps.MapsActivity">
+
+        </activity>
+
     </application>
 
 </manifest>

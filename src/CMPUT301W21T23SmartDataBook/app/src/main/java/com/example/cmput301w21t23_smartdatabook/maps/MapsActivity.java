@@ -37,8 +37,8 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
 
         // Obtain the SupportMapFragment and get
         // notified when the map is ready to be used.
-        SupportMapFragment mapFragment = (SupportMapFragment) getSupportFragmentManager().findFragmentById(R.id.map);
-        mapFragment.getMapAsync(this);
+//        SupportMapFragment mapFragment = (SupportMapFragment) getSupportFragmentManager().findFragmentById(R.id.map);
+//        mapFragment.getMapAsync(this);
     }
 
     @Override
@@ -46,7 +46,7 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
         mMap = googleMap;
 
         // creating a variable for document reference.
-        DocumentReference documentReference = db.collection("MapsData").document("7QWDor9vozLaHdFYV9kh");
+        DocumentReference documentReference = db.collection("Maps").document("123");
 
         // calling document reference class with on snap shot listener.
         documentReference.addSnapshotListener(new EventListener<DocumentSnapshot>() {

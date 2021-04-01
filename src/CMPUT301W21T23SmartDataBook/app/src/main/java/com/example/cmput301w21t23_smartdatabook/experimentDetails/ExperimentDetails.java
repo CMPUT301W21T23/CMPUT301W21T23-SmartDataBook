@@ -17,6 +17,7 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import com.example.cmput301w21t23_smartdatabook.BuildConfig;
 import com.example.cmput301w21t23_smartdatabook.QRCode.QRCodeActivity;
+import com.example.cmput301w21t23_smartdatabook.maps.MapsActivity;
 import com.example.cmput301w21t23_smartdatabook.user.User;
 import com.example.cmput301w21t23_smartdatabook.comments.CommentActivity;
 import com.example.cmput301w21t23_smartdatabook.database.Database;
@@ -124,6 +125,9 @@ public class ExperimentDetails extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 // TODO: new show map activity
+                Intent intent = new Intent(ExperimentDetails.this, MapsActivity.class);
+                intent.putExtra("experiemnt", experiment);
+                startActivity(intent);
             }
         });
 
