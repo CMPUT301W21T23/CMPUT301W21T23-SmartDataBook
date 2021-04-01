@@ -92,13 +92,6 @@ public class QRCodeActivity extends AppCompatActivity {
 
                     QRCodeMessage = experiment.getExpID()+","+user.getUserUniqueID()+"," + value.getText().toString() +","+experiment.getTrialType()+","+experiment.getRegionOn() + "," + findBinoType(binoChoice.getCheckedRadioButtonId());
 
-//                    if ( findBinoType(binoChoice.getCheckedRadioButtonId()) ){
-//                        QRCodeMessage+=",true";
-//                    }
-//                    else{
-//                        QRCodeMessage+=",false";
-//                    }
-
                 } else {
 
                     QRCodeMessage = experiment.getExpID() + "," + user.getUserUniqueID() + "," + value.getText().toString() + "," + experiment.getTrialType() + "," + experiment.getRegionOn();
