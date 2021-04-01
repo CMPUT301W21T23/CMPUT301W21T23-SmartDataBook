@@ -24,6 +24,8 @@ import com.example.cmput301w21t23_smartdatabook.Date;
 import com.example.cmput301w21t23_smartdatabook.Experiment;
 import com.example.cmput301w21t23_smartdatabook.QRCode.ScannerActivity;
 import com.example.cmput301w21t23_smartdatabook.R;
+import com.example.cmput301w21t23_smartdatabook.database.GeneralDataCallBack;
+import com.example.cmput301w21t23_smartdatabook.geolocation.LocationWithPermission;
 import com.example.cmput301w21t23_smartdatabook.user.User;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
@@ -144,28 +146,39 @@ public class addExpFragment extends Fragment {
                 String expDescription = "" + description.getEditText().getText();
                 String trialType = findTrialType(trialChoice.getCheckedRadioButtonId());
 
-                if (expName == "" || expDescription == "") {
-                    Toast.makeText(getContext(), "The name or description can't be empty.", Toast.LENGTH_SHORT).show();
-                }else if (minTrials.getValue() >= maxTrials.getValue() ) {
-                    Toast.makeText(getContext(), "Minimum is larger or equal to maximum.", Toast.LENGTH_SHORT).show();
-                }else if (trialType == null) {
-                    Toast.makeText(getContext(), "A trial type needs to be selected.", Toast.LENGTH_SHORT).show();
-                }else{
+                new LocationWithPermission(activity).getLatLng(new GeneralDataCallBack() {
+                    @Override
+                    public void onDataReturn(Object returnedObject) {
+                        if (returnedObject == null) {
+                            return;
+                        } else {
+                            LatLng latlng = (LatLng) returnedObject;
 
-                    mAuth = FirebaseAuth.getInstance();
+                            if (expName == "" || expDescription == "") {
+                                Toast.makeText(getContext(), "The name or description can't be empty.", Toast.LENGTH_SHORT).show();
+                            }else if (minTrials.getValue() >= maxTrials.getValue() ) {
+                                Toast.makeText(getContext(), "Minimum is larger or equal to maximum.", Toast.LENGTH_SHORT).show();
+                            }else if (trialType == null) {
+                                Toast.makeText(getContext(), "A trial type needs to be selected.", Toast.LENGTH_SHORT).show();
+                            }else{
 
-                    returnedExperiment = new Experiment(expName, currentID, "please refresh",
-                            trialType, expDescription, checkLocationOn, minTrials.getValue(), maxTrials.getValue(),
-                            checkPublicOn, currentDate.getDate(), UUID.randomUUID().toString(), false);
+                                mAuth = FirebaseAuth.getInstance();
 
-                    //Source: Shweta Chauhan; https://stackoverflow.com/users/6021469/shweta-chauhan
-                    //Code: https://stackoverflow.com/questions/40085608/how-to-pass-data-from-one-fragment-to-previous-fragment
-                    Intent intent = new Intent(getActivity(), addExpFragment.class);
-                    intent.putExtra("newExp", returnedExperiment);
-                    getTargetFragment().onActivityResult(getTargetRequestCode(), 1, intent);
+                                returnedExperiment = new Experiment(expName, currentID, "please refresh",
+                                        trialType, expDescription, checkLocationOn, minTrials.getValue(), maxTrials.getValue(),
+                                        checkPublicOn, currentDate.getDate(), UUID.randomUUID().toString(), false, latlng);
 
-                    getActivity().getSupportFragmentManager().popBackStack();
-                }
+                                //Source: Shweta Chauhan; https://stackoverflow.com/users/6021469/shweta-chauhan
+                                //Code: https://stackoverflow.com/questions/40085608/how-to-pass-data-from-one-fragment-to-previous-fragment
+                                Intent intent = new Intent(getActivity(), addExpFragment.class);
+                                intent.putExtra("newExp", returnedExperiment);
+                                getTargetFragment().onActivityResult(getTargetRequestCode(), 1, intent);
+
+                                getActivity().getSupportFragmentManager().popBackStack();
+                            }
+                        }
+                    }
+                });
             }
         });
 
@@ -176,7 +189,6 @@ public class addExpFragment extends Fragment {
     @Override
     public void onDestroy() {
         super.onDestroy();
-        AppCompatActivity activity = ((AppCompatActivity) getActivity());
         activity.getSupportActionBar().setTitle("Home");
 //        getActivity().getSupportFragmentManager().popBackStack();
         BottomNavigationView bottomNavigation = activity.findViewById(R.id.bottom_navigation);
