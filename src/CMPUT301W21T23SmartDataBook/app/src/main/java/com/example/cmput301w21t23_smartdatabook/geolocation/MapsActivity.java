@@ -1,4 +1,4 @@
-package com.example.cmput301w21t23_smartdatabook.maps;
+package com.example.cmput301w21t23_smartdatabook.geolocation;
 
 import android.os.Bundle;
 import android.widget.Toast;
