@@ -156,7 +156,7 @@
                 android:layout_width="144dp"
                 android:layout_height="42dp"
                 android:layout_marginTop="4dp"
-                android:checked="false"
+                android:checked="true"
                 android:text="Location"
                 android:textColor="@color/theme_default"
                 android:textStyle="bold"
