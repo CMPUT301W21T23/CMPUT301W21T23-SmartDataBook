@@ -197,6 +197,8 @@ public class MainActivity extends AppCompatActivity{
             // This gets called every time text is updated, AND search edittext is clicked
             @Override
             public boolean onQueryTextChange(String newText) {
+                Log.e("queryTextSubmit", "AFAQ NABI");
+                onQueryTextSubmit(newText);
 //                Fragment currentFragment = getSupportFragmentManager().findFragmentById(R.id.container);
 //                if (currentFragment != null && currentFragment.isVisible() && !newText.equals("")) {
 //                    if (currentFragment instanceof homePage) {
@@ -212,6 +214,7 @@ public class MainActivity extends AppCompatActivity{
 
 
         });
+
         return true;
     }
 

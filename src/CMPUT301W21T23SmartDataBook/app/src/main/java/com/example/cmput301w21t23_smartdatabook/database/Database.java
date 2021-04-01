@@ -48,8 +48,6 @@ import java.util.concurrent.ExecutionException;
  */
 public class Database {
 
-//    private FillDataCallBack fillDataCallBack;
-//    private SignInCallBack signInCallBack;
     private ArrayList<Experiment> experimentDataList = new ArrayList<>();
     private static final String TAG1 = "Your";
     private static final String TAG2 = "Warning";
@@ -60,20 +58,6 @@ public class Database {
 
     FirebaseAuth mAuth;
     FirebaseFirestore db;
-
-//    /**
-//     * Constructor of the database class
-//     * @param fillDataCallBack
-//     * @throws InterruptedException
-//     * @author Bosco Chan
-//     */
-//    public Database(FillDataCallBack fillDataCallBack) throws InterruptedException {
-//        this.fillDataCallBack = fillDataCallBack;
-//    }
-//
-//    public Database(SignInCallBack signInCallBack) throws InterruptedException {
-//        this.signInCallBack = signInCallBack;
-//    }
 
     /**
      * Main function does most of database's tasks
@@ -128,19 +112,7 @@ public class Database {
         data.put("Trial Value", trial.getValue());
         data.put("UUID", trial.getUid());
         data.put("TrialID", trial.getTrialID());
-        genericDocument.set(data)
-                .addOnSuccessListener(new OnSuccessListener<Void>() {
-                    @Override
-                    public void onSuccess(Void aVoid) {
-                        Log.d("Trial!@#: ", "Trial added");
-                    }
-                })
-                .addOnFailureListener(new OnFailureListener() {
-                    @Override
-                    public void onFailure(@NonNull Exception e) {
-                        Log.d("Trial addition Fails: ", "trial");
-                    }
-                });
+        genericDocument.set(data);
     }
 
     public void fillTrialList(CollectionReference coll, ArrayList<Trial> trialDataList, ArrayAdapter<Trial> trialArrayAdapter){
@@ -159,11 +131,7 @@ public class Database {
                                         document.get("TrialID").toString())
                                 );
                             }
-                            Log.d("Trials list", ""+trialDataList.size());
                             trialArrayAdapter.notifyDataSetChanged();
-                        }
-                        else {
-                            Log.d("Failure", "fail");
                         }
                     }
                 });
@@ -404,15 +372,9 @@ public class Database {
                                 docRef.update("UserName", username);
 
                                 docRef.update("Email", email);
-
                             }
                         });
-
-                    } else {
-                        Log.d(TAG2, "No such document");
                     }
-                } else {
-                    Log.d(TAG3, "get failed with ", task.getException());
                 }
             }
         });
