@@ -73,6 +73,7 @@ public class MainActivity extends AppCompatActivity{
         super.onAttachFragment(fragment);
         searchShow = fragment instanceof homePage;
         if (fragment instanceof FavPage) searchShow = true;
+        if (fragment instanceof ArchivePage) searchShow = true;
         if (fragment instanceof addExpFragment) bottomNavigation.setVisibility(View.GONE);
         invalidateOptionsMenu();
     }
@@ -170,12 +171,17 @@ public class MainActivity extends AppCompatActivity{
             public boolean onQueryTextSubmit(String query) {
                 Fragment currentFragment = getSupportFragmentManager().findFragmentById(R.id.container);
                 if (currentFragment != null && currentFragment.isVisible() && !query.equals("")) {
+
                     if (currentFragment instanceof homePage) {
                         ((homePage)currentFragment).doUpdate(query, currentFragment);
                     }
                     if (currentFragment instanceof FavPage) {
                         ((FavPage)currentFragment).doUpdate(query, currentFragment);
                     }
+                    if (currentFragment instanceof ArchivePage) {
+                        ((ArchivePage)currentFragment).doUpdate(query, currentFragment);
+                    }
+
                 }
 
 
@@ -238,6 +244,7 @@ public class MainActivity extends AppCompatActivity{
                             toolbar.setTitle("Settings");
                             openFragment(SettingsPage.newInstance(""));
                             return true;
+
                         case R.id.archived_nav:
                             toolbar.setTitle("Archived");
                             openFragment(ArchivePage.newInstance(""));

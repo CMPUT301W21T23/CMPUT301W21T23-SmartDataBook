@@ -13,6 +13,7 @@ import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentTransaction;
 
 import com.example.cmput301w21t23_smartdatabook.Experiment;
 import com.example.cmput301w21t23_smartdatabook.R;
@@ -55,6 +56,25 @@ public class ArchivePage extends Fragment {
         args.putSerializable("", user);
         fragment.setArguments(args);
         return fragment;
+    }
+
+    public void doUpdate(String query, Fragment currentFragment) {
+
+//        Log.d("From_" + this.getClass().getSimpleName(), query);
+//        Log.d("From_" + this.getClass().getSimpleName(), mainActivity.test());
+
+        currentQuery = query;
+
+        if (currentQuery != null){
+            //Source: Michele Lacorte; https://stackoverflow.com/users/4529790/michele-lacorte
+            //Code: https://stackoverflow.com/questions/32359727/method-to-refresh-fragment-content-when-data-changed-like-recall-oncreateview
+            //Refresh the current fragment after assigning a the currentQuery
+            FragmentTransaction fragmentTransaction = getFragmentManager().beginTransaction();
+            fragmentTransaction.detach(currentFragment);
+            fragmentTransaction.attach(currentFragment);
+            fragmentTransaction.commit();
+        }
+
     }
 
     @Override
@@ -106,9 +126,9 @@ public class ArchivePage extends Fragment {
                         //Create a new searchDataList depending on the query
                         if (currentQuery != null) {
                             for (Experiment experiment : archiveExperimentDataList) {
-                                if (experiment.getExpName().equals(currentQuery) ||
-                                        experiment.getOwnerUserName().equals(currentQuery) ||
-                                        experiment.getDate().equals(currentQuery) ||
+                                if (experiment.getExpName().contains(currentQuery) ||
+                                        UserName.get(experiment.getOwnerUserID()).getUserName().contains(currentQuery) ||
+                                        experiment.getDate().contains(currentQuery) ||
                                         experiment.getDescription().contains(currentQuery)) {
 
                                     Log.d("experiment", ""+ experiment.getExpName());
@@ -145,10 +165,7 @@ public class ArchivePage extends Fragment {
             }
         });
 
-
         return view;
-
-
 
         // same as home page, even same adapter, copy the whole code, change the array adapter and the list
     }
