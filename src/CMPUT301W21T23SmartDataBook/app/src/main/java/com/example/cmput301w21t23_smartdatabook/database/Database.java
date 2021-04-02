@@ -209,8 +209,7 @@ public class Database {
     public void fillDataList(GeneralDataCallBack generalDataCallBack, ArrayAdapter<Experiment> experimentArrayAdapter, CollectionReference collection, String currentID, Hashtable<String, User> userNames) {
         db = FirebaseFirestore.getInstance();
 //        Log.d("USER_SIZE", String.valueOf(userNames.size()));
-//        Log.d("Collection", ""+ collection.getPath() + db.collection("Archived").getPath());
-//        Log.d("Collection", ""+ collection.getPath().equals(db.collection("Archived")));
+
         collection
                 .get()
                 .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
@@ -247,7 +246,6 @@ public class Database {
 
                             }//for
 
-                            Log.d("FillDataListSize", ""+ experimentDataList.size());
                             //Get callback to grab the populated dataList
                             generalDataCallBack.onDataReturn(experimentDataList);
                             experimentArrayAdapter.notifyDataSetChanged();
@@ -284,30 +282,6 @@ public class Database {
         }else{
             return "Off";
         }
-    }
-
-    public void addToArchived(Experiment experiment, CollectionReference collection){
-        mAuth = FirebaseAuth.getInstance();
-
-        db = FirebaseFirestore.getInstance();
-        HashMap<String, Object> data = new HashMap<>();
-        // If there’s some data in the EditText field, then we create a new key-value pair.
-        data.put("Name", experiment.getExpName());
-        data.put("Description", experiment.getDescription());
-        data.put("Trial Type", experiment.getTrialType());
-        data.put("LocationStatus", giveString(experiment.getRegionOn()));
-        data.put("PublicStatus", giveString(experiment.isPublic()));
-        data.put("UUID", experiment.getOwnerUserID());
-        data.put("Minimum Trials", "" + experiment.getMinTrials());
-        data.put("Maximum Trials", "" + experiment.getMaxTrials());
-        data.put("Date", experiment.getDate());
-        data.put("ExpID", experiment.getExpID());
-        data.put("isEnd", giveString(experiment.getIsEnd()));
-        Log.d("Collection", ""+ collection.getPath() + db.collection("Archived").getPath());
-        Log.d("Collection", ""+ collection.getPath().equals(db.collection("Archived")));
-        collection
-                .document(experiment.getExpID())
-                .set(data);
     }
 
     /**

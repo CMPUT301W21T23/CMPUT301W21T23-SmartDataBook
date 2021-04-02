@@ -23,7 +23,6 @@ import com.example.cmput301w21t23_smartdatabook.experimentDetails.ExperimentDeta
 import com.example.cmput301w21t23_smartdatabook.home.CardList;
 import com.example.cmput301w21t23_smartdatabook.mainController.MainActivity;
 import com.example.cmput301w21t23_smartdatabook.user.User;
-import com.google.firebase.firestore.CollectionReference;
 import com.google.firebase.firestore.FirebaseFirestore;
 
 import java.util.ArrayList;
@@ -131,7 +130,6 @@ public class ArchivePage extends Fragment {
                                         experiment.getDate().contains(currentQuery) ||
                                         experiment.getDescription().contains(currentQuery)) {
 
-                                    Log.d("experiment", ""+ experiment.getExpName());
                                     searchDataList.add(experiment);
 
                                 }
@@ -140,13 +138,11 @@ public class ArchivePage extends Fragment {
                             archiveExperimentAdapter.clear();
                             archiveExperimentAdapter.addAll(searchDataList);
 
-                            Log.d("search", ""+searchDataList.size());
+//                            Log.d("search", ""+searchDataList.size());
 
                         }else{
                             archiveExperimentAdapter.addAll(archiveExperimentDataList);
                         }
-
-                        Log.d("ExperimentList", ""+ archiveExperimentDataList.size());
 
                         archiveExperimentAdapter.notifyDataSetChanged();
 
@@ -178,24 +174,5 @@ public class ArchivePage extends Fragment {
         archiveExperimentAdapter.notifyDataSetChanged();
         ((AppCompatActivity) getActivity()).getSupportActionBar().setDisplayHomeAsUpEnabled(false);
     }
-
-//    public void onActivityResult(int requestCode, int resultCode, Intent data) {
-//        super.onActivityResult(requestCode, resultCode, data);
-//
-//        int addExpFragmentResultCode = 1;
-//        int addExpFragmentRequestCode = 0;
-//
-//        if (resultCode == addExpFragmentResultCode) {
-//            if (requestCode == addExpFragmentRequestCode) {
-//                Experiment newExperiment = (Experiment) data.getSerializableExtra("newExp");
-//                Toast.makeText(getActivity(), newExperiment.getExpName() + " " + newExperiment.getDescription(), Toast.LENGTH_SHORT).show();
-//                experimentAdapter.add(newExperiment);
-//                CollectionReference experimentsCollection = db.collection("Experiments");
-//                database.addExperimentToDB(newExperiment, experimentsCollection, user.getUserUniqueID() );
-//                experimentAdapter.notifyDataSetChanged();
-//            }
-//        }
-//
-//    }
 
 }

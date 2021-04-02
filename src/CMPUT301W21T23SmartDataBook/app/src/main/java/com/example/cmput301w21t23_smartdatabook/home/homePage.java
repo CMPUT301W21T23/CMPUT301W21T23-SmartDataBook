@@ -170,7 +170,6 @@ public class homePage extends Fragment {
                                         experiment.getDate().contains(currentQuery) ||
                                         experiment.getDescription().contains(currentQuery)) {
 
-                                    Log.d("experiment", ""+ experiment.getExpName());
                                     searchDataList.add(experiment);
 
                                 }
@@ -179,7 +178,7 @@ public class homePage extends Fragment {
                             experimentAdapter.clear();
                             experimentAdapter.addAll(searchDataList);
 
-                            Log.d("search", ""+searchDataList.size());
+//                            Log.d("search", ""+searchDataList.size());
 
                         }else{
                             experimentAdapter.addAll(experimentDataList);
@@ -197,7 +196,7 @@ public class homePage extends Fragment {
                             }
                         });
 
-                        Log.d("QueryCheck", ""+currentQuery);
+//                        Log.d("QueryCheck", ""+currentQuery);
 
                     }//getExpDataList
                 }, experimentAdapter, db.collection("Experiments"), user.getUserUniqueID(), UserName);//fillDataList
