@@ -161,7 +161,6 @@ public class MainActivity extends AppCompatActivity{
         SearchManager searchManager = (SearchManager) getSystemService(Context.SEARCH_SERVICE);
         SearchView searchView = (SearchView) menu.findItem(R.id.app_bar_search).getActionView();
 
-
         // I have no idea
         searchView.setSearchableInfo(searchManager.getSearchableInfo(getComponentName()));
 

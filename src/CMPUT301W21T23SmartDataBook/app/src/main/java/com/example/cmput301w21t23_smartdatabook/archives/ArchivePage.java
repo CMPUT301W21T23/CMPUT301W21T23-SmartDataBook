@@ -146,6 +146,8 @@ public class ArchivePage extends Fragment {
                             archiveExperimentAdapter.addAll(archiveExperimentDataList);
                         }
 
+                        Log.d("ExperimentList", ""+ archiveExperimentDataList.size());
+
                         archiveExperimentAdapter.notifyDataSetChanged();
 
                         archiveExperimentList.setOnItemClickListener(new AdapterView.OnItemClickListener() {
@@ -158,10 +160,9 @@ public class ArchivePage extends Fragment {
                             }
                         });
 
-                        Log.d("QueryCheck", ""+currentQuery);
 
                     }//getExpDataList
-                }, archiveExperimentAdapter, db.collection("Experiments"), user.getUserUniqueID(), UserName);//fillDataList
+                }, archiveExperimentAdapter, db.collection("Archived"), user.getUserUniqueID(), UserName);//fillDataList
             }
         });
 

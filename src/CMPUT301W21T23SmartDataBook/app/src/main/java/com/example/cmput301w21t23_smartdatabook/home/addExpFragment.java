@@ -149,7 +149,8 @@ public class addExpFragment extends Fragment {
                 new LocationWithPermission(activity).getLatLng(new GeneralDataCallBack() {
                     @Override
                     public void onDataReturn(Object returnedObject) {
-                        if (returnedObject == null) {
+//                        if (returnedObject == null) { //previous if condition
+                        if (false) {
                             return;
                         } else {
                             LatLng latlng = (LatLng) returnedObject;
@@ -178,7 +179,8 @@ public class addExpFragment extends Fragment {
                             }
                         }
                     }
-                });
+
+                });//LocationWithPermission
             }
         });
 

@@ -309,7 +309,8 @@ public class Database {
         data.put("Date", newExperiment.getDate());
         data.put("ExpID", newExperiment.getExpID());
         data.put("isEnd", giveString(newExperiment.getIsEnd()));
-
+        Log.d("Collection", ""+ collection.getPath() + db.collection("Archived").getPath());
+        Log.d("Collection", ""+ collection.getPath().equals(db.collection("Archived")));
         collection
                 .document(newExperiment.getExpID())
                 .set(data);
