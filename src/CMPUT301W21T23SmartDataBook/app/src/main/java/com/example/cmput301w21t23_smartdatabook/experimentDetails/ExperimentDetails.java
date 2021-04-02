@@ -16,6 +16,7 @@ import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.example.cmput301w21t23_smartdatabook.QRCode.QRCodeActivity;
+import com.example.cmput301w21t23_smartdatabook.QRCode.ScannerActivity;
 import com.example.cmput301w21t23_smartdatabook.geolocation.MapsActivity;
 import com.example.cmput301w21t23_smartdatabook.user.User;
 import com.example.cmput301w21t23_smartdatabook.comments.CommentActivity;
@@ -58,6 +59,23 @@ public class ExperimentDetails extends AppCompatActivity {
         toolbar.setTitle(experiment.getExpName());
 
         View userInfoView = LayoutInflater.from(ExperimentDetails.this).inflate(R.layout.view_profile, null);
+
+
+        Button scan = findViewById(R.id.scanner);
+        scan.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(ExperimentDetails.this, ScannerActivity.class);
+                intent.putExtra("experiment", experiment);
+                startActivity(intent);
+            }
+        });
+
+
+
+
+
+
 
         TextView username = userInfoView.findViewById(R.id.expOwner);
         username.setText("Username: " + user.getUserName());

@@ -82,9 +82,6 @@ public class homePage extends Fragment {
 
     public void doUpdate(String query, Fragment currentFragment) {
 
-//        Log.d("From_" + this.getClass().getSimpleName(), query);
-//        Log.d("From_" + this.getClass().getSimpleName(), mainActivity.test());
-
         currentQuery = query;
 
         if (currentQuery != null){
@@ -128,12 +125,6 @@ public class homePage extends Fragment {
 
         experimentAdapter = new CardList(getContext(), experimentDataList, new Hashtable<String, User>(), 1);
 
-//        experimentAdapter = new CardList(getContext(), experimentDataList,1);
-//
-//        experimentList.setAdapter(experimentAdapter);
-//
-//        Toast.makeText(getContext(), "" + user.getUserName(), Toast.LENGTH_LONG).show();
-
         //Source: Erwin Kurniawan A; https://stackoverflow.com/users/7693494/erwin-kurniawan-a
         //Code: https://stackoverflow.com/questions/61930061/how-to-return-a-value-from-oncompletelistener-while-creating-user-with-email-and
         database.fillUserName(new GeneralDataCallBack() {
@@ -148,8 +139,6 @@ public class homePage extends Fragment {
                         experimentAdapter = new CardList(getContext(), experimentDataList, UserName, 1);
 
                         experimentList.setAdapter(experimentAdapter);
-
-//                        Toast.makeText(getContext(), "" + user.getUserName(), Toast.LENGTH_LONG).show();
 
                         //Reset the experiment adapter for every onCreateView call
                         experimentAdapter.clear();
@@ -173,8 +162,6 @@ public class homePage extends Fragment {
 
                             experimentAdapter.clear();
                             experimentAdapter.addAll(searchDataList);
-
-//                            Log.d("search", ""+searchDataList.size());
 
                         }else{
                             experimentAdapter.addAll(experimentDataList);

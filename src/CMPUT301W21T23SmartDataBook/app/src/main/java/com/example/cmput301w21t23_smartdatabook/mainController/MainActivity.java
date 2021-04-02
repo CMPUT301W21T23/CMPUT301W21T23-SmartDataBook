@@ -150,18 +150,19 @@ public class MainActivity extends AppCompatActivity{
         FirebaseAuth.getInstance().getCurrentUser().delete();
     }
 
-    @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-        switch (item.getItemId()) {
-            case R.id.app_bar_qr:
-                startActivity(new Intent(this, ScannerActivity.class));
-                break;
-            default:
-                super.onOptionsItemSelected(item);
-        }
-
-        return true;
-    }
+//    @Override
+//    public boolean onOptionsItemSelected(MenuItem item) {
+//        switch (item.getItemId()) {
+//            case R.id.app_bar_qr:
+//
+//                startActivity(new Intent(this, ScannerActivity.class));
+//                break;
+//            default:
+//                super.onOptionsItemSelected(item);
+//        }
+//
+//        return true;
+//    }
 
 
     /**
@@ -219,11 +220,8 @@ public class MainActivity extends AppCompatActivity{
 //                        ((FavPage)currentFragment).doUpdate(newText);
 //                    }
 //                }
-
                 return false;
             }
-
-
         });
 
         return true;

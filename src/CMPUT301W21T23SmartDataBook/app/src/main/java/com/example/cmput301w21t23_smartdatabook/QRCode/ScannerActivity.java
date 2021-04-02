@@ -7,7 +7,7 @@ import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
 import android.provider.Settings;
-import android.util.Log;
+import android.text.InputType;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.CompoundButton;
@@ -16,11 +16,11 @@ import android.widget.Switch;
 import android.widget.TextView;
 import android.widget.Toast;
 import androidx.appcompat.app.AppCompatActivity;
-
 import com.example.cmput301w21t23_smartdatabook.Experiment;
 import com.example.cmput301w21t23_smartdatabook.R;
 import com.example.cmput301w21t23_smartdatabook.database.Database;
 import com.example.cmput301w21t23_smartdatabook.trials.Trial;
+import com.example.cmput301w21t23_smartdatabook.user.User;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.zxing.Result;
 import com.karumi.dexter.Dexter;
@@ -29,6 +29,8 @@ import com.karumi.dexter.listener.PermissionDeniedResponse;
 import com.karumi.dexter.listener.PermissionGrantedResponse;
 import com.karumi.dexter.listener.PermissionRequest;
 import com.karumi.dexter.listener.single.PermissionListener;
+
+import java.util.HashMap;
 import java.util.UUID;
 import me.dm7.barcodescanner.zxing.ZXingScannerView;
 
@@ -45,14 +47,15 @@ public class ScannerActivity extends AppCompatActivity implements ZXingScannerVi
 	Database database = Database.getDataBase();
 	FirebaseFirestore db = FirebaseFirestore.getInstance();
 
-	Intent intent = getIntent();
-	Experiment experiment = (Experiment) intent.getSerializableExtra("experiment");
+	Experiment experiment;
+	User user = User.getUser();
 
 	@Override
     protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		scannerView = new ZXingScannerView(this);
 		setContentView(scannerView);
+
 
 		Dexter.withContext(getApplicationContext())
 			.withPermission(Manifest.permission.CAMERA)
@@ -107,10 +110,11 @@ public class ScannerActivity extends AppCompatActivity implements ZXingScannerVi
 
 	@Override
 	public void handleResult(Result rawResult) {
-
-		String[] values = rawResult.getText().split(",");
+		Intent intent = getIntent();
+		Experiment experiment = (Experiment) intent.getSerializableExtra("experiment");
 
 		if (rawResult.getBarcodeFormat().toString().contains("QR_CODE")) {
+			String[] values = rawResult.getText().split(",");
 
 			if (values[3].equals("Binomial")){
 				//Need to add in given number of binomial trials
@@ -145,10 +149,17 @@ public class ScannerActivity extends AppCompatActivity implements ZXingScannerVi
 			TextView trueFalse = trialView.findViewById(R.id.true_false);
 			Switch switchTF = trialView.findViewById(R.id.switchTF);
 
-			if (experiment.getTrialType().equals("Binomial")){
+			int inputType = InputType.TYPE_CLASS_NUMBER;
+			if (experiment.getTrialType().equals("Count")){
+				inputType += InputType.TYPE_NUMBER_FLAG_SIGNED;
+			} else if (experiment.getTrialType().equals("Measurement")){
+				inputType += InputType.TYPE_NUMBER_FLAG_DECIMAL;
+			}
+			else if (experiment.getTrialType().equals("Binomial")){
 				trueFalse.setVisibility(View.VISIBLE);
 				switchTF.setVisibility(View.VISIBLE);
 			}
+			value.setInputType(inputType);
 
 			switchTF.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
 				@Override
@@ -174,6 +185,18 @@ public class ScannerActivity extends AppCompatActivity implements ZXingScannerVi
 					.setPositiveButton("Confirm", new DialogInterface.OnClickListener() {
 						@Override
 						public void onClick(DialogInterface dialog, int which) {
+							HashMap<String,Object> data = new HashMap<>();
+							data.put("RawResult", rawResult.toString());
+							data.put("UUID", user.getUserUniqueID());
+							data.put("ExpID", experiment.getExpID());
+							data.put("Value", value.getText());
+							data.put("Bool", switchTF.isChecked());
+
+							db.collection("Barcode")
+									.document(experiment.getExpID())
+									.collection(user.getUserUniqueID())
+									.document(UUID.randomUUID().toString())
+									.set(data);
 							onBackPressed();
 						}
 					})

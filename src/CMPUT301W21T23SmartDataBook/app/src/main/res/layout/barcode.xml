@@ -11,7 +11,6 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:ems="10"
-        android:inputType="numberSigned"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.497"
         app:layout_constraintStart_toStartOf="parent"
@@ -21,22 +20,18 @@
         android:id="@+id/switchTF"
         android:layout_width="47dp"
         android:layout_height="31dp"
-        android:layout_marginStart="144dp"
-        app:layout_constraintEnd_toStartOf="@+id/true_false"
-        app:layout_constraintHorizontal_bias="0.915"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/value"
         android:visibility="invisible"
-        />
+        app:layout_constraintEnd_toStartOf="@+id/true_false"
+        app:layout_constraintTop_toBottomOf="@+id/value" />
 
     <TextView
         android:id="@+id/true_false"
         android:layout_width="68dp"
         android:layout_height="31dp"
         android:text="TextView"
-        tools:layout_editor_absoluteX="191dp"
-        tools:layout_editor_absoluteY="45dp"
         android:visibility="invisible"
-        />
+        app:layout_constraintBottom_toBottomOf="@+id/switchTF"
+        app:layout_constraintTop_toTopOf="@+id/switchTF"
+        tools:layout_editor_absoluteX="191dp" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
