@@ -134,7 +134,7 @@ public class ScannerActivity extends AppCompatActivity implements ZXingScannerVi
 		else {
 			registerBarcode(rawResult.toString(), experiment);
 		}
-		
+
 	}
 
 	@Override
