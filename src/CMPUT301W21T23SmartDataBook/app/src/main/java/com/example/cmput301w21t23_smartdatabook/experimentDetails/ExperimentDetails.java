@@ -1,6 +1,7 @@
 package com.example.cmput301w21t23_smartdatabook.experimentDetails;
 
 import android.app.AlertDialog;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
@@ -153,18 +154,29 @@ public class ExperimentDetails extends AppCompatActivity {
         endExp.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if (!experiment.getIsEnd()) {
-                    experiment.setEnd(true);
-                    database.publicOrEnd(db.collection("Experiments"), "On", experiment, "isEnd");
-                    database.publicOrEnd((db.collection("Users")
-                            .document(user.getUserUniqueID())
-                            .collection("Favorites")), "On", experiment, "isEnd");
-                    Toast.makeText(getBaseContext(), "Experiment has been ended this action cannot be undone", Toast.LENGTH_SHORT).show();
-                    Log.d("Tests", "value1: " + experiment.getIsEnd());
-                } else {
-                    Toast.makeText(getBaseContext(), "Experiment is ended already!!", Toast.LENGTH_SHORT).show();
+                AlertDialog.Builder builder= new AlertDialog.Builder(ExperimentDetails.this);
+                builder.setTitle("Archive experiment");
+                builder.setMessage("Do you want to archive your experiment");
+                builder.setNegativeButton("Cancel", null)
+                        .setPositiveButton("End experiment", new DialogInterface.OnClickListener() {
+                            @Override
+                            public void onClick(DialogInterface dialog, int which) {
+                                if (!experiment.getIsEnd()) {
+                                    experiment.setEnd(true);
+                                    database.publicOrEnd(db.collection("Experiments"), "On", experiment, "isEnd");
+                                    database.publicOrEnd((db.collection("Users")
+                                            .document(user.getUserUniqueID())
+                                            .collection("Favorites")), "On", experiment, "isEnd");
+                                    Toast.makeText(getBaseContext(), "Experiment has been ended this action cannot be undone", Toast.LENGTH_SHORT).show();
+                                    Log.d("Tests", "value1: " + experiment.getIsEnd());
+                                } else {
+                                    Toast.makeText(getBaseContext(), "Experiment is ended already!!", Toast.LENGTH_SHORT).show();
 
-                }
+                                }
+                            }
+                        })
+                        .create().show();
+
             }
         });
 
