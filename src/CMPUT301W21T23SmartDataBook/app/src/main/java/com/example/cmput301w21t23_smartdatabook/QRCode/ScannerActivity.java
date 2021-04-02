@@ -99,12 +99,6 @@ public class ScannerActivity extends AppCompatActivity implements ZXingScannerVi
 
 		String[] values = rawResult.getText().split(",");
 
-//		data.put("Region On", values[4]);
-//		data.put("Trial Type", values[3]);
-//		data.put("Trial Value", values[2]);
-//		data.put("TrialID", ""+trialUUID);
-//		data.put("UUID", values[1]);
-
 		if (values[3].equals("Binomial")){
 			//Need to add in given number of binomial trials
 			for (int i = 1; i <= Integer.parseInt(values[2]); i++ ){
