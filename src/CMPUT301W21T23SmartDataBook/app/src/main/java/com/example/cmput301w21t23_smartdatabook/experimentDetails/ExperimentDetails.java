@@ -1,6 +1,7 @@
 package com.example.cmput301w21t23_smartdatabook.experimentDetails;
 
 import android.app.AlertDialog;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
@@ -150,40 +151,50 @@ public class ExperimentDetails extends AppCompatActivity {
         });
 
         Button endExp = findViewById(R.id.endExp);
-        if(!experiment.getIsEnd()) { //experiment.getIsEnd() returns false
-            endExp.setText("Archive Experiment");
+        String title;
+        if (!experiment.getIsEnd()) {
+            title = "Archive";
             upload.setVisibility(View.VISIBLE);
         } else {
-            endExp.setText("Un-Archive Experiment");
+            title = "Un-Archive";
             upload.setVisibility(View.INVISIBLE);
         }
-
+        endExp.setText(title);
         endExp.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if (!experiment.getIsEnd()) {
-                    experiment.setEnd(true);
-                    database.publicOrEnd(db.collection("Experiments"), "On", experiment, "isEnd");
-                    database.publicOrEnd((db.collection("Users").document(user.getUserUniqueID())
-                            .collection("Favorites")), "On", experiment, "isEnd");
+                AlertDialog.Builder builder= new AlertDialog.Builder(ExperimentDetails.this);
+                builder.setTitle(title);
+                builder.setMessage("Do you wish to " + title + " this experiment ?");
+                builder.setNegativeButton("Cancel", null)
+                        .setPositiveButton(title + " Experiment", new DialogInterface.OnClickListener() {
+                            @Override
+                            public void onClick(DialogInterface dialog, int which) {
+                                if (!experiment.getIsEnd()) {
+                                    experiment.setEnd(true);
+                                    database.publicOrEnd(db.collection("Experiments"), "On", experiment, "isEnd");
+                                    database.publicOrEnd((db.collection("Users")
+                                            .document(user.getUserUniqueID())
+                                            .collection("Favorites")), "On", experiment, "isEnd");
+                                    database.addExperimentToDB(experiment, db.collection("Archived"), experiment.getOwnerUserID());
+                                    database.deleteFromDB(db.collection("Experiments").document(experiment.getExpID()));
 
-                    database.addExperimentToDB(experiment, db.collection("Archived"), user.getUserUniqueID() );
-                    database.deleteFromDB(db.collection("Experiments").document(experiment.getExpID()));
+                                } else {
+                                    experiment.setEnd(false);
+                                    database.publicOrEnd(db.collection("Experiments"), "Off", experiment, "isEnd");
+                                    database.publicOrEnd((db.collection("Users")
+                                            .document(user.getUserUniqueID())
+                                            .collection("Favorites")), "Off", experiment, "isEnd");
+                                    database.addExperimentToDB(experiment, db.collection("Experiments"), experiment.getOwnerUserID());
+                                    database.deleteFromDB(db.collection("Archived").document(experiment.getExpID()));
+                                }
 
-                    Toast.makeText(getBaseContext(), "Experiment has been ended.", Toast.LENGTH_SHORT).show();
+                                Toast.makeText(getBaseContext(), "Experiment has been " + title, Toast.LENGTH_SHORT).show();
 
-                } else {
-                    experiment.setEnd(false);
-                    database.publicOrEnd(db.collection("Experiments"), "Off", experiment, "isEnd");
-                    database.publicOrEnd((db.collection("Users").document(user.getUserUniqueID())
-                            .collection("Favorites")), "Off", experiment, "isEnd");
+                            }//onClick
+                        })
+                        .create().show();
 
-                    database.addExperimentToDB(experiment, db.collection("Experiments"), user.getUserUniqueID() );
-                    database.deleteFromDB(db.collection("Archived").document(experiment.getExpID()));
-
-                    Toast.makeText(getBaseContext(), "Experiment has been un-Archived", Toast.LENGTH_SHORT).show();
-
-                }
             }
         });
 
@@ -194,6 +205,7 @@ public class ExperimentDetails extends AppCompatActivity {
             endExp.setVisibility(View.VISIBLE);
             publish.setVisibility(View.VISIBLE);
             publish_text.setVisibility(View.VISIBLE);
+
         }
 
         publish.setOnClickListener(new View.OnClickListener() {

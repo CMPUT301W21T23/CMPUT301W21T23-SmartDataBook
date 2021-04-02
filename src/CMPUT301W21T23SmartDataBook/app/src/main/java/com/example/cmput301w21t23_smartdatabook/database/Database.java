@@ -209,8 +209,7 @@ public class Database {
     public void fillDataList(GeneralDataCallBack generalDataCallBack, ArrayAdapter<Experiment> experimentArrayAdapter, CollectionReference collection, String currentID, Hashtable<String, User> userNames) {
         db = FirebaseFirestore.getInstance();
 //        Log.d("USER_SIZE", String.valueOf(userNames.size()));
-//        Log.d("Collection", ""+ collection.getPath() + db.collection("Archived").getPath());
-//        Log.d("Collection", ""+ collection.getPath().equals(db.collection("Archived")));
+
         collection
                 .get()
                 .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
@@ -247,7 +246,6 @@ public class Database {
 
                             }//for
 
-                            Log.d("FillDataListSize", ""+ experimentDataList.size());
                             //Get callback to grab the populated dataList
                             generalDataCallBack.onDataReturn(experimentDataList);
                             experimentArrayAdapter.notifyDataSetChanged();
@@ -309,18 +307,23 @@ public class Database {
         data.put("Date", newExperiment.getDate());
         data.put("ExpID", newExperiment.getExpID());
         data.put("isEnd", giveString(newExperiment.getIsEnd()));
-
+        Log.d("Collection", ""+ collection.getPath() + db.collection("Archived").getPath());
+        Log.d("Collection", ""+ collection.getPath().equals(db.collection("Archived")));
         collection
                 .document(newExperiment.getExpID())
                 .set(data);
 
+        addToFavorites(data, currentID, newExperiment);
+
+    }//addExperimentToDB
+
+    public void addToFavorites( HashMap<String, Object> data, String currentID, Experiment newExperiment){
         db.collection("Users")
                 .document(currentID)
                 .collection("Favorites")
                 .document(newExperiment.getExpID())
                 .set(data);
-
-    }//addExperimentToDB
+    }
 
     /**
      * Edit user profile by querying the database.

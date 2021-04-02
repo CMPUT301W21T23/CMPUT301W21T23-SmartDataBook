@@ -9,6 +9,7 @@ import android.location.Location;
 import android.net.Uri;
 import android.os.Looper;
 import android.provider.Settings;
+import android.util.Log;
 import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
@@ -37,7 +38,7 @@ public class LocationWithPermission {
 		this.activity = activity;
 	}
 
-	public void getLatLng(GeneralDataCallBack generalDataCallBack) {
+	public void getLatLng(LocationCallback m) {
         Dexter.withContext(activity.getApplicationContext())
 			.withPermission(Manifest.permission.ACCESS_FINE_LOCATION)
 			.withListener(new PermissionListener() {
@@ -47,14 +48,8 @@ public class LocationWithPermission {
 			        if (ActivityCompat.checkSelfPermission(activity.getApplicationContext(), Manifest.permission.ACCESS_FINE_LOCATION) == PackageManager.PERMISSION_GRANTED) {
 			            // Following check removed from conditionals
 			        	// ActivityCompat.checkSelfPermission(activity.getApplicationContext(), Manifest.permission.ACCESS_COARSE_LOCATION) == PackageManager.PERMISSION_GRANTED
-
-				         fusedLocationClient.requestLocationUpdates(LocationRequest.create().setPriority(LocationRequest.PRIORITY_BALANCED_POWER_ACCURACY), new LocationCallback() {
-	                        @Override
-					        public void onLocationResult(LocationResult locationResult) {
-	                        	Location lastKnownLocation = locationResult.getLastLocation();
-	                        	generalDataCallBack.onDataReturn( new LatLng(lastKnownLocation.getLatitude(), lastKnownLocation.getLongitude()));
-	                        }
-				         }, Looper.myLooper());
+	                        	Log.d("lwpInstance", "working?");
+				         fusedLocationClient.requestLocationUpdates(LocationRequest.create().setPriority(LocationRequest.PRIORITY_BALANCED_POWER_ACCURACY), m, Looper.myLooper());
 
 				        // Below method executes when location is successfully obtained, deprecated due to above mLocationCallback
 //			            fusedLocationClient.getLastLocation().addOnSuccessListener(activity, new OnSuccessListener<Location>() {
@@ -106,7 +101,6 @@ public class LocationWithPermission {
 
 				}
 			}).check();
-
-        generalDataCallBack.onDataReturn(null);
+//        generalDataCallBack.onDataReturn(null);
     }
 }
