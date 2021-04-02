@@ -146,10 +146,7 @@ public class ArchivePage extends Fragment {
             }
         });
 
-
         return view;
-
-
 
         // same as home page, even same adapter, copy the whole code, change the array adapter and the list
     }

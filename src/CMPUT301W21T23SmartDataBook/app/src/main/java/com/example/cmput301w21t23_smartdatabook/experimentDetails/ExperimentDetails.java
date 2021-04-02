@@ -150,23 +150,36 @@ public class ExperimentDetails extends AppCompatActivity {
         });
 
         Button endExp = findViewById(R.id.endExp);
+        if(!experiment.getIsEnd()) { //experiment.getIsEnd() returns false
+            endExp.setText("Archive Experiment");
+        } else {
+            endExp.setText("Un-Archive Experiment");
+        }
+
         endExp.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 if (!experiment.getIsEnd()) {
                     experiment.setEnd(true);
                     database.publicOrEnd(db.collection("Experiments"), "On", experiment, "isEnd");
-                    database.publicOrEnd((db.collection("Users")
-                            .document(user.getUserUniqueID())
+                    database.publicOrEnd((db.collection("Users").document(user.getUserUniqueID())
                             .collection("Favorites")), "On", experiment, "isEnd");
 
                     database.addExperimentToDB(experiment, db.collection("Archived"), user.getUserUniqueID() );
-//                    database.deleteFromDB(db.collection("Experiments").document(experiment.getExpID()));
+                    database.deleteFromDB(db.collection("Experiments").document(experiment.getExpID()));
 
                     Toast.makeText(getBaseContext(), "Experiment has been ended.", Toast.LENGTH_SHORT).show();
-                    Log.d("Tests", "value1: " + experiment.getIsEnd());
+
                 } else {
-                    Toast.makeText(getBaseContext(), "Experiment is ended already!!", Toast.LENGTH_SHORT).show();
+                    experiment.setEnd(false);
+                    database.publicOrEnd(db.collection("Experiments"), "Off", experiment, "isEnd");
+                    database.publicOrEnd((db.collection("Users").document(user.getUserUniqueID())
+                            .collection("Favorites")), "Off", experiment, "isEnd");
+
+                    database.addExperimentToDB(experiment, db.collection("Experiments"), user.getUserUniqueID() );
+                    database.deleteFromDB(db.collection("Archived").document(experiment.getExpID()));
+
+                    Toast.makeText(getBaseContext(), "Experiment has been un-Archived", Toast.LENGTH_SHORT).show();
 
                 }
             }
