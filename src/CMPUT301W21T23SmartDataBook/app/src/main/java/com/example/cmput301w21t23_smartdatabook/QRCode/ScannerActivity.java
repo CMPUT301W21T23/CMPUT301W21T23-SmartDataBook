@@ -8,6 +8,7 @@ import android.net.Uri;
 import android.os.Bundle;
 import android.provider.Settings;
 import android.text.InputType;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.CompoundButton;
@@ -189,8 +190,11 @@ public class ScannerActivity extends AppCompatActivity implements ZXingScannerVi
 							data.put("RawResult", rawResult.toString());
 							data.put("UUID", user.getUserUniqueID());
 							data.put("ExpID", experiment.getExpID());
-							data.put("Value", value.getText());
-							data.put("Bool", switchTF.isChecked());
+							data.put("Value", value.getText().toString());
+							if (experiment.getTrialType().equals("Binomial")){
+								data.put("Bool", switchTF.isChecked());
+							}
+							Log.e("value", String.valueOf(value.getText()));
 
 							db.collection("Barcode")
 									.document(experiment.getExpID())
