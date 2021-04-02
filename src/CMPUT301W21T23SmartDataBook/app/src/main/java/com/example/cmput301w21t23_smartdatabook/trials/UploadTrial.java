@@ -12,7 +12,6 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ListView;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AlertDialog;
@@ -275,7 +274,7 @@ public class UploadTrial extends AppCompatActivity {
                             public void onClick(DialogInterface dialog, int which) {
                                 Log.d("Test","test");
                                 Trial trial = trialDataList.get(position);
-                                database.deleteTrialFromDB(db
+                                database.deleteFromDB(db
                                         .collection("Experiments")
                                         .document(experiment.getExpID())
                                         .collection("Trials")
