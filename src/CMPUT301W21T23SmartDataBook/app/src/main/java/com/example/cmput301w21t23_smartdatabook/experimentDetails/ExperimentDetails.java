@@ -155,8 +155,8 @@ public class ExperimentDetails extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 AlertDialog.Builder builder= new AlertDialog.Builder(ExperimentDetails.this);
-                builder.setTitle("Archive experiment");
-                builder.setMessage("Do you want to archive your experiment");
+                builder.setTitle("Archive/ End Experiment");
+                builder.setMessage("Do you want to archive your experiment?");
                 builder.setNegativeButton("Cancel", null)
                         .setPositiveButton("End experiment", new DialogInterface.OnClickListener() {
                             @Override
