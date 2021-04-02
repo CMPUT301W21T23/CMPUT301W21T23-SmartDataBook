@@ -7,15 +7,19 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
-
 import androidx.fragment.app.Fragment;
-
 import com.example.cmput301w21t23_smartdatabook.database.Database;
 import com.example.cmput301w21t23_smartdatabook.R;
 import com.example.cmput301w21t23_smartdatabook.user.User;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.firestore.FirebaseFirestore;
 
+/**
+ * THe User Contact page where users can change and edit their information freely
+ * @author Krutik, Natnail
+ */
+
+// TODO: change name to User contact instead of settings
 public class SettingsPage extends Fragment {
 	private static final String AP1 = "AP1";
 	private static final String AP2 = "AP2";

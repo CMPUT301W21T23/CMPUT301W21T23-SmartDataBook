@@ -6,27 +6,23 @@ import android.text.InputType;
 import android.util.Log;
 import android.view.View;
 import android.widget.CheckBox;
-import android.widget.CompoundButton;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
-import android.widget.Switch;
-import android.widget.TextView;
 import android.widget.Toast;
-
 import androidx.appcompat.app.AppCompatActivity;
-
 import com.example.cmput301w21t23_smartdatabook.Experiment;
 import com.example.cmput301w21t23_smartdatabook.R;
-import com.example.cmput301w21t23_smartdatabook.database.Database;
 import com.example.cmput301w21t23_smartdatabook.user.User;
 import com.google.android.material.button.MaterialButton;
-import com.google.zxing.common.StringUtils;
 
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
-
+/**
+ * generate QR code activity
+ * this will call the QR code based on input and show it to the user
+ * its the user's responsibility to save the  QR code
+ * @author Afaq Nabi
+ */
 public class QRCodeActivity extends AppCompatActivity {
     User user = User.getUser();
     QRCode QRcode = new QRCode();

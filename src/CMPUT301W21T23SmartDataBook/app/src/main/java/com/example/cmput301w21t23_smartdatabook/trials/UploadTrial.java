@@ -107,7 +107,7 @@ public class UploadTrial extends AppCompatActivity {
                     // URL: https://www.tutorialspoint.com/java/java_string_matches.htm
                     // Q1: how to take input?
                     if (expType.matches("Binomial")){
-                        AlertDialog.Builder builder= new AlertDialog.Builder((UploadTrial.this));
+                        AlertDialog.Builder builder= new AlertDialog.Builder(UploadTrial.this);
                         builder.setTitle("Add Binomial Trials?");
                         final EditText numBinomial = new EditText(UploadTrial.this);
                         // set input to be integer and positives only
@@ -152,7 +152,6 @@ public class UploadTrial extends AppCompatActivity {
                                                     .document(trial.getTrialID()), trial);
                                         }
                                         recreate();
-//                                Log.d("Test", "test");
                                     }})
                                 .setPositiveButton("Cancel", null).create().show();
                     }
@@ -414,12 +413,9 @@ public class UploadTrial extends AppCompatActivity {
                 }
             }
         });
-        // gg
 
         trialsList = findViewById(R.id.uploaded_trials);
         trialDataList = new ArrayList<>();
-
-//        trialDataList.add(new Trial("123","1234"));
 
         trialArrayAdapter = new TrialList( trialDataList, getBaseContext());
         trialsList.setAdapter(trialArrayAdapter);

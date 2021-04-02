@@ -1,8 +1,5 @@
 package com.example.cmput301w21t23_smartdatabook;
 
-import android.location.Location;
-
-import com.example.cmput301w21t23_smartdatabook.user.User;
 import com.google.android.gms.maps.model.LatLng;
 
 import java.io.Serializable;

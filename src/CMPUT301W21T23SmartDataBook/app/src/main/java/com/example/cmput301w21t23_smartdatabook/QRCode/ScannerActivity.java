@@ -9,35 +9,28 @@ import android.os.Bundle;
 import android.provider.Settings;
 import android.util.Log;
 import android.widget.Toast;
-
-import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
-
 import com.example.cmput301w21t23_smartdatabook.database.Database;
 import com.example.cmput301w21t23_smartdatabook.trials.Trial;
-import com.google.android.gms.tasks.OnCompleteListener;
-import com.google.android.gms.tasks.Task;
-import com.google.common.collect.Maps;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.zxing.Result;
-import com.google.zxing.ResultMetadataType;
-import com.google.zxing.ResultPoint;
 import com.karumi.dexter.Dexter;
 import com.karumi.dexter.PermissionToken;
 import com.karumi.dexter.listener.PermissionDeniedResponse;
 import com.karumi.dexter.listener.PermissionGrantedResponse;
 import com.karumi.dexter.listener.PermissionRequest;
 import com.karumi.dexter.listener.single.PermissionListener;
-
-import java.sql.Array;
-import java.util.Arrays;
-import java.util.HashMap;
-import java.util.Map;
 import java.util.UUID;
-
 import me.dm7.barcodescanner.zxing.ZXingScannerView;
 
-// https://www.youtube.com/watch?v=AiNi9K94W5c&ab_channel=MdJamal
+
+/**
+ * this class will use the emulators camera to scan the barcode using the Zxing librabry
+ * once scanned the rawResult will be added to the database
+ * references: https://www.youtube.com/watch?v=AiNi9K94W5c&ab_channel=MdJamal
+ * @author Afaq Nabi
+ */
+
 public class ScannerActivity extends AppCompatActivity implements ZXingScannerView.ResultHandler{
 	ZXingScannerView scannerView;
 	Database database = Database.getDataBase();
@@ -103,22 +96,7 @@ public class ScannerActivity extends AppCompatActivity implements ZXingScannerVi
 	@Override
 	public void handleResult(Result rawResult) {
 
-
-		HashMap<String, String> data = new HashMap<>();
-
 		String[] values = rawResult.getText().split(",");
-		Log.e("Barcode", rawResult.toString());
-		ResultPoint[] a = rawResult.getResultPoints();
-		// unique
-		for (ResultPoint b : a) {
-			Log.e("byte: ",b + " ");
-		}
-
-//		E/byte:: (191.0,148.0)
-//		(458.0,148.0)
-
-
-		onBackPressed();
 
 		if (rawResult.getBarcodeFormat().toString().contains("QR_CODE")) {
 
@@ -147,12 +125,32 @@ public class ScannerActivity extends AppCompatActivity implements ZXingScannerVi
 						.collection("Trials")
 						.document(trial.getTrialID()), trial);
 			}
+			onBackPressed();
 
 		} else {
+
+			AlertDialog.Builder builder = new AlertDialog.Builder(ScannerActivity.this);
+			builder.setTitle("Enter value for trial")
+					.setNegativeButton("cancel", new DialogInterface.OnClickListener() {
+						@Override
+						public void onClick(DialogInterface dialog, int which) {
+							Log.e("msg", "Click works");
+							onBackPressed();
+						}
+					})
+					.setPositiveButton("Confirm", new DialogInterface.OnClickListener() {
+						@Override
+						public void onClick(DialogInterface dialog, int which) {
+							Log.e("msg", "Click works");
+							onBackPressed();
+						}
+					})
+					.create()
+					.show();
 			Log.d("Barcode", "Type is not QR");
+
 		}
 
-		onBackPressed();
 	}
 
 	@Override

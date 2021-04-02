@@ -2,16 +2,20 @@ package com.example.cmput301w21t23_smartdatabook.QRCode;
 
 import android.graphics.Bitmap;
 import android.graphics.Color;
-
-import com.google.firebase.ml.vision.barcode.FirebaseVisionBarcode;
-import com.google.firebase.ml.vision.barcode.FirebaseVisionBarcodeDetectorOptions;
 import com.google.zxing.BarcodeFormat;
 import com.google.zxing.WriterException;
 import com.google.zxing.common.BitMatrix;
 import com.google.zxing.qrcode.QRCodeWriter;
-// https://github.com/kenglxn/QRGen
-// https://stackoverflow.com/questions/8800919/how-to-generate-a-qr-code-for-an-android-application
-// https://developers.google.com/ml-kit/vision/barcode-scanning/android#java
+
+/**
+ * Class that builds a bit matrix which contains a message encoded in a QR code
+ * returns the bitmap to be used in a image view
+ * Refrences: https://github.com/kenglxn/QRGen,
+ * https://stackoverflow.com/questions/8800919/how-to-generate-a-qr-code-for-an-android-application,
+ * https://developers.google.com/ml-kit/vision/barcode-scanning/android#java
+ * @author Afaq Nabi
+ */
+
 public class QRCode {
     QRCodeWriter writer = new QRCodeWriter();
 

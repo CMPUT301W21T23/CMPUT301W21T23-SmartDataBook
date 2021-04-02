@@ -2,19 +2,15 @@ package com.example.cmput301w21t23_smartdatabook.archives;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
-import android.widget.Toast;
-
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentTransaction;
-
 import com.example.cmput301w21t23_smartdatabook.Experiment;
 import com.example.cmput301w21t23_smartdatabook.R;
 import com.example.cmput301w21t23_smartdatabook.database.Database;
@@ -24,9 +20,14 @@ import com.example.cmput301w21t23_smartdatabook.home.CardList;
 import com.example.cmput301w21t23_smartdatabook.mainController.MainActivity;
 import com.example.cmput301w21t23_smartdatabook.user.User;
 import com.google.firebase.firestore.FirebaseFirestore;
-
 import java.util.ArrayList;
 import java.util.Hashtable;
+
+/**
+ * Archives activity page
+ * shows a listview of the experiments that have been "ended"
+ * @author Alex Mak
+ */
 
 public class ArchivePage extends Fragment {
     private static final String AP1 = "AP1";

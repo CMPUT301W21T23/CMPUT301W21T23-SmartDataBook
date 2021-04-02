@@ -20,7 +20,12 @@ import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.FirebaseFirestoreException;
 import com.google.firebase.firestore.GeoPoint;
 
-// https://www.geeksforgeeks.org/how-to-add-dynamic-markers-in-google-maps-with-firebase-firstore/
+/**
+ * the map activity which will show the markers of all the expeirments and trials
+ * @author Afaq Nabi
+ * @ref https://www.geeksforgeeks.org/how-to-add-dynamic-markers-in-google-maps-with-firebase-firstore/
+ */
+//
 
 public class MapsActivity extends FragmentActivity implements OnMapReadyCallback {
 

@@ -8,13 +8,8 @@ import android.widget.ArrayAdapter;
 import android.widget.CheckBox;
 import android.widget.EditText;
 import android.widget.Toast;
-
 import androidx.annotation.NonNull;
-
 import com.example.cmput301w21t23_smartdatabook.Experiment;
-//import com.example.cmput301w21t23_smartdatabook.trials.BinomialTrial;
-//import com.example.cmput301w21t23_smartdatabook.trials.CountTrial;
-//import com.example.cmput301w21t23_smartdatabook.trials.MeasurementTrial;
 import com.example.cmput301w21t23_smartdatabook.trials.Trial;
 import com.example.cmput301w21t23_smartdatabook.user.User;
 import com.example.cmput301w21t23_smartdatabook.comments.Comment;
@@ -29,7 +24,6 @@ import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.QueryDocumentSnapshot;
 import com.google.firebase.firestore.QuerySnapshot;
-
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Hashtable;
@@ -40,7 +34,7 @@ import java.util.Map;
  * class: Database
  * This class consists database, it has the attributes call back which handles synchronous and asychronous functions, and an arraylist of experiment
  * It passes/ takes information to firestore
- * @author Bosco Chan Afaq Nabi
+ * @author Bosco Chan Afaq Nabi, Jayden Cho
  */
 public class Database {
 

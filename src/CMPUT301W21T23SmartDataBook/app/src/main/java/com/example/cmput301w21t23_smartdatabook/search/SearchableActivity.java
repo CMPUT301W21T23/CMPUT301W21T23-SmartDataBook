@@ -3,9 +3,7 @@ package com.example.cmput301w21t23_smartdatabook.search;
 import android.app.SearchManager;
 import android.content.Intent;
 import android.os.Bundle;
-import android.view.View;
 import android.widget.Toast;
-
 import androidx.appcompat.app.AppCompatActivity;
 
 
