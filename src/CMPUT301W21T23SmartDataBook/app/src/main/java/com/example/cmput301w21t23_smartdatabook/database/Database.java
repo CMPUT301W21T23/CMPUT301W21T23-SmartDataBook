@@ -286,6 +286,30 @@ public class Database {
         }
     }
 
+    public void addToArchived(Experiment experiment, CollectionReference collection){
+        mAuth = FirebaseAuth.getInstance();
+
+        db = FirebaseFirestore.getInstance();
+        HashMap<String, Object> data = new HashMap<>();
+        // If there’s some data in the EditText field, then we create a new key-value pair.
+        data.put("Name", experiment.getExpName());
+        data.put("Description", experiment.getDescription());
+        data.put("Trial Type", experiment.getTrialType());
+        data.put("LocationStatus", giveString(experiment.getRegionOn()));
+        data.put("PublicStatus", giveString(experiment.isPublic()));
+        data.put("UUID", experiment.getOwnerUserID());
+        data.put("Minimum Trials", "" + experiment.getMinTrials());
+        data.put("Maximum Trials", "" + experiment.getMaxTrials());
+        data.put("Date", experiment.getDate());
+        data.put("ExpID", experiment.getExpID());
+        data.put("isEnd", giveString(experiment.getIsEnd()));
+        Log.d("Collection", ""+ collection.getPath() + db.collection("Archived").getPath());
+        Log.d("Collection", ""+ collection.getPath().equals(db.collection("Archived")));
+        collection
+                .document(experiment.getExpID())
+                .set(data);
+    }
+
     /**
      * Add a new experiment object to the Firebase database by assigning a unique experiment ID.
      * An experiment is added by firstly checking if the collection contains any
@@ -315,13 +339,17 @@ public class Database {
                 .document(newExperiment.getExpID())
                 .set(data);
 
+        addToFavorites(data, currentID, newExperiment);
+
+    }//addExperimentToDB
+
+    public void addToFavorites( HashMap<String, Object> data, String currentID, Experiment newExperiment){
         db.collection("Users")
                 .document(currentID)
                 .collection("Favorites")
                 .document(newExperiment.getExpID())
                 .set(data);
-
-    }//addExperimentToDB
+    }
 
     /**
      * Edit user profile by querying the database.

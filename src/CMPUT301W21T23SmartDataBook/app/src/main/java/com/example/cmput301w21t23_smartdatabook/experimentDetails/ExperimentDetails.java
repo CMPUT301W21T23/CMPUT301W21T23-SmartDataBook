@@ -151,14 +151,23 @@ public class ExperimentDetails extends AppCompatActivity {
         });
 
         Button endExp = findViewById(R.id.endExp);
+        String title;
+        if (!experiment.getIsEnd()) {
+            title = "Archive";
+            upload.setVisibility(View.VISIBLE);
+        } else {
+            title = "Un-Archive";
+            upload.setVisibility(View.INVISIBLE);
+        }
+        endExp.setText(title);
         endExp.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 AlertDialog.Builder builder= new AlertDialog.Builder(ExperimentDetails.this);
-                builder.setTitle("Archive/ End Experiment");
-                builder.setMessage("Do you want to archive your experiment?");
+                builder.setTitle(title);
+                builder.setMessage("Do you wish to " + title + " this experiment ?");
                 builder.setNegativeButton("Cancel", null)
-                        .setPositiveButton("End experiment", new DialogInterface.OnClickListener() {
+                        .setPositiveButton(title + " Experiment", new DialogInterface.OnClickListener() {
                             @Override
                             public void onClick(DialogInterface dialog, int which) {
                                 if (!experiment.getIsEnd()) {
@@ -167,13 +176,22 @@ public class ExperimentDetails extends AppCompatActivity {
                                     database.publicOrEnd((db.collection("Users")
                                             .document(user.getUserUniqueID())
                                             .collection("Favorites")), "On", experiment, "isEnd");
-                                    Toast.makeText(getBaseContext(), "Experiment has been ended this action cannot be undone", Toast.LENGTH_SHORT).show();
-                                    Log.d("Tests", "value1: " + experiment.getIsEnd());
-                                } else {
-                                    Toast.makeText(getBaseContext(), "Experiment is ended already!!", Toast.LENGTH_SHORT).show();
+                                    database.addExperimentToDB(experiment, db.collection("Archived"), experiment.getOwnerUserID());
+                                    database.deleteFromDB(db.collection("Experiments").document(experiment.getExpID()));
 
+                                } else {
+                                    experiment.setEnd(false);
+                                    database.publicOrEnd(db.collection("Experiments"), "Off", experiment, "isEnd");
+                                    database.publicOrEnd((db.collection("Users")
+                                            .document(user.getUserUniqueID())
+                                            .collection("Favorites")), "Off", experiment, "isEnd");
+                                    database.addExperimentToDB(experiment, db.collection("Experiments"), experiment.getOwnerUserID());
+                                    database.deleteFromDB(db.collection("Archived").document(experiment.getExpID()));
                                 }
-                            }
+
+                                Toast.makeText(getBaseContext(), "Experiment has been " + title, Toast.LENGTH_SHORT).show();
+
+                            }//onClick
                         })
                         .create().show();
 
