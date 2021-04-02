@@ -4,9 +4,11 @@ import android.Manifest;
 import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.location.Location;
 import android.net.Uri;
 import android.os.Bundle;
 import android.provider.Settings;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -26,7 +28,10 @@ import com.example.cmput301w21t23_smartdatabook.QRCode.ScannerActivity;
 import com.example.cmput301w21t23_smartdatabook.R;
 import com.example.cmput301w21t23_smartdatabook.database.GeneralDataCallBack;
 import com.example.cmput301w21t23_smartdatabook.geolocation.LocationWithPermission;
+import com.example.cmput301w21t23_smartdatabook.mainController.MainActivity;
 import com.example.cmput301w21t23_smartdatabook.user.User;
+import com.google.android.gms.location.LocationCallback;
+import com.google.android.gms.location.LocationResult;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.android.material.switchmaterial.SwitchMaterial;
@@ -146,39 +151,35 @@ public class addExpFragment extends Fragment {
                 String expDescription = "" + description.getEditText().getText();
                 String trialType = findTrialType(trialChoice.getCheckedRadioButtonId());
 
-                new LocationWithPermission(activity).getLatLng(new GeneralDataCallBack() {
+                new LocationWithPermission(activity).getLatLng(new LocationCallback() {
                     @Override
-                    public void onDataReturn(Object returnedObject) {
-                        if (returnedObject == null) {
-                            return;
-                        } else {
-                            LatLng latlng = (LatLng) returnedObject;
+                    public void onLocationResult(LocationResult locationResult) {
+                        Location lastKnownLocation = locationResult.getLastLocation();
+                        LatLng latlng = new LatLng(lastKnownLocation.getLatitude(), lastKnownLocation.getLongitude());
 
-                            if (expName == "" || expDescription == "") {
-                                Toast.makeText(getContext(), "The name or description can't be empty.", Toast.LENGTH_SHORT).show();
-                            }else if (minTrials.getValue() >= maxTrials.getValue() ) {
-                                Toast.makeText(getContext(), "Minimum is larger or equal to maximum.", Toast.LENGTH_SHORT).show();
-                            }else if (trialType == null) {
-                                Toast.makeText(getContext(), "A trial type needs to be selected.", Toast.LENGTH_SHORT).show();
-                            }else{
+                        if (expName == "" || expDescription == "") {
+                            Toast.makeText(getContext(), "The name or description can't be empty.", Toast.LENGTH_SHORT).show();
+                        }else if (minTrials.getValue() >= maxTrials.getValue() ) {
+                            Toast.makeText(getContext(), "Minimum is larger or equal to maximum.", Toast.LENGTH_SHORT).show();
+                        }else if (trialType == null) {
+                            Toast.makeText(getContext(), "A trial type needs to be selected.", Toast.LENGTH_SHORT).show();
+                        }else{
+                            mAuth = FirebaseAuth.getInstance();
 
-                                mAuth = FirebaseAuth.getInstance();
+                            returnedExperiment = new Experiment(expName, currentID, "please refresh",
+                                    trialType, expDescription, checkLocationOn, minTrials.getValue(), maxTrials.getValue(),
+                                    checkPublicOn, currentDate.getDate(), UUID.randomUUID().toString(), false, latlng);
 
-                                returnedExperiment = new Experiment(expName, currentID, "please refresh",
-                                        trialType, expDescription, checkLocationOn, minTrials.getValue(), maxTrials.getValue(),
-                                        checkPublicOn, currentDate.getDate(), UUID.randomUUID().toString(), false, latlng);
-
-                                //Source: Shweta Chauhan; https://stackoverflow.com/users/6021469/shweta-chauhan
-                                //Code: https://stackoverflow.com/questions/40085608/how-to-pass-data-from-one-fragment-to-previous-fragment
-                                Intent intent = new Intent(getActivity(), addExpFragment.class);
-                                intent.putExtra("newExp", returnedExperiment);
-                                getTargetFragment().onActivityResult(getTargetRequestCode(), 1, intent);
-
-                                getActivity().getSupportFragmentManager().popBackStack();
-                            }
+                            //Source: Shweta Chauhan; https://stackoverflow.com/users/6021469/shweta-chauhan
+                            //Code: https://stackoverflow.com/questions/40085608/how-to-pass-data-from-one-fragment-to-previous-fragment
+                            Intent intent = new Intent(getActivity(), addExpFragment.class);
+                            intent.putExtra("newExp", returnedExperiment);
+                            addExpFragment.this.getTargetFragment().onActivityResult(getTargetRequestCode(), 1, intent);
+                            activity.getSupportFragmentManager().popBackStack();
                         }
                     }
                 });
+
             }
         });
 

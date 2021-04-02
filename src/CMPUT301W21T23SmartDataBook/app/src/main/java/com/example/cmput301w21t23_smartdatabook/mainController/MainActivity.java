@@ -1,19 +1,29 @@
 package com.example.cmput301w21t23_smartdatabook.mainController;
 
+import android.Manifest;
+import android.app.AlertDialog;
 import android.app.SearchManager;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.pm.PackageManager;
+import android.location.Location;
+import android.net.Uri;
 import android.os.Bundle;
+import android.os.Looper;
+import android.provider.Settings;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.SearchView;
+import androidx.core.app.ActivityCompat;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentTransaction;
 
@@ -27,8 +37,21 @@ import com.example.cmput301w21t23_smartdatabook.home.addExpFragment;
 import com.example.cmput301w21t23_smartdatabook.home.homePage;
 import com.example.cmput301w21t23_smartdatabook.settings.SettingsPage;
 import com.example.cmput301w21t23_smartdatabook.user.User;
+import com.google.android.gms.location.FusedLocationProviderClient;
+import com.google.android.gms.location.LocationCallback;
+import com.google.android.gms.location.LocationRequest;
+import com.google.android.gms.location.LocationResult;
+import com.google.android.gms.location.LocationServices;
+import com.google.android.gms.maps.model.LatLng;
+import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.firebase.auth.FirebaseAuth;
+import com.karumi.dexter.Dexter;
+import com.karumi.dexter.PermissionToken;
+import com.karumi.dexter.listener.PermissionDeniedResponse;
+import com.karumi.dexter.listener.PermissionGrantedResponse;
+import com.karumi.dexter.listener.PermissionRequest;
+import com.karumi.dexter.listener.single.PermissionListener;
 
 /**
  * the Purpose of this class is to register the user in the database and initialize the bottom tab navigation
@@ -45,10 +68,28 @@ public class MainActivity extends AppCompatActivity{
 
     private ActionBar toolbar;
     private boolean searchShow;
+    private LatLng lkll;
 
     public Database database;
 
     public User user;
+
+//    LocationCallback m = new LocationCallback() {
+//        @Override
+//        public void onLocationResult(LocationResult locationResult) {
+//            Log.d("debug", "working????");
+//            Location lastKnownLocation = locationResult.getLastLocation();
+//            lkll =  new LatLng(lastKnownLocation.getLatitude(), lastKnownLocation.getLongitude());
+//        }
+//    };
+
+//    public LatLng getLastKnownLatLng() {
+//        return this.lkll;
+//    }
+//
+//    public LocationCallback getLocationCallback() {
+//        return m;
+//    }
 
 //    //Implement interrupted exception throw on database object instantiation
 //    {
@@ -246,5 +287,71 @@ public class MainActivity extends AppCompatActivity{
                     return false;
                 }
             };
+
+//    public void getLatLng() {
+//        Dexter.withContext(getApplicationContext())
+//			.withPermission(Manifest.permission.ACCESS_FINE_LOCATION)
+//			.withListener(new PermissionListener() {
+//				@Override
+//				public void onPermissionGranted(PermissionGrantedResponse permissionGrantedResponse) {
+//					FusedLocationProviderClient fusedLocationClient = LocationServices.getFusedLocationProviderClient(MainActivity.this);
+//			        if (ActivityCompat.checkSelfPermission(getApplicationContext(), Manifest.permission.ACCESS_FINE_LOCATION) == PackageManager.PERMISSION_GRANTED) {
+//			            // Following check removed from conditionals
+//			        	// ActivityCompat.checkSelfPermission(activity.getApplicationContext(), Manifest.permission.ACCESS_COARSE_LOCATION) == PackageManager.PERMISSION_GRANTED
+//	                        	Log.d("lwpInstance", "working?");
+//				         fusedLocationClient.requestLocationUpdates(LocationRequest.create().setPriority(LocationRequest.PRIORITY_BALANCED_POWER_ACCURACY), m, Looper.myLooper());
+//
+//				        // Below method executes when location is successfully obtained, deprecated due to above mLocationCallback
+//			            fusedLocationClient.getLastLocation().addOnSuccessListener(MainActivity.this, new OnSuccessListener<Location>() {
+//			                @Override
+//			                public void onSuccess(Location location) {
+//			                    // Got last known location. In some rare situations this can be null.
+//			                    if (location != null) {
+//			                        MainActivity.this.lkll = new LatLng(location.getLatitude(), location.getLongitude());
+//			                    } else {
+//			                        System.out.println("Location do not exist yet. Maybe something wrong?");
+//			                    }
+//			                }
+//			            });
+//			        }
+//				}
+//				@Override
+//				public void onPermissionDenied(PermissionDeniedResponse permissionDeniedResponse) {
+//                    Toast.makeText(getBaseContext(), "" + permissionDeniedResponse.isPermanentlyDenied(), Toast.LENGTH_SHORT).show();
+//
+//                    //Source: Opeyemi, https://stackoverflow.com/users/8226150/opeyemi
+//                    //Code: https://stackoverflow.com/questions/50639292/detecting-wether-a-permission-can-be-requested-or-is-permanently-denied
+//                    if (permissionDeniedResponse.isPermanentlyDenied()) {
+//                        //permission is permanently denied navigate to user setting
+//                        new AlertDialog.Builder(MainActivity.this)
+//                                .setTitle("Camera permission was denied permanently.")
+//                                .setMessage("Allow Camera access through your settings.")
+//                                .setPositiveButton("Go To Settings", new DialogInterface.OnClickListener() {
+//                                    @Override
+//                                    public void onClick(DialogInterface dialog, int which) {
+//                                        Intent intent = new Intent(Settings.ACTION_APPLICATION_DETAILS_SETTINGS);
+//                                        Uri uri = Uri.fromParts("package", getPackageName(), null);
+//                                        intent.setData(uri);
+//                                        startActivityForResult(intent, 101);
+//                                        dialog.cancel();
+//                                    }
+//                                })
+//                                .setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
+//                                    @Override
+//                                    public void onClick(DialogInterface dialog, int which) {
+//                                        dialog.cancel();
+//                                    }
+//                                }
+//                        ).show();
+//                    }
+//                }
+//				@Override
+//				public void onPermissionRationaleShouldBeShown(PermissionRequest permissionRequest, PermissionToken permissionToken) {
+//					permissionToken.continuePermissionRequest();
+//
+//				}
+//			}).check();
+////        generalDataCallBack.onDataReturn(null);
+//    }
 
 }//mainActivity
