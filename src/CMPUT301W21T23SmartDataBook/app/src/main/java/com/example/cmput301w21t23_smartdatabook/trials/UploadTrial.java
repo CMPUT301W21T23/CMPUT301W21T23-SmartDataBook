@@ -12,6 +12,7 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ListView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AlertDialog;
@@ -253,8 +254,6 @@ public class UploadTrial extends AppCompatActivity {
                     }
                 }
 
-
-
                 expType=experiment.getTrialType();
                 // 1. 4 different cases for dialog
                 // 2. 4 XML diagram associate with the trial type
@@ -425,27 +424,32 @@ public class UploadTrial extends AppCompatActivity {
                         .collection("Trials")
                 ,trialDataList,trialArrayAdapter);
 
-        trialsList.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-            @Override
-            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                AlertDialog.Builder builder = new AlertDialog.Builder(UploadTrial.this);
-                builder.setTitle("Delete Trial?");
-                builder.setNegativeButton("cancel",  null)
-                        .setPositiveButton("Delete", new DialogInterface.OnClickListener() {
-                            @Override
-                            public void onClick(DialogInterface dialog, int which) {
-                                Log.d("Test","test");
-                                Trial trial = trialDataList.get(position);
-                                database.deleteFromDB(db
-                                        .collection("Experiments")
-                                        .document(experiment.getExpID())
-                                        .collection("Trials")
-                                        .document(trial.getTrialID()));
-                                recreate();
-                            }
-                        }).create().show();
-            }
-        });
+        if (experiment.getOwnerUserID().equals(user.getUserUniqueID())){
+            trialsList.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+                @Override
+                public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                    AlertDialog.Builder builder = new AlertDialog.Builder(UploadTrial.this);
+                    builder.setTitle("Delete Trial?");
+                    builder.setNegativeButton("cancel",  null)
+                            .setPositiveButton("Delete", new DialogInterface.OnClickListener() {
+                                @Override
+                                public void onClick(DialogInterface dialog, int which) {
+                                    Log.d("Test","test");
+                                    Trial trial = trialDataList.get(position);
+                                    database.deleteFromDB(db
+                                            .collection("Experiments")
+                                            .document(experiment.getExpID())
+                                            .collection("Trials")
+                                            .document(trial.getTrialID()));
+                                    recreate();
+                                }
+                            }).create().show();
+                }
+            });
+        }
+        else{
+            Toast.makeText(UploadTrial.this, "You dont have the privilage to delete trials",Toast.LENGTH_SHORT).show();
+        }
 
     }
 }
