@@ -84,7 +84,6 @@ public class homePage extends Fragment {
         return fragment;
     }
 
-
     public void doUpdate(String query, Fragment currentFragment) {
 
 //        Log.d("From_" + this.getClass().getSimpleName(), query);
@@ -166,9 +165,9 @@ public class homePage extends Fragment {
                         //Create a new searchDataList depending on the query
                         if (currentQuery != null) {
                             for (Experiment experiment : experimentDataList) {
-                                if (experiment.getExpName().equals(currentQuery) ||
-                                        experiment.getOwnerUserName().equals(currentQuery) ||
-                                        experiment.getDate().equals(currentQuery) ||
+                                if (experiment.getExpName().contains(currentQuery) ||
+                                        UserName.get(experiment.getOwnerUserID()).getUserName().contains(currentQuery) ||
+                                        experiment.getDate().contains(currentQuery) ||
                                         experiment.getDescription().contains(currentQuery)) {
 
                                     Log.d("experiment", ""+ experiment.getExpName());

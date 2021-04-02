@@ -208,9 +208,9 @@ public class Database {
      */
     public void fillDataList(GeneralDataCallBack generalDataCallBack, ArrayAdapter<Experiment> experimentArrayAdapter, CollectionReference collection, String currentID, Hashtable<String, User> userNames) {
         db = FirebaseFirestore.getInstance();
-        Log.d("USER_SIZE", String.valueOf(userNames.size()));
-        Log.d("Collection", ""+ collection.getPath() + db.collection("Archived").getPath());
-        Log.d("Collection", ""+ collection.getPath().equals(db.collection("Archived")));
+//        Log.d("USER_SIZE", String.valueOf(userNames.size()));
+//        Log.d("Collection", ""+ collection.getPath() + db.collection("Archived").getPath());
+//        Log.d("Collection", ""+ collection.getPath().equals(db.collection("Archived")));
         collection
                 .get()
                 .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
