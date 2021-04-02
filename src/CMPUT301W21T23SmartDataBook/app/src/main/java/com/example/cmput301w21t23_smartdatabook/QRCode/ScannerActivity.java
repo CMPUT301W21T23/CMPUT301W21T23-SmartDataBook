@@ -101,6 +101,7 @@ public class ScannerActivity extends AppCompatActivity implements ZXingScannerVi
 		String[] values = rawResult.getText().split(",");
 		Log.d("Barcode", rawResult.getText());
 		onBackPressed();
+
 //		if (values[3].equals("Binomial")){
 //			//Need to add in given number of binomial trials
 //			for (int i = 1; i <= Integer.parseInt(values[2]); i++ ){

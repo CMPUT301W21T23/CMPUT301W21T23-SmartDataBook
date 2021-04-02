@@ -170,6 +170,7 @@ public class MainActivity extends AppCompatActivity{
             public boolean onQueryTextSubmit(String query) {
                 Fragment currentFragment = getSupportFragmentManager().findFragmentById(R.id.container);
                 if (currentFragment != null && currentFragment.isVisible() && !query.equals("")) {
+
                     if (currentFragment instanceof homePage) {
                         ((homePage)currentFragment).doUpdate(query, currentFragment);
                     }
@@ -179,6 +180,7 @@ public class MainActivity extends AppCompatActivity{
                     if (currentFragment instanceof ArchivePage) {
                         ((ArchivePage)currentFragment).doUpdate(query, currentFragment);
                     }
+
                 }
 
 

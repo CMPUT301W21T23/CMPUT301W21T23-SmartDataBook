@@ -152,8 +152,10 @@ public class ExperimentDetails extends AppCompatActivity {
         Button endExp = findViewById(R.id.endExp);
         if(!experiment.getIsEnd()) { //experiment.getIsEnd() returns false
             endExp.setText("Archive Experiment");
+            upload.setVisibility(View.VISIBLE);
         } else {
             endExp.setText("Un-Archive Experiment");
+            upload.setVisibility(View.INVISIBLE);
         }
 
         endExp.setOnClickListener(new View.OnClickListener() {
