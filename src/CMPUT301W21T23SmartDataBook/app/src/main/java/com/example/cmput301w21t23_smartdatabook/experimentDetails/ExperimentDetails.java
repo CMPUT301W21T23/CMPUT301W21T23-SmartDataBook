@@ -150,19 +150,38 @@ public class ExperimentDetails extends AppCompatActivity {
         });
 
         Button endExp = findViewById(R.id.endExp);
+        if(!experiment.getIsEnd()) { //experiment.getIsEnd() returns false
+            endExp.setText("Archive Experiment");
+            upload.setVisibility(View.VISIBLE);
+        } else {
+            endExp.setText("Un-Archive Experiment");
+            upload.setVisibility(View.INVISIBLE);
+        }
+
         endExp.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 if (!experiment.getIsEnd()) {
                     experiment.setEnd(true);
                     database.publicOrEnd(db.collection("Experiments"), "On", experiment, "isEnd");
-                    database.publicOrEnd((db.collection("Users")
-                            .document(user.getUserUniqueID())
+                    database.publicOrEnd((db.collection("Users").document(user.getUserUniqueID())
                             .collection("Favorites")), "On", experiment, "isEnd");
-                    Toast.makeText(getBaseContext(), "Experiment has been ended this action cannot be undone", Toast.LENGTH_SHORT).show();
-                    Log.d("Tests", "value1: " + experiment.getIsEnd());
+
+                    database.addExperimentToDB(experiment, db.collection("Archived"), user.getUserUniqueID() );
+                    database.deleteFromDB(db.collection("Experiments").document(experiment.getExpID()));
+
+                    Toast.makeText(getBaseContext(), "Experiment has been ended.", Toast.LENGTH_SHORT).show();
+
                 } else {
-                    Toast.makeText(getBaseContext(), "Experiment is ended already!!", Toast.LENGTH_SHORT).show();
+                    experiment.setEnd(false);
+                    database.publicOrEnd(db.collection("Experiments"), "Off", experiment, "isEnd");
+                    database.publicOrEnd((db.collection("Users").document(user.getUserUniqueID())
+                            .collection("Favorites")), "Off", experiment, "isEnd");
+
+                    database.addExperimentToDB(experiment, db.collection("Experiments"), user.getUserUniqueID() );
+                    database.deleteFromDB(db.collection("Archived").document(experiment.getExpID()));
+
+                    Toast.makeText(getBaseContext(), "Experiment has been un-Archived", Toast.LENGTH_SHORT).show();
 
                 }
             }
@@ -175,7 +194,6 @@ public class ExperimentDetails extends AppCompatActivity {
             endExp.setVisibility(View.VISIBLE);
             publish.setVisibility(View.VISIBLE);
             publish_text.setVisibility(View.VISIBLE);
-
         }
 
         publish.setOnClickListener(new View.OnClickListener() {

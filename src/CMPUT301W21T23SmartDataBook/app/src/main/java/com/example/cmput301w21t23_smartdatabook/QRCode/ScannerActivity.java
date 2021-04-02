@@ -7,6 +7,7 @@ import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
 import android.provider.Settings;
+import android.util.Log;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
@@ -98,39 +99,35 @@ public class ScannerActivity extends AppCompatActivity implements ZXingScannerVi
 		HashMap<String, String> data = new HashMap<>();
 
 		String[] values = rawResult.getText().split(",");
+		Log.d("Barcode", rawResult.getText());
+		onBackPressed();
 
-//		data.put("Region On", values[4]);
-//		data.put("Trial Type", values[3]);
-//		data.put("Trial Value", values[2]);
-//		data.put("TrialID", ""+trialUUID);
-//		data.put("UUID", values[1]);
-
-		if (values[3].equals("Binomial")){
-			//Need to add in given number of binomial trials
-			for (int i = 1; i <= Integer.parseInt(values[2]); i++ ){
-				Trial trial = new Trial( Boolean.parseBoolean(values[4]),
-						values[3],
-						Boolean.parseBoolean(values[5]),
-						values[1],
-						UUID.randomUUID().toString());
-				database.addTrialToDB(db.collection("Experiments")
-						.document(values[0])
-						.collection("Trials")
-						.document(trial.getTrialID()), trial);
-			}
-			onBackPressed();
-
-		} else{
-			Trial trial = new Trial( Boolean.parseBoolean(values[4]),
-					values[3],
-					Float.parseFloat(values[2]),
-					values[1],
-					UUID.randomUUID().toString());
-			database.addTrialToDB(db.collection("Experiments")
-					.document(values[0])
-					.collection("Trials")
-					.document(trial.getTrialID()), trial);
-		}
+//		if (values[3].equals("Binomial")){
+//			//Need to add in given number of binomial trials
+//			for (int i = 1; i <= Integer.parseInt(values[2]); i++ ){
+//				Trial trial = new Trial( Boolean.parseBoolean(values[4]),
+//						values[3],
+//						Boolean.parseBoolean(values[5]),
+//						values[1],
+//						UUID.randomUUID().toString());
+//				database.addTrialToDB(db.collection("Experiments")
+//						.document(values[0])
+//						.collection("Trials")
+//						.document(trial.getTrialID()), trial);
+//			}
+//			onBackPressed();
+//
+//		} else{
+//			Trial trial = new Trial( Boolean.parseBoolean(values[4]),
+//					values[3],
+//					Float.parseFloat(values[2]),
+//					values[1],
+//					UUID.randomUUID().toString());
+//			database.addTrialToDB(db.collection("Experiments")
+//					.document(values[0])
+//					.collection("Trials")
+//					.document(trial.getTrialID()), trial);
+//		}
 	}
 
 	@Override
