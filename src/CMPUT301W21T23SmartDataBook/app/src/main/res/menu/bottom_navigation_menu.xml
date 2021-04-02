@@ -18,6 +18,6 @@
     <item
         android:id="@+id/settings_nav"
         android:enabled="true"
-        android:icon="@drawable/ic_setting_nav"
+        android:icon="@drawable/ic_profile_nav"
         android:title="Settings"/>
 </menu>

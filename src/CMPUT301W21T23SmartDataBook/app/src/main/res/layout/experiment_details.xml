@@ -27,23 +27,20 @@
             app:layout_constraintEnd_toEndOf="@+id/MinTrials"
             app:layout_constraintHorizontal_bias="0.153"
             app:layout_constraintStart_toStartOf="@+id/MinTrials"
-            app:layout_constraintTop_toBottomOf="@+id/MinTrials">
-        </TextView>
+            app:layout_constraintTop_toBottomOf="@+id/MinTrials"></TextView>
 
         <TextView
             android:id="@+id/ClickedExpdate"
-            android:textStyle="bold"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginStart="128dp"
-            android:layout_marginTop="16dp"
-            android:layout_marginEnd="128dp"
+            android:layout_marginTop="36dp"
             android:text="Experiment Date"
             android:textColor="@color/theme_default"
             android:textSize="17sp"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.586"
-            app:layout_constraintStart_toStartOf="parent"
+            android:textStyle="bold"
+            app:layout_constraintEnd_toEndOf="@+id/owner"
+            app:layout_constraintHorizontal_bias="0.493"
+            app:layout_constraintStart_toStartOf="@+id/owner"
             app:layout_constraintTop_toTopOf="parent">
 
         </TextView>
@@ -52,14 +49,14 @@
             android:id="@+id/ClickedExpRegion"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="24dp"
+            android:layout_marginTop="12dp"
             android:text="REGION"
             android:textColor="@color/theme_default"
             android:textSize="17sp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.141"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/owner">
+            app:layout_constraintTop_toBottomOf="@+id/ClickedExpdate">
 
         </TextView>
 
@@ -98,6 +95,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="24dp"
+            android:layout_marginBottom="15dp"
             android:text="DESCRIPTION PARAGRAPH"
             android:textColor="@color/theme_default"
             android:textSize="17sp"
@@ -129,11 +127,10 @@
             android:buttonTint="@color/theme_default"
             android:checked="true"
             android:visibility="invisible"
-            app:layout_constraintEnd_toEndOf="@+id/askQuestionsBTN"
+            app:layout_constraintEnd_toEndOf="@+id/endExpImageView"
             app:layout_constraintHorizontal_bias="0.0"
-            app:layout_constraintStart_toStartOf="@+id/askQuestionsBTN"
-            app:layout_constraintTop_toBottomOf="@+id/askQuestionsBTN">
-        </CheckBox>
+            app:layout_constraintStart_toStartOf="@+id/endExpImageView"
+            app:layout_constraintTop_toBottomOf="@+id/endExpImageView"></CheckBox>
 
         <Button
             android:id="@+id/UploadTrialsBTN"
@@ -157,7 +154,6 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginEnd="36dp"
-            android:layout_marginBottom="372dp"
             android:background="@color/theme_default"
             android:text="VIEW STATS"
             app:backgroundTint="@null"
@@ -165,25 +161,33 @@
             app:layout_constraintEnd_toStartOf="@+id/UploadTrialsBTN"
             app:layout_constraintHorizontal_bias="1.0"
             app:layout_constraintLeft_toLeftOf="parent"
-            app:layout_constraintStart_toStartOf="parent">
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintVertical_bias="0.456">
 
         </Button>
 
-        <Button
+        <androidx.appcompat.widget.AppCompatImageButton
+            android:id="@+id/endExpImageView"
+            android:layout_width="25dp"
+            android:layout_height="25dp"
+            android:layout_marginTop="16dp"
+            android:backgroundTint="@color/white"
+            android:src="@drawable/ic_end_experiment"
+            app:layout_constraintEnd_toEndOf="@+id/askQuestionsBTN"
+            app:layout_constraintHorizontal_bias="0.0"
+            app:layout_constraintStart_toStartOf="@+id/askQuestionsBTN"
+            app:layout_constraintTop_toBottomOf="@+id/askQuestionsBTN" />
+
+        <TextView
             android:id="@+id/endExp"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:background="@color/theme_default"
-            android:text="END EXPERIMENT"
-            android:textColor="@color/white"
-            android:visibility="invisible"
-            app:backgroundTint="@null"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.497"
-            app:layout_constraintStart_toStartOf="parent"
-            tools:layout_editor_absoluteY="564dp">
-
-        </Button>
+            android:text="Archive"
+            android:textColor="@color/theme_default"
+            app:layout_constraintBottom_toBottomOf="@+id/endExpImageView"
+            app:layout_constraintStart_toEndOf="@+id/endExpImageView"
+            app:layout_constraintTop_toTopOf="@+id/endExpImageView" />
 
         <androidx.appcompat.widget.AppCompatImageButton
             android:id="@+id/generateCodeBTN"
@@ -192,10 +196,9 @@
             android:layout_marginTop="16dp"
             android:background="@color/white"
             android:src="@drawable/ic_generate_code_foreground"
-            app:backgroundTint="@null"
             app:layout_constraintEnd_toEndOf="@+id/mapButton"
             app:layout_constraintStart_toStartOf="@+id/mapButton"
-            app:layout_constraintTop_toBottomOf="@id/mapButton" />
+            app:layout_constraintTop_toBottomOf="@id/mapButton"/>
 
         <TextView
             android:id="@+id/ShowMap"
@@ -212,12 +215,12 @@
             android:id="@+id/mapButton"
             android:layout_width="25dp"
             android:layout_height="25dp"
-            android:layout_marginTop="12dp"
+            android:layout_marginTop="56dp"
             android:background="@color/white"
             android:src="@drawable/ic_map_button_foreground"
             app:backgroundTint="@null"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.129"
+            app:layout_constraintHorizontal_bias="0.127"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/ViewStatsBTN" />
 
@@ -255,32 +258,28 @@
 
         <TextView
             android:id="@+id/owner"
-            android:textStyle="bold"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="10dp"
+            android:layout_marginTop="4dp"
             android:text="Owner"
             android:textColor="@color/theme_default"
             android:textSize="17sp"
-            app:layout_constraintEnd_toEndOf="@+id/ClickedExpdate"
-            app:layout_constraintLeft_toLeftOf="parent"
-            app:layout_constraintRight_toRightOf="parent"
-            app:layout_constraintStart_toStartOf="@+id/ClickedExpdate"
-            app:layout_constraintTop_toBottomOf="@+id/ClickedExpdate" />
+            android:textStyle="bold"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
 
         <androidx.appcompat.widget.AppCompatImageButton
             android:id="@+id/scanner"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_centerHorizontal="true"
-            android:layout_marginTop="12dp"
+            android:layout_marginBottom="44dp"
             android:background="@color/white"
             android:src="@drawable/ic_qr_image"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.498"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/endExp" />
+            app:layout_constraintStart_toStartOf="parent" />
 
         <TextView
             android:layout_width="wrap_content"

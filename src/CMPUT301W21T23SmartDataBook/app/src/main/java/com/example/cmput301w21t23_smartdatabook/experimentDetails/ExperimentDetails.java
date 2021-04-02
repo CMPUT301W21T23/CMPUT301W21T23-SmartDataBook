@@ -27,6 +27,8 @@ import com.example.cmput301w21t23_smartdatabook.R;
 import com.example.cmput301w21t23_smartdatabook.trials.UploadTrial;
 import com.google.firebase.firestore.FirebaseFirestore;
 
+import org.w3c.dom.Text;
+
 /**
  * Class:ExperimentDetails
  * This class shows the details of the experiment,it displays:
@@ -170,7 +172,7 @@ public class ExperimentDetails extends AppCompatActivity {
             }
         });
 
-        Button endExp = findViewById(R.id.endExp);
+        TextView endExp = findViewById(R.id.endExp);
         String title;
         if (!experiment.getIsEnd()) {
             title = "Archive";
