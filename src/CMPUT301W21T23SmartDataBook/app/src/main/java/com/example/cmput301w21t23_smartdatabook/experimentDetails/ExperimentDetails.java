@@ -159,7 +159,11 @@ public class ExperimentDetails extends AppCompatActivity {
                     database.publicOrEnd((db.collection("Users")
                             .document(user.getUserUniqueID())
                             .collection("Favorites")), "On", experiment, "isEnd");
-                    Toast.makeText(getBaseContext(), "Experiment has been ended this action cannot be undone", Toast.LENGTH_SHORT).show();
+
+                    database.addExperimentToDB(experiment, db.collection("Archived"), user.getUserUniqueID() );
+//                    database.deleteFromDB(db.collection("Experiments").document(experiment.getExpID()));
+
+                    Toast.makeText(getBaseContext(), "Experiment has been ended.", Toast.LENGTH_SHORT).show();
                     Log.d("Tests", "value1: " + experiment.getIsEnd());
                 } else {
                     Toast.makeText(getBaseContext(), "Experiment is ended already!!", Toast.LENGTH_SHORT).show();
@@ -175,7 +179,6 @@ public class ExperimentDetails extends AppCompatActivity {
             endExp.setVisibility(View.VISIBLE);
             publish.setVisibility(View.VISIBLE);
             publish_text.setVisibility(View.VISIBLE);
-
         }
 
         publish.setOnClickListener(new View.OnClickListener() {

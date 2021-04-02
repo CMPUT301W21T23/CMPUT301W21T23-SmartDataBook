@@ -18,12 +18,8 @@ import com.example.cmput301w21t23_smartdatabook.Experiment;
 import com.example.cmput301w21t23_smartdatabook.trials.Trial;
 import com.example.cmput301w21t23_smartdatabook.user.User;
 import com.example.cmput301w21t23_smartdatabook.comments.Comment;
-import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.tasks.OnCompleteListener;
-import com.google.android.gms.tasks.OnFailureListener;
-import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
-import com.google.android.gms.tasks.Tasks;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
@@ -31,7 +27,6 @@ import com.google.firebase.firestore.CollectionReference;
 import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
-import com.google.firebase.firestore.GeoPoint;
 import com.google.firebase.firestore.QueryDocumentSnapshot;
 import com.google.firebase.firestore.QuerySnapshot;
 
@@ -39,7 +34,6 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Hashtable;
 import java.util.Map;
-import java.util.concurrent.ExecutionException;
 
 
 /**
@@ -97,14 +91,12 @@ public class Database {
         });//ref.get()
     }
 
-
     //Task will be executed here. Done in the background. Called Asynchronous task.
     /**
      * This function delete trials from the database
      */
-    public void deleteTrialFromDB(DocumentReference DocRef){
+    public void deleteFromDB(DocumentReference DocRef){
         DocRef.delete();
-
     }
 
     public void addTrialToDB(DocumentReference genericDocument, Trial trial){
@@ -217,7 +209,8 @@ public class Database {
     public void fillDataList(GeneralDataCallBack generalDataCallBack, ArrayAdapter<Experiment> experimentArrayAdapter, CollectionReference collection, String currentID, Hashtable<String, User> userNames) {
         db = FirebaseFirestore.getInstance();
         Log.d("USER_SIZE", String.valueOf(userNames.size()));
-
+        Log.d("Collection", ""+ collection.getPath() + db.collection("Archived").getPath());
+        Log.d("Collection", ""+ collection.getPath().equals(db.collection("Archived")));
         collection
                 .get()
                 .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
@@ -226,13 +219,12 @@ public class Database {
                         mAuth = FirebaseAuth.getInstance();
 
                         experimentDataList.clear();
-
-                        String coll1 = db.collection("Experiments").getPath();
-
+//                        ("Experiments".equals(collection.getPath())
                         if (task.isSuccessful()) {
                             for (QueryDocumentSnapshot document : task.getResult()) {
-                                if ( (coll1.equals(collection.getPath()) && document.getData().get("ExpID") != null && giveBoolean( document.getData().get("PublicStatus").toString())) ||
-                                        (collection.getPath().equals(db.collection("Users").document(currentID).collection("Favorites").getPath())) ){
+                                if ( (collection.getPath().equals("Experiments"))  && document.getData().get("ExpID") != null && giveBoolean( document.getData().get("PublicStatus").toString()) ||
+                                        (collection.getPath().equals(db.collection("Users").document(currentID).collection("Favorites").getPath())) ||
+                                        (collection.getPath().equals("Archived")) ){
 
                                     experimentDataList.add( new Experiment(
                                             document.getData().get("Name").toString(),
@@ -253,8 +245,9 @@ public class Database {
 
                                 Log.d("Success", document.getId() + " => " + document.getData());
 
-                            }
+                            }//for
 
+                            Log.d("FillDataListSize", ""+ experimentDataList.size());
                             //Get callback to grab the populated dataList
                             generalDataCallBack.onDataReturn(experimentDataList);
                             experimentArrayAdapter.notifyDataSetChanged();
