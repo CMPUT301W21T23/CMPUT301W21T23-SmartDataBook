@@ -14,6 +14,7 @@ import android.widget.Toast;
 
 import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.AppCompatImageButton;
 
 import com.example.cmput301w21t23_smartdatabook.QRCode.QRCodeActivity;
 import com.example.cmput301w21t23_smartdatabook.QRCode.ScannerActivity;
@@ -61,7 +62,7 @@ public class ExperimentDetails extends AppCompatActivity {
         View userInfoView = LayoutInflater.from(ExperimentDetails.this).inflate(R.layout.view_profile, null);
 
 
-        Button scan = findViewById(R.id.scanner);
+        AppCompatImageButton scan = findViewById(R.id.scanner);
         scan.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
