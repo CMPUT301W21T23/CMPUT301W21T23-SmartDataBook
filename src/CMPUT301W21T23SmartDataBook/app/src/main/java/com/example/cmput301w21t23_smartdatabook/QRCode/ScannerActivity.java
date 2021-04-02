@@ -8,8 +8,17 @@ import android.net.Uri;
 import android.os.Bundle;
 import android.provider.Settings;
 import android.util.Log;
+import android.view.LayoutInflater;
+import android.view.View;
+import android.widget.CompoundButton;
+import android.widget.EditText;
+import android.widget.Switch;
+import android.widget.TextView;
 import android.widget.Toast;
 import androidx.appcompat.app.AppCompatActivity;
+
+import com.example.cmput301w21t23_smartdatabook.Experiment;
+import com.example.cmput301w21t23_smartdatabook.R;
 import com.example.cmput301w21t23_smartdatabook.database.Database;
 import com.example.cmput301w21t23_smartdatabook.trials.Trial;
 import com.google.firebase.firestore.FirebaseFirestore;
@@ -35,6 +44,9 @@ public class ScannerActivity extends AppCompatActivity implements ZXingScannerVi
 	ZXingScannerView scannerView;
 	Database database = Database.getDataBase();
 	FirebaseFirestore db = FirebaseFirestore.getInstance();
+
+	Intent intent = getIntent();
+	Experiment experiment = (Experiment) intent.getSerializableExtra("experiment");
 
 	@Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -128,27 +140,45 @@ public class ScannerActivity extends AppCompatActivity implements ZXingScannerVi
 			onBackPressed();
 
 		} else {
+			View trialView = LayoutInflater.from(ScannerActivity.this).inflate(R.layout.barcode, null);
+			EditText value = trialView.findViewById(R.id.value);
+			TextView trueFalse = trialView.findViewById(R.id.true_false);
+			Switch switchTF = trialView.findViewById(R.id.switchTF);
+
+			if (experiment.getTrialType().equals("Binomial")){
+				trueFalse.setVisibility(View.VISIBLE);
+				switchTF.setVisibility(View.VISIBLE);
+			}
+
+			switchTF.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+				@Override
+				public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+					if (switchTF.isChecked()) {
+						trueFalse.setText("True");
+					}
+					else{
+						trueFalse.setText("False");
+					}
+				}
+			});
 
 			AlertDialog.Builder builder = new AlertDialog.Builder(ScannerActivity.this);
 			builder.setTitle("Enter value for trial")
+					.setView(trialView)
 					.setNegativeButton("cancel", new DialogInterface.OnClickListener() {
 						@Override
 						public void onClick(DialogInterface dialog, int which) {
-							Log.e("msg", "Click works");
 							onBackPressed();
 						}
 					})
 					.setPositiveButton("Confirm", new DialogInterface.OnClickListener() {
 						@Override
 						public void onClick(DialogInterface dialog, int which) {
-							Log.e("msg", "Click works");
 							onBackPressed();
 						}
 					})
 					.create()
 					.show();
-			Log.d("Barcode", "Type is not QR");
-
 		}
 
 	}
