@@ -64,7 +64,6 @@ public class ScannerActivity extends AppCompatActivity implements ZXingScannerVi
 		scannerView = new ZXingScannerView(this);
 		setContentView(scannerView);
 
-
 		Dexter.withContext(getApplicationContext())
 			.withPermission(Manifest.permission.CAMERA)
 			.withListener(new PermissionListener() {
