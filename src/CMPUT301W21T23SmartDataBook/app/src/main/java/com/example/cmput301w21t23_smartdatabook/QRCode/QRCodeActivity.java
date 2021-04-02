@@ -5,6 +5,7 @@ import android.os.Bundle;
 import android.text.InputType;
 import android.util.Log;
 import android.view.View;
+import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.EditText;
 import android.widget.ImageView;
@@ -16,6 +17,8 @@ import com.example.cmput301w21t23_smartdatabook.Experiment;
 import com.example.cmput301w21t23_smartdatabook.R;
 import com.example.cmput301w21t23_smartdatabook.user.User;
 import com.google.android.material.button.MaterialButton;
+
+import java.util.Scanner;
 
 /**
  * generate QR code activity
@@ -42,6 +45,20 @@ public class QRCodeActivity extends AppCompatActivity {
         Experiment experiment = (Experiment) intent.getSerializableExtra("experiment");
 
 //        toolbar.setTitle(experiment.getExpName());
+
+
+        Button regBarcode = findViewById(R.id.barcode);
+        regBarcode.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(QRCodeActivity.this, ScannerActivity.class);
+                intent.putExtra("experiment", experiment);
+                intent.putExtra("Flag", "Register");
+                startActivity(intent);
+            }
+        });
+
+
 
         EditText value = findViewById(R.id.passesEditTextQR);
 

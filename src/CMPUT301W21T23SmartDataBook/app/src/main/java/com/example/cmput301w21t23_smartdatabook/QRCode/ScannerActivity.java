@@ -16,13 +16,19 @@ import android.widget.EditText;
 import android.widget.Switch;
 import android.widget.TextView;
 import android.widget.Toast;
+
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import com.example.cmput301w21t23_smartdatabook.Experiment;
 import com.example.cmput301w21t23_smartdatabook.R;
 import com.example.cmput301w21t23_smartdatabook.database.Database;
 import com.example.cmput301w21t23_smartdatabook.trials.Trial;
 import com.example.cmput301w21t23_smartdatabook.user.User;
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.Task;
 import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.firestore.QueryDocumentSnapshot;
+import com.google.firebase.firestore.QuerySnapshot;
 import com.google.zxing.Result;
 import com.karumi.dexter.Dexter;
 import com.karumi.dexter.PermissionToken;
@@ -32,6 +38,7 @@ import com.karumi.dexter.listener.PermissionRequest;
 import com.karumi.dexter.listener.single.PermissionListener;
 
 import java.util.HashMap;
+import java.util.Random;
 import java.util.UUID;
 import me.dm7.barcodescanner.zxing.ZXingScannerView;
 
@@ -111,103 +118,23 @@ public class ScannerActivity extends AppCompatActivity implements ZXingScannerVi
 
 	@Override
 	public void handleResult(Result rawResult) {
+		Log.e("format", rawResult.getBarcodeFormat().toString());
 		Intent intent = getIntent();
 		Experiment experiment = (Experiment) intent.getSerializableExtra("experiment");
+		String type = intent.getStringExtra("Flag");
+		if (type.equals("Scan")){
+			if (rawResult.getBarcodeFormat().toString().contains("QR_CODE")) {
+				QRCodeScanned(rawResult.toString());
 
-		if (rawResult.getBarcodeFormat().toString().contains("QR_CODE")) {
-			String[] values = rawResult.getText().split(",");
-
-			if (values[3].equals("Binomial")){
-				//Need to add in given number of binomial trials
-				for (int i = 1; i <= Integer.parseInt(values[2]); i++ ){
-					Trial trial = new Trial( Boolean.parseBoolean(values[4]),
-							values[3],
-							Boolean.parseBoolean(values[5]),
-							values[1],
-							UUID.randomUUID().toString());
-					database.addTrialToDB(db.collection("Experiments")
-							.document(values[0])
-							.collection("Trials")
-							.document(trial.getTrialID()), trial);
-				}
-
-			} else{
-				Trial trial = new Trial( Boolean.parseBoolean(values[4]),
-						values[3],
-						Float.parseFloat(values[2]),
-						values[1],
-						UUID.randomUUID().toString());
-				database.addTrialToDB(db.collection("Experiments")
-						.document(values[0])
-						.collection("Trials")
-						.document(trial.getTrialID()), trial);
+			} else {
+				BarcodeScanned(rawResult.toString(),experiment);
 			}
 			onBackPressed();
-
-		} else {
-			View trialView = LayoutInflater.from(ScannerActivity.this).inflate(R.layout.barcode, null);
-			EditText value = trialView.findViewById(R.id.value);
-			TextView trueFalse = trialView.findViewById(R.id.true_false);
-			Switch switchTF = trialView.findViewById(R.id.switchTF);
-
-			int inputType = InputType.TYPE_CLASS_NUMBER;
-			if (experiment.getTrialType().equals("Count")){
-				inputType += InputType.TYPE_NUMBER_FLAG_SIGNED;
-			} else if (experiment.getTrialType().equals("Measurement")){
-				inputType += InputType.TYPE_NUMBER_FLAG_DECIMAL;
-			}
-			else if (experiment.getTrialType().equals("Binomial")){
-				trueFalse.setVisibility(View.VISIBLE);
-				switchTF.setVisibility(View.VISIBLE);
-			}
-			value.setInputType(inputType);
-
-			switchTF.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
-				@Override
-				public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
-					if (switchTF.isChecked()) {
-						trueFalse.setText("True");
-					}
-					else{
-						trueFalse.setText("False");
-					}
-				}
-			});
-
-			AlertDialog.Builder builder = new AlertDialog.Builder(ScannerActivity.this);
-			builder.setTitle("Enter value for trial")
-					.setView(trialView)
-					.setNegativeButton("cancel", new DialogInterface.OnClickListener() {
-						@Override
-						public void onClick(DialogInterface dialog, int which) {
-							onBackPressed();
-						}
-					})
-					.setPositiveButton("Confirm", new DialogInterface.OnClickListener() {
-						@Override
-						public void onClick(DialogInterface dialog, int which) {
-							HashMap<String,Object> data = new HashMap<>();
-							data.put("RawResult", rawResult.toString());
-							data.put("UUID", user.getUserUniqueID());
-							data.put("ExpID", experiment.getExpID());
-							data.put("Value", value.getText().toString());
-							if (experiment.getTrialType().equals("Binomial")){
-								data.put("Bool", switchTF.isChecked());
-							}
-							Log.e("value", String.valueOf(value.getText()));
-
-							db.collection("Barcode")
-									.document(experiment.getExpID())
-									.collection(user.getUserUniqueID())
-									.document(UUID.randomUUID().toString())
-									.set(data);
-							onBackPressed();
-						}
-					})
-					.create()
-					.show();
 		}
-
+		else {
+			registerBarcode(rawResult.toString(), experiment);
+		}
+		
 	}
 
 	@Override
@@ -226,6 +153,132 @@ public class ScannerActivity extends AppCompatActivity implements ZXingScannerVi
 	protected void onDestroy() {
 		super.onDestroy();
 		scannerView.stopCamera();
+	}
+
+	// if a QR code is scanned this function is called
+	private void QRCodeScanned(String rawResult){
+		String[] values = rawResult.split(",");
+
+		if (values[3].equals("Binomial")){
+			//Need to add in given number of binomial trials
+			for (int i = 1; i <= Integer.parseInt(values[2]); i++ ){
+				Trial trial = new Trial( Boolean.parseBoolean(values[4]),
+						values[3],
+						Boolean.parseBoolean(values[5]),
+						values[1],
+						UUID.randomUUID().toString());
+				database.addTrialToDB(db.collection("Experiments")
+						.document(values[0])
+						.collection("Trials")
+						.document(trial.getTrialID()), trial);
+			}
+
+		} else{
+			Trial trial = new Trial( Boolean.parseBoolean(values[4]),
+					values[3],
+					Float.parseFloat(values[2]),
+					values[1],
+					UUID.randomUUID().toString());
+			database.addTrialToDB(db.collection("Experiments")
+					.document(values[0])
+					.collection("Trials")
+					.document(trial.getTrialID()), trial);
+		}
+	}
+
+	private void BarcodeScanned(String rawResult, Experiment experiment){
+		db.collection("Barcode")
+				.document(experiment.getExpID())
+				.collection(user.getUserUniqueID())
+				.get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
+			@Override
+			public void onComplete(@NonNull Task<QuerySnapshot> task) {
+				if (task.isSuccessful()) {
+					for (QueryDocumentSnapshot document : task.getResult()) {
+						if (rawResult.equals(document.get("RawResult"))){
+							Trial trial = new Trial(experiment.getRegionOn(),
+									experiment.getTrialType(),
+									document.get("Value"),
+									user.getUserUniqueID(),
+									UUID.randomUUID().toString());
+
+							database.addTrialToDB(db
+									.collection("Experiments")
+									.document(experiment.getExpID())
+									.collection("Trials")
+									.document(trial.getTrialID()), trial);
+						}
+					}
+					// TODO: HANDLE BARCODE NOT EXISTS
+				}
+			}
+		});
+	}
+
+	private void registerBarcode(String rawResult, Experiment experiment){
+		View trialView = LayoutInflater.from(ScannerActivity.this).inflate(R.layout.barcode, null);
+		EditText value = trialView.findViewById(R.id.value);
+		TextView trueFalse = trialView.findViewById(R.id.true_false);
+		Switch switchTF = trialView.findViewById(R.id.switchTF);
+
+		int inputType = InputType.TYPE_CLASS_NUMBER;
+		if (experiment.getTrialType().equals("Count")) {
+			inputType += InputType.TYPE_NUMBER_FLAG_SIGNED;
+		} else if (experiment.getTrialType().equals("Measurement")) {
+			inputType += InputType.TYPE_NUMBER_FLAG_DECIMAL;
+		} else if (experiment.getTrialType().equals("Binomial")) {
+			trueFalse.setVisibility(View.VISIBLE);
+			switchTF.setVisibility(View.VISIBLE);
+		}
+		value.setInputType(inputType);
+
+		switchTF.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+			@Override
+			public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+				if (switchTF.isChecked()) {
+					trueFalse.setText("True");
+				} else {
+					trueFalse.setText("False");
+				}
+			}
+		});
+
+		AlertDialog.Builder builder = new AlertDialog.Builder(ScannerActivity.this);
+		builder.setTitle("Enter value for trial")
+				.setView(trialView)
+				.setNegativeButton("cancel", new DialogInterface.OnClickListener() {
+					@Override
+					public void onClick(DialogInterface dialog, int which) {
+						onBackPressed();
+					}
+				})
+				.setPositiveButton("Confirm", new DialogInterface.OnClickListener() {
+					@Override
+					public void onClick(DialogInterface dialog, int which) {
+						HashMap<String, Object> data = new HashMap<>();
+						data.put("RawResult", rawResult);
+						data.put("UUID", user.getUserUniqueID());
+						data.put("ExpID", experiment.getExpID());
+						if (experiment.getTrialType().equals("Binomial")) {
+							data.put("Bool", switchTF.isChecked());
+							data.put("Value", Integer.parseInt(value.getText().toString()));
+						} else if (experiment.getTrialType().equals(("Measurement"))) {
+							data.put("Value", Float.parseFloat(value.getText().toString()));
+						} else {
+							data.put("Value", Integer.parseInt(value.getText().toString()));
+						}
+						Log.e("value", String.valueOf(value.getText()));
+
+						db.collection("Barcode")
+								.document(experiment.getExpID())
+								.collection(user.getUserUniqueID())
+								.document(UUID.randomUUID().toString())
+								.set(data);
+						onBackPressed();
+					}
+				})
+				.create()
+				.show();
 	}
 
 }

@@ -67,6 +67,7 @@ public class ExperimentDetails extends AppCompatActivity {
             public void onClick(View v) {
                 Intent intent = new Intent(ExperimentDetails.this, ScannerActivity.class);
                 intent.putExtra("experiment", experiment);
+                intent.putExtra("Flag", "Scan");
                 startActivity(intent);
             }
         });
