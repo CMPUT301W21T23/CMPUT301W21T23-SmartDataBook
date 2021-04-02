@@ -17,8 +17,11 @@ import com.example.cmput301w21t23_smartdatabook.database.Database;
 import com.example.cmput301w21t23_smartdatabook.trials.Trial;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
+import com.google.common.collect.Maps;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.zxing.Result;
+import com.google.zxing.ResultMetadataType;
+import com.google.zxing.ResultPoint;
 import com.karumi.dexter.Dexter;
 import com.karumi.dexter.PermissionToken;
 import com.karumi.dexter.listener.PermissionDeniedResponse;
@@ -26,11 +29,15 @@ import com.karumi.dexter.listener.PermissionGrantedResponse;
 import com.karumi.dexter.listener.PermissionRequest;
 import com.karumi.dexter.listener.single.PermissionListener;
 
+import java.sql.Array;
+import java.util.Arrays;
 import java.util.HashMap;
+import java.util.Map;
 import java.util.UUID;
 
 import me.dm7.barcodescanner.zxing.ZXingScannerView;
 
+// https://www.youtube.com/watch?v=AiNi9K94W5c&ab_channel=MdJamal
 public class ScannerActivity extends AppCompatActivity implements ZXingScannerView.ResultHandler{
 	ZXingScannerView scannerView;
 	Database database = Database.getDataBase();
@@ -99,7 +106,17 @@ public class ScannerActivity extends AppCompatActivity implements ZXingScannerVi
 		HashMap<String, String> data = new HashMap<>();
 
 		String[] values = rawResult.getText().split(",");
-		Log.d("Barcode", rawResult.getText());
+		Log.e("Barcode", rawResult.toString());
+		ResultPoint[] a = rawResult.getResultPoints();
+		// unique
+		for (ResultPoint b : a) {
+			Log.e("byte: ",b + " ");
+		}
+
+//		E/byte:: (191.0,148.0)
+//		(458.0,148.0)
+
+
 		onBackPressed();
 
 //		if (values[3].equals("Binomial")){
