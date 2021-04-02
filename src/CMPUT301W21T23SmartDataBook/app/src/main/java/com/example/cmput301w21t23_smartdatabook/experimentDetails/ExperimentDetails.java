@@ -178,7 +178,9 @@ public class ExperimentDetails extends AppCompatActivity {
 
                                 }
                             }
-                        });
+                        }
+                        ).create().show();
+
 
 
 
@@ -192,7 +194,6 @@ public class ExperimentDetails extends AppCompatActivity {
             endExp.setVisibility(View.VISIBLE);
             publish.setVisibility(View.VISIBLE);
             publish_text.setVisibility(View.VISIBLE);
-
         }
 
         publish.setOnClickListener(new View.OnClickListener() {
