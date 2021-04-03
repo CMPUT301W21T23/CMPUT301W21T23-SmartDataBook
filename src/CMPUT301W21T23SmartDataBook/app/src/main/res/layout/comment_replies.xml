@@ -39,7 +39,7 @@
         android:layout_alignParentTop="true"
         android:layout_marginEnd="20dp"
         android:layout_marginBottom="12dp"
-        android:text="date"
+        android:text="stringDate"
         app:layout_constraintBottom_toTopOf="@+id/commentText"
         app:layout_constraintEnd_toStartOf="@+id/commentID"
         app:layout_constraintTop_toTopOf="parent"

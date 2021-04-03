@@ -19,14 +19,13 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.app.ActivityCompat;
 import androidx.fragment.app.Fragment;
 
-import com.example.cmput301w21t23_smartdatabook.Date;
+import com.example.cmput301w21t23_smartdatabook.StringDate;
 import com.example.cmput301w21t23_smartdatabook.Experiment;
 import com.example.cmput301w21t23_smartdatabook.R;
 import com.example.cmput301w21t23_smartdatabook.geolocation.LocationWithPermission;
 import com.example.cmput301w21t23_smartdatabook.user.User;
 import com.google.android.gms.location.FusedLocationProviderClient;
 import com.google.android.gms.location.LocationCallback;
-import com.google.android.gms.location.LocationResult;
 import com.google.android.gms.location.LocationServices;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.tasks.OnSuccessListener;
@@ -135,8 +134,8 @@ public class addExpFragment extends Fragment {
             @Override
             public void onClick(View v) {
 
-                //Instantiate currentDate object to get the current date
-                Date currentDate = new Date();
+                //Instantiate currentStringDate object to get the current date
+                StringDate currentStringDate = new StringDate();
 
                 String expName = "" + name.getEditText().getText();
                 String expDescription = "" + description.getEditText().getText();
@@ -154,7 +153,7 @@ public class addExpFragment extends Fragment {
 //
 //                    returnedExperiment = new Experiment(expName, currentID, "please refresh",
 //                            trialType, expDescription, checkLocationOn, minTrials.getValue(), maxTrials.getValue(),
-//                            checkPublicOn, currentDate.getDate(), UUID.randomUUID().toString(), false, latlng);
+//                            checkPublicOn, currentStringDate.getDate(), UUID.randomUUID().toString(), false, latlng);
 //
 //                    //Source: Shweta Chauhan; https://stackoverflow.com/users/6021469/shweta-chauhan
 //                    //Code: https://stackoverflow.com/questions/40085608/how-to-pass-data-from-one-fragment-to-previous-fragment
@@ -187,7 +186,7 @@ public class addExpFragment extends Fragment {
 
                             returnedExperiment = new Experiment(expName, currentID, "please refresh",
                                     trialType, expDescription, checkLocationOn, minTrials.getValue(), maxTrials.getValue(),
-                                    checkPublicOn, currentDate.getCurrentDate(), UUID.randomUUID().toString(), false, latlng);
+                                    checkPublicOn, currentStringDate.getCurrentDate(), UUID.randomUUID().toString(), false, latlng);
 
                             //Source: Shweta Chauhan; https://stackoverflow.com/users/6021469/shweta-chauhan
                             //Code: https://stackoverflow.com/questions/40085608/how-to-pass-data-from-one-fragment-to-previous-fragment

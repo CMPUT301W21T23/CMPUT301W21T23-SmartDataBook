@@ -15,7 +15,7 @@ import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.example.cmput301w21t23_smartdatabook.database.Database;
-import com.example.cmput301w21t23_smartdatabook.Date;
+import com.example.cmput301w21t23_smartdatabook.StringDate;
 import com.example.cmput301w21t23_smartdatabook.Experiment;
 import com.example.cmput301w21t23_smartdatabook.R;
 import com.example.cmput301w21t23_smartdatabook.user.User;
@@ -51,7 +51,7 @@ public class RepliesActivity extends AppCompatActivity {
     private User user = User.getUser();
 
     FloatingActionButton addReply;
-    Date curDate = new Date();
+    StringDate curStringDate = new StringDate();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -94,7 +94,7 @@ public class RepliesActivity extends AppCompatActivity {
                             public void onClick(DialogInterface dialog, int which) {
                                 String commentText = newComment.getText().toString();
 
-                                Comment comment = new Comment(commentText, user.getUserUniqueID(), UUID.randomUUID().toString(), curDate.getCurrentDate());
+                                Comment comment = new Comment(commentText, user.getUserUniqueID(), UUID.randomUUID().toString(), curStringDate.getCurrentDate());
 
                                 database.addCommentToDB(db.collection("Replies")
                                         .document(parentComment.getCommentID())

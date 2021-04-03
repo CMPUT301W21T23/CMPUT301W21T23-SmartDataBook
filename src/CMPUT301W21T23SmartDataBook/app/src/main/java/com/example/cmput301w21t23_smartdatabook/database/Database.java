@@ -16,7 +16,6 @@ import com.example.cmput301w21t23_smartdatabook.comments.Comment;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
-import com.google.firebase.Timestamp;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
@@ -27,16 +26,10 @@ import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.GeoPoint;
 import com.google.firebase.firestore.QueryDocumentSnapshot;
 import com.google.firebase.firestore.QuerySnapshot;
-
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
-import java.time.LocalDateTime;
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.HashMap;
 import java.util.Hashtable;
 import java.util.Map;
-
 
 /**
  * class: Database
@@ -108,7 +101,7 @@ public class Database {
         data.put("Trial Value", trial.getValue());
         data.put("UUID", trial.getUid());
         data.put("TrialID", trial.getTrialID());
-        data.put("Date", trial.getDate());
+        data.put("StringDate", trial.getDate());
         genericDocument.set(data);
     }
 
@@ -126,7 +119,7 @@ public class Database {
                                         document.get("Trial Value"),
                                         document.get("UUID").toString(),
                                         document.get("TrialID").toString(),
-                                        (Timestamp) document.get("Date"))
+                                        (String) document.get("StringDate"))
                                 );
                             }
                             trialArrayAdapter.notifyDataSetChanged();
@@ -141,7 +134,7 @@ public class Database {
         data.put("CommentText", comment.getText());
         data.put("UserID", comment.getUserUniqueID());
         data.put("CommentID", comment.getCommentID());
-        data.put("Date", comment.getDate());
+        data.put("StringDate", comment.getDate());
         DocRef.set(data);
     }
 
@@ -157,7 +150,7 @@ public class Database {
                                         document.get("CommentText").toString(),
                                         document.get("UserID").toString(),
                                         document.get("CommentID").toString(),
-                                        (Timestamp) document.get("Date")));
+                                        (String) document.get("StringDate")));
                                 Log.d("Success", document.getId() + " => " + document.getData());
                             }
                             commentAdapter.notifyDataSetChanged();
@@ -221,7 +214,7 @@ public class Database {
                             for (QueryDocumentSnapshot document : task.getResult()) {
 
                                 tempList.add( document.get("Trial Value").toString() );
-                                tempList.add( document.get("Date") );
+                                tempList.add( document.get("StringDate") );
                                 statsDataList.add(tempList);
                                 tempList.clear();
                             }
@@ -278,7 +271,7 @@ public class Database {
                                             Integer.parseInt( document.getData().get("Minimum Trials").toString() ),
                                             Integer.parseInt( document.getData().get("Maximum Trials").toString() ),
                                             giveBoolean( document.getData().get("PublicStatus").toString() ),
-                                            (Timestamp) document.get("Date"),
+                                            (String) document.getData().get("StringDate"),
                                             document.getData().get("ExpID").toString(),
                                             giveBoolean(document.getData().get("isEnd").toString()),
                                             latlng
@@ -348,7 +341,7 @@ public class Database {
         data.put("UUID", newExperiment.getOwnerUserID());
         data.put("Minimum Trials", "" + newExperiment.getMinTrials());
         data.put("Maximum Trials", "" + newExperiment.getMaxTrials());
-        data.put("Date", newExperiment.getDate());
+        data.put("StringDate", newExperiment.getDate());
         data.put("ExpID", newExperiment.getExpID());
         data.put("isEnd", giveString(newExperiment.getIsEnd()));
         if (newExperiment.getRequireLocation()) {
