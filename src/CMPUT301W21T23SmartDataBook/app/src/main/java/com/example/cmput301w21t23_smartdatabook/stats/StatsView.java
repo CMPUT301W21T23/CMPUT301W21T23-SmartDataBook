@@ -91,7 +91,7 @@ public class StatsView extends AppCompatActivity {
                     Date date = dateClass.getDate((String) statsDataList.get(i).get(1));
                     String timeStamp = new SimpleDateFormat("HH:mm:ss").format(new Timestamp(date.getTime()));
                     float testFloat = testMinTimeStamp(timeStamp);
-                    entries.add(new Entry(j,
+                    entries.add(new Entry(testFloat,
                             Float.parseFloat(statsDataList.get(i).get(0).toString())) );
                     j += 1;
                 }
@@ -143,6 +143,8 @@ public class StatsView extends AppCompatActivity {
         Log.d("Timestamp", ""+ timeStampList[0] + " " + timeStampList[1]);
         float min = Float.parseFloat(timeStampList[0]);
         float sec = Float.parseFloat(timeStampList[1]);
+
+        return min+sec;
     }
 
 
