@@ -204,11 +204,12 @@ public class Database {
 
 
     /**
-     * Fills the statistical views with trial value and date data
+     * Fills the statistical views with trial value and date data. statsDataList contains a list with [Number, StringDate]
+     * for each item.
      */
     public void fillStatsList(GeneralDataCallBack generalDataCallBack, ArrayList<ArrayList> statsDataList, CollectionReference collection) {
         db = FirebaseFirestore.getInstance();
-        ArrayList<Object> tempList = new ArrayList<>();
+
         collection
                 .get()
                 .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
@@ -220,13 +221,29 @@ public class Database {
 
                         if (task.isSuccessful()) {
                             for (QueryDocumentSnapshot document : task.getResult()) {
+                                statsDataList.add(new ArrayList<Object>() {
+                                    {
+                                        Number temp;
 
-                                tempList.add( document.get("Trial Value").toString() );
-                                tempList.add( document.get("StringDate") );
-                                statsDataList.add(tempList);
-                                tempList.clear();
-                            }
+                                        if (document.get("Trial Type").toString() == "Binomial"){
 
+                                            //Convert database boolean into integer value
+                                            if ( (Boolean) document.get("Trial Value")) {
+                                                temp = 1;
+                                            } else {
+                                                temp = 0;
+                                            }
+
+                                        } else {
+                                            temp = Float.parseFloat(document.get("Trial Value").toString());
+                                        }
+                                        add(temp);
+                                        add(document.get("StringDate").toString());
+                                    }
+                                });
+                            }//for
+
+                            Log.d("stats", ""+statsDataList.size());
                             //Get callback to grab the populated dataList
                             generalDataCallBack.onDataReturn(statsDataList);
 
