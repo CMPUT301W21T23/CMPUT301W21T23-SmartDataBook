@@ -248,12 +248,15 @@ public class UploadTrial extends AppCompatActivity {
                                         // Q1: check editText value
                                         // Q2: how to save information
                                         // check input for
-                                        float rounded=Float.valueOf(measurementInput.getText().toString());
-                                        double scale = Math.pow(10, 2);
-                                        double finalRound=(rounded *scale)/scale;
+
+                                        // source: https://docs.oracle.com/javase/8/docs/api/java/math/BigDecimal.html
+                                        // I have use the idea of BigDecimal object to handle float returning not exactly the same valye
+                                        // by Alex Mak
+                                        BigDecimal roundedVal= new BigDecimal(measurementInput.getText().toString());
+                                        double finalVal= roundedVal.doubleValue();
                                         Trial trial = new Trial(experiment.getRequireLocation(),
                                                 experiment.getTrialType(),
-                                                finalRound,
+                                                finalVal,
 //                                                Float.parseFloat(measurementInput.getText().toString()),
                                                 experiment.getOwnerUserID(),
                                                 UUID.randomUUID().toString(),
