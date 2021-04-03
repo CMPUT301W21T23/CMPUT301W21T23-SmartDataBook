@@ -122,7 +122,7 @@ public class UploadTrial extends AppCompatActivity {
 //                            Log.d("Test", "test");
                                         for (int i = 0; i<Integer.parseInt(numBinomial.getText().toString()); i++){
                                             Log.d("Integer i: ", String.valueOf(i));
-                                            Trial trial = new Trial(experiment.getRegionOn(),
+                                            Trial trial = new Trial(experiment.getRequireLocation(),
                                                     experiment.getTrialType(),
                                                     true,
                                                     experiment.getOwnerUserID(),
@@ -141,7 +141,7 @@ public class UploadTrial extends AppCompatActivity {
 
                                         for (int i = 0; i<Integer.parseInt(numBinomial.getText().toString()); i++){
                                             Log.d("Integer i: ", String.valueOf(i));
-                                            Trial trial = new Trial(experiment.getRegionOn(),
+                                            Trial trial = new Trial(experiment.getRequireLocation(),
                                                     experiment.getTrialType(),
                                                     false,
                                                     experiment.getOwnerUserID(),
@@ -171,7 +171,7 @@ public class UploadTrial extends AppCompatActivity {
                                 .setPositiveButton("Add Trials", new DialogInterface.OnClickListener() {
                                     @Override
                                     public void onClick(DialogInterface dialog, int which) {
-                                        Trial trial = new Trial(experiment.getRegionOn(),
+                                        Trial trial = new Trial(experiment.getRequireLocation(),
                                                 experiment.getTrialType(),
                                                 Integer.parseInt(numCount.getText().toString()),
                                                 experiment.getOwnerUserID(),
@@ -204,7 +204,7 @@ public class UploadTrial extends AppCompatActivity {
                                         // include 0 as well
                                         if (Integer.parseInt(numNonNegCount.getText().toString())>=0){
                                             // save the data
-                                            Trial trial = new Trial(experiment.getRegionOn(),
+                                            Trial trial = new Trial(experiment.getRequireLocation(),
                                                     experiment.getTrialType(),
                                                     Integer.parseInt(numNonNegCount.getText().toString()),
                                                     experiment.getOwnerUserID(),
@@ -237,7 +237,7 @@ public class UploadTrial extends AppCompatActivity {
                                         // Q1: check editText value
                                         // Q2: how to save information
                                         // check input for
-                                        Trial trial = new Trial(experiment.getRegionOn(),
+                                        Trial trial = new Trial(experiment.getRequireLocation(),
                                                 experiment.getTrialType(),
                                                 Float.parseFloat(measurementInput.getText().toString()),
                                                 experiment.getOwnerUserID(),
@@ -279,7 +279,7 @@ public class UploadTrial extends AppCompatActivity {
 //                            Log.d("Test", "test");
                             for (int i = 0; i<Integer.parseInt(numBinomial.getText().toString()); i++){
                                 Log.d("Integer i: ", String.valueOf(i));
-                                Trial trial = new Trial(experiment.getRegionOn(),
+                                Trial trial = new Trial(experiment.getRequireLocation(),
                                         experiment.getTrialType(),
                                         true,
                                         experiment.getOwnerUserID(),
@@ -298,7 +298,7 @@ public class UploadTrial extends AppCompatActivity {
 
                                 for (int i = 0; i<Integer.parseInt(numBinomial.getText().toString()); i++){
                                     Log.d("Integer i: ", String.valueOf(i));
-                                    Trial trial = new Trial(experiment.getRegionOn(),
+                                    Trial trial = new Trial(experiment.getRequireLocation(),
                                             experiment.getTrialType(),
                                             false,
                                             experiment.getOwnerUserID(),
@@ -329,7 +329,7 @@ public class UploadTrial extends AppCompatActivity {
                             .setPositiveButton("Add Trials", new DialogInterface.OnClickListener() {
                                 @Override
                                 public void onClick(DialogInterface dialog, int which) {
-                                    Trial trial = new Trial(experiment.getRegionOn(),
+                                    Trial trial = new Trial(experiment.getRequireLocation(),
                                             experiment.getTrialType(),
                                             Integer.parseInt(numCount.getText().toString()),
                                             experiment.getOwnerUserID(),
@@ -362,7 +362,7 @@ public class UploadTrial extends AppCompatActivity {
                                     // include 0 as well
                                     if (Integer.parseInt(numNonNegCount.getText().toString())>=0){
                                         // save the data
-                                        Trial trial = new Trial(experiment.getRegionOn(),
+                                        Trial trial = new Trial(experiment.getRequireLocation(),
                                                 experiment.getTrialType(),
                                                 Integer.parseInt(numNonNegCount.getText().toString()),
                                                 experiment.getOwnerUserID(),
@@ -395,7 +395,7 @@ public class UploadTrial extends AppCompatActivity {
                                     // Q1: check editText value
                                     // Q2: how to save information
                                     // check input for
-                                    Trial trial = new Trial(experiment.getRegionOn(),
+                                    Trial trial = new Trial(experiment.getRequireLocation(),
                                             experiment.getTrialType(),
                                             Float.parseFloat(measurementInput.getText().toString()),
                                             experiment.getOwnerUserID(),

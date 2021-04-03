@@ -18,8 +18,6 @@ import com.example.cmput301w21t23_smartdatabook.R;
 import com.example.cmput301w21t23_smartdatabook.user.User;
 import com.google.android.material.button.MaterialButton;
 
-import java.util.Scanner;
-
 /**
  * generate QR code activity
  * this will call the QR code based on input and show it to the user
@@ -84,14 +82,14 @@ public class QRCodeActivity extends AppCompatActivity {
 
         CheckBox location = findViewById(R.id.TrialLocationCheckBox);
 
-        if(experiment.getRegionOn()){
+        if(experiment.getRequireLocation()){
             location.setChecked(true);
         }
 
         location.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Toast.makeText(getBaseContext(), "Location was turned "+experiment.getRegionOn()+" for this experiment.", Toast.LENGTH_SHORT).show();
+                Toast.makeText(getBaseContext(), "Location was turned "+experiment.getRequireLocation()+" for this experiment.", Toast.LENGTH_SHORT).show();
             }
         });
 
@@ -106,11 +104,11 @@ public class QRCodeActivity extends AppCompatActivity {
 
                 if (experiment.getTrialType().equals("Binomial")){
 
-                    QRCodeMessage = experiment.getExpID()+","+user.getUserUniqueID()+"," + value.getText().toString() +","+experiment.getTrialType()+","+experiment.getRegionOn() + "," + findBinoType(binoChoice.getCheckedRadioButtonId());
+                    QRCodeMessage = experiment.getExpID()+","+user.getUserUniqueID()+"," + value.getText().toString() +","+experiment.getTrialType()+","+experiment.getRequireLocation() + "," + findBinoType(binoChoice.getCheckedRadioButtonId());
 
                 } else {
 
-                    QRCodeMessage = experiment.getExpID() + "," + user.getUserUniqueID() + "," + value.getText().toString() + "," + experiment.getTrialType() + "," + experiment.getRegionOn();
+                    QRCodeMessage = experiment.getExpID() + "," + user.getUserUniqueID() + "," + value.getText().toString() + "," + experiment.getTrialType() + "," + experiment.getRequireLocation();
 
                 }
 
