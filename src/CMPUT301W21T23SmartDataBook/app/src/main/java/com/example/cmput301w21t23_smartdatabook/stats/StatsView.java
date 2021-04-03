@@ -61,8 +61,6 @@ public class StatsView extends AppCompatActivity {
 
                 statsDataList = DataList;
 
-                
-
             }
         } , statsDataList, db.collection("Experiments").document(experiment.getExpID()).collection("Trials"));
 

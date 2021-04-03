@@ -2,6 +2,7 @@ package com.example.cmput301w21t23_smartdatabook.trials;
 
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.location.Location;
 import android.os.Bundle;
 import android.text.InputType;
 import android.util.Log;
@@ -13,22 +14,21 @@ import android.widget.EditText;
 import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
-
 import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
-
 import com.example.cmput301w21t23_smartdatabook.StringDate;
 import com.example.cmput301w21t23_smartdatabook.database.Database;
 import com.example.cmput301w21t23_smartdatabook.Experiment;
 import com.example.cmput301w21t23_smartdatabook.R;
+import com.example.cmput301w21t23_smartdatabook.database.GeneralDataCallBack;
+import com.example.cmput301w21t23_smartdatabook.geolocation.LocationWithPermission;
 import com.example.cmput301w21t23_smartdatabook.user.User;
+import com.google.android.gms.maps.model.LatLng;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.firestore.FirebaseFirestore;
-
 import java.math.BigDecimal;
-import java.text.DecimalFormat;
 import java.util.ArrayList;
 import java.util.UUID;
 
@@ -126,41 +126,56 @@ public class UploadTrial extends AppCompatActivity {
                                 .setNeutralButton("Add passes", new DialogInterface.OnClickListener() {
                                     @Override
                                     public void onClick(DialogInterface dialog, int which) {
-//                            Log.d("Test", "test");
-                                        for (int i = 0; i<Integer.parseInt(numBinomial.getText().toString()); i++){
-                                            Log.d("Integer i: ", String.valueOf(i));
-                                            Trial trial = new Trial(experiment.getRequireLocation(),
-                                                    experiment.getTrialType(),
-                                                    true,
-                                                    experiment.getOwnerUserID(),
-                                                    UUID.randomUUID().toString(),
-                                                    stringDate.getCurrentDate());
-                                            database.addTrialToDB(db.collection("Experiments")
-                                                    .document(experiment.getExpID())
-                                                    .collection("Trials")
-                                                    .document(trial.getTrialID()), trial);
-                                        }
-                                        recreate();
+                                        new LocationWithPermission(UploadTrial.this).getLatLng(new GeneralDataCallBack() {
+                                            @Override
+                                            public void onDataReturn(Object returnedObject) {
+                                                Location location = (Location) returnedObject;
+                                                LatLng latlng = new LatLng(location.getLatitude(), location.getLongitude());
+                                                for (int i = 0; i<Integer.parseInt(numBinomial.getText().toString()); i++){
+                                                    Log.d("Integer i: ", String.valueOf(i));
+                                                    Trial trial = new Trial(experiment.getRequireLocation(),
+                                                            experiment.getTrialType(),
+                                                            true,
+                                                            experiment.getOwnerUserID(),
+                                                            UUID.randomUUID().toString(),
+                                                            stringDate.getCurrentDate(),
+                                                            experiment.getRequireLocation() ? latlng : null);
+                                                    database.addTrialToDB(db.collection("Experiments")
+                                                            .document(experiment.getExpID())
+                                                            .collection("Trials")
+                                                            .document(trial.getTrialID()), trial);
+                                                    Log.e("Work", "Binomial");
+                                                }
+                                                recreate();
+                                            }
+                                        });
+
                                     }
                                 })
                                 .setNegativeButton("Add failure", new DialogInterface.OnClickListener() {
                                     @Override
                                     public void onClick(DialogInterface dialog, int which) {
-
-                                        for (int i = 0; i<Integer.parseInt(numBinomial.getText().toString()); i++){
-                                            Log.d("Integer i: ", String.valueOf(i));
-                                            Trial trial = new Trial(experiment.getRequireLocation(),
-                                                    experiment.getTrialType(),
-                                                    false,
-                                                    experiment.getOwnerUserID(),
-                                                    UUID.randomUUID().toString(),
-                                                    stringDate.getCurrentDate());
-                                            database.addTrialToDB(db
-                                                    .collection("Experiments")
-                                                    .document(experiment.getExpID())
-                                                    .collection("Trials")
-                                                    .document(trial.getTrialID()), trial);
-                                        }
+                                        new LocationWithPermission(UploadTrial.this).getLatLng(new GeneralDataCallBack() {
+                                            @Override
+                                            public void onDataReturn(Object returnedObject) {
+                                                Location location = (Location) returnedObject;
+                                                LatLng latlng = new LatLng(location.getLatitude(), location.getLongitude());
+                                                for (int i = 0; i<Integer.parseInt(numBinomial.getText().toString()); i++){
+                                                    Log.d("Integer i: ", String.valueOf(i));
+                                                    Trial trial = new Trial(experiment.getRequireLocation(),
+                                                            experiment.getTrialType(),
+                                                            false,
+                                                            experiment.getOwnerUserID(),
+                                                            UUID.randomUUID().toString(),
+                                                            stringDate.getCurrentDate(),
+                                                            experiment.getRequireLocation() ? latlng : null);
+                                                    database.addTrialToDB(db.collection("Experiments")
+                                                            .document(experiment.getExpID())
+                                                            .collection("Trials")
+                                                            .document(trial.getTrialID()), trial);
+                                                }
+                                            }
+                                        });
                                         recreate();
                                     }})
                                 .setPositiveButton("Cancel", null).create().show();
@@ -180,18 +195,27 @@ public class UploadTrial extends AppCompatActivity {
                                 .setPositiveButton("Add Trials", new DialogInterface.OnClickListener() {
                                     @Override
                                     public void onClick(DialogInterface dialog, int which) {
-                                        Trial trial = new Trial(experiment.getRequireLocation(),
-                                                experiment.getTrialType(),
-                                                Integer.parseInt(numCount.getText().toString()),
-                                                experiment.getOwnerUserID(),
-                                                UUID.randomUUID().toString(),
-                                                stringDate.getCurrentDate());
-                                        database.addTrialToDB(db
-                                                .collection("Experiments")
-                                                .document(experiment.getExpID())
-                                                .collection("Trials")
-                                                .document(trial.getTrialID()), trial);
-                                        recreate();
+                                        new LocationWithPermission(UploadTrial.this).getLatLng(new GeneralDataCallBack() {
+                                            @Override
+                                            public void onDataReturn(Object returnedObject) {
+                                                Location location = (Location) returnedObject;
+                                                LatLng latlng = new LatLng(location.getLatitude(), location.getLongitude());
+                                                Trial trial = new Trial(experiment.getRequireLocation(),
+                                                        experiment.getTrialType(),
+                                                        Integer.parseInt(numCount.getText().toString()),
+                                                        experiment.getOwnerUserID(),
+                                                        UUID.randomUUID().toString(),
+                                                        stringDate.getCurrentDate(),
+                                                        experiment.getRequireLocation() ? latlng : null);
+                                                database.addTrialToDB(db
+                                                        .collection("Experiments")
+                                                        .document(experiment.getExpID())
+                                                        .collection("Trials")
+                                                        .document(trial.getTrialID()), trial);
+                                                recreate();
+                                            }
+                                        });
+
                                     }
                                 }).create().show();
                     }
@@ -206,27 +230,34 @@ public class UploadTrial extends AppCompatActivity {
                         numNonNegCount.setHint("Enter a positive number");
                         builder.setView(numNonNegCount);
 
-
                         builder.setNegativeButton("Cancel", null)
                                 .setPositiveButton("Add trials", new DialogInterface.OnClickListener() {
                                     @Override
                                     public void onClick(DialogInterface dialog, int which) {
                                         // include 0 as well
-                                        if (Integer.parseInt(numNonNegCount.getText().toString())>=0){
-                                            // save the data
-                                            Trial trial = new Trial(experiment.getRequireLocation(),
-                                                    experiment.getTrialType(),
-                                                    Integer.parseInt(numNonNegCount.getText().toString()),
-                                                    experiment.getOwnerUserID(),
-                                                    UUID.randomUUID().toString(),
-                                                    stringDate.getCurrentDate());
-                                            database.addTrialToDB(db
-                                                    .collection("Experiments")
-                                                    .document(experiment.getExpID())
-                                                    .collection("Trials")
-                                                    .document(trial.getTrialID()), trial);
-                                        }
-                                        recreate();
+                                        new LocationWithPermission(UploadTrial.this).getLatLng(new GeneralDataCallBack() {
+                                            @Override
+                                            public void onDataReturn(Object returnedObject) {
+                                                Location location = (Location) returnedObject;
+                                                LatLng latlng = new LatLng(location.getLatitude(), location.getLongitude());
+                                                if (Integer.parseInt(numNonNegCount.getText().toString())>=0){
+                                                    // save the data
+                                                    Trial trial = new Trial(experiment.getRequireLocation(),
+                                                            experiment.getTrialType(),
+                                                            Integer.parseInt(numNonNegCount.getText().toString()),
+                                                            experiment.getOwnerUserID(),
+                                                            UUID.randomUUID().toString(),
+                                                            stringDate.getCurrentDate(),
+                                                            experiment.getRequireLocation() ? latlng : null);
+                                                    database.addTrialToDB(db
+                                                            .collection("Experiments")
+                                                            .document(experiment.getExpID())
+                                                            .collection("Trials")
+                                                            .document(trial.getTrialID()), trial);
+                                                }
+                                                recreate();
+                                            }
+                                        });
                                     }
                                 }).create().show();
                     }
@@ -252,22 +283,30 @@ public class UploadTrial extends AppCompatActivity {
                                         // source: https://docs.oracle.com/javase/8/docs/api/java/math/BigDecimal.html
                                         // I have use the idea of BigDecimal object to handle float returning not exactly the same valye
                                         // by Alex Mak
-                                        BigDecimal roundedVal= new BigDecimal(measurementInput.getText().toString());
-                                        double finalVal= roundedVal.doubleValue();
-                                        Trial trial = new Trial(experiment.getRequireLocation(),
-                                                experiment.getTrialType(),
-                                                finalVal,
+                                        new LocationWithPermission(UploadTrial.this).getLatLng(new GeneralDataCallBack() {
+                                            @Override
+                                            public void onDataReturn(Object returnedObject) {
+                                                Location location = (Location) returnedObject;
+                                                LatLng latlng = new LatLng(location.getLatitude(), location.getLongitude());
+                                                BigDecimal roundedVal= new BigDecimal(measurementInput.getText().toString());
+                                                double finalVal= roundedVal.doubleValue();
+                                                Trial trial = new Trial(experiment.getRequireLocation(),
+                                                        experiment.getTrialType(),
+                                                        finalVal,
 //                                                Float.parseFloat(measurementInput.getText().toString()),
-                                                experiment.getOwnerUserID(),
-                                                UUID.randomUUID().toString(),
-                                                stringDate.getCurrentDate());
-                                        database.addTrialToDB(db
-                                                .collection("Experiments")
-                                                .document(experiment.getExpID())
-                                                .collection("Trials")
-                                                .document(trial.getTrialID()), trial);
-                                        Log.d("Test", "test");
-                                        recreate();
+                                                        experiment.getOwnerUserID(),
+                                                        UUID.randomUUID().toString(),
+                                                        stringDate.getCurrentDate(),
+                                                        experiment.getRequireLocation() ? latlng : null);
+                                                database.addTrialToDB(db
+                                                        .collection("Experiments")
+                                                        .document(experiment.getExpID())
+                                                        .collection("Trials")
+                                                        .document(trial.getTrialID()), trial);
+                                                Log.d("Test", "test");
+                                                recreate();
+                                            }
+                                        });
                                     }
                                 }).create().show();
                     }
@@ -314,4 +353,27 @@ public class UploadTrial extends AppCompatActivity {
         }
 
     }
+
+    public void locationClick(){
+        new LocationWithPermission(UploadTrial.this).getLatLng(new GeneralDataCallBack() {
+            @Override
+            public void onDataReturn(Object returnedObject) {
+                Location location = (Location) returnedObject;
+                LatLng latlng = new LatLng(location.getLatitude(), location.getLongitude());
+
+            }
+        });
+//        FusedLocationProviderClient fusedLocationProviderClient = LocationServices.getFusedLocationProviderClient(this);
+//        if (ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(activity.getApplicationContext(), Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
+//
+//            return;
+//        }
+//        fusedLocationProviderClient.getLastLocation().addOnSuccessListener(this, new OnSuccessListener<Location>() {
+//            @Override
+//            public void onSuccess(Location location) {
+//                LatLng latlng = new LatLng(location.getLatitude(), location.getLongitude());
+//            }
+//            });
+    }
+
 }

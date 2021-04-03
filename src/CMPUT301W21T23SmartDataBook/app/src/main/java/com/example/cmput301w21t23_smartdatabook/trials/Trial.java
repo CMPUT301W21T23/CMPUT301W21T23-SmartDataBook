@@ -1,6 +1,9 @@
 package com.example.cmput301w21t23_smartdatabook.trials;
 
 import android.location.Location;
+
+import com.google.android.gms.maps.model.LatLng;
+
 import java.time.LocalDateTime;
 
 /**
@@ -12,12 +15,23 @@ import java.time.LocalDateTime;
 public class Trial {
 
     private boolean geoLocationSettingOn;
-//    private Location location;
     private String expType;
     private Object value;
     private String uid;
     private String trialID;
     private String date;
+    private LatLng location;
+
+    public Trial(boolean geoLocationSettingOn, String expType, Object value, String uid, String trialID, String date, LatLng location) {
+        this.geoLocationSettingOn = geoLocationSettingOn;
+        this.expType = expType;
+        this.value = value;
+        this.uid = uid;
+        this.trialID = trialID;
+        this.date = date;
+        this.location = location;
+
+    }
 
     public Trial(boolean geoLocationSettingOn, String expType, Object value, String uid, String trialID, String date) {
         this.geoLocationSettingOn = geoLocationSettingOn;
@@ -26,7 +40,14 @@ public class Trial {
         this.uid = uid;
         this.trialID = trialID;
         this.date = date;
+    }
 
+    public LatLng getLocation() {
+        return location;
+    }
+
+    public void setLocation(LatLng location) {
+        this.location = location;
     }
 
     public String getDate() {

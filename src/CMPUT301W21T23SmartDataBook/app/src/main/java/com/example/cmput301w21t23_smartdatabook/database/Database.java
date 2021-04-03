@@ -102,6 +102,7 @@ public class Database {
         data.put("UUID", trial.getUid());
         data.put("TrialID", trial.getTrialID());
         data.put("StringDate", trial.getDate());
+        data.put("GeoPoint", trial.getLocation());
         genericDocument.set(data);
     }
 
@@ -119,8 +120,9 @@ public class Database {
                                         document.get("Trial Value"),
                                         document.get("UUID").toString(),
                                         document.get("TrialID").toString(),
-                                        (String) document.get("StringDate"))
-                                );
+                                        (String) document.get("StringDate"),
+                                        (LatLng) document.get("GeoPoint")
+                                ));
                             }
                             trialArrayAdapter.notifyDataSetChanged();
                         }
