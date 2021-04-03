@@ -1,12 +1,17 @@
 package com.example.cmput301w21t23_smartdatabook.stats;
 
+import com.example.cmput301w21t23_smartdatabook.StringDate;
+
 import java.util.ArrayList;
+import java.util.Date;
 
 /**
  * this classs will calculate various values needed in the statistics view
  * @author Afaq, Bosco
  */
 public class StatisticsModel {
+
+    StringDate dateClass = new StringDate();
 
     public StatisticsModel() {
     }
@@ -33,7 +38,7 @@ public class StatisticsModel {
         }
     }
 
-    public void bubbleSort(ArrayList<ArrayList> statsDataList){
+    public void bubbleSortByValue(ArrayList<ArrayList> statsDataList){
         for (int i = 0; i < statsDataList.size(); i++) {
             for (int j = 0; j < statsDataList.size()-i-1; j++){
                 double num1 = (double) statsDataList.get(j).get(0);
@@ -46,6 +51,20 @@ public class StatisticsModel {
             }
         }
     }
+
+    public void bubbleSortByDate(ArrayList<ArrayList> statsDataList){
+        for (int i = 0; i < statsDataList.size(); i++) {
+            for (int j = 0; j < statsDataList.size()-i-1; j++){
+                Date d1 =  dateClass.getDate(statsDataList.get(j).get(1).toString());
+                Date d2 =  dateClass.getDate(statsDataList.get(j+1).get(1).toString());
+                if (d1.compareTo(d2) > 0){
+                    ArrayList temp = statsDataList.get(j);
+                    statsDataList.set(j, statsDataList.get(j+1));
+                    statsDataList.set(j+1,temp);
+                }
+            }
+        }//for
+    }//bubbleSortByDate
 
     // https://stackoverflow.com/questions/42381759/finding-first-quartile-and-third-quartile-in-integer-array-using-java
     public double[] quartiles(ArrayList<Double> val) {

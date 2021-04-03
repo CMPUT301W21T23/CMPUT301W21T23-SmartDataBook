@@ -18,11 +18,16 @@ import com.example.cmput301w21t23_smartdatabook.database.GeneralDataCallBack;
 import com.example.cmput301w21t23_smartdatabook.user.User;
 import com.github.mikephil.charting.charts.BarChart;
 import com.github.mikephil.charting.charts.LineChart;
+import com.github.mikephil.charting.components.AxisBase;
+import com.github.mikephil.charting.components.XAxis;
 import com.github.mikephil.charting.components.YAxis;
 import com.github.mikephil.charting.data.Entry;
 import com.github.mikephil.charting.data.LineData;
 import com.github.mikephil.charting.data.LineDataSet;
 //import com.google.firebase.Timestamp;
+import com.github.mikephil.charting.formatter.IAxisValueFormatter;
+import com.github.mikephil.charting.formatter.ValueFormatter;
+import com.google.firebase.firestore.CollectionReference;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.type.DateTime;
 
@@ -30,8 +35,10 @@ import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.Date;
 import java.util.List;
+import java.util.Locale;
 
 
 public class StatsView extends AppCompatActivity {
@@ -80,25 +87,37 @@ public class StatsView extends AppCompatActivity {
 
                 statsDataList = DataList;
 
-                stats.bubbleSort(statsDataList); // sort list
+                stats.bubbleSortByDate(statsDataList); //sort list by date
 
-                float j = 0;
                 List<Entry> entries = new ArrayList<Entry>();
                 for (int i = 0; i<statsDataList.size(); i++){
 //                    Date date = dateClass.getDate((String) statsDataList.get(i).get(1));
 //                    entries.add(new Entry(date.getTime(),
 //                            Float.parseFloat((String) statsDataList.get(i).get(0))));
-                    Date date = dateClass.getDate((String) statsDataList.get(i).get(1));
-                    String timeStamp = new SimpleDateFormat("HH:mm:ss").format(new Timestamp(date.getTime()));
-                    float testFloat = testMinTimeStamp(timeStamp);
-                    entries.add(new Entry(testFloat,
+
+                    Log.d("Entire", ""+statsDataList.get(i).get(0).toString()+ " " + statsDataList.get(i).get(1).toString());
+                    entries.add(new Entry(i,
                             Float.parseFloat(statsDataList.get(i).get(0).toString())) );
-                    j += 1;
                 }
+
+                //https://github.com/PhilJay/MPAndroidChart/issues/3705
+                ValueFormatter formatter = new ValueFormatter() {
+                    @Override
+                    public String getAxisLabel(float value, AxisBase axis) {
+                        stats.bubbleSortByDate(statsDataList); //sort list by date
+                        SimpleDateFormat sdf = new SimpleDateFormat("HH:mm:ss", Locale.ENGLISH);
+                        Log.d("Date", ""+ (int) value + "|" + sdf.format( dateClass.getDate( statsDataList.get( (int)value ).get(1).toString() )));
+                        return sdf.format( dateClass.getDate( statsDataList.get( (int)value ).get(1).toString() ) );
+                    }
+                };
 
                 LineDataSet dataSet = new LineDataSet(entries, "Label"); // add entries to dataset
                 dataSet.setAxisDependency(YAxis.AxisDependency.LEFT);
                 dataSet.setLineWidth(2.0f);
+
+                XAxis xAxis = lineChart.getXAxis();
+                xAxis.setValueFormatter(formatter);
+
                 LineData lineData = new LineData(dataSet);
                 lineChart.setData(lineData);
                 lineChart.invalidate(); // refresh
@@ -117,6 +136,7 @@ public class StatsView extends AppCompatActivity {
 
 
 
+                stats.bubbleSortByValue(statsDataList); // sort list by value
 
                 ArrayList<Double> sortedArray = new ArrayList<>();
                 for (int i = 0; i < statsDataList.size(); i++) {
@@ -137,16 +157,6 @@ public class StatsView extends AppCompatActivity {
         } , statsDataList, db.collection("Experiments").document(experiment.getExpID()).collection("Trials"));
 
     }//onCreate
-
-    public float testMinTimeStamp(String timeStamp) {
-        String[] timeStampList = timeStamp.split(":");
-        Log.d("Timestamp", ""+ timeStampList[0] + " " + timeStampList[1]);
-        float min = Float.parseFloat(timeStampList[0]);
-        float sec = Float.parseFloat(timeStampList[1]);
-
-        return min+sec;
-    }
-
 
 
 }
