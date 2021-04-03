@@ -11,8 +11,12 @@ import android.os.Looper;
 import android.provider.Settings;
 import android.util.Log;
 import android.widget.Toast;
+
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.app.ActivityCompat;
+
+import com.example.cmput301w21t23_smartdatabook.database.GeneralDataCallBack;
 import com.google.android.gms.location.FusedLocationProviderClient;
 import com.google.android.gms.location.LocationCallback;
 import com.google.android.gms.location.LocationRequest;
@@ -40,7 +44,7 @@ public class LocationWithPermission {
 		this.activity = activity;
 	}
 
-	public FusedLocationProviderClient getLatLng(LocationCallback m) {
+	public FusedLocationProviderClient getLatLng(GeneralDataCallBack generalDataCallBack) {
 		FusedLocationProviderClient fusedLocationClient = LocationServices.getFusedLocationProviderClient(activity);
         Dexter.withContext(activity.getApplicationContext())
 			.withPermission(Manifest.permission.ACCESS_FINE_LOCATION)
@@ -51,17 +55,16 @@ public class LocationWithPermission {
 			            // Following check removed from conditionals
 			        	// ActivityCompat.checkSelfPermission(activity.getApplicationContext(), Manifest.permission.ACCESS_COARSE_LOCATION) == PackageManager.PERMISSION_GRANTED
 	                        	Log.d("lwpInstance", "working?");
-				         fusedLocationClient.requestLocationUpdates(LocationRequest.create().setPriority(LocationRequest.PRIORITY_BALANCED_POWER_ACCURACY), m, Looper.myLooper());
+				         fusedLocationClient.requestLocationUpdates(LocationRequest.create().setPriority(LocationRequest.PRIORITY_BALANCED_POWER_ACCURACY), new LocationCallback() {}, Looper.myLooper());
 
 				        // Below method executes when location is successfully obtained, deprecated due to above mLocationCallback
-//			            fusedLocationClient.getLastLocation().addOnSuccessListener(activity, new OnSuccessListener<Location>() {
-//			                @Override
-//			                public void onSuccess(Location location) {
-//			                    // Got last known location. In some rare situations this can be null.
-//				                LocationResult temp = new LocationResult(new List<Location>() );
-//			                    m.onLocationResult();
-//			                }
-//			            });
+			            fusedLocationClient.getLastLocation().addOnSuccessListener(activity, new OnSuccessListener<Location>() {
+			                @Override
+			                public void onSuccess(Location location) {
+				                // Got last known location. In some rare situations this can be null.
+				                generalDataCallBack.onDataReturn(location);
+			                }
+			            });
 			        }
 				}
 				@Override
