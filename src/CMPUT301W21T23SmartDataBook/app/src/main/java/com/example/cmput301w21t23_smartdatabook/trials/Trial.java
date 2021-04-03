@@ -2,6 +2,8 @@ package com.example.cmput301w21t23_smartdatabook.trials;
 
 import android.location.Location;
 
+import com.google.firebase.Timestamp;
+
 import java.time.LocalDateTime;
 
 /**
@@ -18,9 +20,9 @@ public class Trial {
     private Object value;
     private String uid;
     private String trialID;
-    private LocalDateTime date;
+    private Timestamp date;
 
-    public Trial(boolean geoLocationSettingOn, String expType, Object value, String uid, String trialID, LocalDateTime date) {
+    public Trial(boolean geoLocationSettingOn, String expType, Object value, String uid, String trialID, Timestamp date) {
         this.geoLocationSettingOn = geoLocationSettingOn;
         this.expType = expType;
         this.value = value;
@@ -30,11 +32,11 @@ public class Trial {
 
     }
 
-    public LocalDateTime getDate() {
+    public Timestamp getDate() {
         return date;
     }
 
-    public void setDate(LocalDateTime date) {
+    public void setDate(Timestamp date) {
         this.date = date;
     }
 
