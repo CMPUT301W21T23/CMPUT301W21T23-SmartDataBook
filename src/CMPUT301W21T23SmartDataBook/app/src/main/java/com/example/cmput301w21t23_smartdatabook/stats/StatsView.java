@@ -15,6 +15,7 @@ import com.example.cmput301w21t23_smartdatabook.database.GeneralDataCallBack;
 import com.example.cmput301w21t23_smartdatabook.user.User;
 import com.github.mikephil.charting.charts.BarChart;
 import com.github.mikephil.charting.charts.LineChart;
+import com.github.mikephil.charting.components.YAxis;
 import com.github.mikephil.charting.data.Entry;
 import com.github.mikephil.charting.data.LineData;
 import com.github.mikephil.charting.data.LineDataSet;
@@ -78,20 +79,26 @@ public class StatsView extends AppCompatActivity {
 
                 stats.bubbleSort(statsDataList); // sort list
 
-
+                float j = 0;
                 List<Entry> entries = new ArrayList<Entry>();
                 for (int i = 0; i<statsDataList.size(); i++){
-                    Date date = dateClass.getDate((String) statsDataList.get(i).get(1));
-                    entries.add(new Entry(date.getTime(),
-                            Float.parseFloat((String) statsDataList.get(i).get(0))));
+//                    Date date = dateClass.getDate((String) statsDataList.get(i).get(1));
+//                    entries.add(new Entry(date.getTime(),
+//                            Float.parseFloat((String) statsDataList.get(i).get(0))));
+
+                    entries.add(new Entry(j,
+                            Float.parseFloat(statsDataList.get(i).get(0).toString())) );
+                    j += 1;
+
                 }
 
                 LineDataSet dataSet = new LineDataSet(entries, "Label"); // add entries to dataset
-
+                dataSet.setAxisDependency(YAxis.AxisDependency.LEFT);
                 LineData lineData = new LineData(dataSet);
                 lineChart.setData(lineData);
                 lineChart.invalidate(); // refresh
 
+                //Printing Forloop
                 for (int i = 0; i< statsDataList.size(); i++){
                     Date result1 = dateClass.getDate((String) statsDataList.get(i).get(1));
                     Log.d("Time: ", ""+ result1);

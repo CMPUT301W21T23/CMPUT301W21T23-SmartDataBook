@@ -241,7 +241,7 @@ public class Database {
 											}
 
 										} else {
-											temp = Float.parseFloat(document.get("Trial Value").toString());
+											temp = Double.parseDouble(document.get("Trial Value").toString());
 										}
 										add(temp);
 										add(document.get("StringDate").toString());
