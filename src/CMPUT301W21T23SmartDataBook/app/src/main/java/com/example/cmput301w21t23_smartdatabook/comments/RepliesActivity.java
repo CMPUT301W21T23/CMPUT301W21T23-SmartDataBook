@@ -69,7 +69,7 @@ public class RepliesActivity extends AppCompatActivity {
         owner.setText(parentComment.getUserUniqueID());
 
         date = findViewById(R.id.commentDate);
-        date.setText((CharSequence) parentComment.getDate());
+        date.setText(parentComment.getDate().toString());
 
         commentID = findViewById(R.id.commentID);
         commentID.setText(parentComment.getCommentID().substring(0,6));
@@ -94,7 +94,7 @@ public class RepliesActivity extends AppCompatActivity {
                             public void onClick(DialogInterface dialog, int which) {
                                 String commentText = newComment.getText().toString();
 
-                                Comment comment = new Comment(commentText, user.getUserUniqueID(), UUID.randomUUID().toString(), curDate.getDate());
+                                Comment comment = new Comment(commentText, user.getUserUniqueID(), UUID.randomUUID().toString(), curDate.getCurrentDate());
 
                                 database.addCommentToDB(db.collection("Replies")
                                         .document(parentComment.getCommentID())

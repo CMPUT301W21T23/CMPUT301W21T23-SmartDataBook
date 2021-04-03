@@ -1,6 +1,9 @@
 package com.example.cmput301w21t23_smartdatabook.home;
 
+import android.Manifest;
 import android.content.Intent;
+import android.content.pm.PackageManager;
+import android.location.Location;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -11,17 +14,27 @@ import android.widget.NumberPicker;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
 import android.widget.Toast;
+
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.app.ActivityCompat;
 import androidx.fragment.app.Fragment;
+
 import com.example.cmput301w21t23_smartdatabook.Date;
 import com.example.cmput301w21t23_smartdatabook.Experiment;
 import com.example.cmput301w21t23_smartdatabook.R;
+import com.example.cmput301w21t23_smartdatabook.geolocation.LocationWithPermission;
 import com.example.cmput301w21t23_smartdatabook.user.User;
+import com.google.android.gms.location.FusedLocationProviderClient;
+import com.google.android.gms.location.LocationCallback;
+import com.google.android.gms.location.LocationResult;
+import com.google.android.gms.location.LocationServices;
 import com.google.android.gms.maps.model.LatLng;
+import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.android.material.switchmaterial.SwitchMaterial;
 import com.google.android.material.textfield.TextInputLayout;
 import com.google.firebase.auth.FirebaseAuth;
+
 import java.util.UUID;
 
 /**
@@ -61,7 +74,7 @@ public class addExpFragment extends Fragment {
 
         String currentID = getArguments().getString("UUID");
 
-        Toast.makeText(getContext(),""+ currentID, Toast.LENGTH_LONG).show();
+        Toast.makeText(getContext(), "" + currentID, Toast.LENGTH_LONG).show();
 
         NumberPicker maxTrials = view.findViewById(R.id.maxTrialsNumberPicker);
         NumberPicker minTrials = view.findViewById(R.id.minTrialsNumberPicker);
@@ -129,56 +142,62 @@ public class addExpFragment extends Fragment {
                 String expDescription = "" + description.getEditText().getText();
                 String trialType = findTrialType(trialChoice.getCheckedRadioButtonId());
 
-                LatLng latlng = null;
-                if (expName == "" || expDescription == "") {
-                    Toast.makeText(getContext(), "The name or description can't be empty.", Toast.LENGTH_SHORT).show();
-                }else if (minTrials.getValue() >= maxTrials.getValue() ) {
-                    Toast.makeText(getContext(), "Minimum is larger or equal to maximum.", Toast.LENGTH_SHORT).show();
-                }else if (trialType == null) {
-                    Toast.makeText(getContext(), "A trial type needs to be selected.", Toast.LENGTH_SHORT).show();
-                }else{
-                    mAuth = FirebaseAuth.getInstance();
+//                LatLng latlng = null;
+//                if (expName == "" || expDescription == "") {
+//                    Toast.makeText(getContext(), "The name or description can't be empty.", Toast.LENGTH_SHORT).show();
+//                }else if (minTrials.getValue() >= maxTrials.getValue() ) {
+//                    Toast.makeText(getContext(), "Minimum is larger or equal to maximum.", Toast.LENGTH_SHORT).show();
+//                }else if (trialType == null) {
+//                    Toast.makeText(getContext(), "A trial type needs to be selected.", Toast.LENGTH_SHORT).show();
+//                }else{
+//                    mAuth = FirebaseAuth.getInstance();
+//
+//                    returnedExperiment = new Experiment(expName, currentID, "please refresh",
+//                            trialType, expDescription, checkLocationOn, minTrials.getValue(), maxTrials.getValue(),
+//                            checkPublicOn, currentDate.getDate(), UUID.randomUUID().toString(), false, latlng);
+//
+//                    //Source: Shweta Chauhan; https://stackoverflow.com/users/6021469/shweta-chauhan
+//                    //Code: https://stackoverflow.com/questions/40085608/how-to-pass-data-from-one-fragment-to-previous-fragment
+//                    Intent intent = new Intent(getActivity(), addExpFragment.class);
+//                    intent.putExtra("newExp", returnedExperiment);
+//                    addExpFragment.this.getTargetFragment().onActivityResult(getTargetRequestCode(), 1, intent);
+//                    activity.getSupportFragmentManager().popBackStack();
+//                }
 
-                    returnedExperiment = new Experiment(expName, currentID, "please refresh",
-                            trialType, expDescription, checkLocationOn, minTrials.getValue(), maxTrials.getValue(),
-                            checkPublicOn, currentDate.getDate(), UUID.randomUUID().toString(), false, latlng);
+                new LocationWithPermission(activity).getLatLng(new LocationCallback() {
+                });
+                FusedLocationProviderClient fusedLocationProviderClient = LocationServices.getFusedLocationProviderClient(activity);
+                if (ActivityCompat.checkSelfPermission(activity.getApplicationContext(), Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(activity.getApplicationContext(), Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
 
-                    //Source: Shweta Chauhan; https://stackoverflow.com/users/6021469/shweta-chauhan
-                    //Code: https://stackoverflow.com/questions/40085608/how-to-pass-data-from-one-fragment-to-previous-fragment
-                    Intent intent = new Intent(getActivity(), addExpFragment.class);
-                    intent.putExtra("newExp", returnedExperiment);
-                    addExpFragment.this.getTargetFragment().onActivityResult(getTargetRequestCode(), 1, intent);
-                    activity.getSupportFragmentManager().popBackStack();
+                    return;
                 }
+                fusedLocationProviderClient.getLastLocation().addOnSuccessListener(activity, new OnSuccessListener<Location>() {
+                    @Override
+                    public void onSuccess(Location location) {
+                        LatLng latlng = new LatLng(location.getLatitude(), location.getLongitude());
 
-//                new LocationWithPermission(activity).getLatLng(new LocationCallback() {
-//                    @Override
-//                    public void onLocationResult(LocationResult locationResult) {
-//                        Location lastKnownLocation = locationResult.getLastLocation();
-//                        LatLng latlng = new LatLng(lastKnownLocation.getLatitude(), lastKnownLocation.getLongitude());
-//
-//                        if (expName == "" || expDescription == "") {
-//                            Toast.makeText(getContext(), "The name or description can't be empty.", Toast.LENGTH_SHORT).show();
-//                        }else if (minTrials.getValue() >= maxTrials.getValue() ) {
-//                            Toast.makeText(getContext(), "Minimum is larger or equal to maximum.", Toast.LENGTH_SHORT).show();
-//                        }else if (trialType == null) {
-//                            Toast.makeText(getContext(), "A trial type needs to be selected.", Toast.LENGTH_SHORT).show();
-//                        }else{
-//                            mAuth = FirebaseAuth.getInstance();
-//
-//                            returnedExperiment = new Experiment(expName, currentID, "please refresh",
-//                                    trialType, expDescription, checkLocationOn, minTrials.getValue(), maxTrials.getValue(),
-//                                    checkPublicOn, currentDate.getDate(), UUID.randomUUID().toString(), false, latlng);
-//
-//                            //Source: Shweta Chauhan; https://stackoverflow.com/users/6021469/shweta-chauhan
-//                            //Code: https://stackoverflow.com/questions/40085608/how-to-pass-data-from-one-fragment-to-previous-fragment
-//                            Intent intent = new Intent(getActivity(), addExpFragment.class);
-//                            intent.putExtra("newExp", returnedExperiment);
-//                            addExpFragment.this.getTargetFragment().onActivityResult(getTargetRequestCode(), 1, intent);
-//                            activity.getSupportFragmentManager().popBackStack();
-//                        }
-//                    }
-//                });
+                        if (expName == "" || expDescription == "") {
+                            Toast.makeText(getContext(), "The name or description can't be empty.", Toast.LENGTH_SHORT).show();
+                        }else if (minTrials.getValue() >= maxTrials.getValue() ) {
+                            Toast.makeText(getContext(), "Minimum is larger or equal to maximum.", Toast.LENGTH_SHORT).show();
+                        }else if (trialType == null) {
+                            Toast.makeText(getContext(), "A trial type needs to be selected.", Toast.LENGTH_SHORT).show();
+                        }else{
+                            mAuth = FirebaseAuth.getInstance();
+
+                            returnedExperiment = new Experiment(expName, currentID, "please refresh",
+                                    trialType, expDescription, checkLocationOn, minTrials.getValue(), maxTrials.getValue(),
+                                    checkPublicOn, currentDate.getCurrentDate(), UUID.randomUUID().toString(), false, latlng);
+
+                            //Source: Shweta Chauhan; https://stackoverflow.com/users/6021469/shweta-chauhan
+                            //Code: https://stackoverflow.com/questions/40085608/how-to-pass-data-from-one-fragment-to-previous-fragment
+                            Intent intent = new Intent(getActivity(), addExpFragment.class);
+                            intent.putExtra("newExp", returnedExperiment);
+                            addExpFragment.this.getTargetFragment().onActivityResult(getTargetRequestCode(), 1, intent);
+                            activity.getSupportFragmentManager().popBackStack();
+                        }
+                    }
+                });
 
             }
         });

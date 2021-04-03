@@ -3,6 +3,7 @@ package com.example.cmput301w21t23_smartdatabook.home;
 import android.app.AlertDialog;
 import android.content.Context;
 import android.content.Intent;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -103,7 +104,7 @@ public class CardList extends ArrayAdapter<Experiment> {
 
 
             experimentName.setText(experiment.getExpName());
-            date.setText(experiment.getDate());
+            date.setText(experiment.getDate().toString());
 //            ownerName.setText("User - " + experiment.getOwnerUserID().substring(0,4));
             ownerName.setText(experiment.getOwnerUserName());
             experimentDescription.setText(experiment.getDescription());
@@ -146,7 +147,7 @@ public class CardList extends ArrayAdapter<Experiment> {
                           final CollectionReference favExpCollection = db.collection("Users")
                                   .document(user.getUserUniqueID())
                                   .collection("Favorites");
-
+//                          Log.d("cardList:150", experiment.getLatLng().toString());
                           database.addExperimentToDB(experiment, favExpCollection, user.getUserUniqueID());
 
                           System.out.println("Checked");

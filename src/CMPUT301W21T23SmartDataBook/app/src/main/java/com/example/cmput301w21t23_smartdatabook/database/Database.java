@@ -13,8 +13,10 @@ import com.example.cmput301w21t23_smartdatabook.Experiment;
 import com.example.cmput301w21t23_smartdatabook.trials.Trial;
 import com.example.cmput301w21t23_smartdatabook.user.User;
 import com.example.cmput301w21t23_smartdatabook.comments.Comment;
+import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
+import com.google.firebase.Timestamp;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
@@ -22,9 +24,15 @@ import com.google.firebase.firestore.CollectionReference;
 import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.firestore.GeoPoint;
 import com.google.firebase.firestore.QueryDocumentSnapshot;
 import com.google.firebase.firestore.QuerySnapshot;
+
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.time.LocalDateTime;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.Hashtable;
 import java.util.Map;
@@ -118,7 +126,7 @@ public class Database {
                                         document.get("Trial Value"),
                                         document.get("UUID").toString(),
                                         document.get("TrialID").toString(),
-                                        document.get("Date").toString())
+                                        (Timestamp) document.get("Date"))
                                 );
                             }
                             trialArrayAdapter.notifyDataSetChanged();
@@ -129,7 +137,7 @@ public class Database {
 
 
     public void addCommentToDB(DocumentReference DocRef, Comment comment){
-        HashMap<String, String> data = new HashMap<>();
+        HashMap<String, Object> data = new HashMap<>();
         data.put("CommentText", comment.getText());
         data.put("UserID", comment.getUserUniqueID());
         data.put("CommentID", comment.getCommentID());
@@ -149,7 +157,7 @@ public class Database {
                                         document.get("CommentText").toString(),
                                         document.get("UserID").toString(),
                                         document.get("CommentID").toString(),
-                                        document.get("Date").toString()));
+                                        (Timestamp) document.get("Date")));
                                 Log.d("Success", document.getId() + " => " + document.getData());
                             }
                             commentAdapter.notifyDataSetChanged();
@@ -194,9 +202,12 @@ public class Database {
     }
 
 
+    /**
+     * Fills the statistical views with trial value and date data
+     */
     public void fillStatsList(GeneralDataCallBack generalDataCallBack, ArrayList<ArrayList> statsDataList, CollectionReference collection) {
         db = FirebaseFirestore.getInstance();
-        ArrayList<String> tempList = new ArrayList<>();
+        ArrayList<Object> tempList = new ArrayList<>();
         collection
                 .get()
                 .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
@@ -208,8 +219,9 @@ public class Database {
 
                         if (task.isSuccessful()) {
                             for (QueryDocumentSnapshot document : task.getResult()) {
+
                                 tempList.add( document.get("Trial Value").toString() );
-                                tempList.add( document.get("Date").toString() );
+                                tempList.add( document.get("Date") );
                                 statsDataList.add(tempList);
                                 tempList.clear();
                             }
@@ -252,19 +264,24 @@ public class Database {
                                         (collection.getPath().equals(db.collection("Users").document(currentID).collection("Favorites").getPath())) ||
                                         (collection.getPath().equals("Archived")) ){
 
+                                    boolean requireLocation = giveBoolean( document.getData().get("requireLocation").toString() );
+                                    GeoPoint geoPoint =(GeoPoint)document.getData().get("Location");
+                                    LatLng latlng = requireLocation ? (new LatLng(geoPoint.getLatitude(), geoPoint.getLongitude())) : null;
+
                                     experimentDataList.add( new Experiment(
                                             document.getData().get("Name").toString(),
                                             document.getData().get("UUID").toString(),
                                             userNames.get(document.getData().get("UUID").toString()).getUserName(),
                                             document.getData().get("Trial Type").toString(),
                                             document.getData().get("Description").toString(),
-                                            giveBoolean( document.getData().get("LocationStatus").toString() ),
+                                            requireLocation,
                                             Integer.parseInt( document.getData().get("Minimum Trials").toString() ),
                                             Integer.parseInt( document.getData().get("Maximum Trials").toString() ),
                                             giveBoolean( document.getData().get("PublicStatus").toString() ),
-                                            document.getData().get("Date").toString(),
+                                            (Timestamp) document.get("Date"),
                                             document.getData().get("ExpID").toString(),
-                                            giveBoolean(document.getData().get("isEnd").toString())
+                                            giveBoolean(document.getData().get("isEnd").toString()),
+                                            latlng
                                             )
                                     );
                                 }
@@ -326,7 +343,7 @@ public class Database {
         data.put("Name", newExperiment.getExpName());
         data.put("Description", newExperiment.getDescription());
         data.put("Trial Type", newExperiment.getTrialType());
-        data.put("LocationStatus", giveString(newExperiment.getRegionOn()));
+        data.put("requireLocation", giveString(newExperiment.getRequireLocation()));
         data.put("PublicStatus", giveString(newExperiment.isPublic()));
         data.put("UUID", newExperiment.getOwnerUserID());
         data.put("Minimum Trials", "" + newExperiment.getMinTrials());
@@ -334,6 +351,10 @@ public class Database {
         data.put("Date", newExperiment.getDate());
         data.put("ExpID", newExperiment.getExpID());
         data.put("isEnd", giveString(newExperiment.getIsEnd()));
+        if (newExperiment.getRequireLocation()) {
+            GeoPoint geoPoint = new GeoPoint(newExperiment.getLatLng().latitude, newExperiment.getLatLng().longitude);
+            data.put("Location", geoPoint);
+        }
         Log.d("Collection", ""+ collection.getPath() + db.collection("Archived").getPath());
         Log.d("Collection", ""+ collection.getPath().equals(db.collection("Archived")));
         collection

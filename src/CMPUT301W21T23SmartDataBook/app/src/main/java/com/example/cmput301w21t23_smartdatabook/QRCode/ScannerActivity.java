@@ -40,7 +40,6 @@ import com.karumi.dexter.listener.PermissionRequest;
 import com.karumi.dexter.listener.single.PermissionListener;
 
 import java.util.HashMap;
-import java.util.Random;
 import java.util.UUID;
 import me.dm7.barcodescanner.zxing.ZXingScannerView;
 
@@ -168,7 +167,7 @@ public class ScannerActivity extends AppCompatActivity implements ZXingScannerVi
 						Boolean.parseBoolean(values[5]),
 						values[1],
 						UUID.randomUUID().toString(),
-						date.getDate());
+						date.getCurrentDate());
 				database.addTrialToDB(db.collection("Experiments")
 						.document(values[0])
 						.collection("Trials")
@@ -181,7 +180,7 @@ public class ScannerActivity extends AppCompatActivity implements ZXingScannerVi
 					Float.parseFloat(values[2]),
 					values[1],
 					UUID.randomUUID().toString(),
-					date.getDate());
+					date.getCurrentDate());
 			database.addTrialToDB(db.collection("Experiments")
 					.document(values[0])
 					.collection("Trials")
@@ -199,12 +198,12 @@ public class ScannerActivity extends AppCompatActivity implements ZXingScannerVi
 				if (task.isSuccessful()) {
 					for (QueryDocumentSnapshot document : task.getResult()) {
 						if (rawResult.equals(document.get("RawResult"))){
-							Trial trial = new Trial(experiment.getRegionOn(),
+							Trial trial = new Trial(experiment.getRequireLocation(),
 									experiment.getTrialType(),
 									document.get("Value"),
 									user.getUserUniqueID(),
 									UUID.randomUUID().toString(),
-									date.getDate());
+									date.getCurrentDate());
 
 							database.addTrialToDB(db
 									.collection("Experiments")

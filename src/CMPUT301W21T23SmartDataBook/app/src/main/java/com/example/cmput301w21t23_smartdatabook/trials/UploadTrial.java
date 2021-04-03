@@ -129,12 +129,12 @@ public class UploadTrial extends AppCompatActivity {
 //                            Log.d("Test", "test");
                                         for (int i = 0; i<Integer.parseInt(numBinomial.getText().toString()); i++){
                                             Log.d("Integer i: ", String.valueOf(i));
-                                            Trial trial = new Trial(experiment.getRegionOn(),
+                                            Trial trial = new Trial(experiment.getRequireLocation(),
                                                     experiment.getTrialType(),
                                                     true,
                                                     experiment.getOwnerUserID(),
                                                     UUID.randomUUID().toString(),
-                                                    date.getDate());
+                                                    date.getCurrentDate());
                                             database.addTrialToDB(db.collection("Experiments")
                                                     .document(experiment.getExpID())
                                                     .collection("Trials")
@@ -149,12 +149,12 @@ public class UploadTrial extends AppCompatActivity {
 
                                         for (int i = 0; i<Integer.parseInt(numBinomial.getText().toString()); i++){
                                             Log.d("Integer i: ", String.valueOf(i));
-                                            Trial trial = new Trial(experiment.getRegionOn(),
+                                            Trial trial = new Trial(experiment.getRequireLocation(),
                                                     experiment.getTrialType(),
                                                     false,
                                                     experiment.getOwnerUserID(),
                                                     UUID.randomUUID().toString(),
-                                                    date.getDate());
+                                                    date.getCurrentDate());
                                             database.addTrialToDB(db
                                                     .collection("Experiments")
                                                     .document(experiment.getExpID())
@@ -180,12 +180,12 @@ public class UploadTrial extends AppCompatActivity {
                                 .setPositiveButton("Add Trials", new DialogInterface.OnClickListener() {
                                     @Override
                                     public void onClick(DialogInterface dialog, int which) {
-                                        Trial trial = new Trial(experiment.getRegionOn(),
+                                        Trial trial = new Trial(experiment.getRequireLocation(),
                                                 experiment.getTrialType(),
                                                 Integer.parseInt(numCount.getText().toString()),
                                                 experiment.getOwnerUserID(),
                                                 UUID.randomUUID().toString(),
-                                                date.getDate());
+                                                date.getCurrentDate());
                                         database.addTrialToDB(db
                                                 .collection("Experiments")
                                                 .document(experiment.getExpID())
@@ -214,12 +214,12 @@ public class UploadTrial extends AppCompatActivity {
                                         // include 0 as well
                                         if (Integer.parseInt(numNonNegCount.getText().toString())>=0){
                                             // save the data
-                                            Trial trial = new Trial(experiment.getRegionOn(),
+                                            Trial trial = new Trial(experiment.getRequireLocation(),
                                                     experiment.getTrialType(),
                                                     Integer.parseInt(numNonNegCount.getText().toString()),
                                                     experiment.getOwnerUserID(),
                                                     UUID.randomUUID().toString(),
-                                                    date.getDate());
+                                                    date.getCurrentDate());
                                             database.addTrialToDB(db
                                                     .collection("Experiments")
                                                     .document(experiment.getExpID())
@@ -247,18 +247,13 @@ public class UploadTrial extends AppCompatActivity {
                                         // once click add trials, add the trial's outcome, location
                                         // Q1: check editText value
                                         // Q2: how to save information
-//                                        BigDecimal rounded= new BigDecimal(measurementInput.getText().toString());
-                                        float rounded=Float.valueOf(measurementInput.getText().toString());
-                                        double scale = Math.pow(10, 2);
-                                        double finalRound=(rounded *scale)/scale;
-
-
-                                        Trial trial = new Trial(experiment.getRegionOn(),
+                                        // check input for
+                                        Trial trial = new Trial(experiment.getRequireLocation(),
                                                 experiment.getTrialType(),
                                                 Float.parseFloat(measurementInput.getText().toString()),
                                                 experiment.getOwnerUserID(),
                                                 UUID.randomUUID().toString(),
-                                                date.getDate());
+                                                date.getCurrentDate());
                                         database.addTrialToDB(db
                                                 .collection("Experiments")
                                                 .document(experiment.getExpID())

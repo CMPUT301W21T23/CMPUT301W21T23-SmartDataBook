@@ -2,9 +2,12 @@
 package com.example.cmput301w21t23_smartdatabook.comments;
 
 import com.example.cmput301w21t23_smartdatabook.user.User;
+import com.google.firebase.Timestamp;
 
 import java.io.Serializable;
+import com.google.firebase.Timestamp;
 import java.util.ArrayList;
+import java.util.Date;
 
 /**
  * class: Comment
@@ -18,7 +21,7 @@ public class Comment implements Serializable {
     private String userUniqueID;
     private String text;
     private String commentID;
-    private String date;
+    private Timestamp date;
 
     //Contains a list of comment objects that are replying to the 
     //parent comment object.
@@ -31,7 +34,7 @@ public class Comment implements Serializable {
      * @param userUniqueID
      * @param commentID
      */
-    public Comment(String text, String userUniqueID, String commentID, String date) {
+    public Comment(String text, String userUniqueID, String commentID, Timestamp date) {
 //        super(null, null, userUniqueID);
         this.text = text;
         this.userUniqueID = userUniqueID;
@@ -48,11 +51,11 @@ public class Comment implements Serializable {
         this.userUniqueID = userUniqueID;
     }
 
-    public String getDate() {
+    public Timestamp getDate() {
         return date;
     }
 
-    public void setDate(String date) {
+    public void setDate(Timestamp date) {
         this.date = date;
     }
 

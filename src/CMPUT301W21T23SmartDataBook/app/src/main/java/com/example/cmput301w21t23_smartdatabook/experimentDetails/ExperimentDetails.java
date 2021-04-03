@@ -101,7 +101,7 @@ public class ExperimentDetails extends AppCompatActivity {
         });
 
         TextView expDate = findViewById(R.id.ClickedExpdate);
-        expDate.setText(experiment.getDate());
+        expDate.setText(experiment.getDate().toString());
 
         TextView description = findViewById(R.id.ClickedExpDesc);
         description.setText(experiment.getDescription());

@@ -3,6 +3,7 @@ package com.example.cmput301w21t23_smartdatabook;
 import com.google.android.gms.maps.model.LatLng;
 
 import java.io.Serializable;
+import com.google.firebase.Timestamp;
 
 /**
  * Class: Experiment
@@ -18,7 +19,6 @@ public class Experiment implements Serializable {
     private String ownerUserName;
     private String trialType;
     private String description;
-    private boolean regionOn;
 
     // private Map region;
     private int minTrials;
@@ -26,8 +26,8 @@ public class Experiment implements Serializable {
     private boolean isPublic;
 
     // private Trial Array<Trial>;
-    private String date;
-    private boolean requireLocation = false;
+    private boolean requireLocation;
+    private Timestamp date;
     private LatLng latlng;
 
     // end experiment
@@ -47,7 +47,7 @@ public class Experiment implements Serializable {
      */
     public Experiment(String expName, String ownerUserID, String ownerUserName,
                       String trialType, String description, boolean regionOn,
-                      int minTrials, int maxTrials, boolean isPublic, String date,
+                      int minTrials, int maxTrials, boolean isPublic, Timestamp date,
                       String expID, boolean isEnd) {
 
         this.expName = expName;
@@ -55,7 +55,7 @@ public class Experiment implements Serializable {
         this.ownerUserName = ownerUserName;
         this.trialType = trialType;
         this.description = description;
-        this.regionOn = regionOn;
+        this.requireLocation = regionOn;
         this.minTrials = minTrials;
         this.maxTrials = maxTrials;
         this.isPublic = isPublic;
@@ -76,15 +76,15 @@ public class Experiment implements Serializable {
      * @param ownerUserID
      * @param trialType
      * @param description
-     * @param regionOn
+     * @param requireLocation
      * @param minTrials
      * @param maxTrials
      * @param isPublic
      * @param date
      */
     public Experiment(String expName, String ownerUserID, String ownerUserName,
-                      String trialType, String description, boolean regionOn,
-                      int minTrials, int maxTrials, boolean isPublic, String date,
+                      String trialType, String description, boolean requireLocation,
+                      int minTrials, int maxTrials, boolean isPublic, Timestamp date,
                       String expID, boolean isEnd, LatLng latlng) {
 
         this.expName = expName;
@@ -92,7 +92,7 @@ public class Experiment implements Serializable {
         this.ownerUserName = ownerUserName;
         this.trialType = trialType;
         this.description = description;
-        this.regionOn = regionOn;
+        this.requireLocation = requireLocation;
         this.minTrials = minTrials;
         this.maxTrials = maxTrials;
         this.isPublic = isPublic;
@@ -115,7 +115,7 @@ public class Experiment implements Serializable {
      * getter for the date of the experiment
      * @return String of date
      */
-    public String getDate() {
+    public Timestamp getDate() {
         return date;
     }
 
@@ -123,7 +123,7 @@ public class Experiment implements Serializable {
      * Setter for the date attribute of the class
      * @param date
      */
-    public void setDate(String date) {
+    public void setDate(Timestamp date) {
         this.date = date;
     }
 
@@ -195,17 +195,17 @@ public class Experiment implements Serializable {
      * Returns if the regionOn is True/False for the expeiment
      * @return Boolean to represent True/False for regionOn attrubute
      */
-    public boolean getRegionOn() {
-        return regionOn;
+    public boolean getRequireLocation() {
+        return requireLocation;
     }
 
 
     /**
      * Set the regionOn attribute of experiment to True/False
-     * @param regionOn
+     * @param requireLocation
      */
-    public void setRegionOn(boolean regionOn) {
-        this.regionOn = regionOn;
+    public void setRequireLocation(boolean requireLocation) {
+        this.requireLocation = requireLocation;
     }
 
     /**
@@ -285,7 +285,7 @@ public class Experiment implements Serializable {
      * Setter for the location of the experiment using a Location object
      * @param latlng
      */
-    public void setLocation(LatLng latlng) {
+    public void setLatLng(LatLng latlng) {
         this.latlng = latlng;
     }
 

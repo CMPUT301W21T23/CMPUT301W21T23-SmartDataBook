@@ -49,15 +49,19 @@ public class StatsView extends AppCompatActivity {
 
         statsDataList = new ArrayList<>();
 
+        statsDataList.clear();
+
         //Source: Erwin Kurniawan A; https://stackoverflow.com/users/7693494/erwin-kurniawan-a
         //Code: https://stackoverflow.com/questions/61930061/how-to-return-a-value-from-oncompletelistener-while-creating-user-with-email-and
-
         database.fillStatsList(new GeneralDataCallBack() {
             @Override
             public void onDataReturn(Object returnedObject) {
-                ArrayList<ArrayList> DataList = (ArrayList<ArrayList>) returnedObject;
+
+                ArrayList DataList = (ArrayList) returnedObject;
 
                 statsDataList = DataList;
+
+                
 
             }
         } , statsDataList, db.collection("Experiments").document(experiment.getExpID()).collection("Trials"));

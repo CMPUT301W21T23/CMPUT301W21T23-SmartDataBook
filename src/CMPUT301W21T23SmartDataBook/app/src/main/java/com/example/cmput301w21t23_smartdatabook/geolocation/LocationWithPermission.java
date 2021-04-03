@@ -5,6 +5,7 @@ import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.pm.PackageManager;
+import android.location.Location;
 import android.net.Uri;
 import android.os.Looper;
 import android.provider.Settings;
@@ -15,13 +16,18 @@ import androidx.core.app.ActivityCompat;
 import com.google.android.gms.location.FusedLocationProviderClient;
 import com.google.android.gms.location.LocationCallback;
 import com.google.android.gms.location.LocationRequest;
+import com.google.android.gms.location.LocationResult;
 import com.google.android.gms.location.LocationServices;
+import com.google.android.gms.tasks.OnSuccessListener;
 import com.karumi.dexter.Dexter;
 import com.karumi.dexter.PermissionToken;
 import com.karumi.dexter.listener.PermissionDeniedResponse;
 import com.karumi.dexter.listener.PermissionGrantedResponse;
 import com.karumi.dexter.listener.PermissionRequest;
 import com.karumi.dexter.listener.single.PermissionListener;
+
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * @author Jayden
@@ -34,13 +40,13 @@ public class LocationWithPermission {
 		this.activity = activity;
 	}
 
-	public void getLatLng(LocationCallback m) {
+	public FusedLocationProviderClient getLatLng(LocationCallback m) {
+		FusedLocationProviderClient fusedLocationClient = LocationServices.getFusedLocationProviderClient(activity);
         Dexter.withContext(activity.getApplicationContext())
 			.withPermission(Manifest.permission.ACCESS_FINE_LOCATION)
 			.withListener(new PermissionListener() {
 				@Override
 				public void onPermissionGranted(PermissionGrantedResponse permissionGrantedResponse) {
-					FusedLocationProviderClient fusedLocationClient = LocationServices.getFusedLocationProviderClient(activity);
 			        if (ActivityCompat.checkSelfPermission(activity.getApplicationContext(), Manifest.permission.ACCESS_FINE_LOCATION) == PackageManager.PERMISSION_GRANTED) {
 			            // Following check removed from conditionals
 			        	// ActivityCompat.checkSelfPermission(activity.getApplicationContext(), Manifest.permission.ACCESS_COARSE_LOCATION) == PackageManager.PERMISSION_GRANTED
@@ -52,11 +58,8 @@ public class LocationWithPermission {
 //			                @Override
 //			                public void onSuccess(Location location) {
 //			                    // Got last known location. In some rare situations this can be null.
-//			                    if (location != null) {
-//			                        System.out.println(location.toString());
-//			                    } else {
-//			                        System.out.println("Location do not exist yet. Maybe something wrong?");
-//			                    }
+//				                LocationResult temp = new LocationResult(new List<Location>() );
+//			                    m.onLocationResult();
 //			                }
 //			            });
 			        }
@@ -98,5 +101,6 @@ public class LocationWithPermission {
 				}
 			}).check();
 //        generalDataCallBack.onDataReturn(null);
+		return fusedLocationClient;
     }
 }
