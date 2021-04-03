@@ -1,6 +1,7 @@
 package com.example.cmput301w21t23_smartdatabook;
 
 import java.text.DateFormat;
+import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.Locale;
@@ -24,9 +25,21 @@ public class StringDate {
      * @return formattedDate: a string that consists the formatted date
      */
     public String getCurrentDate(){
-        DateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSS'Z'", Locale.US);
-        dateFormat.setTimeZone(TimeZone.getTimeZone("UTC"));
+        DateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSS'Z'", Locale.CANADA);
+        dateFormat.setTimeZone(TimeZone.getTimeZone("GMT"));
         return dateFormat.format(new Date());
+    }
+
+    // https://stackoverflow.com/questions/2201925/converting-iso-8601-compliant-string-to-java-util-date
+    public Date getDate(String dateString){
+        DateFormat df1 = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSSXXX");
+        Date result1 = null;
+        try {
+            result1 = df1.parse(dateString);
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
+        return result1;
     }
 
 }

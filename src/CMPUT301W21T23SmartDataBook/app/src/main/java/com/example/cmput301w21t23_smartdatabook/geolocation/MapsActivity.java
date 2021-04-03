@@ -1,11 +1,13 @@
 package com.example.cmput301w21t23_smartdatabook.geolocation;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.widget.Toast;
 
 import androidx.annotation.Nullable;
 import androidx.fragment.app.FragmentActivity;
 
+import com.example.cmput301w21t23_smartdatabook.Experiment;
 import com.example.cmput301w21t23_smartdatabook.R;
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
@@ -25,7 +27,6 @@ import com.google.firebase.firestore.GeoPoint;
  * @author Afaq Nabi
  * @ref https://www.geeksforgeeks.org/how-to-add-dynamic-markers-in-google-maps-with-firebase-firstore/
  */
-//
 
 public class MapsActivity extends FragmentActivity implements OnMapReadyCallback {
 
@@ -37,8 +38,12 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_maps);
 
+
         // initializing our firebase firestore.
         db = FirebaseFirestore.getInstance();
+
+        Intent intent = getIntent();
+        Experiment experiment = (Experiment) intent.getSerializableExtra("experiment");
 
         // Obtain the SupportMapFragment and get
         // notified when the map is ready to be used.

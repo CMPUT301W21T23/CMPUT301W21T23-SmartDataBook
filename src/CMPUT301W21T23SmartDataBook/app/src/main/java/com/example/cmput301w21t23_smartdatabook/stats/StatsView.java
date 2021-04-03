@@ -3,34 +3,31 @@ package com.example.cmput301w21t23_smartdatabook.stats;
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
-import android.view.LayoutInflater;
-import android.view.View;
-import android.view.ViewGroup;
-import android.widget.AdapterView;
+import android.widget.TextView;
 
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.fragment.app.FragmentTransaction;
-
+import java.sql.Timestamp;
 import com.example.cmput301w21t23_smartdatabook.Experiment;
 import com.example.cmput301w21t23_smartdatabook.R;
+import com.example.cmput301w21t23_smartdatabook.StringDate;
 import com.example.cmput301w21t23_smartdatabook.database.Database;
 import com.example.cmput301w21t23_smartdatabook.database.GeneralDataCallBack;
-import com.example.cmput301w21t23_smartdatabook.home.CardList;
-import com.example.cmput301w21t23_smartdatabook.home.addExpFragment;
-import com.example.cmput301w21t23_smartdatabook.home.homePage;
-import com.example.cmput301w21t23_smartdatabook.mainController.MainActivity;
 import com.example.cmput301w21t23_smartdatabook.user.User;
 import com.github.mikephil.charting.charts.BarChart;
 import com.github.mikephil.charting.charts.LineChart;
-import com.google.android.material.floatingactionbutton.FloatingActionButton;
+import com.github.mikephil.charting.data.Entry;
+import com.github.mikephil.charting.data.LineData;
+import com.github.mikephil.charting.data.LineDataSet;
+//import com.google.firebase.Timestamp;
 import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.type.DateTime;
 
+import java.text.DateFormat;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Collections;
-import java.util.Comparator;
-import java.util.Hashtable;
-
+import java.util.Date;
+import java.util.List;
 
 
 public class StatsView extends AppCompatActivity {
@@ -39,6 +36,7 @@ public class StatsView extends AppCompatActivity {
     private User user;
     private Database database;
     private FirebaseFirestore db;
+    StringDate dateClass = new StringDate();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -58,9 +56,16 @@ public class StatsView extends AppCompatActivity {
 
         statsDataList.clear();
 
-//        LineChart lineChart = findViewById(R.id.plotChart);
-//        BarChart barChart = findViewById(R.id.barChart);
+        LineChart lineChart = (LineChart) findViewById(R.id.plotChart);
+        BarChart barChart = (BarChart) findViewById(R.id.barChart);
 
+        StatisticsModel stats = new StatisticsModel();
+
+        TextView meanView = findViewById(R.id.meanTextView);
+        TextView medianView = findViewById(R.id.medianTextView);
+        TextView SDView = findViewById(R.id.stdDeviationTextView);
+
+        // https://weeklycoding.com/mpandroidchart-documentation/getting-started/
         //Source: Erwin Kurniawan A; https://stackoverflow.com/users/7693494/erwin-kurniawan-a
         //Code: https://stackoverflow.com/questions/61930061/how-to-return-a-value-from-oncompletelistener-while-creating-user-with-email-and
         database.fillStatsList(new GeneralDataCallBack() {
@@ -71,76 +76,56 @@ public class StatsView extends AppCompatActivity {
 
                 statsDataList = DataList;
 
-                Number mean = calcMean(statsDataList);
+                stats.bubbleSort(statsDataList); // sort list
 
-//                [ [Number, String], [Number, String], ... ]
-
-                for (int i = 0; i < statsDataList.size(); i++) {
-                    Log.d("Item", ""+statsDataList.get(i));
+                List<Entry> entries = new ArrayList<Entry>();
+                for (int i = 0; i<statsDataList.size(); i++){
+                    Date date = dateClass.getDate((String) statsDataList.get(i).get(1));
+                    entries.add(new Entry( date,
+                            Float.parseFloat((String) statsDataList.get(i).get(0))));
                 }
 
-                for (int i = 0; i < statsDataList.size(); i++) {
-                    for (int j = 0; j < statsDataList.size()-i-1; j++){
-                        Log.d("First", "" + statsDataList.get(j).get(0));
-                        Log.d("Second", "" + statsDataList.get(j+1).get(0));
+                LineDataSet dataSet = new LineDataSet(entries, "Label"); // add entries to dataset
 
-                        float num1 = (float) statsDataList.get(i).get(0);
-                        float num2 = (float) statsDataList.get(i+1).get(0);
+                LineData lineData = new LineData(dataSet);
+                lineChart.setData(lineData);
+                lineChart.invalidate(); // refresh
 
-                        if (num1 > num2){
-
-                            ArrayList temp = statsDataList.get(j);
-                            statsDataList.set(j, statsDataList.get(j+1));
-                            statsDataList.set(j+1,temp);
-                        }
-                    }
+                for (int i = 0; i< statsDataList.size(); i++){
+                    Date result1 = dateClass.getDate((String) statsDataList.get(i).get(1));
+                    Log.d("Time: ", ""+ result1);
+                    assert result1 != null;
+                    Log.d("int", ""+( int)result1.getTime());
                 }
 
-//                for(int i = 0; i < rowCount; i++){
-//                    for(int j = 0; j < colCount; j++){
-//                        for(int k = 0; k < colCount; k++){
-//                            if(differencearray[i][k]>differencearray[i][k+1]){
-//
-//                                int temp = differencearray[i][k];
-//                                differencearray[i][k] = differencearray[i][k+1];
-//                                differencearray[i][k+1] = temp;
-//                            }
-//                        }
-//                    }
-//                }
 
+
+
+
+
+
+
+                ArrayList<Float> sortedArray = new ArrayList<>();
                 for (int i = 0; i < statsDataList.size(); i++) {
-                    Log.d("Item", ""+statsDataList.get(i));
+                    sortedArray.add((Float) statsDataList.get(i).get(0));
                 }
+                float[] quartiles = stats.quartiles(sortedArray);
+                Number SD = stats.calculateSD(sortedArray);
+                Number mean = stats.calcMean(statsDataList);
+                Number median = stats.calcMedian(statsDataList);
 
-//                Number median = calcMedian(statsDataList);
+                meanView.setText("Mean: "+mean.toString());
+                medianView.setText("Median: "+ median.toString());
+                SDView.setText("Std: "+SD.toString());
+
+
 
             }
         } , statsDataList, db.collection("Experiments").document(experiment.getExpID()).collection("Trials"));
 
     }//onCreate
 
-    public Number calcMean(ArrayList<ArrayList> statsDataList){
-        int sum = 0;
-        for (int i = 0; i < statsDataList.size(); i++){
-            sum += statsDataList.get(i).indexOf(0);
-        }
-        if (statsDataList.size() == 0) {
-            return 0;
-        }else{
-            return sum/statsDataList.size();
-        }
 
-    }
-
-    public Number calcMedian(ArrayList<ArrayList> statsDataList) {
-        int middle = statsDataList.size()/2;
-        if (statsDataList.size()%2 == 1) {
-            return statsDataList.get(middle).indexOf(0);
-        } else {
-            return (statsDataList.get(middle-1).indexOf(0) + statsDataList.get(middle).indexOf(0) / 2.0);
-        }
-    }
 
 
 
