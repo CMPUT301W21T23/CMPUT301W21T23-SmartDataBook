@@ -12,9 +12,9 @@ public class StatisticsModel {
     }
 
     public Number calcMean(ArrayList<ArrayList> statsDataList){
-        float sum = 0;
+        double sum = 0;
         for (int i = 0; i < statsDataList.size(); i++){
-            sum += (float) statsDataList.get(i).get(0);
+            sum += (double) statsDataList.get(i).get(0);
         }
         if (statsDataList.size() == 0) {
             return 0;
@@ -29,19 +29,15 @@ public class StatisticsModel {
         if (statsDataList.size()%2 == 1) {
             return (Number) statsDataList.get(middle).get(0);
         } else {
-            return (((Float) statsDataList.get(middle-1).get(0) + (Float) statsDataList.get(middle).get(0)) / 2.0);
+            return (((double) statsDataList.get(middle-1).get(0) + (double) statsDataList.get(middle).get(0)) / 2.0);
         }
     }
 
     public void bubbleSort(ArrayList<ArrayList> statsDataList){
         for (int i = 0; i < statsDataList.size(); i++) {
             for (int j = 0; j < statsDataList.size()-i-1; j++){
-//                        Log.d("First", "" + statsDataList.get(j).get(0));
-//                        Log.d("Second", "" + statsDataList.get(j+1).get(0));
-
-                float num1 = (float) statsDataList.get(j).get(0);
-                float num2 = (float) statsDataList.get(j+1).get(0);
-
+                double num1 = (double) statsDataList.get(j).get(0);
+                double num2 = (double) statsDataList.get(j+1).get(0);
                 if (num1 > num2){
                     ArrayList temp = statsDataList.get(j);
                     statsDataList.set(j, statsDataList.get(j+1));
@@ -52,13 +48,12 @@ public class StatisticsModel {
     }
 
     // https://stackoverflow.com/questions/42381759/finding-first-quartile-and-third-quartile-in-integer-array-using-java
-    public float[] quartiles(ArrayList<Float> val) {
-        float ans[] = new float[3];
-
+    public double[] quartiles(ArrayList<Double> val) {
+        double ans[] = new double[3];
         for (int quartileType = 1; quartileType < 4; quartileType++) {
-            float length = val.size() + 1;
-            float quartile;
-            float newArraySize = (length * ((float) (quartileType) * 25 / 100)) - 1;
+            double length = val.size() + 1;
+            double quartile;
+            double newArraySize = (length * ((double) (quartileType) * 25 / 100)) - 1;
 //            Arrays.sort(val);
             if (newArraySize % 1 == 0) {
                 quartile = val.get((int) (newArraySize));
@@ -72,21 +67,18 @@ public class StatisticsModel {
     }
 
     // https://www.programiz.com/java-programming/examples/standard-deviation
-    public static float calculateSD(ArrayList<Float> numArray)
-    {
+    public static double calculateSD(ArrayList<Double> numArray) {
         double sum = 0.0, standardDeviation = 0.0;
         int length = numArray.size();
-
         for(double num : numArray) {
             sum += num;
         }
-
         double mean = sum/length;
-
         for(double num: numArray) {
             standardDeviation += Math.pow(num - mean, 2);
         }
-
-        return (float) Math.sqrt(standardDeviation/length);
+        return (double) Math.sqrt(standardDeviation/length);
     }
+
+
 }

@@ -78,18 +78,19 @@ public class StatsView extends AppCompatActivity {
 
                 stats.bubbleSort(statsDataList); // sort list
 
-                List<Entry> entries = new ArrayList<Entry>();
-                for (int i = 0; i<statsDataList.size(); i++){
-                    Date date = dateClass.getDate((String) statsDataList.get(i).get(1));
-                    entries.add(new Entry( date,
-                            Float.parseFloat((String) statsDataList.get(i).get(0))));
-                }
 
-                LineDataSet dataSet = new LineDataSet(entries, "Label"); // add entries to dataset
-
-                LineData lineData = new LineData(dataSet);
-                lineChart.setData(lineData);
-                lineChart.invalidate(); // refresh
+//                List<Entry> entries = new ArrayList<Entry>();
+////                for (int i = 0; i<statsDataList.size(); i++){
+////                    Date date = dateClass.getDate((String) statsDataList.get(i).get(1));
+////                    entries.add(new Entry( date,
+////                            Float.parseFloat((String) statsDataList.get(i).get(0))));
+////                }
+////
+////                LineDataSet dataSet = new LineDataSet(entries, "Label"); // add entries to dataset
+////
+////                LineData lineData = new LineData(dataSet);
+////                lineChart.setData(lineData);
+////                lineChart.invalidate(); // refresh
 
                 for (int i = 0; i< statsDataList.size(); i++){
                     Date result1 = dateClass.getDate((String) statsDataList.get(i).get(1));
@@ -105,11 +106,11 @@ public class StatsView extends AppCompatActivity {
 
 
 
-                ArrayList<Float> sortedArray = new ArrayList<>();
+                ArrayList<Double> sortedArray = new ArrayList<>();
                 for (int i = 0; i < statsDataList.size(); i++) {
-                    sortedArray.add((Float) statsDataList.get(i).get(0));
+                    sortedArray.add((Double) statsDataList.get(i).get(0));
                 }
-                float[] quartiles = stats.quartiles(sortedArray);
+                double[] quartiles = stats.quartiles(sortedArray);
                 Number SD = stats.calculateSD(sortedArray);
                 Number mean = stats.calcMean(statsDataList);
                 Number median = stats.calcMedian(statsDataList);

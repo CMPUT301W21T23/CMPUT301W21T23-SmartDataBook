@@ -167,7 +167,6 @@ public class Database {
 										document.get("UserID").toString(),
 										document.get("CommentID").toString(),
 										(String) document.get("StringDate")));
-								Log.d("Success", document.getId() + " => " + document.getData());
 							}
 							commentAdapter.notifyDataSetChanged();
 						}
@@ -199,7 +198,6 @@ public class Database {
 
 							userNames.put(document.getData().get("UUID").toString(), user);
 
-							Log.d("Getting_user", "Success");
 						}
 					}
 					generalDataCallBack.onDataReturn(userNames);
@@ -233,13 +231,13 @@ public class Database {
 									{
 										Number temp;
 
-										if (document.get("Trial Type").toString() == "Binomial") {
+										if (document.get("Trial Type").toString().equals("Binomial")) {
 
 											//Convert database boolean into integer value
 											if ((Boolean) document.get("Trial Value")) {
-												temp = 1;
+												temp = 1.0;
 											} else {
-												temp = 0;
+												temp = 0.0;
 											}
 
 										} else {
@@ -251,12 +249,10 @@ public class Database {
 								});
 							}//for
 
-							Log.d("stats", "" + statsDataList.size());
 							//Get callback to grab the populated dataList
 							generalDataCallBack.onDataReturn(statsDataList);
 
 						} else {
-							Log.d("Failure", "Error getting documents: ", task.getException());
 							generalDataCallBack.onDataReturn(new ArrayList<>());
 						}
 					}
@@ -274,7 +270,6 @@ public class Database {
 	 */
 	public void fillDataList(GeneralDataCallBack generalDataCallBack, ArrayAdapter<Experiment> experimentArrayAdapter, CollectionReference collection, String currentID, Hashtable<String, User> userNames) {
 		db = FirebaseFirestore.getInstance();
-//        Log.d("USER_SIZE", String.valueOf(userNames.size()));
 
 		collection
 				.get()
@@ -313,7 +308,6 @@ public class Database {
 									);
 								}
 
-								Log.d("Success", document.getId() + " => " + document.getData());
 
 							}//for
 
@@ -322,7 +316,6 @@ public class Database {
 							experimentArrayAdapter.notifyDataSetChanged();
 
 						} else {
-							Log.d("Failure", "Error getting documents: ", task.getException());
 							generalDataCallBack.onDataReturn(new ArrayList<>());
 						}
 					}
@@ -385,8 +378,6 @@ public class Database {
 			GeoPoint geoPoint = new GeoPoint(newExperiment.getLatLng().latitude, newExperiment.getLatLng().longitude);
 			data.put("Location", geoPoint);
 		}
-		Log.d("Collection", "" + collection.getPath() + db.collection("Archived").getPath());
-		Log.d("Collection", "" + collection.getPath().equals(db.collection("Archived")));
 		collection
 				.document(newExperiment.getExpID())
 				.set(data);
@@ -423,7 +414,6 @@ public class Database {
 				if (task.isSuccessful()) {
 					DocumentSnapshot document = task.getResult();
 					if (document.exists()) {
-						Log.d(TAG1, "DocumentSnapshot data: " + document.getData());
 						Map<String, Object> data = document.getData();
 
 						if (data.get("UserName").toString().equals("")) {
@@ -479,7 +469,6 @@ public class Database {
 						if (task.isSuccessful()) {
 
 							// Sign in success, update UI with the signed-in user's information
-							Log.d("Authentication Success", "signInAnonymously:success: " + mAuth.getUid());
 							FirebaseUser currentUser = mAuth.getCurrentUser();
 
 							assert currentUser != null;
@@ -514,7 +503,6 @@ public class Database {
 							});
 						} else {
 							// If sign in fails, display a message to the user.
-							Log.w("Authentication Failed", "signInAnonymously:failure", task.getException());
 						}//if
 					}
 				});
