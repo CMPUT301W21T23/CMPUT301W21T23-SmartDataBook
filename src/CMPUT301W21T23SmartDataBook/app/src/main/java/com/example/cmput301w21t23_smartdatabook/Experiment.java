@@ -4,6 +4,7 @@ import com.google.android.gms.maps.model.LatLng;
 
 import java.io.Serializable;
 import com.google.firebase.Timestamp;
+import com.google.firebase.firestore.GeoPoint;
 
 /**
  * Class: Experiment
