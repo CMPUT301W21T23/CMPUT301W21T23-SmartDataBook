@@ -3,6 +3,7 @@ package com.example.cmput301w21t23_smartdatabook.home;
 import android.app.AlertDialog;
 import android.content.Context;
 import android.content.Intent;
+import android.os.Parcelable;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -116,7 +117,7 @@ public class CardList extends ArrayAdapter<Experiment> {
                 public void onClick(View v) {
 
                     Intent intent = new Intent(getContext(), CommentActivity.class);
-                    intent.putExtra("Experiment", experiment);
+                    intent.putExtra("Experiment", (Parcelable) experiment);
                     intent.putExtra("CurrentID", user.getUserUniqueID());
                     intent.putExtra("user", user);
                     context.startActivity(intent);

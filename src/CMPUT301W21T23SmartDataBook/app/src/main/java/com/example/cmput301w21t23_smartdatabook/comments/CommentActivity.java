@@ -13,8 +13,8 @@ import android.widget.ListView;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 
+import com.example.cmput301w21t23_smartdatabook.StringDate;
 import com.example.cmput301w21t23_smartdatabook.database.Database;
-import com.example.cmput301w21t23_smartdatabook.Date;
 import com.example.cmput301w21t23_smartdatabook.Experiment;
 import com.example.cmput301w21t23_smartdatabook.user.User;
 import com.example.cmput301w21t23_smartdatabook.R;
@@ -58,7 +58,7 @@ public class CommentActivity extends AppCompatActivity {
 
         commentDataList = new ArrayList<>();
 
-        Date date = new Date();
+        StringDate stringDate = new StringDate();
 
         commentAdapter = new CommentList(this, commentDataList);
 
@@ -86,7 +86,7 @@ public class CommentActivity extends AppCompatActivity {
                             public void onClick(DialogInterface dialog, int which) {
                                 String commentText = newComment.getText().toString();
 
-                                Comment comment = new Comment(commentText, user.getUserUniqueID(), UUID.randomUUID().toString(), date.getCurrentDate());
+                                Comment comment = new Comment(commentText, user.getUserUniqueID(), UUID.randomUUID().toString(), stringDate.getCurrentDate());
 
                                 database.addCommentToDB(db.collection("Comments")
                                         .document(experiment.getExpID())

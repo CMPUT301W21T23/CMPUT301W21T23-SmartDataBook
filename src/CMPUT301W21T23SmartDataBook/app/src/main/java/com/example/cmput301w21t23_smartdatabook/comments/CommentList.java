@@ -10,7 +10,7 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 
-import com.example.cmput301w21t23_smartdatabook.Date;
+import com.example.cmput301w21t23_smartdatabook.StringDate;
 import com.example.cmput301w21t23_smartdatabook.R;
 import com.example.cmput301w21t23_smartdatabook.user.User;
 
@@ -26,7 +26,7 @@ public class CommentList extends ArrayAdapter<Comment> {
     private final Context context;
     User user = User.getUser();
 
-    Date date;
+    StringDate stringDate;
 
     /**
      * Public Constructor of the CommentList class
@@ -54,7 +54,7 @@ public class CommentList extends ArrayAdapter<Comment> {
             view = LayoutInflater.from(context).inflate(R.layout.comment_item, parent, false);
         }
 
-        date = new Date();
+        stringDate = new StringDate();
 
         Comment comment = comments.get(position);
 

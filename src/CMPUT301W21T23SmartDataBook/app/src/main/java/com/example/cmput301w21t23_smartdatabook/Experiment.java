@@ -1,16 +1,18 @@
 package com.example.cmput301w21t23_smartdatabook;
 
+import android.os.Parcel;
+import android.os.Parcelable;
+
 import com.google.android.gms.maps.model.LatLng;
 
 import java.io.Serializable;
-import com.google.firebase.Timestamp;
 
 /**
  * Class: Experiment
  * class that constructs the experiment
  * @author Afaq Nabi, Bosco Chan
  */
-public class Experiment implements Serializable {
+public class Experiment implements Serializable, Parcelable {
 
     private String expID;
     private String expName;
@@ -27,7 +29,7 @@ public class Experiment implements Serializable {
 
     // private Trial Array<Trial>;
     private boolean requireLocation;
-    private Timestamp date;
+    private String date;
     private LatLng latlng;
 
     // end experiment
@@ -47,7 +49,7 @@ public class Experiment implements Serializable {
      */
     public Experiment(String expName, String ownerUserID, String ownerUserName,
                       String trialType, String description, boolean regionOn,
-                      int minTrials, int maxTrials, boolean isPublic, Timestamp date,
+                      int minTrials, int maxTrials, boolean isPublic, String date,
                       String expID, boolean isEnd) {
 
         this.expName = expName;
@@ -64,6 +66,34 @@ public class Experiment implements Serializable {
         this.isEnd = isEnd;
         this.latlng = null;
     }
+
+    protected Experiment(Parcel in) {
+        expID = in.readString();
+        expName = in.readString();
+        ownerUserID = in.readString();
+        ownerUserName = in.readString();
+        trialType = in.readString();
+        description = in.readString();
+        minTrials = in.readInt();
+        maxTrials = in.readInt();
+        isPublic = in.readByte() != 0;
+        requireLocation = in.readByte() != 0;
+        date = in.readString();
+        latlng = in.readParcelable(LatLng.class.getClassLoader());
+        isEnd = in.readByte() != 0;
+    }
+
+    public static final Creator<Experiment> CREATOR = new Creator<Experiment>() {
+        @Override
+        public Experiment createFromParcel(Parcel in) {
+            return new Experiment(in);
+        }
+
+        @Override
+        public Experiment[] newArray(int size) {
+            return new Experiment[size];
+        }
+    };
 
     public String getOwnerUserName() {
         return ownerUserName;
@@ -84,7 +114,7 @@ public class Experiment implements Serializable {
      */
     public Experiment(String expName, String ownerUserID, String ownerUserName,
                       String trialType, String description, boolean requireLocation,
-                      int minTrials, int maxTrials, boolean isPublic, Timestamp date,
+                      int minTrials, int maxTrials, boolean isPublic, String date,
                       String expID, boolean isEnd, LatLng latlng) {
 
         this.expName = expName;
@@ -115,7 +145,7 @@ public class Experiment implements Serializable {
      * getter for the date of the experiment
      * @return String of date
      */
-    public Timestamp getDate() {
+    public String getDate() {
         return date;
     }
 
@@ -123,7 +153,7 @@ public class Experiment implements Serializable {
      * Setter for the date attribute of the class
      * @param date
      */
-    public void setDate(Timestamp date) {
+    public void setDate(String date) {
         this.date = date;
     }
 
@@ -295,6 +325,28 @@ public class Experiment implements Serializable {
 
     public void setExpID(String expID) {
         this.expID = expID;
+    }
+
+    @Override
+    public int describeContents() {
+        return 0;
+    }
+
+    @Override
+    public void writeToParcel(Parcel dest, int flags) {
+        dest.writeString(expID);
+        dest.writeString(expName);
+        dest.writeString(ownerUserID);
+        dest.writeString(ownerUserName);
+        dest.writeString(trialType);
+        dest.writeString(description);
+        dest.writeInt(minTrials);
+        dest.writeInt(maxTrials);
+        dest.writeByte((byte) (isPublic ? 1 : 0));
+        dest.writeByte((byte) (requireLocation ? 1 : 0));
+        dest.writeString(date);
+        dest.writeParcelable(latlng, flags);
+        dest.writeByte((byte) (isEnd ? 1 : 0));
     }
 }//Experiment
 

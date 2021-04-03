@@ -2,6 +2,7 @@ package com.example.cmput301w21t23_smartdatabook.fav;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.os.Parcelable;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -161,7 +162,7 @@ public class FavPage extends Fragment {
                                 Experiment exp = favDataList.get(position); // get the experiment from list
                                 Intent intent = new Intent(getActivity(), ExperimentDetails.class);
                                 intent.putExtra("currentID", user.getUserUniqueID()); // pass position to ExperimentDetails class
-                                intent.putExtra("experiment", exp); // pass experiment object
+                                intent.putExtra("experiment", (Parcelable) exp); // pass experiment object
                                 startActivity(intent);
                             }
                         });

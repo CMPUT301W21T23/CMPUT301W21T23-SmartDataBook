@@ -18,7 +18,7 @@ import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 
-import com.example.cmput301w21t23_smartdatabook.Date;
+import com.example.cmput301w21t23_smartdatabook.StringDate;
 import com.example.cmput301w21t23_smartdatabook.database.Database;
 import com.example.cmput301w21t23_smartdatabook.Experiment;
 import com.example.cmput301w21t23_smartdatabook.R;
@@ -48,7 +48,7 @@ public class UploadTrial extends AppCompatActivity {
     User user = User.getUser();
     Database database = Database.getDataBase();
     FirebaseFirestore db = FirebaseFirestore.getInstance();
-    Date date = new Date();
+    StringDate stringDate = new StringDate();
 
     /**
      * This function create the uploadTrial view
@@ -134,7 +134,7 @@ public class UploadTrial extends AppCompatActivity {
                                                     true,
                                                     experiment.getOwnerUserID(),
                                                     UUID.randomUUID().toString(),
-                                                    date.getCurrentDate());
+                                                    stringDate.getCurrentDate());
                                             database.addTrialToDB(db.collection("Experiments")
                                                     .document(experiment.getExpID())
                                                     .collection("Trials")
@@ -154,7 +154,7 @@ public class UploadTrial extends AppCompatActivity {
                                                     false,
                                                     experiment.getOwnerUserID(),
                                                     UUID.randomUUID().toString(),
-                                                    date.getCurrentDate());
+                                                    stringDate.getCurrentDate());
                                             database.addTrialToDB(db
                                                     .collection("Experiments")
                                                     .document(experiment.getExpID())
@@ -185,7 +185,7 @@ public class UploadTrial extends AppCompatActivity {
                                                 Integer.parseInt(numCount.getText().toString()),
                                                 experiment.getOwnerUserID(),
                                                 UUID.randomUUID().toString(),
-                                                date.getCurrentDate());
+                                                stringDate.getCurrentDate());
                                         database.addTrialToDB(db
                                                 .collection("Experiments")
                                                 .document(experiment.getExpID())
@@ -219,7 +219,7 @@ public class UploadTrial extends AppCompatActivity {
                                                     Integer.parseInt(numNonNegCount.getText().toString()),
                                                     experiment.getOwnerUserID(),
                                                     UUID.randomUUID().toString(),
-                                                    date.getCurrentDate());
+                                                    stringDate.getCurrentDate());
                                             database.addTrialToDB(db
                                                     .collection("Experiments")
                                                     .document(experiment.getExpID())
@@ -257,7 +257,7 @@ public class UploadTrial extends AppCompatActivity {
 //                                                Float.parseFloat(measurementInput.getText().toString()),
                                                 experiment.getOwnerUserID(),
                                                 UUID.randomUUID().toString(),
-                                                date.getCurrentDate());
+                                                stringDate.getCurrentDate());
                                         database.addTrialToDB(db
                                                 .collection("Experiments")
                                                 .document(experiment.getExpID())
