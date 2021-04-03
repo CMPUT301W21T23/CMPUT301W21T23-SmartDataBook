@@ -100,6 +100,7 @@ public class Database {
         data.put("Trial Value", trial.getValue());
         data.put("UUID", trial.getUid());
         data.put("TrialID", trial.getTrialID());
+        data.put("Date", trial.getDate());
         genericDocument.set(data);
     }
 
@@ -116,7 +117,8 @@ public class Database {
                                         document.get("Trial Type").toString(),
                                         document.get("Trial Value"),
                                         document.get("UUID").toString(),
-                                        document.get("TrialID").toString())
+                                        document.get("TrialID").toString(),
+                                        document.get("Date").toString())
                                 );
                             }
                             trialArrayAdapter.notifyDataSetChanged();
@@ -192,9 +194,9 @@ public class Database {
     }
 
 
-    public void fillStatsList(GeneralDataCallBack generalDataCallBack, ArrayList<String> statsDataList, CollectionReference collection) {
+    public void fillStatsList(GeneralDataCallBack generalDataCallBack, ArrayList<ArrayList> statsDataList, CollectionReference collection) {
         db = FirebaseFirestore.getInstance();
-
+        ArrayList<String> tempList = new ArrayList<>();
         collection
                 .get()
                 .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
@@ -203,13 +205,17 @@ public class Database {
                         mAuth = FirebaseAuth.getInstance();
 
                         statsDataList.clear();
-//                        ("Experiments".equals(collection.getPath())
+
                         if (task.isSuccessful()) {
                             for (QueryDocumentSnapshot document : task.getResult()) {
-                                statsDataList.add( document.get("Trial Value").toString() );
+                                tempList.add( document.get("Trial Value").toString() );
+                                tempList.add( document.get("Date").toString() );
+                                statsDataList.add(tempList);
+                                tempList.clear();
                             }
+
                             //Get callback to grab the populated dataList
-                            generalDataCallBack.onDataReturn(experimentDataList);
+                            generalDataCallBack.onDataReturn(statsDataList);
 
                         } else {
                             Log.d("Failure", "Error getting documents: ", task.getException());

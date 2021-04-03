@@ -30,7 +30,7 @@ import java.util.Hashtable;
 
 public class StatsView extends AppCompatActivity {
 
-        private ArrayList<String> statsDataList;
+        private ArrayList<ArrayList> statsDataList;
     private User user;
     private Database database;
     private FirebaseFirestore db;
@@ -38,7 +38,8 @@ public class StatsView extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.stats);
+
+        setContentView(R.layout.graph_layout);
 
         database = new Database();
         db = FirebaseFirestore.getInstance();
@@ -54,75 +55,12 @@ public class StatsView extends AppCompatActivity {
         database.fillStatsList(new GeneralDataCallBack() {
             @Override
             public void onDataReturn(Object returnedObject) {
-                ArrayList<String> DataList = (ArrayList<String>) returnedObject;
+                ArrayList<ArrayList> DataList = (ArrayList<ArrayList>) returnedObject;
 
                 statsDataList = DataList;
 
-                Log.d("ItemsCount", "" + statsDataList.size());
-
             }
         } , statsDataList, db.collection("Experiments").document(experiment.getExpID()).collection("Trials"));
-
-
-//
-//        database.fillUserName(new GeneralDataCallBack() {
-//            @Override
-//            public void onDataReturn(Object returnedObject) {
-//                Hashtable<String, User> UserName = (Hashtable<String, User>) returnedObject;
-//                database.fillDataList(new GeneralDataCallBack() {
-//                    @Override
-//                    public void onDataReturn(Object returnedObject) {
-//                        ArrayList<Number> DataList = (ArrayList<Stats>) returnedObject;
-//
-//                        StatsAdapter = new CardList(getContext(), StatsDataList, UserName, 1);
-//
-//                        StatsList.setAdapter(StatsAdapter);
-//
-//                        //Reset the Stats adapter for every onCreateView call
-//                        StatsAdapter.clear();
-//                        searchDataList.clear();
-//
-//                        //StatsDataList with added items ONLY exist inside the scope of this getExpDataList function
-//                        StatsDataList = DataList;
-//
-//                        //Create a new searchDataList depending on the query
-//                        if (currentQuery != null) {
-//                            for (Stats Stats : StatsDataList) {
-//                                if (Stats.getExpName().contains(currentQuery) ||
-//                                        UserName.get(Stats.getOwnerUserID()).getUserName().contains(currentQuery) ||
-//                                        Stats.getDate().contains(currentQuery) ||
-//                                        Stats.getDescription().contains(currentQuery)) {
-//
-//                                    searchDataList.add(Stats);
-//
-//                                }
-//                            }
-//
-//                            StatsAdapter.clear();
-//                            StatsAdapter.addAll(searchDataList);
-//
-//                        }else{
-//                            StatsAdapter.addAll(StatsDataList);
-//                        }
-//
-//                        StatsAdapter.notifyDataSetChanged();
-//
-//                        StatsList.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-//                            @Override
-//                            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-//                                Stats exp = StatsDataList.get(position); // get the Stats from list
-//                                Intent intent = new Intent(getActivity(), StatsDetails.class);
-//                                intent.putExtra("Stats", exp); // pass Stats object
-//                                startActivity(intent);
-//                            }
-//                        });
-//
-////                        Log.d("QueryCheck", ""+currentQuery);
-//
-//                    }//getExpDataList
-//                }, StatsAdapter, db.collection("Stats"), user.getUserUniqueID(), UserName);//fillDataList
-//            }
-//        });
 
     }//onCreate
 

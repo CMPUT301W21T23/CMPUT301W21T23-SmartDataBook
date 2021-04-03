@@ -18,6 +18,7 @@ import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 
+import com.example.cmput301w21t23_smartdatabook.Date;
 import com.example.cmput301w21t23_smartdatabook.database.Database;
 import com.example.cmput301w21t23_smartdatabook.Experiment;
 import com.example.cmput301w21t23_smartdatabook.R;
@@ -45,6 +46,7 @@ public class UploadTrial extends AppCompatActivity {
     User user = User.getUser();
     Database database = Database.getDataBase();
     FirebaseFirestore db = FirebaseFirestore.getInstance();
+    Date date = new Date();
 
     /**
      * This function create the uploadTrial view
@@ -129,7 +131,8 @@ public class UploadTrial extends AppCompatActivity {
                                                     experiment.getTrialType(),
                                                     true,
                                                     experiment.getOwnerUserID(),
-                                                    UUID.randomUUID().toString());
+                                                    UUID.randomUUID().toString(),
+                                                    date.getDate());
                                             database.addTrialToDB(db.collection("Experiments")
                                                     .document(experiment.getExpID())
                                                     .collection("Trials")
@@ -148,7 +151,8 @@ public class UploadTrial extends AppCompatActivity {
                                                     experiment.getTrialType(),
                                                     false,
                                                     experiment.getOwnerUserID(),
-                                                    UUID.randomUUID().toString());
+                                                    UUID.randomUUID().toString(),
+                                                    date.getDate());
                                             database.addTrialToDB(db
                                                     .collection("Experiments")
                                                     .document(experiment.getExpID())
@@ -178,7 +182,8 @@ public class UploadTrial extends AppCompatActivity {
                                                 experiment.getTrialType(),
                                                 Integer.parseInt(numCount.getText().toString()),
                                                 experiment.getOwnerUserID(),
-                                                UUID.randomUUID().toString());
+                                                UUID.randomUUID().toString(),
+                                                date.getDate());
                                         database.addTrialToDB(db
                                                 .collection("Experiments")
                                                 .document(experiment.getExpID())
@@ -211,7 +216,8 @@ public class UploadTrial extends AppCompatActivity {
                                                     experiment.getTrialType(),
                                                     Integer.parseInt(numNonNegCount.getText().toString()),
                                                     experiment.getOwnerUserID(),
-                                                    UUID.randomUUID().toString());
+                                                    UUID.randomUUID().toString(),
+                                                    date.getDate());
                                             database.addTrialToDB(db
                                                     .collection("Experiments")
                                                     .document(experiment.getExpID())
@@ -244,7 +250,8 @@ public class UploadTrial extends AppCompatActivity {
                                                 experiment.getTrialType(),
                                                 Float.parseFloat(measurementInput.getText().toString()),
                                                 experiment.getOwnerUserID(),
-                                                UUID.randomUUID().toString());
+                                                UUID.randomUUID().toString(),
+                                                date.getDate());
                                         database.addTrialToDB(db
                                                 .collection("Experiments")
                                                 .document(experiment.getExpID())
