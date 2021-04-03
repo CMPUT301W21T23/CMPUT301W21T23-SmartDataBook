@@ -86,7 +86,7 @@ public class CommentActivity extends AppCompatActivity {
                             public void onClick(DialogInterface dialog, int which) {
                                 String commentText = newComment.getText().toString();
 
-                                Comment comment = new Comment(commentText, user.getUserUniqueID(), UUID.randomUUID().toString(), date.getDate());
+                                Comment comment = new Comment(commentText, user.getUserUniqueID(), UUID.randomUUID().toString(), date.getCurrentDate());
 
                                 database.addCommentToDB(db.collection("Comments")
                                         .document(experiment.getExpID())

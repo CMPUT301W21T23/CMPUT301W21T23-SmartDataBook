@@ -19,6 +19,7 @@ import androidx.appcompat.widget.AppCompatImageButton;
 import com.example.cmput301w21t23_smartdatabook.QRCode.QRCodeActivity;
 import com.example.cmput301w21t23_smartdatabook.QRCode.ScannerActivity;
 import com.example.cmput301w21t23_smartdatabook.geolocation.MapsActivity;
+import com.example.cmput301w21t23_smartdatabook.stats.StatsView;
 import com.example.cmput301w21t23_smartdatabook.user.User;
 import com.example.cmput301w21t23_smartdatabook.comments.CommentActivity;
 import com.example.cmput301w21t23_smartdatabook.database.Database;
@@ -100,7 +101,7 @@ public class ExperimentDetails extends AppCompatActivity {
         });
 
         TextView expDate = findViewById(R.id.ClickedExpdate);
-        expDate.setText(experiment.getDate());
+        expDate.setText(experiment.getDate().toString());
 
         TextView description = findViewById(R.id.ClickedExpDesc);
         description.setText(experiment.getDescription());
@@ -121,6 +122,9 @@ public class ExperimentDetails extends AppCompatActivity {
         viewStats.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                Intent intent = new Intent(getBaseContext(), StatsView.class);
+                intent.putExtra("experiment", experiment);
+                startActivity(intent);
                 // TODO: new stats activity
             }
         });

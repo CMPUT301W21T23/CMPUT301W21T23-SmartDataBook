@@ -73,6 +73,10 @@
 
         </activity>
 
+        <activity android:name=".stats.StatsView">
+
+        </activity>
+
     </application>
 
 </manifest>

@@ -68,7 +68,7 @@ public class CommentList extends ArrayAdapter<Comment> {
         commentID.setText(comment.getCommentID().substring(0,6));
 
         TextView commentDate = view.findViewById(R.id.commentDate);
-        commentDate.setText(comment.getDate());
+        commentDate.setText(comment.getDate().toString());
 
         return view;
     }

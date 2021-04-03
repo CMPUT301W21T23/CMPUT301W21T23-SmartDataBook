@@ -152,7 +152,7 @@ public class homePage extends Fragment {
                             for (Experiment experiment : experimentDataList) {
                                 if (experiment.getExpName().contains(currentQuery) ||
                                         UserName.get(experiment.getOwnerUserID()).getUserName().contains(currentQuery) ||
-                                        experiment.getDate().contains(currentQuery) ||
+                                        experiment.getDate().toString().contains(currentQuery) ||
                                         experiment.getDescription().contains(currentQuery)) {
 
                                     searchDataList.add(experiment);

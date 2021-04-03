@@ -187,7 +187,7 @@ public class addExpFragment extends Fragment {
 
                             returnedExperiment = new Experiment(expName, currentID, "please refresh",
                                     trialType, expDescription, checkLocationOn, minTrials.getValue(), maxTrials.getValue(),
-                                    checkPublicOn, currentDate.getDate(), UUID.randomUUID().toString(), false, latlng);
+                                    checkPublicOn, currentDate.getCurrentDate(), UUID.randomUUID().toString(), false, latlng);
 
                             //Source: Shweta Chauhan; https://stackoverflow.com/users/6021469/shweta-chauhan
                             //Code: https://stackoverflow.com/questions/40085608/how-to-pass-data-from-one-fragment-to-previous-fragment

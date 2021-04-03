@@ -18,6 +18,7 @@ import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 
+import com.example.cmput301w21t23_smartdatabook.Date;
 import com.example.cmput301w21t23_smartdatabook.database.Database;
 import com.example.cmput301w21t23_smartdatabook.Experiment;
 import com.example.cmput301w21t23_smartdatabook.R;
@@ -45,6 +46,7 @@ public class UploadTrial extends AppCompatActivity {
     User user = User.getUser();
     Database database = Database.getDataBase();
     FirebaseFirestore db = FirebaseFirestore.getInstance();
+    Date date = new Date();
 
     /**
      * This function create the uploadTrial view
@@ -63,7 +65,7 @@ public class UploadTrial extends AppCompatActivity {
 
         toolbar.setTitle("Upload Trials");
 
-        // get intetn and experiment
+        // get intent and experiment
         Intent intent = getIntent();
         Experiment experiment = (Experiment) intent.getSerializableExtra("experiment"); // get the experiment object
 
@@ -91,7 +93,10 @@ public class UploadTrial extends AppCompatActivity {
         // add conditional to make sure archived experiments can't upload trials
 
 
-
+        /**
+         * Methods to handle upload trials based on different types of trials in experiment by using dialog
+         * @author Alex Mak
+         */
         addTrials.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -103,7 +108,7 @@ public class UploadTrial extends AppCompatActivity {
                     // Go from upload trial to each of trial types
                     // 3. 3 fragments, shows binomial fragment or input fragment, get trial
 
-                    // 1st case: if the experiment's trial type is binomial, incomplete
+                    // 1st case: if the experiment's trial type is binomial
                     // I learned about string matching on java from tutorialspoint
                     // URL: https://www.tutorialspoint.com/java/java_string_matches.htm
                     // Q1: how to take input?
@@ -126,7 +131,8 @@ public class UploadTrial extends AppCompatActivity {
                                                     experiment.getTrialType(),
                                                     true,
                                                     experiment.getOwnerUserID(),
-                                                    UUID.randomUUID().toString());
+                                                    UUID.randomUUID().toString(),
+                                                    date.getCurrentDate());
                                             database.addTrialToDB(db.collection("Experiments")
                                                     .document(experiment.getExpID())
                                                     .collection("Trials")
@@ -145,7 +151,8 @@ public class UploadTrial extends AppCompatActivity {
                                                     experiment.getTrialType(),
                                                     false,
                                                     experiment.getOwnerUserID(),
-                                                    UUID.randomUUID().toString());
+                                                    UUID.randomUUID().toString(),
+                                                    date.getCurrentDate());
                                             database.addTrialToDB(db
                                                     .collection("Experiments")
                                                     .document(experiment.getExpID())
@@ -156,7 +163,7 @@ public class UploadTrial extends AppCompatActivity {
                                     }})
                                 .setPositiveButton("Cancel", null).create().show();
                     }
-                    // 2nd case: if the experiment's trial type is count, incomplete
+                    // 2nd case: if the experiment's trial type is count
                     // Q1: how to take input?
                     if (expType.matches("Count")){
                         AlertDialog.Builder builder= new AlertDialog.Builder((UploadTrial.this));
@@ -175,7 +182,8 @@ public class UploadTrial extends AppCompatActivity {
                                                 experiment.getTrialType(),
                                                 Integer.parseInt(numCount.getText().toString()),
                                                 experiment.getOwnerUserID(),
-                                                UUID.randomUUID().toString());
+                                                UUID.randomUUID().toString(),
+                                                date.getCurrentDate());
                                         database.addTrialToDB(db
                                                 .collection("Experiments")
                                                 .document(experiment.getExpID())
@@ -185,7 +193,7 @@ public class UploadTrial extends AppCompatActivity {
                                     }
                                 }).create().show();
                     }
-                    // 3rd case: if the experiment's trial type is non-negative count, incomplete
+                    // 3rd case: if the experiment's trial type is non-negative count
                     // Q1: how to take input?
                     if (expType.matches("Non-Negative Count")){
                         AlertDialog.Builder builder= new AlertDialog.Builder((UploadTrial.this));
@@ -208,7 +216,8 @@ public class UploadTrial extends AppCompatActivity {
                                                     experiment.getTrialType(),
                                                     Integer.parseInt(numNonNegCount.getText().toString()),
                                                     experiment.getOwnerUserID(),
-                                                    UUID.randomUUID().toString());
+                                                    UUID.randomUUID().toString(),
+                                                    date.getCurrentDate());
                                             database.addTrialToDB(db
                                                     .collection("Experiments")
                                                     .document(experiment.getExpID())
@@ -219,7 +228,7 @@ public class UploadTrial extends AppCompatActivity {
                                     }
                                 }).create().show();
                     }
-                    // 4th case: if the experiment's trial type is measurement, partial complete,
+                    // 4th case: if the experiment's trial type is measurement
                     if (expType.matches("Measurement")){
                         AlertDialog.Builder builder= new AlertDialog.Builder((UploadTrial.this));
                         builder.setTitle("Add Measurement Trials?");
@@ -241,7 +250,8 @@ public class UploadTrial extends AppCompatActivity {
                                                 experiment.getTrialType(),
                                                 Float.parseFloat(measurementInput.getText().toString()),
                                                 experiment.getOwnerUserID(),
-                                                UUID.randomUUID().toString());
+                                                UUID.randomUUID().toString(),
+                                                date.getCurrentDate());
                                         database.addTrialToDB(db
                                                 .collection("Experiments")
                                                 .document(experiment.getExpID())
@@ -253,163 +263,162 @@ public class UploadTrial extends AppCompatActivity {
                                 }).create().show();
                     }
                 }
-
-                expType=experiment.getTrialType();
-                // 1. 4 different cases for dialog
-                // 2. 4 XML diagram associate with the trial type
-                // Go from upload trial to each of trial types
-                // 3. 3 fragments, shows binomial fragment or input fragment, get trial
-
-                // 1st case: if the experiment's trial type is binomial, incomplete
-                // I learned about string matching on java from tutorialspoint
-                // URL: https://www.tutorialspoint.com/java/java_string_matches.htm
-                // Q1: how to take input?
-                if (expType.matches("Binomial")){
-                    AlertDialog.Builder builder= new AlertDialog.Builder((UploadTrial.this));
-                    builder.setTitle("Add Binomial Trials?");
-                    final EditText numBinomial = new EditText(UploadTrial.this);
-                    // set input to be integer and positives only
-                    numBinomial.setInputType(InputType.TYPE_CLASS_NUMBER);
-                    numBinomial.setHint("Enter positive number of passes/failures");
-                    builder.setView(numBinomial);
-                    builder
-                            .setNeutralButton("Add passes", new DialogInterface.OnClickListener() {
-                        @Override
-                        public void onClick(DialogInterface dialog, int which) {
-//                            Log.d("Test", "test");
-                            for (int i = 0; i<Integer.parseInt(numBinomial.getText().toString()); i++){
-                                Log.d("Integer i: ", String.valueOf(i));
-                                Trial trial = new Trial(experiment.getRequireLocation(),
-                                        experiment.getTrialType(),
-                                        true,
-                                        experiment.getOwnerUserID(),
-                                        UUID.randomUUID().toString());
-                                database.addTrialToDB(db.collection("Experiments")
-                                        .document(experiment.getExpID())
-                                        .collection("Trials")
-                                        .document(trial.getTrialID()), trial);
-                            }
-                            recreate();
-                        }
-                    })
-                            .setNegativeButton("Add failure", new DialogInterface.OnClickListener() {
-                            @Override
-                            public void onClick(DialogInterface dialog, int which) {
-
-                                for (int i = 0; i<Integer.parseInt(numBinomial.getText().toString()); i++){
-                                    Log.d("Integer i: ", String.valueOf(i));
-                                    Trial trial = new Trial(experiment.getRequireLocation(),
-                                            experiment.getTrialType(),
-                                            false,
-                                            experiment.getOwnerUserID(),
-                                            UUID.randomUUID().toString());
-                                    database.addTrialToDB(db
-                                            .collection("Experiments")
-                                            .document(experiment.getExpID())
-                                            .collection("Trials")
-                                            .document(trial.getTrialID()), trial);
-                                }
-                                recreate();
-//                                Log.d("Test", "test");
-                            }})
-                            .setPositiveButton("Cancel", null).create().show();
-                }
-                // 2nd case: if the experiment's trial type is count, incomplete
-                // Q1: how to take input?
-                if (expType.matches("Count")){
-                    AlertDialog.Builder builder= new AlertDialog.Builder((UploadTrial.this));
-                    builder.setTitle("Add Count Trials?");
-                    final EditText numCount= new EditText(UploadTrial.this);
-                    // set input to be any integer
-                    numCount.setInputType(InputType.TYPE_CLASS_NUMBER| InputType.TYPE_NUMBER_FLAG_SIGNED);
-                    numCount.setHint("Enter positive/negative number of counts");
-                    builder.setView(numCount);
-
-                    builder.setNegativeButton("Cancel", null)
-                            .setPositiveButton("Add Trials", new DialogInterface.OnClickListener() {
-                                @Override
-                                public void onClick(DialogInterface dialog, int which) {
-                                    Trial trial = new Trial(experiment.getRequireLocation(),
-                                            experiment.getTrialType(),
-                                            Integer.parseInt(numCount.getText().toString()),
-                                            experiment.getOwnerUserID(),
-                                            UUID.randomUUID().toString());
-                                    database.addTrialToDB(db
-                                            .collection("Experiments")
-                                            .document(experiment.getExpID())
-                                            .collection("Trials")
-                                            .document(trial.getTrialID()), trial);
-                                    recreate();
-                                }
-                            }).create().show();
-                }
-                // 3rd case: if the experiment's trial type is non-negative count, incomplete
-                // Q1: how to take input?
-                if (expType.matches("Non-Negative Count")){
-                    AlertDialog.Builder builder= new AlertDialog.Builder((UploadTrial.this));
-                    builder.setTitle("Add Non-Negative Count Trials?");
-                    final EditText numNonNegCount= new EditText(UploadTrial.this);
-                    // set input to be integer and positives only
-                    numNonNegCount.setInputType(InputType.TYPE_CLASS_NUMBER);
-                    numNonNegCount.setHint("Enter a positive number");
-                    builder.setView(numNonNegCount);
-
-
-                    builder.setNegativeButton("Cancel", null)
-                            .setPositiveButton("Add trials", new DialogInterface.OnClickListener() {
-                                @Override
-                                public void onClick(DialogInterface dialog, int which) {
-                                    // include 0 as well
-                                    if (Integer.parseInt(numNonNegCount.getText().toString())>=0){
-                                        // save the data
-                                        Trial trial = new Trial(experiment.getRequireLocation(),
-                                                experiment.getTrialType(),
-                                                Integer.parseInt(numNonNegCount.getText().toString()),
-                                                experiment.getOwnerUserID(),
-                                                UUID.randomUUID().toString());
-                                        database.addTrialToDB(db
-                                                .collection("Experiments")
-                                                .document(experiment.getExpID())
-                                                .collection("Trials")
-                                                .document(trial.getTrialID()), trial);
-                                    }
-                                    recreate();
-                                }
-                            }).create().show();
-                }
-                // 4th case: if the experiment's trial type is measurement, partial complete,
-                if (expType.matches("Measurement")){
-                    AlertDialog.Builder builder= new AlertDialog.Builder((UploadTrial.this));
-                    builder.setTitle("Add Measurement Trials?");
-                    builder.setMessage("Enter measurement below:");
-                    final EditText measurementInput = new EditText(UploadTrial.this);
-                    measurementInput.setHint("In Integers or Floats");
-                    // set input to be exclusively integer and decimal
-                    measurementInput.setInputType(InputType.TYPE_CLASS_NUMBER  | InputType.TYPE_NUMBER_FLAG_DECIMAL| InputType.TYPE_NUMBER_FLAG_SIGNED);
-                    builder.setView(measurementInput);
-                    builder.setNegativeButton("Cancel", null)
-                            .setPositiveButton("Add Trials", new DialogInterface.OnClickListener() {
-                                @Override
-                                public void onClick(DialogInterface dialog, int which) {
-                                    // once click add trials, add the trial's outcome, location
-                                    // Q1: check editText value
-                                    // Q2: how to save information
-                                    // check input for
-                                    Trial trial = new Trial(experiment.getRequireLocation(),
-                                            experiment.getTrialType(),
-                                            Float.parseFloat(measurementInput.getText().toString()),
-                                            experiment.getOwnerUserID(),
-                                            UUID.randomUUID().toString());
-                                    database.addTrialToDB(db
-                                            .collection("Experiments")
-                                            .document(experiment.getExpID())
-                                            .collection("Trials")
-                                            .document(trial.getTrialID()), trial);
-                                    Log.d("Test", "test");
-                                    recreate();
-                                }
-                            }).create().show();
-                }
+//                expType=experiment.getTrialType();
+//                // 1. 4 different cases for dialog
+//                // 2. 4 XML diagram associate with the trial type
+//                // Go from upload trial to each of trial types
+//                // 3. 3 fragments, shows binomial fragment or input fragment, get trial
+//
+//                // 1st case: if the experiment's trial type is binomial, incomplete
+//                // I learned about string matching on java from tutorialspoint
+//                // URL: https://www.tutorialspoint.com/java/java_string_matches.htm
+//                // Q1: how to take input?
+//                if (expType.matches("Binomial")){
+//                    AlertDialog.Builder builder= new AlertDialog.Builder((UploadTrial.this));
+//                    builder.setTitle("Add Binomial Trials?");
+//                    final EditText numBinomial = new EditText(UploadTrial.this);
+//                    // set input to be integer and positives only
+//                    numBinomial.setInputType(InputType.TYPE_CLASS_NUMBER);
+//                    numBinomial.setHint("Enter positive number of passes/failures");
+//                    builder.setView(numBinomial);
+//                    builder
+//                            .setNeutralButton("Add passes", new DialogInterface.OnClickListener() {
+//                        @Override
+//                        public void onClick(DialogInterface dialog, int which) {
+////                            Log.d("Test", "test");
+//                            for (int i = 0; i<Integer.parseInt(numBinomial.getText().toString()); i++){
+//                                Log.d("Integer i: ", String.valueOf(i));
+//                                Trial trial = new Trial(experiment.getRequireLocation(),
+//                                        experiment.getTrialType(),
+//                                        true,
+//                                        experiment.getOwnerUserID(),
+//                                        UUID.randomUUID().toString());
+//                                database.addTrialToDB(db.collection("Experiments")
+//                                        .document(experiment.getExpID())
+//                                        .collection("Trials")
+//                                        .document(trial.getTrialID()), trial);
+//                            }
+//                            recreate();
+//                        }
+//                    })
+//                            .setNegativeButton("Add failure", new DialogInterface.OnClickListener() {
+//                            @Override
+//                            public void onClick(DialogInterface dialog, int which) {
+//
+//                                for (int i = 0; i<Integer.parseInt(numBinomial.getText().toString()); i++){
+//                                    Log.d("Integer i: ", String.valueOf(i));
+//                                    Trial trial = new Trial(experiment.getRequireLocation(),
+//                                            experiment.getTrialType(),
+//                                            false,
+//                                            experiment.getOwnerUserID(),
+//                                            UUID.randomUUID().toString());
+//                                    database.addTrialToDB(db
+//                                            .collection("Experiments")
+//                                            .document(experiment.getExpID())
+//                                            .collection("Trials")
+//                                            .document(trial.getTrialID()), trial);
+//                                }
+//                                recreate();
+////                                Log.d("Test", "test");
+//                            }})
+//                            .setPositiveButton("Cancel", null).create().show();
+//                }
+//                // 2nd case: if the experiment's trial type is count, incomplete
+//                // Q1: how to take input?
+//                if (expType.matches("Count")){
+//                    AlertDialog.Builder builder= new AlertDialog.Builder((UploadTrial.this));
+//                    builder.setTitle("Add Count Trials?");
+//                    final EditText numCount= new EditText(UploadTrial.this);
+//                    // set input to be any integer
+//                    numCount.setInputType(InputType.TYPE_CLASS_NUMBER| InputType.TYPE_NUMBER_FLAG_SIGNED);
+//                    numCount.setHint("Enter positive/negative number of counts");
+//                    builder.setView(numCount);
+//
+//                    builder.setNegativeButton("Cancel", null)
+//                            .setPositiveButton("Add Trials", new DialogInterface.OnClickListener() {
+//                                @Override
+//                                public void onClick(DialogInterface dialog, int which) {
+//                                    Trial trial = new Trial(experiment.getRequireLocation(),
+//                                            experiment.getTrialType(),
+//                                            Integer.parseInt(numCount.getText().toString()),
+//                                            experiment.getOwnerUserID(),
+//                                            UUID.randomUUID().toString());
+//                                    database.addTrialToDB(db
+//                                            .collection("Experiments")
+//                                            .document(experiment.getExpID())
+//                                            .collection("Trials")
+//                                            .document(trial.getTrialID()), trial);
+//                                    recreate();
+//                                }
+//                            }).create().show();
+//                }
+//                // 3rd case: if the experiment's trial type is non-negative count, incomplete
+//                // Q1: how to take input?
+//                if (expType.matches("Non-Negative Count")){
+//                    AlertDialog.Builder builder= new AlertDialog.Builder((UploadTrial.this));
+//                    builder.setTitle("Add Non-Negative Count Trials?");
+//                    final EditText numNonNegCount= new EditText(UploadTrial.this);
+//                    // set input to be integer and positives only
+//                    numNonNegCount.setInputType(InputType.TYPE_CLASS_NUMBER);
+//                    numNonNegCount.setHint("Enter a positive number");
+//                    builder.setView(numNonNegCount);
+//
+//
+//                    builder.setNegativeButton("Cancel", null)
+//                            .setPositiveButton("Add trials", new DialogInterface.OnClickListener() {
+//                                @Override
+//                                public void onClick(DialogInterface dialog, int which) {
+//                                    // include 0 as well
+//                                    if (Integer.parseInt(numNonNegCount.getText().toString())>=0){
+//                                        // save the data
+//                                        Trial trial = new Trial(experiment.getRequireLocation(),
+//                                                experiment.getTrialType(),
+//                                                Integer.parseInt(numNonNegCount.getText().toString()),
+//                                                experiment.getOwnerUserID(),
+//                                                UUID.randomUUID().toString());
+//                                        database.addTrialToDB(db
+//                                                .collection("Experiments")
+//                                                .document(experiment.getExpID())
+//                                                .collection("Trials")
+//                                                .document(trial.getTrialID()), trial);
+//                                    }
+//                                    recreate();
+//                                }
+//                            }).create().show();
+//                }
+//                // 4th case: if the experiment's trial type is measurement, partial complete,
+//                if (expType.matches("Measurement")){
+//                    AlertDialog.Builder builder= new AlertDialog.Builder((UploadTrial.this));
+//                    builder.setTitle("Add Measurement Trials?");
+//                    builder.setMessage("Enter measurement below:");
+//                    final EditText measurementInput = new EditText(UploadTrial.this);
+//                    measurementInput.setHint("In Integers or Floats");
+//                    // set input to be exclusively integer and decimal
+//                    measurementInput.setInputType(InputType.TYPE_CLASS_NUMBER  | InputType.TYPE_NUMBER_FLAG_DECIMAL| InputType.TYPE_NUMBER_FLAG_SIGNED);
+//                    builder.setView(measurementInput);
+//                    builder.setNegativeButton("Cancel", null)
+//                            .setPositiveButton("Add Trials", new DialogInterface.OnClickListener() {
+//                                @Override
+//                                public void onClick(DialogInterface dialog, int which) {
+//                                    // once click add trials, add the trial's outcome, location
+//                                    // Q1: check editText value
+//                                    // Q2: how to save information
+//                                    // check input for
+//                                    Trial trial = new Trial(experiment.getRequireLocation(),
+//                                            experiment.getTrialType(),
+//                                            Float.parseFloat(measurementInput.getText().toString()),
+//                                            experiment.getOwnerUserID(),
+//                                            UUID.randomUUID().toString());
+//                                    database.addTrialToDB(db
+//                                            .collection("Experiments")
+//                                            .document(experiment.getExpID())
+//                                            .collection("Trials")
+//                                            .document(trial.getTrialID()), trial);
+//                                    Log.d("Test", "test");
+//                                    recreate();
+//                                }
+//                            }).create().show();
+//                }
             }
         });
 

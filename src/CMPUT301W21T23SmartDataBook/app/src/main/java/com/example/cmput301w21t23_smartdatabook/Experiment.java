@@ -3,6 +3,7 @@ package com.example.cmput301w21t23_smartdatabook;
 import com.google.android.gms.maps.model.LatLng;
 
 import java.io.Serializable;
+import java.time.LocalDateTime;
 
 /**
  * Class: Experiment
@@ -25,8 +26,8 @@ public class Experiment implements Serializable {
     private boolean isPublic;
 
     // private Trial Array<Trial>;
-    private String date;
     private boolean requireLocation;
+    private LocalDateTime date;
     private LatLng latlng;
 
     // end experiment
@@ -46,7 +47,7 @@ public class Experiment implements Serializable {
      */
     public Experiment(String expName, String ownerUserID, String ownerUserName,
                       String trialType, String description, boolean regionOn,
-                      int minTrials, int maxTrials, boolean isPublic, String date,
+                      int minTrials, int maxTrials, boolean isPublic, LocalDateTime date,
                       String expID, boolean isEnd) {
 
         this.expName = expName;
@@ -83,7 +84,7 @@ public class Experiment implements Serializable {
      */
     public Experiment(String expName, String ownerUserID, String ownerUserName,
                       String trialType, String description, boolean requireLocation,
-                      int minTrials, int maxTrials, boolean isPublic, String date,
+                      int minTrials, int maxTrials, boolean isPublic, LocalDateTime date,
                       String expID, boolean isEnd, LatLng latlng) {
 
         this.expName = expName;
@@ -114,7 +115,7 @@ public class Experiment implements Serializable {
      * getter for the date of the experiment
      * @return String of date
      */
-    public String getDate() {
+    public LocalDateTime getDate() {
         return date;
     }
 
@@ -122,7 +123,7 @@ public class Experiment implements Serializable {
      * Setter for the date attribute of the class
      * @param date
      */
-    public void setDate(String date) {
+    public void setDate(LocalDateTime date) {
         this.date = date;
     }
 

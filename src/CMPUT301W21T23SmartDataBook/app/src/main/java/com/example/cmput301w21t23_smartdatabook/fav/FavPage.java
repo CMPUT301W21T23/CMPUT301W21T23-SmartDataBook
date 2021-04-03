@@ -135,7 +135,7 @@ public class FavPage extends Fragment {
                             for (Experiment experiment : favDataList) {
                                 if (experiment.getExpName().contains(currentQuery) ||
                                         UserName.get(experiment.getOwnerUserID()).getUserName().contains(currentQuery) ||
-                                        experiment.getDate().contains(currentQuery) ||
+                                        experiment.getDate().toString().contains(currentQuery) ||
                                         experiment.getDescription().contains(currentQuery)) {
 
                                     Log.d("experiment", ""+ experiment.getExpName());

@@ -26,7 +26,12 @@ import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.GeoPoint;
 import com.google.firebase.firestore.QueryDocumentSnapshot;
 import com.google.firebase.firestore.QuerySnapshot;
+
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.time.LocalDateTime;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.Hashtable;
 import java.util.Map;
@@ -102,6 +107,7 @@ public class Database {
         data.put("Trial Value", trial.getValue());
         data.put("UUID", trial.getUid());
         data.put("TrialID", trial.getTrialID());
+        data.put("Date", trial.getDate());
         genericDocument.set(data);
     }
 
@@ -118,7 +124,8 @@ public class Database {
                                         document.get("Trial Type").toString(),
                                         document.get("Trial Value"),
                                         document.get("UUID").toString(),
-                                        document.get("TrialID").toString())
+                                        document.get("TrialID").toString(),
+                                        (LocalDateTime) document.get("Date"))
                                 );
                             }
                             trialArrayAdapter.notifyDataSetChanged();
@@ -129,7 +136,7 @@ public class Database {
 
 
     public void addCommentToDB(DocumentReference DocRef, Comment comment){
-        HashMap<String, String> data = new HashMap<>();
+        HashMap<String, Object> data = new HashMap<>();
         data.put("CommentText", comment.getText());
         data.put("UserID", comment.getUserUniqueID());
         data.put("CommentID", comment.getCommentID());
@@ -149,7 +156,7 @@ public class Database {
                                         document.get("CommentText").toString(),
                                         document.get("UserID").toString(),
                                         document.get("CommentID").toString(),
-                                        document.get("Date").toString()));
+                                        (LocalDateTime) document.get("Date")));
                                 Log.d("Success", document.getId() + " => " + document.getData());
                             }
                             commentAdapter.notifyDataSetChanged();
@@ -195,6 +202,41 @@ public class Database {
 
 
     /**
+     * Fills the statistical views with trial value and date data
+     */
+    public void fillStatsList(GeneralDataCallBack generalDataCallBack, ArrayList<ArrayList> statsDataList, CollectionReference collection) {
+        db = FirebaseFirestore.getInstance();
+        ArrayList<Object> tempList = new ArrayList<>();
+        collection
+                .get()
+                .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
+                    @Override
+                    public void onComplete(@NonNull Task<QuerySnapshot> task) {
+                        mAuth = FirebaseAuth.getInstance();
+
+                        statsDataList.clear();
+
+                        if (task.isSuccessful()) {
+                            for (QueryDocumentSnapshot document : task.getResult()) {
+
+                                tempList.add( document.get("Trial Value").toString() );
+                                tempList.add( document.get("Date") );
+                                statsDataList.add(tempList);
+                                tempList.clear();
+                            }
+
+                            //Get callback to grab the populated dataList
+                            generalDataCallBack.onDataReturn(statsDataList);
+
+                        } else {
+                            Log.d("Failure", "Error getting documents: ", task.getException());
+                            generalDataCallBack.onDataReturn(new ArrayList<>());
+                        }
+                    }
+                });
+    }
+
+    /**
      * Get Experiment documents from the database and add its contents to the experimentDataList
      * to populate the user's fragment page.
      * (All experiments added to the experimentDataList ONLY exist in the SCOPE of the "onComplete()").
@@ -235,7 +277,7 @@ public class Database {
                                             Integer.parseInt( document.getData().get("Minimum Trials").toString() ),
                                             Integer.parseInt( document.getData().get("Maximum Trials").toString() ),
                                             giveBoolean( document.getData().get("PublicStatus").toString() ),
-                                            document.getData().get("Date").toString(),
+                                            document.get("Date"),
                                             document.getData().get("ExpID").toString(),
                                             giveBoolean(document.getData().get("isEnd").toString()),
                                             latlng
