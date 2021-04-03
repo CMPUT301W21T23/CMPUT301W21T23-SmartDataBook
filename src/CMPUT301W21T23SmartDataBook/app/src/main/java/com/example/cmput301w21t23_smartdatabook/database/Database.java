@@ -16,6 +16,7 @@ import com.example.cmput301w21t23_smartdatabook.comments.Comment;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
+import com.google.firebase.Timestamp;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
@@ -125,7 +126,7 @@ public class Database {
                                         document.get("Trial Value"),
                                         document.get("UUID").toString(),
                                         document.get("TrialID").toString(),
-                                        (LocalDateTime) document.get("Date"))
+                                        (Timestamp) document.get("Date"))
                                 );
                             }
                             trialArrayAdapter.notifyDataSetChanged();
@@ -156,7 +157,7 @@ public class Database {
                                         document.get("CommentText").toString(),
                                         document.get("UserID").toString(),
                                         document.get("CommentID").toString(),
-                                        (LocalDateTime) document.get("Date")));
+                                        (Timestamp) document.get("Date")));
                                 Log.d("Success", document.getId() + " => " + document.getData());
                             }
                             commentAdapter.notifyDataSetChanged();
@@ -277,7 +278,7 @@ public class Database {
                                             Integer.parseInt( document.getData().get("Minimum Trials").toString() ),
                                             Integer.parseInt( document.getData().get("Maximum Trials").toString() ),
                                             giveBoolean( document.getData().get("PublicStatus").toString() ),
-                                            document.get("Date"),
+                                            (Timestamp) document.get("Date"),
                                             document.getData().get("ExpID").toString(),
                                             giveBoolean(document.getData().get("isEnd").toString()),
                                             latlng

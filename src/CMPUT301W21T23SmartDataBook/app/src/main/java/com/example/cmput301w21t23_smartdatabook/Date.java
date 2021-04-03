@@ -13,15 +13,12 @@ import java.time.format.DateTimeFormatter;
  * @References https://www.javatpoint.com/java-get-current-date
  */
 public class Date {
-
-    DateTimeFormatter dtf;
     Timestamp currentDate;
 
     /**
      * Public Constructor on the Date class
      */
     public Date() {
-        this.dtf = DateTimeFormatter.ofPattern("yyyy/MM/dd HH:mm:ss");
         this.currentDate = Timestamp.now();
     }
 
