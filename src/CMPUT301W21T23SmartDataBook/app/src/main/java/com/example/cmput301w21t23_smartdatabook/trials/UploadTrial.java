@@ -155,9 +155,11 @@ public class UploadTrial extends AppCompatActivity {
                                 .setNegativeButton("Add failure", new DialogInterface.OnClickListener() {
                                     @Override
                                     public void onClick(DialogInterface dialog, int which) {
+                                        Log.e("Work", "Binomial line 158 in upload trial class");
                                         new LocationWithPermission(UploadTrial.this).getLatLng(new GeneralDataCallBack() {
                                             @Override
                                             public void onDataReturn(Object returnedObject) {
+                                                Log.e("Work", "Binomial");
                                                 Location location = (Location) returnedObject;
                                                 LatLng latlng = new LatLng(location.getLatitude(), location.getLongitude());
                                                 for (int i = 0; i<Integer.parseInt(numBinomial.getText().toString()); i++){
@@ -173,11 +175,14 @@ public class UploadTrial extends AppCompatActivity {
                                                             .document(experiment.getExpID())
                                                             .collection("Trials")
                                                             .document(trial.getTrialID()), trial);
+
                                                 }
+                                                recreate();
                                             }
                                         });
-                                        recreate();
-                                    }})
+
+                                    }
+                                })
                                 .setPositiveButton("Cancel", null).create().show();
                     }
                     // 2nd case: if the experiment's trial type is count
@@ -349,7 +354,7 @@ public class UploadTrial extends AppCompatActivity {
             });
         }
         else{
-            Toast.makeText(UploadTrial.this, "You dont have the privilage to delete trials",Toast.LENGTH_SHORT).show();
+            Toast.makeText(UploadTrial.this, "You don't have the privilage to delete trials",Toast.LENGTH_SHORT).show();
         }
 
     }

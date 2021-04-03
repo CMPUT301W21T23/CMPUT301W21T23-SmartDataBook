@@ -79,24 +79,24 @@ public class StatsView extends AppCompatActivity {
                 stats.bubbleSort(statsDataList); // sort list
 
 
-//                List<Entry> entries = new ArrayList<Entry>();
-////                for (int i = 0; i<statsDataList.size(); i++){
-////                    Date date = dateClass.getDate((String) statsDataList.get(i).get(1));
-////                    entries.add(new Entry( date,
-////                            Float.parseFloat((String) statsDataList.get(i).get(0))));
-////                }
-////
-////                LineDataSet dataSet = new LineDataSet(entries, "Label"); // add entries to dataset
-////
-////                LineData lineData = new LineData(dataSet);
-////                lineChart.setData(lineData);
-////                lineChart.invalidate(); // refresh
+                List<Entry> entries = new ArrayList<Entry>();
+                for (int i = 0; i<statsDataList.size(); i++){
+                    Date date = dateClass.getDate((String) statsDataList.get(i).get(1));
+                    entries.add(new Entry(date.getTime(),
+                            Float.parseFloat((String) statsDataList.get(i).get(0))));
+                }
+
+                LineDataSet dataSet = new LineDataSet(entries, "Label"); // add entries to dataset
+
+                LineData lineData = new LineData(dataSet);
+                lineChart.setData(lineData);
+                lineChart.invalidate(); // refresh
 
                 for (int i = 0; i< statsDataList.size(); i++){
                     Date result1 = dateClass.getDate((String) statsDataList.get(i).get(1));
                     Log.d("Time: ", ""+ result1);
                     assert result1 != null;
-                    Log.d("int", ""+( int)result1.getTime());
+                    Log.d("int", ""+ (int)result1.getTime());
                 }
 
 
@@ -111,13 +111,13 @@ public class StatsView extends AppCompatActivity {
                     sortedArray.add((Double) statsDataList.get(i).get(0));
                 }
                 double[] quartiles = stats.quartiles(sortedArray);
-                Number SD = stats.calculateSD(sortedArray);
-                Number mean = stats.calcMean(statsDataList);
-                Number median = stats.calcMedian(statsDataList);
+                double SD = stats.calculateSD(sortedArray);
+                double mean = (double) stats.calcMean(statsDataList);
+                double median = (double) stats.calcMedian(statsDataList);
 
-                meanView.setText("Mean: "+mean.toString());
-                medianView.setText("Median: "+ median.toString());
-                SDView.setText("Std: "+SD.toString());
+                meanView.setText("Mean: "+ Double.parseDouble(String.valueOf(mean)));
+                medianView.setText("Median: "+ String.valueOf(median));
+                SDView.setText("Std: "+String.valueOf(SD));
 
 
 
