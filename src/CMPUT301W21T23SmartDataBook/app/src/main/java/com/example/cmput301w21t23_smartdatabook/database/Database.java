@@ -192,6 +192,33 @@ public class Database {
     }
 
 
+    public void fillStatsList(GeneralDataCallBack generalDataCallBack, ArrayList<String> statsDataList, CollectionReference collection) {
+        db = FirebaseFirestore.getInstance();
+
+        collection
+                .get()
+                .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
+                    @Override
+                    public void onComplete(@NonNull Task<QuerySnapshot> task) {
+                        mAuth = FirebaseAuth.getInstance();
+
+                        statsDataList.clear();
+//                        ("Experiments".equals(collection.getPath())
+                        if (task.isSuccessful()) {
+                            for (QueryDocumentSnapshot document : task.getResult()) {
+                                statsDataList.add( document.get("Trial Value").toString() );
+                            }
+                            //Get callback to grab the populated dataList
+                            generalDataCallBack.onDataReturn(experimentDataList);
+
+                        } else {
+                            Log.d("Failure", "Error getting documents: ", task.getException());
+                            generalDataCallBack.onDataReturn(new ArrayList<>());
+                        }
+                    }
+                });
+    }
+
     /**
      * Get Experiment documents from the database and add its contents to the experimentDataList
      * to populate the user's fragment page.
