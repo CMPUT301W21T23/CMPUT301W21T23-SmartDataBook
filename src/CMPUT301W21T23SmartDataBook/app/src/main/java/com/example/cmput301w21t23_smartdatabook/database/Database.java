@@ -8,11 +8,13 @@ import android.widget.ArrayAdapter;
 import android.widget.CheckBox;
 import android.widget.EditText;
 import android.widget.Toast;
+
 import androidx.annotation.NonNull;
+
 import com.example.cmput301w21t23_smartdatabook.Experiment;
+import com.example.cmput301w21t23_smartdatabook.comments.Comment;
 import com.example.cmput301w21t23_smartdatabook.trials.Trial;
 import com.example.cmput301w21t23_smartdatabook.user.User;
-import com.example.cmput301w21t23_smartdatabook.comments.Comment;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
@@ -26,6 +28,7 @@ import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.GeoPoint;
 import com.google.firebase.firestore.QueryDocumentSnapshot;
 import com.google.firebase.firestore.QuerySnapshot;
+
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Hashtable;
@@ -35,479 +38,491 @@ import java.util.Map;
  * class: Database
  * This class consists database, it has the attributes call back which handles synchronous and asychronous functions, and an arraylist of experiment
  * It passes/ takes information to firestore
+ *
  * @author Bosco Chan Afaq Nabi, Jayden Cho
  */
 public class Database {
 
-    private ArrayList<Experiment> experimentDataList = new ArrayList<>();
-    private static final String TAG1 = "Your";
-    private static final String TAG2 = "Warning";
-    private static final String TAG3 = "Exception";
+	private ArrayList<Experiment> experimentDataList = new ArrayList<>();
+	private static final String TAG1 = "Your";
+	private static final String TAG2 = "Warning";
+	private static final String TAG3 = "Exception";
 
-    private User user = User.getUser();
-    private static Database database;
+	private User user = User.getUser();
+	private static Database database;
 
-    FirebaseAuth mAuth;
-    FirebaseFirestore db;
+	FirebaseAuth mAuth;
+	FirebaseFirestore db;
 
-    /**
-     * Main function does most of database's tasks
-     * @author Bosco Chan
-     */
-    public Database (){};
+	/**
+	 * Main function does most of database's tasks
+	 *
+	 * @author Bosco Chan
+	 */
+	public Database() {
+	}
 
-    //Singleton implementation
-    public static Database getDataBase(){
-        if (database == null){
-            database = new Database();
-        }
-        return database;
-    }
+	;
 
-    public void followStatus(DocumentReference ref, Experiment experiment, Context context, CheckBox follow, String currentID) {
+	//Singleton implementation
+	public static Database getDataBase() {
+		if (database == null) {
+			database = new Database();
+		}
+		return database;
+	}
 
-        ref.get().addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
-            @Override
-            public void onComplete(@NonNull Task<DocumentSnapshot> task) {
-                if (task.isSuccessful()) {
-                    DocumentSnapshot document = task.getResult();
-                    if (document.exists()) {
+	public void followStatus(DocumentReference ref, Experiment experiment, Context context, CheckBox follow, String currentID) {
 
-                        if(!currentID.equals(experiment.getOwnerUserID())){
-                            ref.delete();
-                        }
-                        else{
-                            Toast.makeText(context,"Cannot unfollow owned Experiment",Toast.LENGTH_SHORT).show();
-                            follow.setChecked(true);
-                        }
-                    }
-                }
-            }
-        });//ref.get()
-    }
+		ref.get().addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
+			@Override
+			public void onComplete(@NonNull Task<DocumentSnapshot> task) {
+				if (task.isSuccessful()) {
+					DocumentSnapshot document = task.getResult();
+					if (document.exists()) {
 
-    //Task will be executed here. Done in the background. Called Asynchronous task.
-    /**
-     * This function delete trials from the database
-     */
-    public void deleteFromDB(DocumentReference DocRef){
-        DocRef.delete();
-    }
+						if (!currentID.equals(experiment.getOwnerUserID())) {
+							ref.delete();
+						} else {
+							Toast.makeText(context, "Cannot unfollow owned Experiment", Toast.LENGTH_SHORT).show();
+							follow.setChecked(true);
+						}
+					}
+				}
+			}
+		});//ref.get()
+	}
 
-    public void addTrialToDB(DocumentReference genericDocument, Trial trial){
-        LatLng latlng = trial.getLocation();
-        HashMap<String, Object> data = new HashMap<>();
-        data.put("Region On", trial.isGeoLocationSettingOn());
-        data.put("Trial Type", trial.getExpType());
-        data.put("Trial Value", trial.getValue());
-        data.put("UUID", trial.getUid());
-        data.put("TrialID", trial.getTrialID());
-        data.put("StringDate", trial.getDate());
-        if (trial.isGeoLocationSettingOn()){
-            data.put("GeoPoint",  new GeoPoint(latlng.latitude, latlng.longitude));
-        }
+	//Task will be executed here. Done in the background. Called Asynchronous task.
 
-        genericDocument.set(data);
-    }
+	/**
+	 * This function delete trials from the database
+	 */
+	public void deleteFromDB(DocumentReference DocRef) {
+		DocRef.delete();
+	}
 
-    public void fillTrialList(CollectionReference coll, ArrayList<Trial> trialDataList, ArrayAdapter<Trial> trialArrayAdapter){
+	public void addTrialToDB(DocumentReference genericDocument, Trial trial) {
+		LatLng latlng = trial.getLocation();
+		HashMap<String, Object> data = new HashMap<>();
+		data.put("Region On", trial.isGeoLocationSettingOn());
+		data.put("Trial Type", trial.getExpType());
+		data.put("Trial Value", trial.getValue());
+		data.put("UUID", trial.getUid());
+		data.put("TrialID", trial.getTrialID());
+		data.put("StringDate", trial.getDate());
+		if (trial.isGeoLocationSettingOn()) {
+			data.put("GeoPoint", new GeoPoint(latlng.latitude, latlng.longitude));
+		}
 
-        coll.get()
-                .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
-                    @Override
-                    public void onComplete(@NonNull Task<QuerySnapshot> task) {
-                        if (task.isSuccessful()){
-                            for (QueryDocumentSnapshot document : task.getResult()){
-                                GeoPoint geoPoint = (GeoPoint)document.getData().get("GeoPoint");
-                                LatLng latlng = document.get("GeoPoint")!=null ? (new LatLng(geoPoint.getLatitude(), geoPoint.getLongitude())) : null;
-                                trialDataList.add(new Trial(
-                                        (Boolean) document.get("Region On"),
-                                        document.get("Trial Type").toString(),
-                                        document.get("Trial Value"),
-                                        document.get("UUID").toString(),
-                                        document.get("TrialID").toString(),
-                                        (String) document.get("StringDate"),
-                                        latlng
-                                ));
-                            }
-                            trialArrayAdapter.notifyDataSetChanged();
-                        }
-                    }
-                });
-    }
+		genericDocument.set(data);
+	}
 
+	public void fillTrialList(CollectionReference coll, ArrayList<Trial> trialDataList, ArrayAdapter<Trial> trialArrayAdapter) {
 
-    public void addCommentToDB(DocumentReference DocRef, Comment comment){
-        HashMap<String, Object> data = new HashMap<>();
-        data.put("CommentText", comment.getText());
-        data.put("UserID", comment.getUserUniqueID());
-        data.put("CommentID", comment.getCommentID());
-        data.put("StringDate", comment.getDate());
-        DocRef.set(data);
-    }
-
-    public void fillCommentList(CollectionReference coll, ArrayList<Comment> commentList, ArrayAdapter<Comment> commentAdapter) {
-        coll
-                .get()
-                .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
-                    @Override
-                    public void onComplete(@NonNull Task<QuerySnapshot> task) {
-                        if (task.isSuccessful()) {
-                            for (QueryDocumentSnapshot document : task.getResult()) {
-                                commentList.add(new Comment(
-                                        document.get("CommentText").toString(),
-                                        document.get("UserID").toString(),
-                                        document.get("CommentID").toString(),
-                                        (String) document.get("StringDate")));
-                                Log.d("Success", document.getId() + " => " + document.getData());
-                            }
-                            commentAdapter.notifyDataSetChanged();
-                        }
-                    }
-                });
-    }
-
-    public void fillUserName(GeneralDataCallBack generalDataCallBack) {
-        db = FirebaseFirestore.getInstance();
-
-        Hashtable<String, User> userNames = new Hashtable<String, User>();
-
-        db.collection("Users")
-            .get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
-
-                 @Override
-                 public void onComplete(@NonNull Task<QuerySnapshot> task) {
-                     mAuth = FirebaseAuth.getInstance();
-
-                     String path = db.collection("Users").getPath();
-
-                     if (task.isSuccessful()) {
-                         for (QueryDocumentSnapshot document : task.getResult()) {
-                             if (document.getData().get("UUID") != null && document.getData().get("UserName") != null) {
-
-                                 User user = new User(document.getData().get("UserName").toString(),
-                                         document.getData().get("Email").toString(),
-                                         document.getData().get("UUID").toString());
-
-                                 userNames.put(document.getData().get("UUID").toString(), user );
-
-                                 Log.d("Getting_user", "Success");
-                             }
-                         }
-                         generalDataCallBack.onDataReturn(userNames);
-                     } else {
-                         generalDataCallBack.onDataReturn(new Hashtable<String, User>());
-                     }
-                 }
-         });
-    }
+		coll.get()
+				.addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
+					@Override
+					public void onComplete(@NonNull Task<QuerySnapshot> task) {
+						if (task.isSuccessful()) {
+							for (QueryDocumentSnapshot document : task.getResult()) {
+								GeoPoint geoPoint = (GeoPoint) document.get("GeoPoint");
+								LatLng latlng = (geoPoint != null) ? (new LatLng(geoPoint.getLatitude(), geoPoint.getLongitude())) : null;
+								trialDataList.add(new Trial(
+										(Boolean) document.get("Region On"),
+										document.get("Trial Type").toString(),
+										document.get("Trial Value"),
+										document.get("UUID").toString(),
+										document.get("TrialID").toString(),
+										(String) document.get("StringDate"),
+										latlng
+								));
+							}
+							trialArrayAdapter.notifyDataSetChanged();
+						}
+					}
+				});
+	}
 
 
-    /**
-     * Fills the statistical views with trial value and date data. statsDataList contains a list with [Number, StringDate]
-     * for each item.
-     */
-    public void fillStatsList(GeneralDataCallBack generalDataCallBack, ArrayList<ArrayList> statsDataList, CollectionReference collection) {
-        db = FirebaseFirestore.getInstance();
+	public void addCommentToDB(DocumentReference DocRef, Comment comment) {
+		HashMap<String, Object> data = new HashMap<>();
+		data.put("CommentText", comment.getText());
+		data.put("UserID", comment.getUserUniqueID());
+		data.put("CommentID", comment.getCommentID());
+		data.put("StringDate", comment.getDate());
+		DocRef.set(data);
+	}
 
-        collection
-                .get()
-                .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
-                    @Override
-                    public void onComplete(@NonNull Task<QuerySnapshot> task) {
-                        mAuth = FirebaseAuth.getInstance();
+	public void fillCommentList(CollectionReference coll, ArrayList<Comment> commentList, ArrayAdapter<Comment> commentAdapter) {
+		coll
+				.get()
+				.addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
+					@Override
+					public void onComplete(@NonNull Task<QuerySnapshot> task) {
+						if (task.isSuccessful()) {
+							for (QueryDocumentSnapshot document : task.getResult()) {
+								commentList.add(new Comment(
+										document.get("CommentText").toString(),
+										document.get("UserID").toString(),
+										document.get("CommentID").toString(),
+										(String) document.get("StringDate")));
+								Log.d("Success", document.getId() + " => " + document.getData());
+							}
+							commentAdapter.notifyDataSetChanged();
+						}
+					}
+				});
+	}
 
-                        statsDataList.clear();
+	public void fillUserName(GeneralDataCallBack generalDataCallBack) {
+		db = FirebaseFirestore.getInstance();
 
-                        if (task.isSuccessful()) {
-                            for (QueryDocumentSnapshot document : task.getResult()) {
-                                statsDataList.add(new ArrayList<Object>() {
-                                    {
-                                        Number temp;
+		Hashtable<String, User> userNames = new Hashtable<String, User>();
 
-                                        if (document.get("Trial Type").toString() == "Binomial"){
+		db.collection("Users")
+				.get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
 
-                                            //Convert database boolean into integer value
-                                            if ( (Boolean) document.get("Trial Value")) {
-                                                temp = 1;
-                                            } else {
-                                                temp = 0;
-                                            }
+			@Override
+			public void onComplete(@NonNull Task<QuerySnapshot> task) {
+				mAuth = FirebaseAuth.getInstance();
 
-                                        } else {
-                                            temp = Float.parseFloat(document.get("Trial Value").toString());
-                                        }
-                                        add(temp);
-                                        add(document.get("StringDate").toString());
-                                    }
-                                });
-                            }//for
+				String path = db.collection("Users").getPath();
 
-                            Log.d("stats", ""+statsDataList.size());
-                            //Get callback to grab the populated dataList
-                            generalDataCallBack.onDataReturn(statsDataList);
+				if (task.isSuccessful()) {
+					for (QueryDocumentSnapshot document : task.getResult()) {
+						if (document.getData().get("UUID") != null && document.getData().get("UserName") != null) {
 
-                        } else {
-                            Log.d("Failure", "Error getting documents: ", task.getException());
-                            generalDataCallBack.onDataReturn(new ArrayList<>());
-                        }
-                    }
-                });
-    }
+							User user = new User(document.getData().get("UserName").toString(),
+									document.getData().get("Email").toString(),
+									document.getData().get("UUID").toString());
 
-    /**
-     * Get Experiment documents from the database and add its contents to the experimentDataList
-     * to populate the user's fragment page.
-     * (All experiments added to the experimentDataList ONLY exist in the SCOPE of the "onComplete()").
-     * (Since ArrayAdapter<Experiment> experimentAdapter
-     * @author Bosco Chan
-     * @param generalDataCallBack is the callback instance from a synchronous.
-     */
-    public void fillDataList(GeneralDataCallBack generalDataCallBack, ArrayAdapter<Experiment> experimentArrayAdapter, CollectionReference collection, String currentID, Hashtable<String, User> userNames) {
-        db = FirebaseFirestore.getInstance();
+							userNames.put(document.getData().get("UUID").toString(), user);
+
+							Log.d("Getting_user", "Success");
+						}
+					}
+					generalDataCallBack.onDataReturn(userNames);
+				} else {
+					generalDataCallBack.onDataReturn(new Hashtable<String, User>());
+				}
+			}
+		});
+	}
+
+
+	/**
+	 * Fills the statistical views with trial value and date data. statsDataList contains a list with [Number, StringDate]
+	 * for each item.
+	 */
+	public void fillStatsList(GeneralDataCallBack generalDataCallBack, ArrayList<ArrayList> statsDataList, CollectionReference collection) {
+		db = FirebaseFirestore.getInstance();
+
+		collection
+				.get()
+				.addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
+					@Override
+					public void onComplete(@NonNull Task<QuerySnapshot> task) {
+						mAuth = FirebaseAuth.getInstance();
+
+						statsDataList.clear();
+
+						if (task.isSuccessful()) {
+							for (QueryDocumentSnapshot document : task.getResult()) {
+								statsDataList.add(new ArrayList<Object>() {
+									{
+										Number temp;
+
+										if (document.get("Trial Type").toString() == "Binomial") {
+
+											//Convert database boolean into integer value
+											if ((Boolean) document.get("Trial Value")) {
+												temp = 1;
+											} else {
+												temp = 0;
+											}
+
+										} else {
+											temp = Float.parseFloat(document.get("Trial Value").toString());
+										}
+										add(temp);
+										add(document.get("StringDate").toString());
+									}
+								});
+							}//for
+
+							Log.d("stats", "" + statsDataList.size());
+							//Get callback to grab the populated dataList
+							generalDataCallBack.onDataReturn(statsDataList);
+
+						} else {
+							Log.d("Failure", "Error getting documents: ", task.getException());
+							generalDataCallBack.onDataReturn(new ArrayList<>());
+						}
+					}
+				});
+	}
+
+	/**
+	 * Get Experiment documents from the database and add its contents to the experimentDataList
+	 * to populate the user's fragment page.
+	 * (All experiments added to the experimentDataList ONLY exist in the SCOPE of the "onComplete()").
+	 * (Since ArrayAdapter<Experiment> experimentAdapter
+	 *
+	 * @param generalDataCallBack is the callback instance from a synchronous.
+	 * @author Bosco Chan
+	 */
+	public void fillDataList(GeneralDataCallBack generalDataCallBack, ArrayAdapter<Experiment> experimentArrayAdapter, CollectionReference collection, String currentID, Hashtable<String, User> userNames) {
+		db = FirebaseFirestore.getInstance();
 //        Log.d("USER_SIZE", String.valueOf(userNames.size()));
 
-        collection
-                .get()
-                .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
-                    @Override
-                    public void onComplete(@NonNull Task<QuerySnapshot> task) {
-                        mAuth = FirebaseAuth.getInstance();
+		collection
+				.get()
+				.addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
+					@Override
+					public void onComplete(@NonNull Task<QuerySnapshot> task) {
+						mAuth = FirebaseAuth.getInstance();
 
-                        experimentDataList.clear();
+						experimentDataList.clear();
 //                        ("Experiments".equals(collection.getPath())
-                        if (task.isSuccessful()) {
-                            for (QueryDocumentSnapshot document : task.getResult()) {
-                                if ( (collection.getPath().equals("Experiments"))  && document.getData().get("ExpID") != null && giveBoolean( document.getData().get("PublicStatus").toString()) ||
-                                        (collection.getPath().equals(db.collection("Users").document(currentID).collection("Favorites").getPath())) ||
-                                        (collection.getPath().equals("Archived")) ){
+						if (task.isSuccessful()) {
+							for (QueryDocumentSnapshot document : task.getResult()) {
+								if ((collection.getPath().equals("Experiments")) && document.getData().get("ExpID") != null && giveBoolean(document.getData().get("PublicStatus").toString()) ||
+										(collection.getPath().equals(db.collection("Users").document(currentID).collection("Favorites").getPath())) ||
+										(collection.getPath().equals("Archived"))) {
 
-                                    boolean requireLocation = giveBoolean( document.getData().get("requireLocation").toString() );
-                                    GeoPoint geoPoint =(GeoPoint)document.getData().get("Location");
-                                    LatLng latlng = requireLocation ? (new LatLng(geoPoint.getLatitude(), geoPoint.getLongitude())) : null;
+									boolean requireLocation = giveBoolean(document.getData().get("requireLocation").toString());
+									GeoPoint geoPoint = (GeoPoint) document.getData().get("Location");
+									LatLng latlng = requireLocation ? (new LatLng(geoPoint.getLatitude(), geoPoint.getLongitude())) : null;
 
-                                    experimentDataList.add( new Experiment(
-                                            document.getData().get("Name").toString(),
-                                            document.getData().get("UUID").toString(),
-                                            userNames.get(document.getData().get("UUID").toString()).getUserName(),
-                                            document.getData().get("Trial Type").toString(),
-                                            document.getData().get("Description").toString(),
-                                            requireLocation,
-                                            Integer.parseInt( document.getData().get("Minimum Trials").toString() ),
-                                            Integer.parseInt( document.getData().get("Maximum Trials").toString() ),
-                                            giveBoolean( document.getData().get("PublicStatus").toString() ),
-                                            (String) document.getData().get("StringDate"),
-                                            document.getData().get("ExpID").toString(),
-                                            giveBoolean(document.getData().get("isEnd").toString()),
-                                            latlng
-                                            )
-                                    );
-                                }
+									experimentDataList.add(new Experiment(
+													document.getData().get("Name").toString(),
+													document.getData().get("UUID").toString(),
+													userNames.get(document.getData().get("UUID").toString()).getUserName(),
+													document.getData().get("Trial Type").toString(),
+													document.getData().get("Description").toString(),
+													requireLocation,
+													Integer.parseInt(document.getData().get("Minimum Trials").toString()),
+													Integer.parseInt(document.getData().get("Maximum Trials").toString()),
+													giveBoolean(document.getData().get("PublicStatus").toString()),
+													(String) document.getData().get("StringDate"),
+													document.getData().get("ExpID").toString(),
+													giveBoolean(document.getData().get("isEnd").toString()),
+													latlng
+											)
+									);
+								}
 
-                                Log.d("Success", document.getId() + " => " + document.getData());
+								Log.d("Success", document.getId() + " => " + document.getData());
 
-                            }//for
+							}//for
 
-                            //Get callback to grab the populated dataList
-                            generalDataCallBack.onDataReturn(experimentDataList);
-                            experimentArrayAdapter.notifyDataSetChanged();
+							//Get callback to grab the populated dataList
+							generalDataCallBack.onDataReturn(experimentDataList);
+							experimentArrayAdapter.notifyDataSetChanged();
 
-                        } else {
-                            Log.d("Failure", "Error getting documents: ", task.getException());
-                            generalDataCallBack.onDataReturn(new ArrayList<>());
-                        }
-                    }
-                });
-    }
+						} else {
+							Log.d("Failure", "Error getting documents: ", task.getException());
+							generalDataCallBack.onDataReturn(new ArrayList<>());
+						}
+					}
+				});
+	}
 
-    /**
-     * Checks if the status of  "PublicStatus" and "LocationStatus" found in the database
-     * is "on" or "of" and gives respective boolean.
-     * @author Bosco Chan
-     * @param status
-     * @return a boolean that is either "true" or "false"
-     */
-    public boolean giveBoolean (String status) {
-        return status.equals("On");
-    }
+	/**
+	 * Checks if the status of  "PublicStatus" and "LocationStatus" found in the database
+	 * is "on" or "of" and gives respective boolean.
+	 *
+	 * @param status
+	 * @return a boolean that is either "true" or "false"
+	 * @author Bosco Chan
+	 */
+	public boolean giveBoolean(String status) {
+		return status.equals("On");
+	}
 
-    /**
-     * Checks if the boolean condition of "getRegionOn" and "isPublic" is "true" or "false"
-     * and gives the respective "on" or "off" string
-     * @author Bosco Chan
-     * @param condition the boolean that determines if region or isPublic is true or false
-     * @return a string that is either "on" or "off"
-     */
-    public String giveString (boolean condition) {
-        if (condition) {
-            return "On";
-        }else{
-            return "Off";
-        }
-    }
+	/**
+	 * Checks if the boolean condition of "getRegionOn" and "isPublic" is "true" or "false"
+	 * and gives the respective "on" or "off" string
+	 *
+	 * @param condition the boolean that determines if region or isPublic is true or false
+	 * @return a string that is either "on" or "off"
+	 * @author Bosco Chan
+	 */
+	public String giveString(boolean condition) {
+		if (condition) {
+			return "On";
+		} else {
+			return "Off";
+		}
+	}
 
-    /**
-     * Add a new experiment object to the Firebase database by assigning a unique experiment ID.
-     * An experiment is added by firstly checking if the collection contains any
-     * @author Bosco Chan
-     * @param newExperiment The experiment object that is to be added to the Firebase database
-     */
-    public void addExperimentToDB(Experiment newExperiment, CollectionReference collection, String currentID) {
-        mAuth = FirebaseAuth.getInstance();
+	/**
+	 * Add a new experiment object to the Firebase database by assigning a unique experiment ID.
+	 * An experiment is added by firstly checking if the collection contains any
+	 *
+	 * @param newExperiment The experiment object that is to be added to the Firebase database
+	 * @author Bosco Chan
+	 */
+	public void addExperimentToDB(Experiment newExperiment, CollectionReference collection, String currentID) {
+		mAuth = FirebaseAuth.getInstance();
 
-        db = FirebaseFirestore.getInstance();
-        HashMap<String, Object> data = new HashMap<>();
-        // If there’s some data in the EditText field, then we create a new key-value pair.
-        data.put("Name", newExperiment.getExpName());
-        data.put("Description", newExperiment.getDescription());
-        data.put("Trial Type", newExperiment.getTrialType());
-        data.put("requireLocation", giveString(newExperiment.getRequireLocation()));
-        data.put("PublicStatus", giveString(newExperiment.isPublic()));
-        data.put("UUID", newExperiment.getOwnerUserID());
-        data.put("Minimum Trials", "" + newExperiment.getMinTrials());
-        data.put("Maximum Trials", "" + newExperiment.getMaxTrials());
-        data.put("StringDate", newExperiment.getDate());
-        data.put("ExpID", newExperiment.getExpID());
-        data.put("isEnd", giveString(newExperiment.getIsEnd()));
-        if (newExperiment.getRequireLocation()) {
-            GeoPoint geoPoint = new GeoPoint(newExperiment.getLatLng().latitude, newExperiment.getLatLng().longitude);
-            data.put("Location", geoPoint);
-        }
-        Log.d("Collection", ""+ collection.getPath() + db.collection("Archived").getPath());
-        Log.d("Collection", ""+ collection.getPath().equals(db.collection("Archived")));
-        collection
-                .document(newExperiment.getExpID())
-                .set(data);
+		db = FirebaseFirestore.getInstance();
+		HashMap<String, Object> data = new HashMap<>();
+		// If there’s some data in the EditText field, then we create a new key-value pair.
+		data.put("Name", newExperiment.getExpName());
+		data.put("Description", newExperiment.getDescription());
+		data.put("Trial Type", newExperiment.getTrialType());
+		data.put("requireLocation", giveString(newExperiment.getRequireLocation()));
+		data.put("PublicStatus", giveString(newExperiment.isPublic()));
+		data.put("UUID", newExperiment.getOwnerUserID());
+		data.put("Minimum Trials", "" + newExperiment.getMinTrials());
+		data.put("Maximum Trials", "" + newExperiment.getMaxTrials());
+		data.put("StringDate", newExperiment.getDate());
+		data.put("ExpID", newExperiment.getExpID());
+		data.put("isEnd", giveString(newExperiment.getIsEnd()));
+		if (newExperiment.getRequireLocation()) {
+			GeoPoint geoPoint = new GeoPoint(newExperiment.getLatLng().latitude, newExperiment.getLatLng().longitude);
+			data.put("Location", geoPoint);
+		}
+		Log.d("Collection", "" + collection.getPath() + db.collection("Archived").getPath());
+		Log.d("Collection", "" + collection.getPath().equals(db.collection("Archived")));
+		collection
+				.document(newExperiment.getExpID())
+				.set(data);
 
-        addToFavorites(data, currentID, newExperiment);
+		addToFavorites(data, currentID, newExperiment);
 
-    }//addExperimentToDB
+	}//addExperimentToDB
 
-    public void addToFavorites( HashMap<String, Object> data, String currentID, Experiment newExperiment){
-        db.collection("Users")
-                .document(currentID)
-                .collection("Favorites")
-                .document(newExperiment.getExpID())
-                .set(data);
-    }
+	public void addToFavorites(HashMap<String, Object> data, String currentID, Experiment newExperiment) {
+		db.collection("Users")
+				.document(currentID)
+				.collection("Favorites")
+				.document(newExperiment.getExpID())
+				.set(data);
+	}
 
-    /**
-     * Edit user profile by querying the database.
-     * @author Bosco Chan
-     * @param usernameTextField contains the editText field to write username to
-     * @param emailTextField contains the editText field to write email to
-     * @param saveButtonView contains the save button view
-     * @param context contains the given context from which this function is called from
-     */
-    public void editUser(EditText usernameTextField, EditText emailTextField, View saveButtonView, Context context, String currentID, User user) {
+	/**
+	 * Edit user profile by querying the database.
+	 *
+	 * @param usernameTextField contains the editText field to write username to
+	 * @param emailTextField    contains the editText field to write email to
+	 * @param saveButtonView    contains the save button view
+	 * @param context           contains the given context from which this function is called from
+	 * @author Bosco Chan
+	 */
+	public void editUser(EditText usernameTextField, EditText emailTextField, View saveButtonView, Context context, String currentID, User user) {
 
-        db = FirebaseFirestore.getInstance();
+		db = FirebaseFirestore.getInstance();
 
-        DocumentReference docRef = db.collection("Users").document(currentID);
-        docRef.get().addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
-            @Override
-            public void onComplete(@NonNull Task<DocumentSnapshot> task) {
-                if (task.isSuccessful()) {
-                    DocumentSnapshot document = task.getResult();
-                    if (document.exists()) {
-                        Log.d(TAG1, "DocumentSnapshot data: " + document.getData());
-                        Map<String, Object> data = document.getData();
+		DocumentReference docRef = db.collection("Users").document(currentID);
+		docRef.get().addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
+			@Override
+			public void onComplete(@NonNull Task<DocumentSnapshot> task) {
+				if (task.isSuccessful()) {
+					DocumentSnapshot document = task.getResult();
+					if (document.exists()) {
+						Log.d(TAG1, "DocumentSnapshot data: " + document.getData());
+						Map<String, Object> data = document.getData();
 
-                        if (data.get("UserName").toString().equals("")){
-                            usernameTextField.setHint("Enter Username");
-                        }else{
-                            usernameTextField.setText(data.get("UserName").toString());
-                        }
+						if (data.get("UserName").toString().equals("")) {
+							usernameTextField.setHint("Enter Username");
+						} else {
+							usernameTextField.setText(data.get("UserName").toString());
+						}
 
-                        if (data.get("Email").toString().equals("")){
-                            emailTextField.setHint("Enter Email");
-                        }else{
-                            emailTextField.setText(data.get("Email").toString());
-                        }
+						if (data.get("Email").toString().equals("")) {
+							emailTextField.setHint("Enter Email");
+						} else {
+							emailTextField.setText(data.get("Email").toString());
+						}
 
-                        saveButtonView.setOnClickListener(new View.OnClickListener() {
-                            @Override
-                            public void onClick(View v) {
-                                String username = usernameTextField.getText().toString();
-                                String email = emailTextField.getText().toString();
-                                user.setUserName(username);
-                                user.setUserContact(email);
+						saveButtonView.setOnClickListener(new View.OnClickListener() {
+							@Override
+							public void onClick(View v) {
+								String username = usernameTextField.getText().toString();
+								String email = emailTextField.getText().toString();
+								user.setUserName(username);
+								user.setUserContact(email);
 
-                                docRef.update("UserName", username);
+								docRef.update("UserName", username);
 
-                                docRef.update("Email", email);
-                            }
-                        });
-                    }
-                }
-            }
-        });
+								docRef.update("Email", email);
+							}
+						});
+					}
+				}
+			}
+		});
 
-    }
+	}
 
-    //Temporarily sign in user as an anonymous user on first sign in
-    //Source: firebase guides, https://firebase.google.com
-    //License: Creative Commons Attribution 4.0 License, Apache 2.0 License
-    //Code: https://firebase.google.com/docs/auth/android/anonymous-auth?authuser=0
-    /**
-     * Authenticates a new app user anonymously and generates a "User document" for the user
-     * containing their respective "username and contact".
-     * @author Bosco Chan
-     */
-    public void authenticateAnon(GeneralDataCallBack generalDataCallBack) {
+	//Temporarily sign in user as an anonymous user on first sign in
+	//Source: firebase guides, https://firebase.google.com
+	//License: Creative Commons Attribution 4.0 License, Apache 2.0 License
+	//Code: https://firebase.google.com/docs/auth/android/anonymous-auth?authuser=0
 
-        FirebaseAuth mAuth = FirebaseAuth.getInstance();
-        mAuth.signInAnonymously()
-                .addOnCompleteListener( new OnCompleteListener<AuthResult>() {
-                    @Override
-                    public void onComplete(@NonNull Task<AuthResult> task) {
-                        if (task.isSuccessful()) {
+	/**
+	 * Authenticates a new app user anonymously and generates a "User document" for the user
+	 * containing their respective "username and contact".
+	 *
+	 * @author Bosco Chan
+	 */
+	public void authenticateAnon(GeneralDataCallBack generalDataCallBack) {
 
-                            // Sign in success, update UI with the signed-in user's information
-                            Log.d("Authentication Success", "signInAnonymously:success: " + mAuth.getUid());
-                            FirebaseUser currentUser = mAuth.getCurrentUser();
+		FirebaseAuth mAuth = FirebaseAuth.getInstance();
+		mAuth.signInAnonymously()
+				.addOnCompleteListener(new OnCompleteListener<AuthResult>() {
+					@Override
+					public void onComplete(@NonNull Task<AuthResult> task) {
+						if (task.isSuccessful()) {
 
-                            assert currentUser != null;
-                            generalDataCallBack.onDataReturn(currentUser.getUid());
+							// Sign in success, update UI with the signed-in user's information
+							Log.d("Authentication Success", "signInAnonymously:success: " + mAuth.getUid());
+							FirebaseUser currentUser = mAuth.getCurrentUser();
 
-                            FirebaseFirestore db = FirebaseFirestore.getInstance();
-                            // Get a top level reference to the collection
-                            final CollectionReference allUsersCollection = db.collection("Users");
-                            HashMap<String, String> data = new HashMap<>();
+							assert currentUser != null;
+							generalDataCallBack.onDataReturn(currentUser.getUid());
 
-                            //Source: Firebase, firebase.google.com
-                            //License: Creative Commons Attribution 4.0 License, Apache 2.0 License
-                            //Code: https://firebase.google.com/docs/firestore/query-data/get-data#java_
-                            DocumentReference userDoc = allUsersCollection.document(currentUser.getUid());
-                            userDoc.get().addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
-                                @Override
-                                public void onComplete(@NonNull Task<DocumentSnapshot> task) {
-                                    if (task.isSuccessful()) {
-                                        DocumentSnapshot document = task.getResult();
-                                        assert document != null;
-                                        if (!document.exists()) {
-                                            data.put("UserName", "User - "+currentUser.getUid().substring(0,4));
-                                            data.put("Email", "");
-                                            data.put("UUID", currentUser.getUid());
+							FirebaseFirestore db = FirebaseFirestore.getInstance();
+							// Get a top level reference to the collection
+							final CollectionReference allUsersCollection = db.collection("Users");
+							HashMap<String, String> data = new HashMap<>();
 
-                                            allUsersCollection
-                                                    .document(currentUser.getUid())
-                                                    .set(data);
-                                        }
-                                    }
-                                }
-                            });
-                        } else {
-                            // If sign in fails, display a message to the user.
-                            Log.w("Authentication Failed", "signInAnonymously:failure", task.getException());
-                        }//if
-                    }
-                });
+							//Source: Firebase, firebase.google.com
+							//License: Creative Commons Attribution 4.0 License, Apache 2.0 License
+							//Code: https://firebase.google.com/docs/firestore/query-data/get-data#java_
+							DocumentReference userDoc = allUsersCollection.document(currentUser.getUid());
+							userDoc.get().addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
+								@Override
+								public void onComplete(@NonNull Task<DocumentSnapshot> task) {
+									if (task.isSuccessful()) {
+										DocumentSnapshot document = task.getResult();
+										assert document != null;
+										if (!document.exists()) {
+											data.put("UserName", "User - " + currentUser.getUid().substring(0, 4));
+											data.put("Email", "");
+											data.put("UUID", currentUser.getUid());
 
-    }//authenticationAnon
+											allUsersCollection
+													.document(currentUser.getUid())
+													.set(data);
+										}
+									}
+								}
+							});
+						} else {
+							// If sign in fails, display a message to the user.
+							Log.w("Authentication Failed", "signInAnonymously:failure", task.getException());
+						}//if
+					}
+				});
 
-    public void publicOrEnd(CollectionReference coll, String onOff, Experiment experiment, String status){
-        coll.document(experiment.getExpID()).update(status, onOff);
-    }
+	}//authenticationAnon
+
+	public void publicOrEnd(CollectionReference coll, String onOff, Experiment experiment, String status) {
+		coll.document(experiment.getExpID()).update(status, onOff);
+	}
 
 }//Database
