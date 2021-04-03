@@ -5,6 +5,7 @@ import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.location.Location;
 import android.os.Bundle;
+import android.os.Parcelable;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -191,7 +192,7 @@ public class addExpFragment extends Fragment {
                             //Source: Shweta Chauhan; https://stackoverflow.com/users/6021469/shweta-chauhan
                             //Code: https://stackoverflow.com/questions/40085608/how-to-pass-data-from-one-fragment-to-previous-fragment
                             Intent intent = new Intent(getActivity(), addExpFragment.class);
-                            intent.putExtra("newExp", returnedExperiment);
+                            intent.putExtra("newExp", (Parcelable) returnedExperiment);
                             addExpFragment.this.getTargetFragment().onActivityResult(getTargetRequestCode(), 1, intent);
                             activity.getSupportFragmentManager().popBackStack();
                         }

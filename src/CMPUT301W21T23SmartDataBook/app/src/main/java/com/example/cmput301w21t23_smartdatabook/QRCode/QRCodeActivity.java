@@ -2,6 +2,7 @@ package com.example.cmput301w21t23_smartdatabook.QRCode;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.os.Parcelable;
 import android.text.InputType;
 import android.util.Log;
 import android.view.View;
@@ -50,7 +51,7 @@ public class QRCodeActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(QRCodeActivity.this, ScannerActivity.class);
-                intent.putExtra("experiment", experiment);
+                intent.putExtra("experiment", (Parcelable) experiment);
                 intent.putExtra("Flag", "Register");
                 startActivity(intent);
             }
