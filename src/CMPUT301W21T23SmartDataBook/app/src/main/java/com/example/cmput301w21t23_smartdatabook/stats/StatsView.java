@@ -19,6 +19,9 @@ import com.github.mikephil.charting.charts.LineChart;
 import com.github.mikephil.charting.components.AxisBase;
 import com.github.mikephil.charting.components.XAxis;
 import com.github.mikephil.charting.components.YAxis;
+import com.github.mikephil.charting.data.BarData;
+import com.github.mikephil.charting.data.BarDataSet;
+import com.github.mikephil.charting.data.BarEntry;
 import com.github.mikephil.charting.data.Entry;
 import com.github.mikephil.charting.data.LineData;
 import com.github.mikephil.charting.data.LineDataSet;
@@ -88,16 +91,18 @@ public class StatsView extends AppCompatActivity {
 
                 stats.bubbleSortByDate(statsDataList); //sort list by date
 
-                List<Entry> entries = new ArrayList<Entry>();
+                List<Entry> lineEntries = new ArrayList<Entry>();
+                List<BarEntry> barEntries = new ArrayList<BarEntry>();
                 for (int i = 0; i<statsDataList.size(); i++){
 
                     dates.add( dateClass.getDate(statsDataList.get(i).get(1).toString()) );
 //                    Log.d("Entire", ""+statsDataList.get(i).get(0).toString()+ " " + statsDataList.get(i).get(1).toString());
-                    entries.add(new Entry(i,
-                            Float.parseFloat(statsDataList.get(i).get(0).toString())) );
+                    lineEntries.add(new Entry(i, Float.parseFloat(statsDataList.get(i).get(0).toString())) );
+                    barEntries.add( new BarEntry(i, Float.parseFloat(statsDataList.get(i).get(0).toString())) );
                 }
 
-                //https://github.com/PhilJay/MPAndroidChart/issues/3705
+                //Source: sidcgithub; https://github.com/sidcgithub
+                //Code: https://github.com/PhilJay/MPAndroidChart/issues/3705
                 ValueFormatter formatter = new ValueFormatter() {
                     @Override
                     public String getAxisLabel(float value, AxisBase axis) {
@@ -108,16 +113,30 @@ public class StatsView extends AppCompatActivity {
                     }
                 };
 
-                LineDataSet dataSet = new LineDataSet(entries, "Label"); // add entries to dataset
-                dataSet.setAxisDependency(YAxis.AxisDependency.LEFT);
-                dataSet.setLineWidth(2.0f);
+                LineDataSet lineDataSet = new LineDataSet(lineEntries, "Trial Value"); // add entries to dataset
+                lineDataSet.setAxisDependency(YAxis.AxisDependency.LEFT);
+                lineDataSet.setLineWidth(2.0f);
 
-                XAxis xAxis = lineChart.getXAxis();
-                xAxis.setValueFormatter(formatter);
+                XAxis lineChartXAxis = lineChart.getXAxis();
+                lineChartXAxis.setValueFormatter(formatter);
 
-                LineData lineData = new LineData(dataSet);
+                LineData lineData = new LineData(lineDataSet);
                 lineChart.setData(lineData);
                 lineChart.invalidate(); // refresh
+
+                BarDataSet barDataSet = new BarDataSet(barEntries, "Trial Value");
+
+                barDataSet.setBarBorderWidth(2.0f);
+
+                XAxis barChartXAxis = barChart.getXAxis();
+                barChartXAxis.setValueFormatter(formatter);
+
+                BarData barData = new BarData(barDataSet);
+
+                barData.setBarWidth(0.9f); // set custom bar width
+                barChart.setData(barData);
+                barChart.setFitBars(true); // make the x-axis fit exactly all bars
+                barChart.invalidate();
 
                 //Printing Forloop
 //                for (int i = 0; i< statsDataList.size(); i++){
@@ -154,7 +173,6 @@ public class StatsView extends AppCompatActivity {
         } , statsDataList, db.collection("Experiments").document(experiment.getExpID()).collection("Trials"));
 
     }//onCreate
-
 
 }
 
