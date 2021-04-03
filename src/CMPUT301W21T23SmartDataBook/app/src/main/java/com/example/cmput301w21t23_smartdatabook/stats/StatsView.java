@@ -82,17 +82,17 @@ public class StatsView extends AppCompatActivity {
 
                 ArrayList DataList = (ArrayList) returnedObject;
 
+                ArrayList<Date> dates = new ArrayList<>();
+
                 statsDataList = DataList;
 
                 stats.bubbleSortByDate(statsDataList); //sort list by date
 
                 List<Entry> entries = new ArrayList<Entry>();
                 for (int i = 0; i<statsDataList.size(); i++){
-//                    Date date = dateClass.getDate((String) statsDataList.get(i).get(1));
-//                    entries.add(new Entry(date.getTime(),
-//                            Float.parseFloat((String) statsDataList.get(i).get(0))));
 
-                    Log.d("Entire", ""+statsDataList.get(i).get(0).toString()+ " " + statsDataList.get(i).get(1).toString());
+                    dates.add( dateClass.getDate(statsDataList.get(i).get(1).toString()) );
+//                    Log.d("Entire", ""+statsDataList.get(i).get(0).toString()+ " " + statsDataList.get(i).get(1).toString());
                     entries.add(new Entry(i,
                             Float.parseFloat(statsDataList.get(i).get(0).toString())) );
                 }
@@ -101,10 +101,10 @@ public class StatsView extends AppCompatActivity {
                 ValueFormatter formatter = new ValueFormatter() {
                     @Override
                     public String getAxisLabel(float value, AxisBase axis) {
-                        stats.bubbleSortByDate(statsDataList); //sort list by date
+                        Date date = dates.get( (int) value );
                         SimpleDateFormat sdf = new SimpleDateFormat("HH:mm:ss", Locale.ENGLISH);
-                        Log.d("Date", ""+ (int) value + "|" + sdf.format( dateClass.getDate( statsDataList.get( (int)value ).get(1).toString() )));
-                        return sdf.format( dateClass.getDate( statsDataList.get( (int)value ).get(1).toString() ) );
+//                        Log.d("Date", ""+ (int) value + "|" + sdf.format( dateClass.getDate( statsDataList.get( (int)value ).get(1).toString() )));
+                        return sdf.format( date );
                     }
                 };
 
