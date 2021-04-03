@@ -150,7 +150,8 @@ public class ExperimentDetails extends AppCompatActivity {
             public void onClick(View v) {
                 // TODO: new show map activity
                 Intent intent = new Intent(ExperimentDetails.this, MapsActivity.class);
-                intent.putExtra("experiemnt", (Parcelable) experiment);
+                intent.putExtra("experiment", (Parcelable) experiment);
+                intent.putExtra("main", "false");
                 startActivity(intent);
             }
         });

@@ -4,9 +4,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.widget.TextView;
-
 import androidx.appcompat.app.AppCompatActivity;
-
 import java.sql.Array;
 import java.sql.Time;
 import java.sql.Timestamp;
@@ -22,10 +20,8 @@ import com.github.mikephil.charting.components.YAxis;
 import com.github.mikephil.charting.data.Entry;
 import com.github.mikephil.charting.data.LineData;
 import com.github.mikephil.charting.data.LineDataSet;
-//import com.google.firebase.Timestamp;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.type.DateTime;
-
 import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
@@ -82,7 +78,6 @@ public class StatsView extends AppCompatActivity {
 
                 stats.bubbleSort(statsDataList); // sort list
 
-                float j = 0;
                 List<Entry> entries = new ArrayList<Entry>();
                 for (int i = 0; i<statsDataList.size(); i++){
 //                    Date date = dateClass.getDate((String) statsDataList.get(i).get(1));
@@ -93,7 +88,6 @@ public class StatsView extends AppCompatActivity {
                     float testFloat = testMinTimeStamp(timeStamp);
                     entries.add(new Entry(testFloat,
                             Float.parseFloat(statsDataList.get(i).get(0).toString())) );
-                    j += 1;
                 }
 
                 LineDataSet dataSet = new LineDataSet(entries, "Label"); // add entries to dataset
@@ -144,7 +138,7 @@ public class StatsView extends AppCompatActivity {
         float min = Float.parseFloat(timeStampList[0]);
         float sec = Float.parseFloat(timeStampList[1]);
 
-        return min+sec;
+        return min;
     }
 
 
