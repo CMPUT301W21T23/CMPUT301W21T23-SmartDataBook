@@ -20,7 +20,7 @@
             android:id="@+id/MaxTrials"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="24dp"
+            android:layout_marginTop="12dp"
             android:text="Max Trials: "
             android:textColor="@color/theme_default"
             android:textSize="17sp"
@@ -64,7 +64,7 @@
             android:id="@+id/MinTrials"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="24dp"
+            android:layout_marginTop="12dp"
             android:text="Min Trials: "
             android:textColor="@color/theme_default"
             android:textSize="17sp"
@@ -79,7 +79,7 @@
             android:id="@+id/ExpType"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="24dp"
+            android:layout_marginTop="12dp"
             android:text="TYPE OF EXPERIMENT"
             android:textColor="@color/theme_default"
             android:textSize="17sp"
@@ -94,8 +94,7 @@
             android:id="@+id/ClickedExpDesc"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="24dp"
-            android:layout_marginBottom="15dp"
+            android:layout_marginTop="12dp"
             android:text="DESCRIPTION PARAGRAPH"
             android:textColor="@color/theme_default"
             android:textSize="17sp"
@@ -163,7 +162,7 @@
             app:layout_constraintLeft_toLeftOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintVertical_bias="0.456">
+            app:layout_constraintVertical_bias="0.403">
 
         </Button>
 
@@ -215,7 +214,7 @@
             android:id="@+id/mapButton"
             android:layout_width="25dp"
             android:layout_height="25dp"
-            android:layout_marginTop="56dp"
+            android:layout_marginTop="32dp"
             android:background="@color/white"
             android:src="@drawable/ic_map_button_foreground"
             app:backgroundTint="@null"
@@ -274,11 +273,12 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_centerHorizontal="true"
-            android:layout_marginBottom="44dp"
+            android:layout_marginBottom="76dp"
             android:background="@color/white"
             android:src="@drawable/ic_qr_image"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.498"
             app:layout_constraintStart_toStartOf="parent" />
 
         <TextView
