@@ -248,9 +248,13 @@ public class UploadTrial extends AppCompatActivity {
                                         // Q1: check editText value
                                         // Q2: how to save information
                                         // check input for
+                                        float rounded=Float.valueOf(measurementInput.getText().toString());
+                                        double scale = Math.pow(10, 2);
+                                        double finalRound=(rounded *scale)/scale;
                                         Trial trial = new Trial(experiment.getRequireLocation(),
                                                 experiment.getTrialType(),
-                                                Float.parseFloat(measurementInput.getText().toString()),
+                                                finalRound,
+//                                                Float.parseFloat(measurementInput.getText().toString()),
                                                 experiment.getOwnerUserID(),
                                                 UUID.randomUUID().toString(),
                                                 date.getCurrentDate());
