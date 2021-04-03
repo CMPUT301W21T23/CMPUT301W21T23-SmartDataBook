@@ -20,7 +20,7 @@ import android.widget.Toast;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
-import com.example.cmput301w21t23_smartdatabook.Date;
+import com.example.cmput301w21t23_smartdatabook.StringDate;
 import com.example.cmput301w21t23_smartdatabook.Experiment;
 import com.example.cmput301w21t23_smartdatabook.R;
 import com.example.cmput301w21t23_smartdatabook.database.Database;
@@ -55,7 +55,7 @@ public class ScannerActivity extends AppCompatActivity implements ZXingScannerVi
 	ZXingScannerView scannerView;
 	Database database = Database.getDataBase();
 	FirebaseFirestore db = FirebaseFirestore.getInstance();
-	Date date = new Date();
+	StringDate stringDate = new StringDate();
 	Experiment experiment;
 	User user = User.getUser();
 
@@ -167,7 +167,7 @@ public class ScannerActivity extends AppCompatActivity implements ZXingScannerVi
 						Boolean.parseBoolean(values[5]),
 						values[1],
 						UUID.randomUUID().toString(),
-						date.getCurrentDate());
+						stringDate.getCurrentDate());
 				database.addTrialToDB(db.collection("Experiments")
 						.document(values[0])
 						.collection("Trials")
@@ -180,7 +180,7 @@ public class ScannerActivity extends AppCompatActivity implements ZXingScannerVi
 					Float.parseFloat(values[2]),
 					values[1],
 					UUID.randomUUID().toString(),
-					date.getCurrentDate());
+					stringDate.getCurrentDate());
 			database.addTrialToDB(db.collection("Experiments")
 					.document(values[0])
 					.collection("Trials")
@@ -203,7 +203,7 @@ public class ScannerActivity extends AppCompatActivity implements ZXingScannerVi
 									document.get("Value"),
 									user.getUserUniqueID(),
 									UUID.randomUUID().toString(),
-									date.getCurrentDate());
+									stringDate.getCurrentDate());
 
 							database.addTrialToDB(db
 									.collection("Experiments")

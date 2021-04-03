@@ -4,6 +4,7 @@ import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
+import android.os.Parcelable;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -70,7 +71,7 @@ public class ExperimentDetails extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(ExperimentDetails.this, ScannerActivity.class);
-                intent.putExtra("experiment", experiment);
+                intent.putExtra("experiment", (Parcelable) experiment);
                 intent.putExtra("Flag", "Scan");
                 startActivity(intent);
             }
@@ -123,7 +124,7 @@ public class ExperimentDetails extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(getBaseContext(), StatsView.class);
-                intent.putExtra("experiment", experiment);
+                intent.putExtra("experiment", (Parcelable) experiment);
                 startActivity(intent);
                 // TODO: new stats activity
             }
@@ -137,7 +138,7 @@ public class ExperimentDetails extends AppCompatActivity {
                 // https://stackoverflow.com/questions/30965292/cannot-resolve-constructor-android-intent
                 Intent trialIntent;
                 trialIntent = new Intent(ExperimentDetails.this, UploadTrial.class);
-                trialIntent.putExtra("experiment", experiment); // pass experiment object
+                trialIntent.putExtra("experiment", (Parcelable) experiment); // pass experiment object
                 startActivity(trialIntent);
 
             }
@@ -149,7 +150,7 @@ public class ExperimentDetails extends AppCompatActivity {
             public void onClick(View v) {
                 // TODO: new show map activity
                 Intent intent = new Intent(ExperimentDetails.this, MapsActivity.class);
-                intent.putExtra("experiemnt", experiment);
+                intent.putExtra("experiemnt", (Parcelable) experiment);
                 startActivity(intent);
             }
         });
@@ -160,7 +161,7 @@ public class ExperimentDetails extends AppCompatActivity {
             public void onClick(View v) {
                 // TODO: new QRCode activity
                 Intent intent = new Intent(ExperimentDetails.this, QRCodeActivity.class);
-                intent.putExtra("experiment", experiment);
+                intent.putExtra("experiment", (Parcelable) experiment);
                 startActivity(intent);
             }
         });
@@ -170,7 +171,7 @@ public class ExperimentDetails extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(getBaseContext(), CommentActivity.class);
-                intent.putExtra("Experiment", experiment);
+                intent.putExtra("Experiment", (Parcelable) experiment);
                 intent.putExtra("user", user);
                 startActivity(intent);
             }

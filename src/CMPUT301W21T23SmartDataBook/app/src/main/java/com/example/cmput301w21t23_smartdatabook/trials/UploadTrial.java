@@ -18,7 +18,7 @@ import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 
-import com.example.cmput301w21t23_smartdatabook.Date;
+import com.example.cmput301w21t23_smartdatabook.StringDate;
 import com.example.cmput301w21t23_smartdatabook.database.Database;
 import com.example.cmput301w21t23_smartdatabook.Experiment;
 import com.example.cmput301w21t23_smartdatabook.R;
@@ -27,6 +27,8 @@ import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.firestore.FirebaseFirestore;
 
+import java.math.BigDecimal;
+import java.text.DecimalFormat;
 import java.util.ArrayList;
 import java.util.UUID;
 
@@ -46,7 +48,7 @@ public class UploadTrial extends AppCompatActivity {
     User user = User.getUser();
     Database database = Database.getDataBase();
     FirebaseFirestore db = FirebaseFirestore.getInstance();
-    Date date = new Date();
+    StringDate stringDate = new StringDate();
 
     /**
      * This function create the uploadTrial view
@@ -132,7 +134,7 @@ public class UploadTrial extends AppCompatActivity {
                                                     true,
                                                     experiment.getOwnerUserID(),
                                                     UUID.randomUUID().toString(),
-                                                    date.getCurrentDate());
+                                                    stringDate.getCurrentDate());
                                             database.addTrialToDB(db.collection("Experiments")
                                                     .document(experiment.getExpID())
                                                     .collection("Trials")
@@ -152,7 +154,7 @@ public class UploadTrial extends AppCompatActivity {
                                                     false,
                                                     experiment.getOwnerUserID(),
                                                     UUID.randomUUID().toString(),
-                                                    date.getCurrentDate());
+                                                    stringDate.getCurrentDate());
                                             database.addTrialToDB(db
                                                     .collection("Experiments")
                                                     .document(experiment.getExpID())
@@ -183,7 +185,7 @@ public class UploadTrial extends AppCompatActivity {
                                                 Integer.parseInt(numCount.getText().toString()),
                                                 experiment.getOwnerUserID(),
                                                 UUID.randomUUID().toString(),
-                                                date.getCurrentDate());
+                                                stringDate.getCurrentDate());
                                         database.addTrialToDB(db
                                                 .collection("Experiments")
                                                 .document(experiment.getExpID())
@@ -217,7 +219,7 @@ public class UploadTrial extends AppCompatActivity {
                                                     Integer.parseInt(numNonNegCount.getText().toString()),
                                                     experiment.getOwnerUserID(),
                                                     UUID.randomUUID().toString(),
-                                                    date.getCurrentDate());
+                                                    stringDate.getCurrentDate());
                                             database.addTrialToDB(db
                                                     .collection("Experiments")
                                                     .document(experiment.getExpID())
@@ -246,12 +248,19 @@ public class UploadTrial extends AppCompatActivity {
                                         // Q1: check editText value
                                         // Q2: how to save information
                                         // check input for
+
+                                        // source: https://docs.oracle.com/javase/8/docs/api/java/math/BigDecimal.html
+                                        // I have use the idea of BigDecimal object to handle float returning not exactly the same valye
+                                        // by Alex Mak
+                                        BigDecimal roundedVal= new BigDecimal(measurementInput.getText().toString());
+                                        double finalVal= roundedVal.doubleValue();
                                         Trial trial = new Trial(experiment.getRequireLocation(),
                                                 experiment.getTrialType(),
-                                                Float.parseFloat(measurementInput.getText().toString()),
+                                                finalVal,
+//                                                Float.parseFloat(measurementInput.getText().toString()),
                                                 experiment.getOwnerUserID(),
                                                 UUID.randomUUID().toString(),
-                                                date.getCurrentDate());
+                                                stringDate.getCurrentDate());
                                         database.addTrialToDB(db
                                                 .collection("Experiments")
                                                 .document(experiment.getExpID())

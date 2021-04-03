@@ -2,6 +2,7 @@ package com.example.cmput301w21t23_smartdatabook.home;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.os.Parcelable;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -174,7 +175,7 @@ public class homePage extends Fragment {
                             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                                 Experiment exp = experimentDataList.get(position); // get the experiment from list
                                 Intent intent = new Intent(getActivity(), ExperimentDetails.class);
-                                intent.putExtra("experiment", exp); // pass experiment object
+                                intent.putExtra("experiment", (Parcelable) exp); // pass experiment object
                                 startActivity(intent);
                             }
                         });
