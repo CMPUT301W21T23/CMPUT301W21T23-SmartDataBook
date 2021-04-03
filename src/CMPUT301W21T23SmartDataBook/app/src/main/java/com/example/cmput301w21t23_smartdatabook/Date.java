@@ -18,7 +18,7 @@ public class Date {
      * Public Constructor on the Date class
      */
     public Date() {
-        this.dtf = DateTimeFormatter.ofPattern("yyyy/MM/dd");
+        this.dtf = DateTimeFormatter.ofPattern("yyyy/MM/dd HH:mm:ss");
         this.currentDate = LocalDateTime.now();
         this.formattedDate = dtf.format(currentDate);
     }
