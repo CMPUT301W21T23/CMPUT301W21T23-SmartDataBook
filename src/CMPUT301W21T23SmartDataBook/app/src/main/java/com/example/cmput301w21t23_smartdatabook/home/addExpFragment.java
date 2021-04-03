@@ -23,6 +23,7 @@ import androidx.fragment.app.Fragment;
 import com.example.cmput301w21t23_smartdatabook.StringDate;
 import com.example.cmput301w21t23_smartdatabook.Experiment;
 import com.example.cmput301w21t23_smartdatabook.R;
+import com.example.cmput301w21t23_smartdatabook.database.GeneralDataCallBack;
 import com.example.cmput301w21t23_smartdatabook.geolocation.LocationWithPermission;
 import com.example.cmput301w21t23_smartdatabook.user.User;
 import com.google.android.gms.location.FusedLocationProviderClient;
@@ -164,7 +165,11 @@ public class addExpFragment extends Fragment {
 //                    activity.getSupportFragmentManager().popBackStack();
 //                }
 
-                new LocationWithPermission(activity).getLatLng(new LocationCallback() {
+                new LocationWithPermission(activity).getLatLng(new GeneralDataCallBack() {
+                    @Override
+                    public void onDataReturn(Object returnedObject) {
+
+                    }
                 });
                 FusedLocationProviderClient fusedLocationProviderClient = LocationServices.getFusedLocationProviderClient(activity);
                 if (ActivityCompat.checkSelfPermission(activity.getApplicationContext(), Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(activity.getApplicationContext(), Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
