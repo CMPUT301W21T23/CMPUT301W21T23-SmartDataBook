@@ -95,6 +95,7 @@ public class Database {
     }
 
     public void addTrialToDB(DocumentReference genericDocument, Trial trial){
+        LatLng latlng = trial.getLocation();
         HashMap<String, Object> data = new HashMap<>();
         data.put("Region On", trial.isGeoLocationSettingOn());
         data.put("Trial Type", trial.getExpType());
@@ -102,7 +103,10 @@ public class Database {
         data.put("UUID", trial.getUid());
         data.put("TrialID", trial.getTrialID());
         data.put("StringDate", trial.getDate());
-        data.put("GeoPoint", trial.getLocation());
+        if (trial.isGeoLocationSettingOn()){
+            data.put("GeoPoint",  new GeoPoint(latlng.latitude, latlng.longitude));
+        }
+
         genericDocument.set(data);
     }
 
@@ -114,6 +118,8 @@ public class Database {
                     public void onComplete(@NonNull Task<QuerySnapshot> task) {
                         if (task.isSuccessful()){
                             for (QueryDocumentSnapshot document : task.getResult()){
+                                GeoPoint geoPoint = (GeoPoint)document.getData().get("GeoPoint");
+                                LatLng latlng = document.get("GeoPoint")!=null ? (new LatLng(geoPoint.getLatitude(), geoPoint.getLongitude())) : null;
                                 trialDataList.add(new Trial(
                                         (Boolean) document.get("Region On"),
                                         document.get("Trial Type").toString(),
@@ -121,7 +127,7 @@ public class Database {
                                         document.get("UUID").toString(),
                                         document.get("TrialID").toString(),
                                         (String) document.get("StringDate"),
-                                        (LatLng) document.get("GeoPoint")
+                                        latlng
                                 ));
                             }
                             trialArrayAdapter.notifyDataSetChanged();
