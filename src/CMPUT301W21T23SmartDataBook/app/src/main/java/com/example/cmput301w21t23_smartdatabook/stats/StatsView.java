@@ -6,6 +6,9 @@ import android.util.Log;
 import android.widget.TextView;
 
 import androidx.appcompat.app.AppCompatActivity;
+
+import java.sql.Array;
+import java.sql.Time;
 import java.sql.Timestamp;
 import com.example.cmput301w21t23_smartdatabook.Experiment;
 import com.example.cmput301w21t23_smartdatabook.R;
@@ -85,26 +88,28 @@ public class StatsView extends AppCompatActivity {
 //                    Date date = dateClass.getDate((String) statsDataList.get(i).get(1));
 //                    entries.add(new Entry(date.getTime(),
 //                            Float.parseFloat((String) statsDataList.get(i).get(0))));
-
+                    Date date = dateClass.getDate((String) statsDataList.get(i).get(1));
+                    String timeStamp = new SimpleDateFormat("HH:mm:ss").format(new Timestamp(date.getTime()));
+                    float testFloat = testMinTimeStamp(timeStamp);
                     entries.add(new Entry(j,
                             Float.parseFloat(statsDataList.get(i).get(0).toString())) );
                     j += 1;
-
                 }
 
                 LineDataSet dataSet = new LineDataSet(entries, "Label"); // add entries to dataset
                 dataSet.setAxisDependency(YAxis.AxisDependency.LEFT);
+                dataSet.setLineWidth(2.0f);
                 LineData lineData = new LineData(dataSet);
                 lineChart.setData(lineData);
                 lineChart.invalidate(); // refresh
 
                 //Printing Forloop
-                for (int i = 0; i< statsDataList.size(); i++){
-                    Date result1 = dateClass.getDate((String) statsDataList.get(i).get(1));
-                    Log.d("Time: ", ""+ result1);
-                    assert result1 != null;
-                    Log.d("int", ""+ (int)result1.getTime());
-                }
+//                for (int i = 0; i< statsDataList.size(); i++){
+//                    Date result1 = dateClass.getDate((String) statsDataList.get(i).get(1));
+//                    Log.d("Time: ", ""+ result1);
+//                    assert result1 != null;
+//                    Log.d("int", ""+ (int)result1.getTime());
+//                }
 
 
 
@@ -133,7 +138,12 @@ public class StatsView extends AppCompatActivity {
 
     }//onCreate
 
-
+    public float testMinTimeStamp(String timeStamp) {
+        String[] timeStampList = timeStamp.split(":");
+        Log.d("Timestamp", ""+ timeStampList[0] + " " + timeStampList[1]);
+        float min = Float.parseFloat(timeStampList[0]);
+        float sec = Float.parseFloat(timeStampList[1]);
+    }
 
 
 
