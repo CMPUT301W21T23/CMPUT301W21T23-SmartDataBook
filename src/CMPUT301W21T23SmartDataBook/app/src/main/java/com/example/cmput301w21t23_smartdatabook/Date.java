@@ -1,5 +1,9 @@
 package com.example.cmput301w21t23_smartdatabook;
 
+import com.google.firebase.Timestamp;
+
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 
@@ -11,24 +15,22 @@ import java.time.format.DateTimeFormatter;
 public class Date {
 
     DateTimeFormatter dtf;
-    LocalDateTime currentDate;
-    String formattedDate;
+    Timestamp currentDate;
 
     /**
      * Public Constructor on the Date class
      */
     public Date() {
         this.dtf = DateTimeFormatter.ofPattern("yyyy/MM/dd HH:mm:ss");
-        this.currentDate = LocalDateTime.now();
-        this.formattedDate = dtf.format(currentDate);
+        this.currentDate = Timestamp.now();
     }
 
     /**
      * functions obtains the formattedDate
      * @return formattedDate: a string that consists the formatted date
      */
-    public String getDate() {
-        return formattedDate;
+    public Timestamp getCurrentDate(){
+        return currentDate;
     }
 
 }

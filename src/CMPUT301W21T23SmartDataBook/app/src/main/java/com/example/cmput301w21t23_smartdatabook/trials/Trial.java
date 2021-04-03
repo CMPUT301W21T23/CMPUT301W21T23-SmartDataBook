@@ -2,6 +2,8 @@ package com.example.cmput301w21t23_smartdatabook.trials;
 
 import android.location.Location;
 
+import java.time.LocalDateTime;
+
 /**
  * Class Trial
  * The class that constructs the trials
@@ -16,9 +18,9 @@ public class Trial {
     private Object value;
     private String uid;
     private String trialID;
-    private String date;
+    private LocalDateTime date;
 
-    public Trial(boolean geoLocationSettingOn, String expType, Object value, String uid, String trialID, String date) {
+    public Trial(boolean geoLocationSettingOn, String expType, Object value, String uid, String trialID, LocalDateTime date) {
         this.geoLocationSettingOn = geoLocationSettingOn;
         this.expType = expType;
         this.value = value;
@@ -28,11 +30,11 @@ public class Trial {
 
     }
 
-    public String getDate() {
+    public LocalDateTime getDate() {
         return date;
     }
 
-    public void setDate(String date) {
+    public void setDate(LocalDateTime date) {
         this.date = date;
     }
 

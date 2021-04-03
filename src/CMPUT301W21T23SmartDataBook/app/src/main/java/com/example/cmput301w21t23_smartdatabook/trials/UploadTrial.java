@@ -132,7 +132,7 @@ public class UploadTrial extends AppCompatActivity {
                                                     true,
                                                     experiment.getOwnerUserID(),
                                                     UUID.randomUUID().toString(),
-                                                    date.getDate());
+                                                    date.getCurrentDate());
                                             database.addTrialToDB(db.collection("Experiments")
                                                     .document(experiment.getExpID())
                                                     .collection("Trials")
@@ -152,7 +152,7 @@ public class UploadTrial extends AppCompatActivity {
                                                     false,
                                                     experiment.getOwnerUserID(),
                                                     UUID.randomUUID().toString(),
-                                                    date.getDate());
+                                                    date.getCurrentDate());
                                             database.addTrialToDB(db
                                                     .collection("Experiments")
                                                     .document(experiment.getExpID())
@@ -183,7 +183,7 @@ public class UploadTrial extends AppCompatActivity {
                                                 Integer.parseInt(numCount.getText().toString()),
                                                 experiment.getOwnerUserID(),
                                                 UUID.randomUUID().toString(),
-                                                date.getDate());
+                                                date.getCurrentDate());
                                         database.addTrialToDB(db
                                                 .collection("Experiments")
                                                 .document(experiment.getExpID())
@@ -217,7 +217,7 @@ public class UploadTrial extends AppCompatActivity {
                                                     Integer.parseInt(numNonNegCount.getText().toString()),
                                                     experiment.getOwnerUserID(),
                                                     UUID.randomUUID().toString(),
-                                                    date.getDate());
+                                                    date.getCurrentDate());
                                             database.addTrialToDB(db
                                                     .collection("Experiments")
                                                     .document(experiment.getExpID())
@@ -251,7 +251,7 @@ public class UploadTrial extends AppCompatActivity {
                                                 Float.parseFloat(measurementInput.getText().toString()),
                                                 experiment.getOwnerUserID(),
                                                 UUID.randomUUID().toString(),
-                                                date.getDate());
+                                                date.getCurrentDate());
                                         database.addTrialToDB(db
                                                 .collection("Experiments")
                                                 .document(experiment.getExpID())

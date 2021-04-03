@@ -168,7 +168,7 @@ public class ScannerActivity extends AppCompatActivity implements ZXingScannerVi
 						Boolean.parseBoolean(values[5]),
 						values[1],
 						UUID.randomUUID().toString(),
-						date.getDate());
+						date.getCurrentDate());
 				database.addTrialToDB(db.collection("Experiments")
 						.document(values[0])
 						.collection("Trials")
@@ -181,7 +181,7 @@ public class ScannerActivity extends AppCompatActivity implements ZXingScannerVi
 					Float.parseFloat(values[2]),
 					values[1],
 					UUID.randomUUID().toString(),
-					date.getDate());
+					date.getCurrentDate());
 			database.addTrialToDB(db.collection("Experiments")
 					.document(values[0])
 					.collection("Trials")
@@ -204,7 +204,7 @@ public class ScannerActivity extends AppCompatActivity implements ZXingScannerVi
 									document.get("Value"),
 									user.getUserUniqueID(),
 									UUID.randomUUID().toString(),
-									date.getDate());
+									date.getCurrentDate());
 
 							database.addTrialToDB(db
 									.collection("Experiments")

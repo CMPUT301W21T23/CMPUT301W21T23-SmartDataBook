@@ -103,7 +103,7 @@ public class CardList extends ArrayAdapter<Experiment> {
 
 
             experimentName.setText(experiment.getExpName());
-            date.setText(experiment.getDate());
+            date.setText(experiment.getDate().toString());
 //            ownerName.setText("User - " + experiment.getOwnerUserID().substring(0,4));
             ownerName.setText(experiment.getOwnerUserName());
             experimentDescription.setText(experiment.getDescription());
