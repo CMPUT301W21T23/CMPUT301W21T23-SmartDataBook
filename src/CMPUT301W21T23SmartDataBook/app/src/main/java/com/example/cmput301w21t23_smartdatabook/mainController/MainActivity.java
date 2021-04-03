@@ -21,6 +21,7 @@ import com.example.cmput301w21t23_smartdatabook.archives.ArchivePage;
 import com.example.cmput301w21t23_smartdatabook.database.Database;
 import com.example.cmput301w21t23_smartdatabook.database.GeneralDataCallBack;
 import com.example.cmput301w21t23_smartdatabook.fav.FavPage;
+import com.example.cmput301w21t23_smartdatabook.geolocation.MapsActivity;
 import com.example.cmput301w21t23_smartdatabook.home.addExpFragment;
 import com.example.cmput301w21t23_smartdatabook.home.homePage;
 import com.example.cmput301w21t23_smartdatabook.settings.SettingsPage;
@@ -150,19 +151,20 @@ public class MainActivity extends AppCompatActivity{
         FirebaseAuth.getInstance().getCurrentUser().delete();
     }
 
-//    @Override
-//    public boolean onOptionsItemSelected(MenuItem item) {
-//        switch (item.getItemId()) {
-//            case R.id.app_bar_qr:
-//
-//                startActivity(new Intent(this, ScannerActivity.class));
-//                break;
-//            default:
-//                super.onOptionsItemSelected(item);
-//        }
-//
-//        return true;
-//    }
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch (item.getItemId()) {
+            case R.id.app_bar_qr:
+                Intent intent = new Intent(this, MapsActivity.class);
+                intent.putExtra("main", "true");
+                startActivity(intent);
+                break;
+            default:
+                super.onOptionsItemSelected(item);
+        }
+
+        return true;
+    }
 
 
     /**
