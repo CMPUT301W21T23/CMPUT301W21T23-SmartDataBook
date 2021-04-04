@@ -77,12 +77,6 @@ public class ExperimentDetails extends AppCompatActivity {
             }
         });
 
-
-
-
-
-
-
         TextView username = userInfoView.findViewById(R.id.expOwner);
         username.setText("Username: " + user.getUserName());
 
@@ -245,7 +239,6 @@ public class ExperimentDetails extends AppCompatActivity {
                 } else {
                     onOff = "Off";
                 }
-                Log.d("ONOFF", onOff);
 
                 database.publicOrEnd(db.collection("Experiments"), onOff, experiment, "PublicStatus");
                 database.publicOrEnd((db.collection("Users")

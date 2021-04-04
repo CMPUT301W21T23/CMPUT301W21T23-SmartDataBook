@@ -50,7 +50,6 @@ public class SettingsPage extends Fragment {
 		return fragment;
 	}
 
-
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
@@ -58,7 +57,6 @@ public class SettingsPage extends Fragment {
 			user = User.getUser();
 		}
 	}
-
 
 	@Override
 	public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {

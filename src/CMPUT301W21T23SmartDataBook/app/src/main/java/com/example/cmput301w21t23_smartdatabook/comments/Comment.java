@@ -23,10 +23,6 @@ public class Comment implements Serializable {
     private String commentID;
     private String date;
 
-    //Contains a list of comment objects that are replying to the 
-    //parent comment object.
-    ArrayList<Comment> replyList;
-
     /**
      * Public constructor for the Comment class
      *
@@ -45,10 +41,6 @@ public class Comment implements Serializable {
 
     public String getUserUniqueID() {
         return userUniqueID;
-    }
-
-    public void setUserUniqueID(String userUniqueID) {
-        this.userUniqueID = userUniqueID;
     }
 
     public String getDate() {
@@ -85,53 +77,6 @@ public class Comment implements Serializable {
     public String getCommentID() {
         return commentID;
     }
-
-    /**
-     * Setter for commentID attribute of the Comment class
-     *
-     * @param commentID
-     */
-    public void setCommentID(String commentID) {
-        this.commentID = commentID;
-    }
-
-    /**
-     * Returns ArrayList of Comment type which is a collection of Comments
-     *
-     * @return replyList, list of replies
-     */
-    public ArrayList<Comment> getReplyList() {
-        return replyList;
-    }
-
-    /**
-     * Setter for the ReplyList for each comment
-     *
-     * @param replyList
-     */
-    public void setReplyList(ArrayList<Comment> replyList) {
-        this.replyList = replyList;
-    }
-
-//    /**
-//     * getter for the question
-//     * @return question, the question itself
-//     */
-//    public Comment getQuestion(){
-//        return question;
-//    }
-
-//    /**
-//     * setter for question
-//     * if set the question only if the reply list is not null
-//     * @param replyList
-//     */
-//     public void setQuestion(ArrayList <Comment> replyList){
-//        // only set the question if the list is not empty
-//        if (!replyList.isEmpty()){
-//            this.question=replyList.get(0);
-//        }
-
 
     }
 

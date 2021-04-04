@@ -13,6 +13,8 @@ import android.widget.ImageView;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
 import android.widget.Toast;
+
+import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
 import com.example.cmput301w21t23_smartdatabook.Experiment;
 import com.example.cmput301w21t23_smartdatabook.R;
@@ -23,7 +25,7 @@ import com.google.android.material.button.MaterialButton;
  * generate QR code activity
  * this will call the QR code based on input and show it to the user
  * its the user's responsibility to save the  QR code
- * @author Afaq Nabi
+ * @author Afaq Nabi, Bosco Chan
  */
 public class QRCodeActivity extends AppCompatActivity {
     User user = User.getUser();
@@ -36,15 +38,14 @@ public class QRCodeActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.generate_qr);
 
-//        setSupportActionBar(findViewById(R.id.app_toolbar));
-//        ActionBar toolbar = getSupportActionBar();
-//        assert toolbar != null;
+        setSupportActionBar(findViewById(R.id.app_toolbar));
+        ActionBar toolbar = getSupportActionBar();
+        assert toolbar != null;
 
         Intent intent = getIntent();
         Experiment experiment = (Experiment) intent.getSerializableExtra("experiment");
 
-//        toolbar.setTitle(experiment.getExpName());
-
+        toolbar.setTitle(experiment.getExpName());
 
         Button regBarcode = findViewById(R.id.barcode);
         regBarcode.setOnClickListener(new View.OnClickListener() {

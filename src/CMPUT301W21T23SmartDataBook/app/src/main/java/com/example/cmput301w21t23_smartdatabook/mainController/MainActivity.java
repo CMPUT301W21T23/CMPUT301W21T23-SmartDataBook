@@ -52,32 +52,6 @@ public class MainActivity extends AppCompatActivity{
 
     public User user;
 
-//    LocationCallback m = new LocationCallback() {
-//        @Override
-//        public void onLocationResult(LocationResult locationResult) {
-//            Log.d("debug", "working????");
-//            Location lastKnownLocation = locationResult.getLastLocation();
-//            lkll =  new LatLng(lastKnownLocation.getLatitude(), lastKnownLocation.getLongitude());
-//        }
-//    };
-
-//    public LatLng getLastKnownLatLng() {
-//        return this.lkll;
-//    }
-//
-//    public LocationCallback getLocationCallback() {
-//        return m;
-//    }
-
-//    //Implement interrupted exception throw on database object instantiation
-//    {
-//        try {
-//            database = new Database(this);
-//        } catch (InterruptedException e) {
-//            e.printStackTrace();
-//        }
-//    }
-
     // VERY IMPORTANT FUNCTION
     // searchShow is set to false by default
     // if fragment is homePage or FavPage, set searchShow to true
@@ -211,17 +185,7 @@ public class MainActivity extends AppCompatActivity{
             // This gets called every time text is updated, AND search edittext is clicked
             @Override
             public boolean onQueryTextChange(String newText) {
-                Log.e("queryTextSubmit", "AFAQ NABI");
                 onQueryTextSubmit(newText);
-//                Fragment currentFragment = getSupportFragmentManager().findFragmentById(R.id.container);
-//                if (currentFragment != null && currentFragment.isVisible() && !newText.equals("")) {
-//                    if (currentFragment instanceof homePage) {
-//                        ((homePage)currentFragment).doUpdate(newText);
-//                    }
-//                    if (currentFragment instanceof FavPage) {
-//                        ((FavPage)currentFragment).doUpdate(newText);
-//                    }
-//                }
                 return false;
             }
         });
@@ -239,8 +203,6 @@ public class MainActivity extends AppCompatActivity{
         transaction.addToBackStack(null);
         transaction.commit();
     }
-
-//    user.setUserUniqueID(currentID);
 
     BottomNavigationView.OnNavigationItemSelectedListener mOnNavigationItemSelectedListener =
             new BottomNavigationView.OnNavigationItemSelectedListener() {
@@ -271,70 +233,5 @@ public class MainActivity extends AppCompatActivity{
                 }
             };
 
-//    public void getLatLng() {
-//        Dexter.withContext(getApplicationContext())
-//			.withPermission(Manifest.permission.ACCESS_FINE_LOCATION)
-//			.withListener(new PermissionListener() {
-//				@Override
-//				public void onPermissionGranted(PermissionGrantedResponse permissionGrantedResponse) {
-//					FusedLocationProviderClient fusedLocationClient = LocationServices.getFusedLocationProviderClient(MainActivity.this);
-//			        if (ActivityCompat.checkSelfPermission(getApplicationContext(), Manifest.permission.ACCESS_FINE_LOCATION) == PackageManager.PERMISSION_GRANTED) {
-//			            // Following check removed from conditionals
-//			        	// ActivityCompat.checkSelfPermission(activity.getApplicationContext(), Manifest.permission.ACCESS_COARSE_LOCATION) == PackageManager.PERMISSION_GRANTED
-//	                        	Log.d("lwpInstance", "working?");
-//				         fusedLocationClient.requestLocationUpdates(LocationRequest.create().setPriority(LocationRequest.PRIORITY_BALANCED_POWER_ACCURACY), m, Looper.myLooper());
-//
-//				        // Below method executes when location is successfully obtained, deprecated due to above mLocationCallback
-//			            fusedLocationClient.getLastLocation().addOnSuccessListener(MainActivity.this, new OnSuccessListener<Location>() {
-//			                @Override
-//			                public void onSuccess(Location location) {
-//			                    // Got last known location. In some rare situations this can be null.
-//			                    if (location != null) {
-//			                        MainActivity.this.lkll = new LatLng(location.getLatitude(), location.getLongitude());
-//			                    } else {
-//			                        System.out.println("Location do not exist yet. Maybe something wrong?");
-//			                    }
-//			                }
-//			            });
-//			        }
-//				}
-//				@Override
-//				public void onPermissionDenied(PermissionDeniedResponse permissionDeniedResponse) {
-//                    Toast.makeText(getBaseContext(), "" + permissionDeniedResponse.isPermanentlyDenied(), Toast.LENGTH_SHORT).show();
-//
-//                    //Source: Opeyemi, https://stackoverflow.com/users/8226150/opeyemi
-//                    //Code: https://stackoverflow.com/questions/50639292/detecting-wether-a-permission-can-be-requested-or-is-permanently-denied
-//                    if (permissionDeniedResponse.isPermanentlyDenied()) {
-//                        //permission is permanently denied navigate to user setting
-//                        new AlertDialog.Builder(MainActivity.this)
-//                                .setTitle("Camera permission was denied permanently.")
-//                                .setMessage("Allow Camera access through your settings.")
-//                                .setPositiveButton("Go To Settings", new DialogInterface.OnClickListener() {
-//                                    @Override
-//                                    public void onClick(DialogInterface dialog, int which) {
-//                                        Intent intent = new Intent(Settings.ACTION_APPLICATION_DETAILS_SETTINGS);
-//                                        Uri uri = Uri.fromParts("package", getPackageName(), null);
-//                                        intent.setData(uri);
-//                                        startActivityForResult(intent, 101);
-//                                        dialog.cancel();
-//                                    }
-//                                })
-//                                .setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
-//                                    @Override
-//                                    public void onClick(DialogInterface dialog, int which) {
-//                                        dialog.cancel();
-//                                    }
-//                                }
-//                        ).show();
-//                    }
-//                }
-//				@Override
-//				public void onPermissionRationaleShouldBeShown(PermissionRequest permissionRequest, PermissionToken permissionToken) {
-//					permissionToken.continuePermissionRequest();
-//
-//				}
-//			}).check();
-////        generalDataCallBack.onDataReturn(null);
-//    }
 
 }//mainActivity

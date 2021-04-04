@@ -60,8 +60,6 @@ public class StatsView extends AppCompatActivity {
         Intent intent = getIntent();
         Experiment experiment = (Experiment) intent.getSerializableExtra("experiment");
 
-        double mean;
-
         statsDataList = new ArrayList<>();
 
         statsDataList.clear();
@@ -117,7 +115,6 @@ public class StatsView extends AppCompatActivity {
                     trialValue = statsDataList.get(i).get(0).toString();
                     date = statsDataList.get(i).get(1).toString();
 
-//                    Log.d("Entire", ""+statsDataList.get(i).get(0).toString()+ " " + statsDataList.get(i).get(1).toString());
                     lineEntries.add(new Entry(i, Float.parseFloat( trialValue)) );
                     dates.add( dateClass.getDate( date ) );
                 }
@@ -179,16 +176,6 @@ public class StatsView extends AppCompatActivity {
                 histogram.setData(histogramData);
                 histogram.setFitBars(true); // make the x-axis fit exactly all bars
                 histogram.invalidate();
-
-
-                //Printing Forloop for debugging
-//                for (int i = 0; i< statsDataList.size(); i++){
-//                    Date result1 = dateClass.getDate((String) statsDataList.get(i).get(1));
-//                    Log.d("Time: ", ""+ result1);
-//                    assert result1 != null;
-//                    Log.d("int", ""+ (int)result1.getTime());
-//                }
-
 
                 stats.bubbleSortByValue(statsDataList); // sort list by value
 

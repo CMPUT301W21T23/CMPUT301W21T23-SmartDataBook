@@ -52,10 +52,6 @@ public class TrialList extends ArrayAdapter<Trial> {
             Boolean val = (Boolean) trial.getValue();
             trialValue.setText(val.toString());
         }
-//        else if (trial.getExpType().equals("Count") || trial.getExpType().equals("Non-Negative Count")){
-//
-//            trialValue.setText((String) trial.getValue());
-//        }
         else {
             trialValue.setText( trial.getValue().toString());
         }

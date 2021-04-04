@@ -62,16 +62,8 @@ public class Trial {
         return geoLocationSettingOn;
     }
 
-    public void setGeoLocationSettingOn(boolean geoLocationSettingOn) {
-        this.geoLocationSettingOn = geoLocationSettingOn;
-    }
-
     public String getExpType() {
         return expType;
-    }
-
-    public void setExpType(String expType) {
-        this.expType = expType;
     }
 
     public Object getValue() {
@@ -86,15 +78,8 @@ public class Trial {
         return uid;
     }
 
-    public void setUid(String uid) {
-        this.uid = uid;
-    }
-
     public String getTrialID() {
         return trialID;
     }
 
-    public void setTrialID(String trialID) {
-        this.trialID = trialID;
-    }
 }

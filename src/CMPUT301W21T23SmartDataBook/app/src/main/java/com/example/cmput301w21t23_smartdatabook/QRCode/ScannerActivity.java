@@ -48,7 +48,7 @@ import me.dm7.barcodescanner.zxing.ZXingScannerView;
  * this class will use the emulators camera to scan the barcode using the Zxing librabry
  * once scanned the rawResult will be added to the database
  * references: https://www.youtube.com/watch?v=AiNi9K94W5c&ab_channel=MdJamal
- * @author Afaq Nabi
+ * @author Afaq
  */
 
 public class ScannerActivity extends AppCompatActivity implements ZXingScannerView.ResultHandler{
@@ -58,6 +58,7 @@ public class ScannerActivity extends AppCompatActivity implements ZXingScannerVi
 	StringDate stringDate = new StringDate();
 	Experiment experiment;
 	User user = User.getUser();
+	QRCode QRcode = new QRCode();
 
 	@Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -120,14 +121,14 @@ public class ScannerActivity extends AppCompatActivity implements ZXingScannerVi
 	public void handleResult(Result rawResult) {
 		Log.e("format", rawResult.getBarcodeFormat().toString());
 		Intent intent = getIntent();
-		Experiment experiment = (Experiment) intent.getSerializableExtra("experiment");
+		experiment = (Experiment) intent.getSerializableExtra("experiment");
 		String type = intent.getStringExtra("Flag");
 		if (type.equals("Scan")){
 			if (rawResult.getBarcodeFormat().toString().contains("QR_CODE")) {
-				QRCodeScanned(rawResult.toString());
+				QRcode.QRCodeScanned(rawResult.toString());
 
 			} else {
-				BarcodeScanned(rawResult.toString(),experiment);
+				QRcode.BarcodeScanned(rawResult.toString(),experiment);
 			}
 			onBackPressed();
 		}
@@ -155,69 +156,8 @@ public class ScannerActivity extends AppCompatActivity implements ZXingScannerVi
 		scannerView.stopCamera();
 	}
 
-	// if a QR code is scanned this function is called
-	private void QRCodeScanned(String rawResult){
-		String[] values = rawResult.split(",");
-
-		if (values[3].equals("Binomial")){
-			//Need to add in given number of binomial trials
-			for (int i = 1; i <= Integer.parseInt(values[2]); i++ ){
-				Trial trial = new Trial( Boolean.parseBoolean(values[4]),
-						values[3],
-						Boolean.parseBoolean(values[5]),
-						values[1],
-						UUID.randomUUID().toString(),
-						stringDate.getCurrentDate());
-				database.addTrialToDB(db.collection("Experiments")
-						.document(values[0])
-						.collection("Trials")
-						.document(trial.getTrialID()), trial);
-			}
-
-		} else{
-			Trial trial = new Trial( Boolean.parseBoolean(values[4]),
-					values[3],
-					Float.parseFloat(values[2]),
-					values[1],
-					UUID.randomUUID().toString(),
-					stringDate.getCurrentDate());
-			database.addTrialToDB(db.collection("Experiments")
-					.document(values[0])
-					.collection("Trials")
-					.document(trial.getTrialID()), trial);
-		}
-	}
-
-	private void BarcodeScanned(String rawResult, Experiment experiment){
-		db.collection("Barcode")
-				.document(experiment.getExpID())
-				.collection(user.getUserUniqueID())
-				.get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
-			@Override
-			public void onComplete(@NonNull Task<QuerySnapshot> task) {
-				if (task.isSuccessful()) {
-					for (QueryDocumentSnapshot document : task.getResult()) {
-						if (rawResult.equals(document.get("RawResult"))){
-							Trial trial = new Trial(experiment.getRequireLocation(),
-									experiment.getTrialType(),
-									document.get("Value"),
-									user.getUserUniqueID(),
-									UUID.randomUUID().toString(),
-									stringDate.getCurrentDate());
-
-							database.addTrialToDB(db
-									.collection("Experiments")
-									.document(experiment.getExpID())
-									.collection("Trials")
-									.document(trial.getTrialID()), trial);
-						}
-					}
-					// TODO: HANDLE BARCODE NOT EXISTS
-				}
-			}
-		});
-	}
-
+	// if a barcode or anything other than a QR code is scanned for th epurpose of
+	// registering it to a trial for an experiment
 	private void registerBarcode(String rawResult, Experiment experiment){
 		View trialView = LayoutInflater.from(ScannerActivity.this).inflate(R.layout.barcode, null);
 		EditText value = trialView.findViewById(R.id.value);

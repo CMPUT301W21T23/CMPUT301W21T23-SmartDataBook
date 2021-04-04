@@ -132,7 +132,6 @@ public class UploadTrial extends AppCompatActivity {
                                                 Location location = (Location) returnedObject;
                                                 LatLng latlng = new LatLng(location.getLatitude(), location.getLongitude());
                                                 for (int i = 0; i<Integer.parseInt(numBinomial.getText().toString()); i++){
-                                                    Log.d("Integer i: ", String.valueOf(i));
                                                     Trial trial = new Trial(experiment.getRequireLocation(),
                                                             experiment.getTrialType(),
                                                             true,
@@ -144,7 +143,6 @@ public class UploadTrial extends AppCompatActivity {
                                                             .document(experiment.getExpID())
                                                             .collection("Trials")
                                                             .document(trial.getTrialID()), trial);
-                                                    Log.e("Work", "Binomial");
                                                 }
                                                 recreate();
                                             }
@@ -155,15 +153,12 @@ public class UploadTrial extends AppCompatActivity {
                                 .setNegativeButton("Add failure", new DialogInterface.OnClickListener() {
                                     @Override
                                     public void onClick(DialogInterface dialog, int which) {
-                                        Log.e("Work", "Binomial line 158 in upload trial class");
                                         new LocationWithPermission(UploadTrial.this).getLatLng(new GeneralDataCallBack() {
                                             @Override
                                             public void onDataReturn(Object returnedObject) {
-                                                Log.e("Work", "Binomial");
                                                 Location location = (Location) returnedObject;
                                                 LatLng latlng = new LatLng(location.getLatitude(), location.getLongitude());
                                                 for (int i = 0; i<Integer.parseInt(numBinomial.getText().toString()); i++){
-                                                    Log.d("Integer i: ", String.valueOf(i));
                                                     Trial trial = new Trial(experiment.getRequireLocation(),
                                                             experiment.getTrialType(),
                                                             false,
@@ -298,7 +293,6 @@ public class UploadTrial extends AppCompatActivity {
                                                 Trial trial = new Trial(experiment.getRequireLocation(),
                                                         experiment.getTrialType(),
                                                         finalVal,
-//                                                Float.parseFloat(measurementInput.getText().toString()),
                                                         experiment.getOwnerUserID(),
                                                         UUID.randomUUID().toString(),
                                                         stringDate.getCurrentDate(),
@@ -308,7 +302,6 @@ public class UploadTrial extends AppCompatActivity {
                                                         .document(experiment.getExpID())
                                                         .collection("Trials")
                                                         .document(trial.getTrialID()), trial);
-                                                Log.d("Test", "test");
                                                 recreate();
                                             }
                                         });
@@ -330,6 +323,8 @@ public class UploadTrial extends AppCompatActivity {
                         .collection("Trials")
                 ,trialDataList,trialArrayAdapter);
 
+
+        // TODO: Users can delete the trials that they entered but owner can delete any trials
         if (experiment.getOwnerUserID().equals(user.getUserUniqueID())){
             trialsList.setOnItemClickListener(new AdapterView.OnItemClickListener() {
                 @Override
@@ -340,7 +335,6 @@ public class UploadTrial extends AppCompatActivity {
                             .setPositiveButton("Delete", new DialogInterface.OnClickListener() {
                                 @Override
                                 public void onClick(DialogInterface dialog, int which) {
-                                    Log.d("Test","test");
                                     Trial trial = trialDataList.get(position);
                                     database.deleteFromDB(db
                                             .collection("Experiments")
@@ -354,20 +348,20 @@ public class UploadTrial extends AppCompatActivity {
             });
         }
         else{
-            Toast.makeText(UploadTrial.this, "You don't have the privilage to delete trials",Toast.LENGTH_SHORT).show();
+            Toast.makeText(UploadTrial.this, "You don't have the privilege to delete trials",Toast.LENGTH_SHORT).show();
         }
 
     }
 
-    public void locationClick(){
-        new LocationWithPermission(UploadTrial.this).getLatLng(new GeneralDataCallBack() {
-            @Override
-            public void onDataReturn(Object returnedObject) {
-                Location location = (Location) returnedObject;
-                LatLng latlng = new LatLng(location.getLatitude(), location.getLongitude());
-
-            }
-        });
+//    public void locationClick(){
+//        new LocationWithPermission(UploadTrial.this).getLatLng(new GeneralDataCallBack() {
+//            @Override
+//            public void onDataReturn(Object returnedObject) {
+//                Location location = (Location) returnedObject;
+//                LatLng latlng = new LatLng(location.getLatitude(), location.getLongitude());
+//
+//            }
+//        });
 //        FusedLocationProviderClient fusedLocationProviderClient = LocationServices.getFusedLocationProviderClient(this);
 //        if (ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(activity.getApplicationContext(), Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
 //
@@ -379,6 +373,6 @@ public class UploadTrial extends AppCompatActivity {
 //                LatLng latlng = new LatLng(location.getLatitude(), location.getLongitude());
 //            }
 //            });
-    }
+//    }
 
 }

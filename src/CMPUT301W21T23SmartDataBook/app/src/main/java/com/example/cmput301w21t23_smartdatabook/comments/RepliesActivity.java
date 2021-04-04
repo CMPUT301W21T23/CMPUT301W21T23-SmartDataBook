@@ -30,6 +30,8 @@ import java.util.UUID;
  * shows the activity of the comments
  * @author Bosco Chan Afaq Nabi
  */
+
+// TODO: anyone can delete any comments right now need to fix that
 public class RepliesActivity extends AppCompatActivity {
 
     ArrayAdapter<Comment> repliesAdapter;
@@ -105,7 +107,6 @@ public class RepliesActivity extends AppCompatActivity {
                                 recreate();
                             }
                         }).create().show();
-                Log.d("Test", "add replies button clicked");
             }
         });
 

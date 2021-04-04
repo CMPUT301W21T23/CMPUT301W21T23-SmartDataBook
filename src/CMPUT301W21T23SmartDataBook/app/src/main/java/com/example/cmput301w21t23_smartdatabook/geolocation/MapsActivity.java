@@ -47,7 +47,6 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_maps);
 
-        // initializing our firebase firestore.
         db = FirebaseFirestore.getInstance();
 
         Intent intent = getIntent();
@@ -75,7 +74,6 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
                 public void onComplete(@NonNull Task<QuerySnapshot> task) {
                     if (task.isSuccessful()) {
                         for (QueryDocumentSnapshot document : task.getResult()) {
-                            Log.d("Experiments", document.getId() + " => " + document.getData());
                             GeoPoint gp = document.getGeoPoint("Location");
                             assert gp != null;
                             LatLng location = new LatLng(gp.getLatitude(), gp.getLongitude());
@@ -96,7 +94,6 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
                         public void onComplete(@NonNull Task<QuerySnapshot> task) {
                             if (task.isSuccessful()) {
                                 for (QueryDocumentSnapshot document : task.getResult()) {
-                                    Log.d("Experiments", document.getId() + " => " + document.getData());
                                     GeoPoint gp = document.getGeoPoint("GeoPoint");
                                     assert gp != null;
                                     LatLng location = new LatLng(gp.getLatitude(), gp.getLongitude());

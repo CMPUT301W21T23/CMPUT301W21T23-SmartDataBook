@@ -46,16 +46,6 @@ public class FavPage extends Fragment {
 
     FirebaseFirestore db = FirebaseFirestore.getInstance();
 
-
-//    //Implement interrupted exception throw on database object instantiation
-//    {
-//        try {
-//            database = new Database(this);
-//        } catch (InterruptedException e) {
-//            e.printStackTrace();
-//        }
-//    }
-
     public FavPage(){}
 
     public static FavPage newInstance(String user) {
@@ -139,7 +129,6 @@ public class FavPage extends Fragment {
                                         experiment.getDate().toString().contains(currentQuery) ||
                                         experiment.getDescription().contains(currentQuery)) {
 
-                                    Log.d("experiment", ""+ experiment.getExpName());
                                     searchDataList.add(experiment);
 
                                 }
@@ -147,8 +136,6 @@ public class FavPage extends Fragment {
 
                             favAdapter.clear();
                             favAdapter.addAll(searchDataList);
-
-                            Log.d("search", ""+searchDataList.size());
 
                         }else{
                             favAdapter.addAll(favDataList);
@@ -173,15 +160,6 @@ public class FavPage extends Fragment {
         });
         return view;
     }//onCreateView
-
-//    /**
-//     * Assigns the experimentDataList with the callback-acquired DataList containing Experiment objects
-//     * @param DataList is the Experiment-populated array list found in Database.fillDataList()
-//     */
-//    @Override
-//    public void getExpDataList(ArrayList<Experiment> DataList) {
-//        favDataList = DataList;
-//    }
 
     @Override
     public void onResume(){

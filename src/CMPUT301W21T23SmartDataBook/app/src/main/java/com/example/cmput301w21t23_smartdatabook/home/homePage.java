@@ -50,24 +50,6 @@ public class homePage extends Fragment {
     private String currentQuery;
     private ArrayList<Experiment> searchDataList;
 
-//    //Implement interrupted exception throw on database object instantiation
-//    {
-//        try {
-//            database = new Database();
-//        } catch (InterruptedException e) {
-//            e.printStackTrace();
-//        }
-//    }
-
-//    /**
-//     * Assigns the experimentDataList with the callback-acquired DataList containing Experiment objects
-//     * @param DataList is the Experiment-populated array list found in Database.fillDataList()
-//     */
-//    @Override
-//    public void getExpDataList(ArrayList<Experiment> DataList) {
-//        experimentDataList = DataList;
-//    }
-
     FirebaseFirestore db = FirebaseFirestore.getInstance();
 
     public homePage() {
@@ -179,8 +161,6 @@ public class homePage extends Fragment {
                                 startActivity(intent);
                             }
                         });
-
-//                        Log.d("QueryCheck", ""+currentQuery);
 
                     }//getExpDataList
                 }, experimentAdapter, db.collection("Experiments"), user.getUserUniqueID(), UserName);//fillDataList

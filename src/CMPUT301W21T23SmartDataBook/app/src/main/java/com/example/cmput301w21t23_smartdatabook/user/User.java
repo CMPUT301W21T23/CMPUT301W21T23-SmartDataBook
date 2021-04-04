@@ -27,9 +27,6 @@ public class User implements Serializable {
         return user;
     }
 
-    ArrayList<Experiment> ownedExperimentList;
-    ArrayList<Experiment> favoriteExperimentList;
-
     public User(String userName, String userContact, String userUniqueID) {
         this.userName = userName;
         this.userContact = userContact;
@@ -50,38 +47,6 @@ public class User implements Serializable {
      */
     public void setUserUniqueID(String userUniqueID) {
         this.userUniqueID = userUniqueID;
-    }
-
-    /**
-     * Getter method for ownedExperimentList: obtains the owned experiment list
-     * @return ownedExperimentList, the arrayList that consists of the user's owned experiment
-     */
-    public ArrayList<Experiment> getOwnedExperimentList() {
-        return ownedExperimentList;
-    }
-
-    /**
-     * Setter method for ownedExperimentList: sets the owned experiment list
-     * @param ownedExperimentList
-     */
-    public void setOwnedExperimentList(ArrayList<Experiment> ownedExperimentList) {
-        this.ownedExperimentList = ownedExperimentList;
-    }
-
-    /**
-     * Getter Method for getFavoriteExperimentList: obtains the user's favorite experiment list
-     * @return favouriteExperimentList, the arrayList that has the user's favourite experiment list
-     */
-    public ArrayList<Experiment> getFavoriteExperimentList() {
-        return favoriteExperimentList;
-    }
-
-    /**
-     * Setter Method for getFavoriteExperimentList: obtains the user's favorite experiment list
-     * @param favoriteExperimentList
-     */
-    public void setFavoriteExperimentList(ArrayList<Experiment> favoriteExperimentList) {
-        this.favoriteExperimentList = favoriteExperimentList;
     }
 
     /**
@@ -117,14 +82,5 @@ public class User implements Serializable {
     }
 
 
-    /**
-     * Creates a new comment object given the text string, userUniqeID string, 
-     * and commentID int
-     * @return gives a new comment object. 
-     */
-//    public Comment createComment(String text, String userUniqueID, int commentID){
-//       return new Comment(text, userUniqueID, commentID);
-//
-//    }
 }
 

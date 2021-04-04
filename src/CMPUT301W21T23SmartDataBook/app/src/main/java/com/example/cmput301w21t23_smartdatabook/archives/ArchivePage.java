@@ -61,9 +61,6 @@ public class ArchivePage extends Fragment {
 
     public void doUpdate(String query, Fragment currentFragment) {
 
-//        Log.d("From_" + this.getClass().getSimpleName(), query);
-//        Log.d("From_" + this.getClass().getSimpleName(), mainActivity.test());
-
         currentQuery = query;
 
         if (currentQuery != null){
@@ -139,8 +136,6 @@ public class ArchivePage extends Fragment {
 
                             archiveExperimentAdapter.clear();
                             archiveExperimentAdapter.addAll(searchDataList);
-
-//                            Log.d("search", ""+searchDataList.size());
 
                         }else{
                             archiveExperimentAdapter.addAll(archiveExperimentDataList);

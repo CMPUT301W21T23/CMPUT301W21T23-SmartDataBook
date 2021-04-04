@@ -54,7 +54,6 @@ public class LocationWithPermission {
 			        if (ActivityCompat.checkSelfPermission(activity.getApplicationContext(), Manifest.permission.ACCESS_FINE_LOCATION) == PackageManager.PERMISSION_GRANTED) {
 			            // Following check removed from conditionals
 			        	// ActivityCompat.checkSelfPermission(activity.getApplicationContext(), Manifest.permission.ACCESS_COARSE_LOCATION) == PackageManager.PERMISSION_GRANTED
-	                        	Log.d("lwpInstance", "working?");
 				         fusedLocationClient.requestLocationUpdates(LocationRequest.create().setPriority(LocationRequest.PRIORITY_BALANCED_POWER_ACCURACY), new LocationCallback() {}, Looper.myLooper());
 
 				        // Below method executes when location is successfully obtained, deprecated due to above mLocationCallback

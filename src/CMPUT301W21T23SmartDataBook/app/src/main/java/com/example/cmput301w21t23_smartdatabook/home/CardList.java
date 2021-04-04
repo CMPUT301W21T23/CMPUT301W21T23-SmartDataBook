@@ -148,7 +148,6 @@ public class CardList extends ArrayAdapter<Experiment> {
                           final CollectionReference favExpCollection = db.collection("Users")
                                   .document(user.getUserUniqueID())
                                   .collection("Favorites");
-//                          Log.d("cardList:150", experiment.getLatLng().toString());
                           database.addExperimentToDB(experiment, favExpCollection, user.getUserUniqueID());
 
                           System.out.println("Checked");
@@ -198,17 +197,6 @@ public class CardList extends ArrayAdapter<Experiment> {
             views.put(position, v);
 
             return v;
-
-        } else if (index == 2){
-
-            view = LayoutInflater.from(context).inflate(R.layout.followed_experiments_items, parent,false);
-
-            assert view != null;
-            TextView experimentName = view.findViewById(R.id.ExpNameTextView);
-            TextView ownerName = view.findViewById(R.id.ownerTextView);
-
-            experimentName.setText(experiment.getExpName());
-            ownerName.setText(experiment.getOwnerUserID());
 
         }
 
