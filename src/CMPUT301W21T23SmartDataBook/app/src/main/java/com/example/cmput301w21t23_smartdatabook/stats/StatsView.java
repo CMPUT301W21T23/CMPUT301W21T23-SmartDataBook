@@ -5,11 +5,8 @@ import android.os.Bundle;
 import android.util.Log;
 import android.widget.TextView;
 
-import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
-import java.sql.Array;
-import java.sql.Time;
-import java.sql.Timestamp;
+
 import com.example.cmput301w21t23_smartdatabook.Experiment;
 import com.example.cmput301w21t23_smartdatabook.R;
 import com.example.cmput301w21t23_smartdatabook.StringDate;
@@ -28,16 +25,11 @@ import com.github.mikephil.charting.data.Entry;
 import com.github.mikephil.charting.data.LineData;
 import com.github.mikephil.charting.data.LineDataSet;
 //import com.google.firebase.Timestamp;
-import com.github.mikephil.charting.formatter.IAxisValueFormatter;
 import com.github.mikephil.charting.formatter.ValueFormatter;
-import com.google.firebase.firestore.CollectionReference;
 import com.google.firebase.firestore.FirebaseFirestore;
-import com.google.type.DateTime;
-import java.text.DateFormat;
-import java.text.ParseException;
+
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
@@ -71,7 +63,7 @@ public class StatsView extends AppCompatActivity {
         statsDataList.clear();
 
         LineChart lineChart = (LineChart) findViewById(R.id.plotChart);
-        BarChart barChart = (BarChart) findViewById(R.id.barChart);
+        BarChart histogram = (BarChart) findViewById(R.id.barChart);
 
         StatisticsModel stats = new StatisticsModel();
 
@@ -154,20 +146,20 @@ public class StatsView extends AppCompatActivity {
                 lineChart.setData(lineData);
                 lineChart.invalidate(); // refresh
 
-                BarDataSet barDataSet = new BarDataSet(barEntries, "Trial Value");
+                BarDataSet histogramDataSet = new BarDataSet(barEntries, "Trial Value");
 
-                barDataSet.setBarBorderWidth(2.0f);
+                histogramDataSet.setBarBorderWidth(2.0f);
 
-                XAxis barChartXAxis = barChart.getXAxis();
+                XAxis barChartXAxis = histogram.getXAxis();
                 barChartXAxis.setValueFormatter(formatter);
 
-                BarData barData = new BarData(barDataSet);
+                BarData histogramData = new BarData(histogramDataSet);
 
-                barData.setBarWidth(0.9f); // set custom bar width
-                barChart.setData(barData);
-                barChart.setFitBars(true); // make the x-axis fit exactly all bars
+                histogramData.setBarWidth(0.9f); // set custom bar width
+                histogram.setData(histogramData);
+                histogram.setFitBars(true); // make the x-axis fit exactly all bars
 
-                barChart.invalidate();
+                histogram.invalidate();
 
                 //Printing Forloop
 //                for (int i = 0; i< statsDataList.size(); i++){
