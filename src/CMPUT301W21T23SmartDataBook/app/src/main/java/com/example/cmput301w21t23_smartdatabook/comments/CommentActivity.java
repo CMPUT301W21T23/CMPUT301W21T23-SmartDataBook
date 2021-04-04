@@ -41,6 +41,8 @@ public class CommentActivity extends AppCompatActivity {
     Database database = new Database();
     User user = User.getUser();
 
+    StringDate stringDate = new StringDate();
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -57,8 +59,6 @@ public class CommentActivity extends AppCompatActivity {
         commentList = findViewById(R.id.comment_list);
 
         commentDataList = new ArrayList<>();
-
-        StringDate stringDate = new StringDate();
 
         commentAdapter = new CommentList(this, commentDataList);
 

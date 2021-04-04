@@ -1,5 +1,6 @@
 package com.example.cmput301w21t23_smartdatabook.comments;
 
+import android.annotation.SuppressLint;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
@@ -38,15 +39,13 @@ public class RepliesActivity extends AppCompatActivity {
     ArrayList<Comment> repliesDataList;
     ListView repliesList;
 
-    private String currentID;
-    private Experiment experiment;
     private Comment parentComment;
 
     FirebaseFirestore db;
     Database database = new Database();
 
     TextView owner;
-    TextView date;
+    TextView dateView;
     TextView commentID;
     TextView commentText;
 
@@ -55,6 +54,7 @@ public class RepliesActivity extends AppCompatActivity {
     FloatingActionButton addReply;
     StringDate curStringDate = new StringDate();
 
+    @SuppressLint("SetTextI18n")
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -70,8 +70,8 @@ public class RepliesActivity extends AppCompatActivity {
         owner = findViewById(R.id.comment_owner_username);
         owner.setText(parentComment.getUserUniqueID());
 
-        date = findViewById(R.id.commentDate);
-        date.setText(parentComment.getDate().toString());
+        dateView = findViewById(R.id.commentDate);
+        dateView.setText(""+curStringDate.getDate(parentComment.getDate()));
 
         commentID = findViewById(R.id.commentID);
         commentID.setText(parentComment.getCommentID().substring(0,6));
@@ -81,7 +81,6 @@ public class RepliesActivity extends AppCompatActivity {
 
         //    https://stackoverflow.com/questions/19826693/how-can-i-make-a-textview-automatically-scroll-as-i-add-more-lines-of-text
         EditText newComment = addCommentView.findViewById(R.id.newComment);
-//        newComment.setMovementMethod(new ScrollingMovementMethod());
 
         addReply = findViewById(R.id.add_replies_button);
         addReply.setOnClickListener(new View.OnClickListener() {

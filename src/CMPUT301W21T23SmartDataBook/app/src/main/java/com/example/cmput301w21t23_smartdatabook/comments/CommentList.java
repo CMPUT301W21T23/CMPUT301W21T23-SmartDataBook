@@ -26,8 +26,7 @@ public class CommentList extends ArrayAdapter<Comment> {
     private final Context context;
     User user = User.getUser();
 
-    StringDate stringDate;
-
+    StringDate stringDate = new StringDate();
     /**
      * Public Constructor of the CommentList class
      * @param context
@@ -68,7 +67,7 @@ public class CommentList extends ArrayAdapter<Comment> {
         commentID.setText(comment.getCommentID().substring(0,6));
 
         TextView commentDate = view.findViewById(R.id.commentDate);
-        commentDate.setText(comment.getDate().toString());
+        commentDate.setText(""+stringDate.getDate(comment.getDate()));
 
         return view;
     }

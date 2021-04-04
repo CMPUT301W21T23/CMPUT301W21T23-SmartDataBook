@@ -125,6 +125,7 @@ public class ScannerActivity extends AppCompatActivity implements ZXingScannerVi
 		String type = intent.getStringExtra("Flag");
 		if (type.equals("Scan")){
 			if (rawResult.getBarcodeFormat().toString().contains("QR_CODE")) {
+
 				QRcode.QRCodeScanned(rawResult.toString());
 
 			} else {

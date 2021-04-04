@@ -133,7 +133,6 @@ public class ArchivePage extends Fragment {
 
                                 }
                             }
-
                             archiveExperimentAdapter.clear();
                             archiveExperimentAdapter.addAll(searchDataList);
 

@@ -176,7 +176,8 @@
             app:layout_constraintEnd_toEndOf="@+id/askQuestionsBTN"
             app:layout_constraintHorizontal_bias="0.0"
             app:layout_constraintStart_toStartOf="@+id/askQuestionsBTN"
-            app:layout_constraintTop_toBottomOf="@+id/askQuestionsBTN" />
+            app:layout_constraintTop_toBottomOf="@+id/askQuestionsBTN"
+            android:visibility="invisible"/>
 
         <TextView
             android:id="@+id/endExp"
@@ -186,7 +187,8 @@
             android:textColor="@color/theme_default"
             app:layout_constraintBottom_toBottomOf="@+id/endExpImageView"
             app:layout_constraintStart_toEndOf="@+id/endExpImageView"
-            app:layout_constraintTop_toTopOf="@+id/endExpImageView" />
+            app:layout_constraintTop_toTopOf="@+id/endExpImageView"
+            android:visibility="invisible"/>
 
         <androidx.appcompat.widget.AppCompatImageButton
             android:id="@+id/generateCodeBTN"

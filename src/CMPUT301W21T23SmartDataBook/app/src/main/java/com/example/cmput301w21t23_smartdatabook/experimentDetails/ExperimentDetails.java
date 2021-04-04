@@ -19,6 +19,7 @@ import androidx.appcompat.widget.AppCompatImageButton;
 
 import com.example.cmput301w21t23_smartdatabook.QRCode.QRCodeActivity;
 import com.example.cmput301w21t23_smartdatabook.QRCode.ScannerActivity;
+import com.example.cmput301w21t23_smartdatabook.StringDate;
 import com.example.cmput301w21t23_smartdatabook.geolocation.MapsActivity;
 import com.example.cmput301w21t23_smartdatabook.stats.StatsView;
 import com.example.cmput301w21t23_smartdatabook.user.User;
@@ -30,6 +31,10 @@ import com.example.cmput301w21t23_smartdatabook.trials.UploadTrial;
 import com.google.firebase.firestore.FirebaseFirestore;
 
 import org.w3c.dom.Text;
+
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 
 /**
  * Class:ExperimentDetails
@@ -45,6 +50,7 @@ import org.w3c.dom.Text;
 public class ExperimentDetails extends AppCompatActivity {
     User user = User.getUser();
     Database database = Database.getDataBase();
+    StringDate date = new StringDate();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -96,7 +102,13 @@ public class ExperimentDetails extends AppCompatActivity {
         });
 
         TextView expDate = findViewById(R.id.ClickedExpdate);
-        expDate.setText(experiment.getDate().toString());
+//        SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSSXXX");
+//        try {
+//            date = format.parse(experiment.getDate());
+//        } catch (ParseException e) {
+//            e.printStackTrace();
+//        }
+        expDate.setText(""+ date.getDate(experiment.getDate()));
 
         TextView description = findViewById(R.id.ClickedExpDesc);
         description.setText(experiment.getDescription());
@@ -182,43 +194,44 @@ public class ExperimentDetails extends AppCompatActivity {
             upload.setVisibility(View.INVISIBLE);
         }
         endExp.setText(title);
-        endExp.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                AlertDialog.Builder builder= new AlertDialog.Builder(ExperimentDetails.this);
-                builder.setTitle(title);
-                builder.setMessage("Do you wish to " + title + " this experiment ?");
-                builder.setNegativeButton("Cancel", null)
-                        .setPositiveButton(title + " Experiment", new DialogInterface.OnClickListener() {
-                            @Override
-                            public void onClick(DialogInterface dialog, int which) {
-                                if (!experiment.getIsEnd()) {
-                                    experiment.setEnd(true);
-                                    database.publicOrEnd(db.collection("Experiments"), "On", experiment, "isEnd");
-                                    database.publicOrEnd((db.collection("Users")
-                                            .document(user.getUserUniqueID())
-                                            .collection("Favorites")), "On", experiment, "isEnd");
-                                    database.addExperimentToDB(experiment, db.collection("Archived"), experiment.getOwnerUserID());
-                                    database.deleteFromDB(db.collection("Experiments").document(experiment.getExpID()));
+        if (user.getUserUniqueID().equals(experiment.getOwnerUserID())){
+            endExp.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    AlertDialog.Builder builder= new AlertDialog.Builder(ExperimentDetails.this);
+                    builder.setTitle(title);
+                    builder.setMessage("Do you wish to " + title + " this experiment ?");
+                    builder.setNegativeButton("Cancel", null)
+                            .setPositiveButton(title + " Experiment", new DialogInterface.OnClickListener() {
+                                @Override
+                                public void onClick(DialogInterface dialog, int which) {
+                                    if (!experiment.getIsEnd()) {
+                                        experiment.setEnd(true);
+                                        database.publicOrEnd(db.collection("Experiments"), "On", experiment, "isEnd");
+                                        database.publicOrEnd((db.collection("Users")
+                                                .document(user.getUserUniqueID())
+                                                .collection("Favorites")), "On", experiment, "isEnd");
+                                        database.addExperimentToDB(experiment, db.collection("Archived"), experiment.getOwnerUserID());
+                                        database.deleteFromDB(db.collection("Experiments").document(experiment.getExpID()));
 
-                                } else {
-                                    experiment.setEnd(false);
-                                    database.publicOrEnd(db.collection("Experiments"), "Off", experiment, "isEnd");
-                                    database.publicOrEnd((db.collection("Users")
-                                            .document(user.getUserUniqueID())
-                                            .collection("Favorites")), "Off", experiment, "isEnd");
-                                    database.addExperimentToDB(experiment, db.collection("Experiments"), experiment.getOwnerUserID());
-                                    database.deleteFromDB(db.collection("Archived").document(experiment.getExpID()));
-                                }
+                                    } else {
+                                        experiment.setEnd(false);
+                                        database.publicOrEnd(db.collection("Experiments"), "Off", experiment, "isEnd");
+                                        database.publicOrEnd((db.collection("Users")
+                                                .document(user.getUserUniqueID())
+                                                .collection("Favorites")), "Off", experiment, "isEnd");
+                                        database.addExperimentToDB(experiment, db.collection("Experiments"), experiment.getOwnerUserID());
+                                        database.deleteFromDB(db.collection("Archived").document(experiment.getExpID()));
+                                    }
 
-                                Toast.makeText(getBaseContext(), "Experiment has been " + title, Toast.LENGTH_SHORT).show();
+                                    Toast.makeText(getBaseContext(), "Experiment has been " + title, Toast.LENGTH_SHORT).show();
 
-                            }//onClick
-                        })
-                        .create().show();
-
-            }
-        });
+                                }//onClick
+                            })
+                            .create().show();
+                }
+            });
+        }
 
         CheckBox publish = findViewById(R.id.Publish);
         TextView publish_text = findViewById(R.id.Publish_text);
@@ -227,7 +240,6 @@ public class ExperimentDetails extends AppCompatActivity {
             endExp.setVisibility(View.VISIBLE);
             publish.setVisibility(View.VISIBLE);
             publish_text.setVisibility(View.VISIBLE);
-
         }
 
         publish.setOnClickListener(new View.OnClickListener() {

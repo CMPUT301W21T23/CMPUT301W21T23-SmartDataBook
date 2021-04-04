@@ -19,6 +19,8 @@ import java.util.Hashtable;
 import java.util.Map;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+
+import com.example.cmput301w21t23_smartdatabook.StringDate;
 import com.example.cmput301w21t23_smartdatabook.user.User;
 import com.example.cmput301w21t23_smartdatabook.comments.CommentActivity;
 import com.example.cmput301w21t23_smartdatabook.database.Database;
@@ -45,6 +47,8 @@ public class CardList extends ArrayAdapter<Experiment> {
     private User user = User.getUser();
 
     private Hashtable<String, User> UserName;
+
+    StringDate date = new StringDate();
 
     public ArrayList<Experiment> getExperiments() {
         return experiments;
@@ -98,15 +102,14 @@ public class CardList extends ArrayAdapter<Experiment> {
             View v = inflater.inflate(R.layout.card, null);
 
             TextView experimentName = v.findViewById(R.id.experimentName);
-            TextView date = v.findViewById(R.id.dateCreated);
+            TextView dateView = v.findViewById(R.id.dateCreated);
             TextView ownerName = v.findViewById(R.id.Owner);
             TextView experimentDescription = v.findViewById(R.id.Experiment_descr);
             TextView region = v.findViewById(R.id.Region);
 
 
             experimentName.setText(experiment.getExpName());
-            date.setText(experiment.getDate().toString());
-//            ownerName.setText("User - " + experiment.getOwnerUserID().substring(0,4));
+            dateView.setText(""+ date.getDate(experiment.getDate()));
             ownerName.setText(experiment.getOwnerUserName());
             experimentDescription.setText(experiment.getDescription());
             region.setText(null);
