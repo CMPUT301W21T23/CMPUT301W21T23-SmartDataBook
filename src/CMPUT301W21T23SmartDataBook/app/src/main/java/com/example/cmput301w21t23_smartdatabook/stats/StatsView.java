@@ -108,7 +108,6 @@ public class StatsView extends AppCompatActivity {
                     //Code: https://stackoverflow.com/questions/81346/most-efficient-way-to-increment-a-map-value-in-java#:~:text=Map%20map,a%20value%20with%20simple%20code.
                     Integer count = bins.containsKey(key) ? bins.get(key) : 0;
                     bins.put(key, count + 1);
-
                 }
 
                 for (int i = 0; i<statsDataList.size(); i++) {
@@ -122,10 +121,13 @@ public class StatsView extends AppCompatActivity {
                     trialValue = statsDataList.get(i).get(0).toString();
                     date = statsDataList.get(i).get(1).toString();
 
-                    dates.add( dateClass.getDate( date ) );
 //                    Log.d("Entire", ""+statsDataList.get(i).get(0).toString()+ " " + statsDataList.get(i).get(1).toString());
                     lineEntries.add(new Entry(i, Float.parseFloat( trialValue)) );
-//                    Log.d("HashMap", ""+ trialValue + "|" + bins.get(trialValue));
+                    dates.add( dateClass.getDate( date ) );
+                }
+
+                for (int i = 0; i < bins.size(); i++) {
+                    trialValue = statsDataList.get(i).get(0).toString();
                     barEntries.add( new BarEntry(i, Float.parseFloat( bins.get(trialValue).toString() )) );
                 }
 
