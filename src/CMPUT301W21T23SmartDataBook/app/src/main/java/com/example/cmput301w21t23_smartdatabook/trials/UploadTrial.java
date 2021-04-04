@@ -42,12 +42,14 @@ public class UploadTrial extends AppCompatActivity {
     ListView trialsList;
     ArrayAdapter<Trial> trialArrayAdapter;
     ArrayList<Trial> trialDataList;
-    FirebaseAuth mAuth = FirebaseAuth.getInstance();
-    FirebaseUser currentUser = mAuth.getCurrentUser();
+
     String expType;
+
     User user = User.getUser();
+
     Database database = Database.getDataBase();
     FirebaseFirestore db = FirebaseFirestore.getInstance();
+
     StringDate stringDate = new StringDate();
 
     /**
@@ -70,9 +72,6 @@ public class UploadTrial extends AppCompatActivity {
         // get intent and experiment
         Intent intent = getIntent();
         Experiment experiment = (Experiment) intent.getSerializableExtra("experiment"); // get the experiment object
-
-        FirebaseAuth mAuth = FirebaseAuth.getInstance();
-        String uid = mAuth.getUid();
 
         TextView name = findViewById(R.id.actual_experiment_name);
         name.setText(experiment.getExpName());
