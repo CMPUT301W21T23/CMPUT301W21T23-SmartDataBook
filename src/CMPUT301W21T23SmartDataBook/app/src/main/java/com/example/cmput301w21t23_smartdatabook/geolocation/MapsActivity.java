@@ -47,7 +47,6 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_maps);
 
-
         // initializing our firebase firestore.
         db = FirebaseFirestore.getInstance();
 
@@ -67,7 +66,7 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
     public void onMapReady(GoogleMap googleMap) {
         mMap = googleMap;
 
-        if(main.equals("true")){
+        if(main.equals("true")) {
             db.collection("Experiments")
                     .whereEqualTo("requireLocation", "On")
                     .get()
