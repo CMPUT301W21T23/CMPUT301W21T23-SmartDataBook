@@ -6,7 +6,7 @@ import java.util.ArrayList;
 import java.util.Date;
 
 /**
- * this classs will calculate various values needed in the statistics view
+ * this class will calculate various values needed in the statistics view
  * @author Afaq, Bosco
  */
 public class StatisticsModel {

@@ -40,7 +40,10 @@ import java.util.Date;
 import java.util.List;
 import java.util.Locale;
 
-
+/**
+ * this class will show the various stats required for the experiments and trials
+ * @author Afaq, Bosco
+ */
 public class StatsView extends AppCompatActivity {
 
     private ArrayList<ArrayList> statsDataList;
