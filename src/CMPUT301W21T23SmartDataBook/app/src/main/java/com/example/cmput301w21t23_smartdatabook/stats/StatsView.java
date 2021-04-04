@@ -138,7 +138,7 @@ public class StatsView extends AppCompatActivity {
                         return sdf.format( date );
                     }
                 };
-                
+
                 ValueFormatter binAxisFormatter = new ValueFormatter() {
                     @Override
                     public String getFormattedValue(float value) {
@@ -158,7 +158,7 @@ public class StatsView extends AppCompatActivity {
                 lineChart.setData(lineData);
                 lineChart.invalidate(); // refresh
 
-                BarDataSet histogramDataSet = new BarDataSet(barEntries, "Trial Value");
+                BarDataSet histogramDataSet = new BarDataSet(barEntries, "Frequency");
 
                 histogramDataSet.setBarBorderWidth(2.0f);
 
@@ -177,17 +177,14 @@ public class StatsView extends AppCompatActivity {
                 histogram.setFitBars(true); // make the x-axis fit exactly all bars
                 histogram.invalidate();
 
-                //Printing Forloop
+
+                //Printing Forloop for debugging
 //                for (int i = 0; i< statsDataList.size(); i++){
 //                    Date result1 = dateClass.getDate((String) statsDataList.get(i).get(1));
 //                    Log.d("Time: ", ""+ result1);
 //                    assert result1 != null;
 //                    Log.d("int", ""+ (int)result1.getTime());
 //                }
-
-
-
-
 
 
                 stats.bubbleSortByValue(statsDataList); // sort list by value
