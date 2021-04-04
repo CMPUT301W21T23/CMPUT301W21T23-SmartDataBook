@@ -32,7 +32,6 @@ import java.util.UUID;
  * @author Bosco Chan Afaq Nabi
  */
 
-// TODO: anyone can delete any comments right now need to fix that
 public class RepliesActivity extends AppCompatActivity {
 
     ArrayAdapter<Comment> repliesAdapter;
