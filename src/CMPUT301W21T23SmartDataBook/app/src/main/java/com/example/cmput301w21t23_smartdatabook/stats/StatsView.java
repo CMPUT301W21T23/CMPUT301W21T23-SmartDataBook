@@ -4,10 +4,9 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.widget.TextView;
+
 import androidx.appcompat.app.AppCompatActivity;
-import java.sql.Array;
-import java.sql.Time;
-import java.sql.Timestamp;
+
 import com.example.cmput301w21t23_smartdatabook.Experiment;
 import com.example.cmput301w21t23_smartdatabook.R;
 import com.example.cmput301w21t23_smartdatabook.StringDate;
@@ -26,19 +25,16 @@ import com.github.mikephil.charting.data.Entry;
 import com.github.mikephil.charting.data.LineData;
 import com.github.mikephil.charting.data.LineDataSet;
 //import com.google.firebase.Timestamp;
-import com.github.mikephil.charting.formatter.IAxisValueFormatter;
 import com.github.mikephil.charting.formatter.ValueFormatter;
-import com.google.firebase.firestore.CollectionReference;
 import com.google.firebase.firestore.FirebaseFirestore;
-import com.google.type.DateTime;
-import java.text.DateFormat;
-import java.text.ParseException;
+
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.Date;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Locale;
+import java.util.Set;
 
 /**
  * this class will show the various stats required for the experiments and trials
@@ -50,12 +46,12 @@ public class StatsView extends AppCompatActivity {
     private User user;
     private Database database;
     private FirebaseFirestore db;
+    private HashMap<Object, Integer> bins = new HashMap<>();
     StringDate dateClass = new StringDate();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-
         setContentView(R.layout.graph_layout);
 
         database = new Database();
@@ -71,7 +67,9 @@ public class StatsView extends AppCompatActivity {
         statsDataList.clear();
 
         LineChart lineChart = (LineChart) findViewById(R.id.plotChart);
-        BarChart barChart = (BarChart) findViewById(R.id.barChart);
+        BarChart histogram = (BarChart) findViewById(R.id.barChart);
+
+        histogram.getDescription().setEnabled(false);
 
         StatisticsModel stats = new StatisticsModel();
 
@@ -96,17 +94,45 @@ public class StatsView extends AppCompatActivity {
 
                 List<Entry> lineEntries = new ArrayList<Entry>();
                 List<BarEntry> barEntries = new ArrayList<BarEntry>();
+
+                String trialValue;
+                String date;
+
+                //Populate bins HashMap for histogram
+                for (int i = 0; i<statsDataList.size(); i++) {
+                    String key = statsDataList.get(i).get(0).toString();
+
+                    //Source: gregory; https://stackoverflow.com/users/10204/gregory
+                    //Code: https://stackoverflow.com/questions/81346/most-efficient-way-to-increment-a-map-value-in-java#:~:text=Map%20map,a%20value%20with%20simple%20code.
+                    Integer count = bins.containsKey(key) ? bins.get(key) : 0;
+                    bins.put(key, count + 1);
+                }
+
+                Log.d("statsDataListSize", "" + statsDataList.size());
+                Log.d("BinSize", ""+bins.size());
+
+                //Adds entries to the linechart. Requires that the statsDataList is sorted by date
                 for (int i = 0; i<statsDataList.size(); i++){
 
-                    dates.add( dateClass.getDate(statsDataList.get(i).get(1).toString()) );
+                    trialValue = statsDataList.get(i).get(0).toString();
+                    date = statsDataList.get(i).get(1).toString();
+
 //                    Log.d("Entire", ""+statsDataList.get(i).get(0).toString()+ " " + statsDataList.get(i).get(1).toString());
-                    lineEntries.add(new Entry(i, Float.parseFloat(statsDataList.get(i).get(0).toString())) );
-                    barEntries.add( new BarEntry(i, Float.parseFloat(statsDataList.get(i).get(0).toString())) );
+                    lineEntries.add(new Entry(i, Float.parseFloat( trialValue)) );
+                    dates.add( dateClass.getDate( date ) );
+                }
+
+                //Add entries to barChart (Histogram)
+                int j = 0;
+                for (Object key: bins.keySet().toArray()) {
+                    Log.d("Bin", "" + key.toString() + "|" + bins.get(key.toString()).toString() );
+                    barEntries.add( new BarEntry(j, Float.parseFloat( bins.get(key).toString() )) );
+                    j+=1;
                 }
 
                 //Source: sidcgithub; https://github.com/sidcgithub
                 //Code: https://github.com/PhilJay/MPAndroidChart/issues/3705
-                ValueFormatter formatter = new ValueFormatter() {
+                ValueFormatter dateAxisFormatter = new ValueFormatter() {
                     @Override
                     public String getAxisLabel(float value, AxisBase axis) {
                         Date date = dates.get( (int) value );
@@ -116,43 +142,52 @@ public class StatsView extends AppCompatActivity {
                     }
                 };
 
+                ValueFormatter binAxisFormatter = new ValueFormatter() {
+                    @Override
+                    public String getFormattedValue(float value) {
+                        int roundedIndex = Math.round(value);
+                        return bins.keySet().toArray()[roundedIndex].toString();
+                    }
+                };
+
                 LineDataSet lineDataSet = new LineDataSet(lineEntries, "Trial Value"); // add entries to dataset
                 lineDataSet.setAxisDependency(YAxis.AxisDependency.LEFT);
                 lineDataSet.setLineWidth(2.0f);
 
                 XAxis lineChartXAxis = lineChart.getXAxis();
-                lineChartXAxis.setValueFormatter(formatter);
+                lineChartXAxis.setValueFormatter(dateAxisFormatter);
 
                 LineData lineData = new LineData(lineDataSet);
                 lineChart.setData(lineData);
                 lineChart.invalidate(); // refresh
 
-                BarDataSet barDataSet = new BarDataSet(barEntries, "Trial Value");
+                BarDataSet histogramDataSet = new BarDataSet(barEntries, "Frequency");
 
-                barDataSet.setBarBorderWidth(2.0f);
+                histogramDataSet.setBarBorderWidth(2.0f);
 
-                XAxis barChartXAxis = barChart.getXAxis();
-                barChartXAxis.setValueFormatter(formatter);
+                //Source:ProgrammerSought; https://www.programmersought.com
+                //Code: https://www.programmersought.com/article/43275089312/
+                XAxis barChartXAxis = histogram.getXAxis();
+                barChartXAxis.setValueFormatter(binAxisFormatter);
+                barChartXAxis.setDrawGridLines(false); // Set this to true to draw grid lines for this axis.
+                barChartXAxis.setLabelCount(bins.size());  // Set the number of labels on the x-axis
+                barChartXAxis.setTextSize(15f); // The size of the label on the x axis
 
-                BarData barData = new BarData(barDataSet);
+                BarData histogramData = new BarData(histogramDataSet);
 
-                barData.setBarWidth(0.9f); // set custom bar width
-                barChart.setData(barData);
-                barChart.setFitBars(true); // make the x-axis fit exactly all bars
-                barChart.invalidate();
+                histogramData.setBarWidth(0.5f);
+                histogram.setData(histogramData);
+                histogram.setFitBars(true); // make the x-axis fit exactly all bars
+                histogram.invalidate();
 
-                //Printing Forloop
+
+                //Printing Forloop for debugging
 //                for (int i = 0; i< statsDataList.size(); i++){
 //                    Date result1 = dateClass.getDate((String) statsDataList.get(i).get(1));
 //                    Log.d("Time: ", ""+ result1);
 //                    assert result1 != null;
 //                    Log.d("int", ""+ (int)result1.getTime());
 //                }
-
-
-
-
-
 
 
                 stats.bubbleSortByValue(statsDataList); // sort list by value
@@ -169,7 +204,6 @@ public class StatsView extends AppCompatActivity {
                 meanView.setText("Mean: "+ Double.parseDouble(String.valueOf(mean)));
                 medianView.setText("Median: "+ String.valueOf(median));
                 SDView.setText("Std: "+String.valueOf(SD));
-
 
 
             }
