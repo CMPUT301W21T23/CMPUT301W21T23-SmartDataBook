@@ -66,6 +66,8 @@ public class StatsView extends AppCompatActivity {
         LineChart lineChart = (LineChart) findViewById(R.id.plotChart);
         BarChart histogram = (BarChart) findViewById(R.id.barChart);
 
+        histogram.getDescription().setEnabled(false);
+
         StatisticsModel stats = new StatisticsModel();
 
         TextView meanView = findViewById(R.id.meanTextView);
@@ -106,7 +108,7 @@ public class StatsView extends AppCompatActivity {
                 Log.d("statsDataListSize", "" + statsDataList.size());
                 Log.d("BinSize", ""+bins.size());
 
-                //Adds entries to the line/bar chart. Requires that the statsDataList is sorted by date
+                //Adds entries to the linechart. Requires that the statsDataList is sorted by date
                 for (int i = 0; i<statsDataList.size(); i++){
 
                     trialValue = statsDataList.get(i).get(0).toString();
@@ -117,6 +119,7 @@ public class StatsView extends AppCompatActivity {
                     dates.add( dateClass.getDate( date ) );
                 }
 
+                //Add entries to barChart (Histogram)
                 int j = 0;
                 for (Object key: bins.keySet().toArray()) {
                     Log.d("Bin", "" + key.toString() + "|" + bins.get(key.toString()).toString() );
@@ -135,12 +138,12 @@ public class StatsView extends AppCompatActivity {
                         return sdf.format( date );
                     }
                 };
-
+                
                 ValueFormatter binAxisFormatter = new ValueFormatter() {
                     @Override
                     public String getFormattedValue(float value) {
                         int roundedIndex = Math.round(value);
-                        return Integer.toString(roundedIndex);
+                        return bins.keySet().toArray()[roundedIndex].toString();
                     }
                 };
 
@@ -159,12 +162,17 @@ public class StatsView extends AppCompatActivity {
 
                 histogramDataSet.setBarBorderWidth(2.0f);
 
+                //Source:ProgrammerSought; https://www.programmersought.com
+                //Code: https://www.programmersought.com/article/43275089312/
                 XAxis barChartXAxis = histogram.getXAxis();
                 barChartXAxis.setValueFormatter(binAxisFormatter);
+                barChartXAxis.setDrawGridLines(false); // Set this to true to draw grid lines for this axis.
+                barChartXAxis.setLabelCount(bins.size());  // Set the number of labels on the x-axis
+                barChartXAxis.setTextSize(15f); // The size of the label on the x axis
 
                 BarData histogramData = new BarData(histogramDataSet);
 
-                histogramData.setBarWidth(0.9f); // set custom bar width
+                histogramData.setBarWidth(0.5f);
                 histogram.setData(histogramData);
                 histogram.setFitBars(true); // make the x-axis fit exactly all bars
                 histogram.invalidate();
