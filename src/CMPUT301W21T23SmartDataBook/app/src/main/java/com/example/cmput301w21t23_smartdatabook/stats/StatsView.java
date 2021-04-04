@@ -34,6 +34,7 @@ import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Locale;
+import java.util.Set;
 
 
 public class StatsView extends AppCompatActivity {
@@ -102,11 +103,9 @@ public class StatsView extends AppCompatActivity {
                     bins.put(key, count + 1);
                 }
 
-                for (int i = 0; i<statsDataList.size(); i++) {
-                    Log.d("Bin", statsDataList.get(i).get(0).toString() + "|" + bins.get(statsDataList.get(i).get(0).toString())) ;
-                }
                 Log.d("statsDataListSize", "" + statsDataList.size());
                 Log.d("BinSize", ""+bins.size());
+
                 //Adds entries to the line/bar chart. Requires that the statsDataList is sorted by date
                 for (int i = 0; i<statsDataList.size(); i++){
 
@@ -118,14 +117,16 @@ public class StatsView extends AppCompatActivity {
                     dates.add( dateClass.getDate( date ) );
                 }
 
-                for (int i = 0; i < bins.size(); i++) {
-                    trialValue = statsDataList.get(i).get(0).toString();
-                    barEntries.add( new BarEntry(i, Float.parseFloat( bins.get(trialValue).toString() )) );
+                int j = 0;
+                for (Object key: bins.keySet().toArray()) {
+                    Log.d("Bin", "" + key.toString() + "|" + bins.get(key.toString()).toString() );
+                    barEntries.add( new BarEntry(j, Float.parseFloat( bins.get(key).toString() )) );
+                    j+=1;
                 }
 
                 //Source: sidcgithub; https://github.com/sidcgithub
                 //Code: https://github.com/PhilJay/MPAndroidChart/issues/3705
-                ValueFormatter formatter = new ValueFormatter() {
+                ValueFormatter dateAxisFormatter = new ValueFormatter() {
                     @Override
                     public String getAxisLabel(float value, AxisBase axis) {
                         Date date = dates.get( (int) value );
@@ -135,12 +136,20 @@ public class StatsView extends AppCompatActivity {
                     }
                 };
 
+                ValueFormatter binAxisFormatter = new ValueFormatter() {
+                    @Override
+                    public String getFormattedValue(float value) {
+                        int roundedIndex = Math.round(value);
+                        return Integer.toString(roundedIndex);
+                    }
+                };
+
                 LineDataSet lineDataSet = new LineDataSet(lineEntries, "Trial Value"); // add entries to dataset
                 lineDataSet.setAxisDependency(YAxis.AxisDependency.LEFT);
                 lineDataSet.setLineWidth(2.0f);
 
                 XAxis lineChartXAxis = lineChart.getXAxis();
-                lineChartXAxis.setValueFormatter(formatter);
+                lineChartXAxis.setValueFormatter(dateAxisFormatter);
 
                 LineData lineData = new LineData(lineDataSet);
                 lineChart.setData(lineData);
@@ -151,14 +160,13 @@ public class StatsView extends AppCompatActivity {
                 histogramDataSet.setBarBorderWidth(2.0f);
 
                 XAxis barChartXAxis = histogram.getXAxis();
-                barChartXAxis.setValueFormatter(formatter);
+                barChartXAxis.setValueFormatter(binAxisFormatter);
 
                 BarData histogramData = new BarData(histogramDataSet);
 
                 histogramData.setBarWidth(0.9f); // set custom bar width
                 histogram.setData(histogramData);
                 histogram.setFitBars(true); // make the x-axis fit exactly all bars
-
                 histogram.invalidate();
 
                 //Printing Forloop
@@ -168,7 +176,6 @@ public class StatsView extends AppCompatActivity {
 //                    assert result1 != null;
 //                    Log.d("int", ""+ (int)result1.getTime());
 //                }
-
 
 
 
