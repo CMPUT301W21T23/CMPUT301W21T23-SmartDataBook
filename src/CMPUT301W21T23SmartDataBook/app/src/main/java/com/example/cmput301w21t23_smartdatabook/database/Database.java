@@ -227,6 +227,9 @@ public class Database {
 
 						if (task.isSuccessful()) {
 							for (QueryDocumentSnapshot document : task.getResult()) {
+
+								Object trialValue = document.get("Trial Value");
+
 								statsDataList.add(new ArrayList<Object>() {
 									{
 										Number temp;
@@ -234,7 +237,7 @@ public class Database {
 										if (document.get("Trial Type").toString().equals("Binomial")) {
 
 											//Convert database boolean into integer value
-											if ((Boolean) document.get("Trial Value")) {
+											if ((Boolean) trialValue) {
 												temp = 1.0;
 											} else {
 												temp = 0.0;
@@ -246,7 +249,8 @@ public class Database {
 										add(temp);
 										add(document.get("StringDate").toString());
 									}
-								});
+								});//Adding to statsDataList
+
 							}//for
 
 							//Get callback to grab the populated dataList

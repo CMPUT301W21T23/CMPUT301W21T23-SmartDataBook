@@ -4,6 +4,8 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.widget.TextView;
+
+import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
 import java.sql.Array;
 import java.sql.Time;
@@ -37,6 +39,7 @@ import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Date;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Locale;
 
@@ -47,12 +50,12 @@ public class StatsView extends AppCompatActivity {
     private User user;
     private Database database;
     private FirebaseFirestore db;
+    private HashMap<Object, Integer> bins = new HashMap<>();
     StringDate dateClass = new StringDate();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-
         setContentView(R.layout.graph_layout);
 
         database = new Database();
@@ -93,12 +96,37 @@ public class StatsView extends AppCompatActivity {
 
                 List<Entry> lineEntries = new ArrayList<Entry>();
                 List<BarEntry> barEntries = new ArrayList<BarEntry>();
+
+                String trialValue;
+                String date;
+
+                //Populate bins HashMap for histogram
+                for (int i = 0; i<statsDataList.size(); i++) {
+                    String key = statsDataList.get(i).get(0).toString();
+
+                    //Source: gregory; https://stackoverflow.com/users/10204/gregory
+                    //Code: https://stackoverflow.com/questions/81346/most-efficient-way-to-increment-a-map-value-in-java#:~:text=Map%20map,a%20value%20with%20simple%20code.
+                    Integer count = bins.containsKey(key) ? bins.get(key) : 0;
+                    bins.put(key, count + 1);
+
+                }
+
+                for (int i = 0; i<statsDataList.size(); i++) {
+                    Log.d("Bin", statsDataList.get(i).get(0).toString() + "|" + bins.get(statsDataList.get(i).get(0).toString())) ;
+                }
+                Log.d("statsDataListSize", "" + statsDataList.size());
+                Log.d("BinSize", ""+bins.size());
+                //Adds entries to the line/bar chart. Requires that the statsDataList is sorted by date
                 for (int i = 0; i<statsDataList.size(); i++){
 
-                    dates.add( dateClass.getDate(statsDataList.get(i).get(1).toString()) );
+                    trialValue = statsDataList.get(i).get(0).toString();
+                    date = statsDataList.get(i).get(1).toString();
+
+                    dates.add( dateClass.getDate( date ) );
 //                    Log.d("Entire", ""+statsDataList.get(i).get(0).toString()+ " " + statsDataList.get(i).get(1).toString());
-                    lineEntries.add(new Entry(i, Float.parseFloat(statsDataList.get(i).get(0).toString())) );
-                    barEntries.add( new BarEntry(i, Float.parseFloat(statsDataList.get(i).get(0).toString())) );
+                    lineEntries.add(new Entry(i, Float.parseFloat( trialValue)) );
+//                    Log.d("HashMap", ""+ trialValue + "|" + bins.get(trialValue));
+                    barEntries.add( new BarEntry(i, Float.parseFloat( bins.get(trialValue).toString() )) );
                 }
 
                 //Source: sidcgithub; https://github.com/sidcgithub
@@ -136,6 +164,7 @@ public class StatsView extends AppCompatActivity {
                 barData.setBarWidth(0.9f); // set custom bar width
                 barChart.setData(barData);
                 barChart.setFitBars(true); // make the x-axis fit exactly all bars
+
                 barChart.invalidate();
 
                 //Printing Forloop
@@ -166,7 +195,6 @@ public class StatsView extends AppCompatActivity {
                 meanView.setText("Mean: "+ Double.parseDouble(String.valueOf(mean)));
                 medianView.setText("Median: "+ String.valueOf(median));
                 SDView.setText("Std: "+String.valueOf(SD));
-
 
 
             }

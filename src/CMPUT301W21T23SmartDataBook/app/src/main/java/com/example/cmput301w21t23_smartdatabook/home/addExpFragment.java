@@ -69,9 +69,9 @@ public class addExpFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.new_experiment_location_on, container, false);
+
         activity = ((AppCompatActivity) getActivity());
         activity.getSupportActionBar().setTitle("Add new experiment");
-        activity.getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
         String currentID = getArguments().getString("UUID");
 
