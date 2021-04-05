@@ -46,11 +46,6 @@ import java.util.UUID;
 public class QRCode {
     QRCodeWriter writer = new QRCodeWriter();
 
-    Database database = Database.getDataBase();
-    FirebaseFirestore db = FirebaseFirestore.getInstance();
-    StringDate stringDate = new StringDate();
-    User user = User.getUser();
-
     public Bitmap generate(String content){
         BitMatrix bitMatrix = null;
 
@@ -70,72 +65,5 @@ public class QRCode {
         }
         return bmp;
     }
-
-    // if a QR code is scanned this function is called
-    void QRCodeScanned(String rawResult){
-        String[] values = rawResult.split(",");
-
-        if (values[3].equals("Binomial")){
-            //Need to add in given number of binomial trials
-            for (int i = 1; i <= Integer.parseInt(values[2]); i++ ){
-                Trial trial = new Trial( Boolean.parseBoolean(values[4]),
-                        values[3],
-                        Boolean.parseBoolean(values[5]),
-                        values[1],
-                        UUID.randomUUID().toString(),
-                        stringDate.getCurrentDate());
-                database.addTrialToDB(db.collection("Experiments")
-                        .document(values[0])
-                        .collection("Trials")
-                        .document(trial.getTrialID()), trial);
-            }
-
-        } else{
-            Trial trial = new Trial( Boolean.parseBoolean(values[4]),
-                    values[3],
-                    Float.parseFloat(values[2]),
-                    values[1],
-                    UUID.randomUUID().toString(),
-                    stringDate.getCurrentDate());
-            database.addTrialToDB(db.collection("Experiments")
-                    .document(values[0])
-                    .collection("Trials")
-                    .document(trial.getTrialID()), trial);
-        }
-    }
-
-    // if barcode is scanned ofr hte purpose of adding a trila to the experiment
-    void BarcodeScanned(String rawResult, Experiment experiment){
-        db.collection("Barcode")
-                .document(experiment.getExpID())
-                .collection(user.getUserUniqueID())
-                .get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
-            @Override
-            public void onComplete(@NonNull Task<QuerySnapshot> task) {
-                if (task.isSuccessful()) {
-                    for (QueryDocumentSnapshot document : task.getResult()) {
-                        if (rawResult.equals(document.get("RawResult"))){
-                            Trial trial = new Trial(experiment.getRequireLocation(),
-                                    experiment.getTrialType(),
-                                    document.get("Value"),
-                                    user.getUserUniqueID(),
-                                    UUID.randomUUID().toString(),
-                                    stringDate.getCurrentDate());
-
-                            database.addTrialToDB(db
-                                    .collection("Experiments")
-                                    .document(experiment.getExpID())
-                                    .collection("Trials")
-                                    .document(trial.getTrialID()), trial);
-                        }
-                    }
-                    // TODO: HANDLE BARCODE NOT EXISTS
-                    // TODO: have not handled binomial barcode trial
-                }
-            }
-        });
-    }
-
-
 
 }

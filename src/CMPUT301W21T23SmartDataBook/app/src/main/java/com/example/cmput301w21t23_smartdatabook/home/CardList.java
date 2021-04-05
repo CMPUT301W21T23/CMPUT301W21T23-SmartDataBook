@@ -129,7 +129,8 @@ public class CardList extends ArrayAdapter<Experiment> {
 
             // https://developer.android.com/reference/android/widget/CheckBox
             CheckBox follow = v.findViewById(R.id.fav);
-            db.collection("Users")
+            db
+                    .collection("Users")
                     .document(user.getUserUniqueID())
                     .collection("Favorites")
                     .document(experiment.getExpID()).get().addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {

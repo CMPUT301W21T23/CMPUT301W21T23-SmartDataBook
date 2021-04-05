@@ -53,7 +53,6 @@ public class RepliesActivity extends AppCompatActivity {
     FloatingActionButton addReply;
     StringDate curStringDate = new StringDate();
 
-    @SuppressLint("SetTextI18n")
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
