@@ -39,21 +39,32 @@ public class Comment implements Serializable {
 
     }
 
+    /**
+     * Getter method that returns the string that contains the user's unique ID
+     * @return userUniqueID
+     */
     public String getUserUniqueID() {
         return userUniqueID;
     }
 
+    /**
+     * Getter method that returns the comment's date in string form
+     * @return date
+     */
     public String getDate() {
         return date;
     }
 
+    /**
+     * Setetr method that sets the Comment's date
+     * @param date
+     */
     public void setDate(String date) {
         this.date = date;
     }
 
     /**
      * Getter that returns the String text attribute of the Comment class
-     *
      * @return String
      */
     public String getText() {
@@ -62,7 +73,6 @@ public class Comment implements Serializable {
 
     /**
      * Setter for the text attribute of the Comment class
-     *
      * @param text
      */
     public void setText(String text) {
@@ -71,7 +81,6 @@ public class Comment implements Serializable {
 
     /**
      * Getter for the commentID attribute of the Comment class
-     *
      * @return int of commentID
      */
     public String getCommentID() {

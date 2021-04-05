@@ -27,9 +27,10 @@ import java.util.UUID;
 /**
  * Class: CommentActivity
  * shows the activity of the comments
- * @author Bosco Chan Afaq Nabi
+ * @author Bosco Chan, Afaq Nabi
  */
 public class CommentActivity extends AppCompatActivity {
+    // initialize variables
     ListView commentList;
     ArrayAdapter<Comment> commentAdapter;
     ArrayList<Comment> commentDataList;
@@ -43,7 +44,10 @@ public class CommentActivity extends AppCompatActivity {
 
     StringDate stringDate = new StringDate();
 
-
+    /**
+     * onCreate method for comment, sets up most of the comment activity page
+     * @param savedInstanceState
+     */
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);

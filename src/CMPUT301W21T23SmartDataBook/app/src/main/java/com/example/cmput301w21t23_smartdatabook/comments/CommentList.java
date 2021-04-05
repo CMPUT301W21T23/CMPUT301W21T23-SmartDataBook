@@ -17,7 +17,7 @@ import com.example.cmput301w21t23_smartdatabook.user.User;
 import java.util.ArrayList;
 
 /**
- * Class: commentList
+ * Class: commentList, that is list consists of comments
  * @author Bosco Chan
  */
 public class CommentList extends ArrayAdapter<Comment> {
