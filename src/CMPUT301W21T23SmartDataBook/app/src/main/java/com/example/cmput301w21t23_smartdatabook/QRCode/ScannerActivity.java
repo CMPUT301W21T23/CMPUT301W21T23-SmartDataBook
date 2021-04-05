@@ -4,6 +4,7 @@ import android.Manifest;
 import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.location.Location;
 import android.net.Uri;
 import android.os.Bundle;
 import android.provider.Settings;
@@ -24,8 +25,12 @@ import com.example.cmput301w21t23_smartdatabook.StringDate;
 import com.example.cmput301w21t23_smartdatabook.Experiment;
 import com.example.cmput301w21t23_smartdatabook.R;
 import com.example.cmput301w21t23_smartdatabook.database.Database;
+import com.example.cmput301w21t23_smartdatabook.database.GeneralDataCallBack;
+import com.example.cmput301w21t23_smartdatabook.geolocation.LocationWithPermission;
 import com.example.cmput301w21t23_smartdatabook.trials.Trial;
+import com.example.cmput301w21t23_smartdatabook.trials.UploadTrial;
 import com.example.cmput301w21t23_smartdatabook.user.User;
+import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.firestore.FirebaseFirestore;
@@ -50,7 +55,6 @@ import me.dm7.barcodescanner.zxing.ZXingScannerView;
  * references: https://www.youtube.com/watch?v=AiNi9K94W5c&ab_channel=MdJamal
  * @author Afaq
  */
-
 public class ScannerActivity extends AppCompatActivity implements ZXingScannerView.ResultHandler{
 	ZXingScannerView scannerView;
 	Database database = Database.getDataBase();
@@ -125,11 +129,10 @@ public class ScannerActivity extends AppCompatActivity implements ZXingScannerVi
 		String type = intent.getStringExtra("Flag");
 		if (type.equals("Scan")){
 			if (rawResult.getBarcodeFormat().toString().contains("QR_CODE")) {
-
-				QRcode.QRCodeScanned(rawResult.toString());
+				QRCodeScanned(rawResult.toString());
 
 			} else {
-				QRcode.BarcodeScanned(rawResult.toString(),experiment);
+				BarcodeScanned(rawResult.toString(),experiment);
 			}
 			onBackPressed();
 		}
@@ -187,42 +190,162 @@ public class ScannerActivity extends AppCompatActivity implements ZXingScannerVi
 			}
 		});
 
-		AlertDialog.Builder builder = new AlertDialog.Builder(ScannerActivity.this);
-		builder.setTitle("Enter value for trial")
-				.setView(trialView)
-				.setNegativeButton("cancel", new DialogInterface.OnClickListener() {
+		db.collection("Barcode")
+				.document(experiment.getExpID())
+				.collection(user.getUserUniqueID())
+				.get()
+				.addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
 					@Override
-					public void onClick(DialogInterface dialog, int which) {
-						onBackPressed();
-					}
-				})
-				.setPositiveButton("Confirm", new DialogInterface.OnClickListener() {
-					@Override
-					public void onClick(DialogInterface dialog, int which) {
-						HashMap<String, Object> data = new HashMap<>();
-						data.put("RawResult", rawResult);
-						data.put("UUID", user.getUserUniqueID());
-						data.put("ExpID", experiment.getExpID());
-						if (experiment.getTrialType().equals("Binomial")) {
-							data.put("Bool", switchTF.isChecked());
-							data.put("Value", Integer.parseInt(value.getText().toString()));
-						} else if (experiment.getTrialType().equals(("Measurement"))) {
-							data.put("Value", Float.parseFloat(value.getText().toString()));
-						} else {
-							data.put("Value", Integer.parseInt(value.getText().toString()));
-						}
-						Log.e("value", String.valueOf(value.getText()));
+					public void onComplete(@NonNull Task<QuerySnapshot> task) {
+						if (task.isSuccessful()) {
+							for (QueryDocumentSnapshot document : task.getResult()) {
+								if (rawResult.equals(document.get("RawResult"))) {
+									onBackPressed();
+									Toast.makeText(getBaseContext(), "Barcode already exists for this experiment", Toast.LENGTH_SHORT).show();
+									return;
+								}
+							}
+							AlertDialog.Builder builder = new AlertDialog.Builder(ScannerActivity.this);
+							builder.setTitle("Enter value for trial")
+									.setView(trialView)
+									.setNegativeButton("cancel", new DialogInterface.OnClickListener() {
+										@Override
+										public void onClick(DialogInterface dialog, int which) {
+											onBackPressed();
+										}
+									})
+									.setPositiveButton("Confirm", new DialogInterface.OnClickListener() {
+										@Override
+										public void onClick(DialogInterface dialog, int which) {
+											HashMap<String, Object> data = new HashMap<>();
+											data.put("RawResult", rawResult);
+											data.put("UUID", user.getUserUniqueID());
+											data.put("ExpID", experiment.getExpID());
+											if (experiment.getTrialType().equals("Binomial")) {
+												data.put("Bool", switchTF.isChecked());
+												data.put("Value", Integer.parseInt(value.getText().toString()));
+											} else if (experiment.getTrialType().equals(("Measurement"))) {
+												data.put("Value", Float.parseFloat(value.getText().toString()));
+											} else {
+												data.put("Value", Integer.parseInt(value.getText().toString()));
+											}
+											Log.e("value", String.valueOf(value.getText()));
 
-						db.collection("Barcode")
-								.document(experiment.getExpID())
-								.collection(user.getUserUniqueID())
-								.document(UUID.randomUUID().toString())
-								.set(data);
-						onBackPressed();
+											db.collection("Barcode")
+													.document(experiment.getExpID())
+													.collection(user.getUserUniqueID())
+													.document(UUID.randomUUID().toString())
+													.set(data);
+											onBackPressed();
+										}
+									})
+									.create()
+									.show();
+						}
 					}
-				})
-				.create()
-				.show();
+				});
+
+	}
+
+	// if a QR code is scanned this function is called
+	private void QRCodeScanned(String rawResult) {
+		new LocationWithPermission(ScannerActivity.this).getLatLng(new GeneralDataCallBack() {
+			@Override
+			public void onDataReturn(Object returnedObject) {
+				Location location = (Location) returnedObject;
+				LatLng latlng = new LatLng(location.getLatitude(), location.getLongitude());
+				String[] values = rawResult.split(",");
+
+				if (values[3].equals("Binomial")) {
+					//Need to add in given number of binomial trials
+					for (int i = 1; i <= Integer.parseInt(values[2]); i++) {
+						Trial trial = new Trial(Boolean.parseBoolean(values[4]),
+								values[3],
+								Boolean.parseBoolean(values[5]),
+								values[1],
+								UUID.randomUUID().toString(),
+								stringDate.getCurrentDate(),
+								experiment.getRequireLocation() ? latlng : null);
+						database.addTrialToDB(db.collection("Experiments")
+								.document(values[0])
+								.collection("Trials")
+								.document(trial.getTrialID()), trial);
+					}
+
+				} else {
+					Trial trial = new Trial(Boolean.parseBoolean(values[4]),
+							values[3],
+							Float.parseFloat(values[2]),
+							values[1],
+							UUID.randomUUID().toString(),
+							stringDate.getCurrentDate(),
+							experiment.getRequireLocation() ? latlng : null);
+
+					database.addTrialToDB(db.collection("Experiments")
+							.document(values[0])
+							.collection("Trials")
+							.document(trial.getTrialID()), trial);
+				}
+			}
+		});
+	}
+
+	// if barcode is scanned ofr hte purpose of adding a trila to the experiment
+	private void BarcodeScanned(String rawResult, Experiment experiment) {
+		new LocationWithPermission(ScannerActivity.this).getLatLng(new GeneralDataCallBack() {
+			@Override
+			public void onDataReturn(Object returnedObject) {
+				Location location = (Location) returnedObject;
+				LatLng latlng = new LatLng(location.getLatitude(), location.getLongitude());
+				db.collection("Barcode")
+						.document(experiment.getExpID())
+						.collection(user.getUserUniqueID())
+						.get()
+						.addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
+					@Override
+					public void onComplete(@NonNull Task<QuerySnapshot> task) {
+						if (task.isSuccessful()) {
+							for (QueryDocumentSnapshot document : task.getResult()) {
+								if (rawResult.equals(document.get("RawResult"))) {
+									if (experiment.getTrialType().equals("Binomial")){
+										for (int i = 1; i <= Integer.parseInt((String) document.get("Value")); i++) {
+											Trial trial = new Trial(experiment.getRequireLocation(),
+													experiment.getTrialType(),
+													document.get("Bool"),
+													user.getUserUniqueID(),
+													UUID.randomUUID().toString(),
+													stringDate.getCurrentDate(),
+													experiment.getRequireLocation() ? latlng : null);
+
+											database.addTrialToDB(db
+													.collection("Experiments")
+													.document(experiment.getExpID())
+													.collection("Trials")
+													.document(trial.getTrialID()), trial);
+										}
+									}
+									else{
+										Trial trial = new Trial(experiment.getRequireLocation(),
+												experiment.getTrialType(),
+												document.get("Value"),
+												user.getUserUniqueID(),
+												UUID.randomUUID().toString(),
+												stringDate.getCurrentDate());
+
+										database.addTrialToDB(db
+												.collection("Experiments")
+												.document(experiment.getExpID())
+												.collection("Trials")
+												.document(trial.getTrialID()), trial);
+									}
+									return; // HANDLE BARCODE NOT EXISTS
+								}
+							}
+						}
+					}
+				});
+			}
+		});
 	}
 
 }

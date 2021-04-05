@@ -133,7 +133,8 @@ public class CardList extends ArrayAdapter<Experiment> {
             // We have learned the idea of CheckBox from developer.android.com
             // URL: https://developer.android.com/reference/android/widget/CheckBox
             CheckBox follow = v.findViewById(R.id.fav);
-            db.collection("Users")
+            db
+                    .collection("Users")
                     .document(user.getUserUniqueID())
                     .collection("Favorites")
                     .document(experiment.getExpID()).get().addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
@@ -198,7 +199,6 @@ public class CardList extends ArrayAdapter<Experiment> {
                     AlertDialog.Builder builder = new AlertDialog.Builder(getContext());
                     builder.setView(userInfoView)
                             .setNegativeButton("Close", null).create().show();
-
                 }
             });
 
