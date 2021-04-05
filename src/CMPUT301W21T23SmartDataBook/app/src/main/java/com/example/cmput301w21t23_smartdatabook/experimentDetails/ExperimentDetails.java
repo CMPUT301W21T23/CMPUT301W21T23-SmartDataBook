@@ -8,6 +8,7 @@ import android.os.Parcelable;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.TextView;
@@ -99,10 +100,16 @@ public class ExperimentDetails extends AppCompatActivity {
         Owner.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                // TODO: new user details activity
+                if (userInfoView.getParent() != null) {
+                    ((ViewGroup) userInfoView.getParent()).removeView(userInfoView);
+                }
+
                 AlertDialog.Builder builder = new AlertDialog.Builder(ExperimentDetails.this);
                 builder.setView(userInfoView)
-                        .setNegativeButton("Close", null).create().show();
+                        .setNegativeButton("Close", null)
+                        .create()
+                        .show();
+
             }
         });
 

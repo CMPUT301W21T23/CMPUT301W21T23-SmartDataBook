@@ -200,9 +200,6 @@ public class StatsView extends AppCompatActivity {
                     barChartXAxis.setValueFormatter(new IndexAxisValueFormatter(labels));
                 }
 
-                YAxis barChartYAxis = histogram.getAxisRight();
-//                barChartYAxis.setAxisMinimum(0f);
-
                 BarData histogramData = new BarData(histogramDataSet);
 
                 histogramData.setBarWidth(0.5f);

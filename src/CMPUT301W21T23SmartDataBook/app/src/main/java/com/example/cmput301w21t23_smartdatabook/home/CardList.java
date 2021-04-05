@@ -199,7 +199,6 @@ public class CardList extends ArrayAdapter<Experiment> {
                     AlertDialog.Builder builder = new AlertDialog.Builder(getContext());
                     builder.setView(userInfoView)
                             .setNegativeButton("Close", null).create().show();
-
                 }
             });
 
