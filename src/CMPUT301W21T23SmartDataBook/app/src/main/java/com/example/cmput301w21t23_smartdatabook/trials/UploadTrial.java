@@ -183,6 +183,10 @@ public class UploadTrial extends AppCompatActivity {
             @Override
             public void onDataReturn(Object returnedObject) {
                 Location location = (Location) returnedObject;
+                if (location == null) {
+                    Toast.makeText(UploadTrial.this, "Please open up the google map and obtain your location at least once.", Toast.LENGTH_LONG).show();
+                    return;
+                }
                 LatLng latlng = new LatLng(location.getLatitude(), location.getLongitude());
 
                 // 1. 4 different cases for dialog

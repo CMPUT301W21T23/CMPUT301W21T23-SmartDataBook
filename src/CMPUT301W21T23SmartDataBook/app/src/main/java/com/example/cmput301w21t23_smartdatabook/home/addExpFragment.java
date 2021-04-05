@@ -25,6 +25,7 @@ import com.example.cmput301w21t23_smartdatabook.Experiment;
 import com.example.cmput301w21t23_smartdatabook.R;
 import com.example.cmput301w21t23_smartdatabook.database.GeneralDataCallBack;
 import com.example.cmput301w21t23_smartdatabook.geolocation.LocationWithPermission;
+import com.example.cmput301w21t23_smartdatabook.trials.UploadTrial;
 import com.example.cmput301w21t23_smartdatabook.user.User;
 import com.google.android.gms.location.FusedLocationProviderClient;
 import com.google.android.gms.location.LocationCallback;
@@ -167,10 +168,14 @@ public class addExpFragment extends Fragment {
 
                     return;
                 }
-                fusedLocationProviderClient.getLastLocation().addOnSuccessListener(activity, new OnSuccessListener<Location>() {
-                    // displays errors through toasts
+                new LocationWithPermission(activity).getLatLng(new GeneralDataCallBack() {
                     @Override
-                    public void onSuccess(Location location) {
+                    public void onDataReturn(Object returnedObject) {
+                        Location location = (Location) returnedObject;
+                        if (location == null) {
+                            Toast.makeText(activity.getApplicationContext(), "Please open up the google map and obtain your location at least once.", Toast.LENGTH_LONG).show();
+                            return;
+                        }
                         LatLng latlng = new LatLng(location.getLatitude(), location.getLongitude());
 
                         if (expName == "" || expDescription == "") {
