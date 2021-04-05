@@ -172,11 +172,16 @@ public class StatsView extends AppCompatActivity {
 //                    }
 //                };
 
-                ValueFormatter binAxisFormatter = new ValueFormatter() {
+                ValueFormatter binBinomialFormatter = new ValueFormatter() {
                     @Override
                     public String getFormattedValue(float value) {
                         Log.d("Value", "" + value);
-                        return labels[(int) value];
+
+                            if (labels[(int) value].equals("1.0")) {
+                                return "Pass";
+                            } else {
+                                return  "Fail";
+                            }
                     }
                 };
 
@@ -184,13 +189,20 @@ public class StatsView extends AppCompatActivity {
                 //Code: https://www.programmersought.com/article/43275089312/
 //                XAxis barChartXAxis = histogram.getXAxis();
 //                barChartXAxis.setValueFormatter(binAxisFormatter);
-                YAxis barChartYAxis = histogram.getAxisLeft();
-                barChartYAxis.setGranularity(1f);
-                barChartYAxis.setGranularityEnabled(true);
-                barChartYAxis.setLabelCount(bins.size());  // Set the number of labels on the x-axis
-                barChartYAxis.setTextSize(15f); // The size of the label on the x axis
-                barChartYAxis.setDrawGridLines(false); // Set this to true to draw grid lines for this axis.
-                barChartYAxis.setValueFormatter(new IndexAxisValueFormatter(labels));
+                XAxis barChartXAxis = histogram.getXAxis();
+                barChartXAxis.setGranularity(1f);
+                barChartXAxis.setGranularityEnabled(true);
+                barChartXAxis.setLabelCount(bins.size());  // Set the number of labels on the x-axis
+                barChartXAxis.setTextSize(15f); // The size of the label on the x axis
+                barChartXAxis.setDrawGridLines(false); // Set this to true to draw grid lines for this axis.
+                if (experiment.getTrialType().equals("Binomial")){
+                    barChartXAxis.setValueFormatter(binBinomialFormatter);
+                } else {
+                    barChartXAxis.setValueFormatter(new IndexAxisValueFormatter(labels));
+                }
+
+                YAxis barChartYAxis = histogram.getAxisRight();
+//                barChartYAxis.setAxisMinimum(0f);
 
                 BarData histogramData = new BarData(histogramDataSet);
 
@@ -205,7 +217,10 @@ public class StatsView extends AppCompatActivity {
                 for (int i = 0; i < statsDataList.size(); i++) {
                     sortedArray.add((Double) statsDataList.get(i).get(0));
                 }
+
+
 //                double[] quartiles = stats.quartiles(sortedArray);
+
                 double SD = stats.calculateSD(sortedArray);
                 double mean = (double) stats.calcMean(statsDataList);
                 double median = (double) stats.calcMedian(statsDataList);
