@@ -36,7 +36,7 @@ import java.util.UUID;
  * Class: UploadTrial activity
  * displays the upload trials page
  * @author Afaq Nabi, Krutik Soni
- * @see TrialList
+ * @see TrialList, Trial
  */
 public class UploadTrial extends AppCompatActivity {
     ListView trialsList;
@@ -53,7 +53,7 @@ public class UploadTrial extends AppCompatActivity {
     StringDate stringDate = new StringDate();
 
     /**
-     * This function create the uploadTrial view
+     * This function sets up the uploadTrial view
      * @param savedInstanceState
      */
     @Override

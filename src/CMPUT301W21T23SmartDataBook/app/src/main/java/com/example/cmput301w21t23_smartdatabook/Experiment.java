@@ -68,6 +68,7 @@ public class Experiment implements Serializable, Parcelable {
         this.latlng = null;
     }
 
+    // for parcellable
     protected Experiment(Parcel in) {
         expID = in.readString();
         expName = in.readString();
@@ -133,11 +134,19 @@ public class Experiment implements Serializable, Parcelable {
         this.latlng = latlng;
     }
 
+    /**
+     * Setters for isEnd
+     * @param end
+     */
 
     public void setEnd(boolean end) {
         isEnd = end;
     }
 
+    /**
+     * Getters for isEnd
+     * @return isEnd: a boolean variable checking whether an experiment has been ended or not
+     */
     public boolean getIsEnd() {
         return isEnd;
     }
@@ -320,10 +329,18 @@ public class Experiment implements Serializable, Parcelable {
         this.latlng = latlng;
     }
 
+    /**
+     * Getters for expID
+     * @return expID: a string object consists the experiment ID
+     */
     public String getExpID() {
         return expID;
     }
 
+    /**
+     * Setters for expID
+     * @param expID
+     */
     public void setExpID(String expID) {
         this.expID = expID;
     }
@@ -333,6 +350,11 @@ public class Experiment implements Serializable, Parcelable {
         return 0;
     }
 
+    /**
+     * This functionm writes the experiment's content to the parcel
+     * @param dest
+     * @param flags
+     */
     @Override
     public void writeToParcel(Parcel dest, int flags) {
         dest.writeString(expID);

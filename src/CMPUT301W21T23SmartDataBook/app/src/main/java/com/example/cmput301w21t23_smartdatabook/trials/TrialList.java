@@ -34,9 +34,8 @@ public class TrialList extends ArrayAdapter<Trial> {
         this.context = context;
     }
 
-
     /**
-     * This function gets the view of the trialList
+     * This function sets up the view, and set trialValue
      * @param position
      * @param convertView
      * @param parent
