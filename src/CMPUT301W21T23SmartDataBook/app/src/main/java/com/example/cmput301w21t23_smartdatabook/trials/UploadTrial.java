@@ -240,12 +240,12 @@ public class UploadTrial extends AppCompatActivity {
                                                                            .document(trial.getTrialID()), trial);
                                                                }
                                                            }
-
+                                                           recreate();
                                                        }
                                                    }
                                                 });
                                     }
-                                    recreate();
+//                                    recreate();
                                 }
                             })
                             .setNegativeButton("Add failure", new DialogInterface.OnClickListener() {
@@ -287,13 +287,14 @@ public class UploadTrial extends AppCompatActivity {
                                                                             .document(trial.getTrialID()), trial);
                                                                 }
                                                             }
+                                                            recreate();
 
                                                         }
                                                     }
                                                 });
                                     }
 
-                                    recreate();
+//                                    recreate();
                                 }
                             })
                             .setPositiveButton("Cancel", null).create().show();
