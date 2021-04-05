@@ -98,13 +98,13 @@ public class ExperimentDetails extends AppCompatActivity {
 
                 // Setting up visual representation(TextView, Button, checkbox) of experiment details page
                 TextView username = userInfoView.findViewById(R.id.expOwner);
-                username.setText("Username: " + UserName.get(user.getUserUniqueID()).getUserName());
+                username.setText("Username: " + UserName.get(experiment.getOwnerUserID()).getUserName());
 
                 TextView email = userInfoView.findViewById(R.id.expContact);;
-                email.setText("Email: " + UserName.get(user.getUserUniqueID()).getUserContact());
+                email.setText("Email: " + UserName.get(experiment.getOwnerUserID()).getUserContact());
 
                 TextView Owner = findViewById(R.id.owner);
-                Owner.setText( UserName.get(user.getUserUniqueID()).getUserName() );
+                Owner.setText( UserName.get(experiment.getOwnerUserID()).getUserName() );
                 Owner.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
@@ -113,7 +113,7 @@ public class ExperimentDetails extends AppCompatActivity {
                         if (userInfoView.getParent() != null) {
                             ((ViewGroup) userInfoView.getParent()).removeView(userInfoView);
                         }
-                        
+
                         AlertDialog.Builder builder = new AlertDialog.Builder(ExperimentDetails.this);
                         builder.setView(userInfoView)
                                 .setNegativeButton("Close", null).create().show();

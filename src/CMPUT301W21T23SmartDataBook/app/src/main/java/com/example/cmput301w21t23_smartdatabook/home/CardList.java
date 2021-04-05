@@ -111,7 +111,6 @@ public class CardList extends ArrayAdapter<Experiment> {
             TextView experimentDescription = v.findViewById(R.id.Experiment_descr);
             TextView region = v.findViewById(R.id.Region);
 
-
             experimentName.setText(experiment.getExpName());
             dateView.setText(""+ date.getDate(experiment.getDate()));
             ownerName.setText(experiment.getOwnerUserName());
@@ -202,7 +201,6 @@ public class CardList extends ArrayAdapter<Experiment> {
 
                 }
             });
-
 
             views.put(position, v);
 
