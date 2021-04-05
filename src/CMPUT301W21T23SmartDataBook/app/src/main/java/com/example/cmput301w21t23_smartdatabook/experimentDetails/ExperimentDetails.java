@@ -8,6 +8,7 @@ import android.os.Parcelable;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.TextView;
@@ -36,6 +37,7 @@ import org.w3c.dom.Text;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
+import java.util.Hashtable;
 
 /**
  * Class:ExperimentDetails
@@ -92,19 +94,26 @@ public class ExperimentDetails extends AppCompatActivity {
         database.fillUserName(new GeneralDataCallBack() {
             @Override
             public void onDataReturn(Object returnedObject) {
+                Hashtable<String, User> UserName = (Hashtable<String, User>) returnedObject;
+
                 // Setting up visual representation(TextView, Button, checkbox) of experiment details page
                 TextView username = userInfoView.findViewById(R.id.expOwner);
-                username.setText("Username: " + user.getUserName());
+                username.setText("Username: " + UserName.get(user.getUserUniqueID()).getUserName());
 
                 TextView email = userInfoView.findViewById(R.id.expContact);;
-                email.setText("Email: " + user.getUserContact());
+                email.setText("Email: " + UserName.get(user.getUserUniqueID()).getUserContact());
 
                 TextView Owner = findViewById(R.id.owner);
-                Owner.setText(experiment.getOwnerUserName());
+                Owner.setText( UserName.get(user.getUserUniqueID()).getUserName() );
                 Owner.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
-                        // TODO: new user details activity
+                        //Source: Johnny Five; https://stackoverflow.com/users/6325722/johnny-five
+                        //Code: https://stackoverflow.com/questions/28071349/the-specified-child-already-has-a-parent-you-must-call-removeview-on-the-chil
+                        if (userInfoView.getParent() != null) {
+                            ((ViewGroup) userInfoView.getParent()).removeView(userInfoView);
+                        }
+                        
                         AlertDialog.Builder builder = new AlertDialog.Builder(ExperimentDetails.this);
                         builder.setView(userInfoView)
                                 .setNegativeButton("Close", null).create().show();
