@@ -187,7 +187,7 @@ public class ExperimentDetailsPageTest {
         solo.sleep(1000);
         solo.clickOnView(rule.getActivity().findViewById(R.id.newExperimentLocationToggleSwitch));
         solo.sleep(1000);
-        solo.clickOnView(rule.getActivity().findViewById(R.id.newExperimentLocationPublicPrivateToggleSwitch));
+        solo.clickOnView(rule.getActivity().findViewById(R.id.newExperimentLocationPublishToggleSwitch));
         solo.sleep(2000);
         solo.clickOnButton("Create");
         solo.sleep(1000);
@@ -255,7 +255,7 @@ public class ExperimentDetailsPageTest {
         solo.sleep(1000);
         solo.clickOnView(rule.getActivity().findViewById(R.id.newExperimentLocationToggleSwitch));
         solo.sleep(1000);
-        solo.clickOnView(rule.getActivity().findViewById(R.id.newExperimentLocationPublicPrivateToggleSwitch));
+        solo.clickOnView(rule.getActivity().findViewById(R.id.newExperimentLocationPublishToggleSwitch));
         solo.sleep(2000);
         solo.clickOnButton("Create");
         solo.sleep(1000);

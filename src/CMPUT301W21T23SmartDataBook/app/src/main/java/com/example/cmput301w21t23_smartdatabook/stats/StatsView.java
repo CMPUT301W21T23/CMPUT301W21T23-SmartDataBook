@@ -5,6 +5,7 @@ import android.os.Bundle;
 import android.util.Log;
 import android.widget.TextView;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.example.cmput301w21t23_smartdatabook.Experiment;
@@ -25,7 +26,9 @@ import com.github.mikephil.charting.data.Entry;
 import com.github.mikephil.charting.data.LineData;
 import com.github.mikephil.charting.data.LineDataSet;
 //import com.google.firebase.Timestamp;
+import com.github.mikephil.charting.formatter.IndexAxisValueFormatter;
 import com.github.mikephil.charting.formatter.ValueFormatter;
+import com.google.android.material.slider.LabelFormatter;
 import com.google.firebase.firestore.FirebaseFirestore;
 
 import java.text.SimpleDateFormat;
@@ -120,7 +123,7 @@ public class StatsView extends AppCompatActivity {
                 }
 
                 //Add entries to barChart (Histogram)
-                int j = 0;
+                int j = 0; //index counter
                 for (Object key: bins.keySet().toArray()) {
                     Log.d("Bin", "" + key.toString() + "|" + bins.get(key.toString()).toString() );
                     barEntries.add( new BarEntry(j, Float.parseFloat( bins.get(key).toString() )) );
@@ -139,14 +142,6 @@ public class StatsView extends AppCompatActivity {
                     }
                 };
 
-                ValueFormatter binAxisFormatter = new ValueFormatter() {
-                    @Override
-                    public String getFormattedValue(float value) {
-                        int roundedIndex = Math.round(value);
-                        return bins.keySet().toArray()[roundedIndex].toString();
-                    }
-                };
-
                 LineDataSet lineDataSet = new LineDataSet(lineEntries, "Trial Value"); // add entries to dataset
                 lineDataSet.setAxisDependency(YAxis.AxisDependency.LEFT);
                 lineDataSet.setLineWidth(2.0f);
@@ -162,13 +157,40 @@ public class StatsView extends AppCompatActivity {
 
                 histogramDataSet.setBarBorderWidth(2.0f);
 
+                String[] labels = bins.keySet().toArray(new String[bins.keySet().size()]);
+
+                for (int i = 0; i<labels.length; i++) {
+                    Log.d("label", labels[i]);
+                }
+
+//                ValueFormatter binAxisFormatter = new ValueFormatter() {
+//                    @Override
+//                    public String getFormattedValue(float value) {
+//                        Log.d("Value", "" + value);
+//                        int roundedIndex = Math.round(value);
+//                        return bins.keySet().toArray()[roundedIndex].toString();
+//                    }
+//                };
+
+                ValueFormatter binAxisFormatter = new ValueFormatter() {
+                    @Override
+                    public String getFormattedValue(float value) {
+                        Log.d("Value", "" + value);
+                        return labels[(int) value];
+                    }
+                };
+
                 //Source:ProgrammerSought; https://www.programmersought.com
                 //Code: https://www.programmersought.com/article/43275089312/
-                XAxis barChartXAxis = histogram.getXAxis();
-                barChartXAxis.setValueFormatter(binAxisFormatter);
-                barChartXAxis.setDrawGridLines(false); // Set this to true to draw grid lines for this axis.
-                barChartXAxis.setLabelCount(bins.size());  // Set the number of labels on the x-axis
-                barChartXAxis.setTextSize(15f); // The size of the label on the x axis
+//                XAxis barChartXAxis = histogram.getXAxis();
+//                barChartXAxis.setValueFormatter(binAxisFormatter);
+                YAxis barChartYAxis = histogram.getAxisLeft();
+                barChartYAxis.setGranularity(1f);
+                barChartYAxis.setGranularityEnabled(true);
+                barChartYAxis.setLabelCount(bins.size());  // Set the number of labels on the x-axis
+                barChartYAxis.setTextSize(15f); // The size of the label on the x axis
+                barChartYAxis.setDrawGridLines(false); // Set this to true to draw grid lines for this axis.
+                barChartYAxis.setValueFormatter(new IndexAxisValueFormatter(labels));
 
                 BarData histogramData = new BarData(histogramDataSet);
 
@@ -183,7 +205,7 @@ public class StatsView extends AppCompatActivity {
                 for (int i = 0; i < statsDataList.size(); i++) {
                     sortedArray.add((Double) statsDataList.get(i).get(0));
                 }
-                double[] quartiles = stats.quartiles(sortedArray);
+//                double[] quartiles = stats.quartiles(sortedArray);
                 double SD = stats.calculateSD(sortedArray);
                 double mean = (double) stats.calcMean(statsDataList);
                 double median = (double) stats.calcMedian(statsDataList);

@@ -350,7 +350,7 @@ public class UploadTrial extends AppCompatActivity {
             Toast.makeText(UploadTrial.this, "You don't have the privilege to delete trials",Toast.LENGTH_SHORT).show();
         }
 
-    }
+    }//onCreate
 
 //    public void locationClick(){
 //        new LocationWithPermission(UploadTrial.this).getLatLng(new GeneralDataCallBack() {
