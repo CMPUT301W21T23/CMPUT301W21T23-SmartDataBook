@@ -179,15 +179,6 @@ public class StatsView extends AppCompatActivity {
                     Log.d("label", labels[i]);
                 }
 
-//                ValueFormatter binAxisFormatter = new ValueFormatter() {
-//                    @Override
-//                    public String getFormattedValue(float value) {
-//                        Log.d("Value", "" + value);
-//                        int roundedIndex = Math.round(value);
-//                        return bins.keySet().toArray()[roundedIndex].toString();
-//                    }
-//                };
-
                 ValueFormatter binBinomialFormatter = new ValueFormatter() {
                     @Override
                     public String getFormattedValue(float value) {
@@ -254,44 +245,6 @@ public class StatsView extends AppCompatActivity {
 
                 if (statsDataList.size() > 0) {
 
-                    double SD = stats.calculateSD(sortedArray);
-                    double mean = (double) stats.calcMean(statsDataList);
-                    double median = (double) stats.calcMedian(statsDataList);
-
-                    String medianText = String.valueOf(median);
-                    String meanText = String.valueOf(mean);
-
-                    if (experiment.getTrialType().equals("Binomial")) {
-                        meanText = "Mean (Pass %): " + meanText;
-                    } else {
-                        meanText = "Mean (Ave. Value): " + meanText;
-                    }
-                    meanView.setText(meanText);
-                    medianView.setText("Median: " + medianText);
-                    SDView.setText("Std: " + String.valueOf(SD));
-                } else {
-                    meanView.setText("Mean: " + "Empty data set");
-                    medianView.setText("Median: " + "Empty data set");
-                    SDView.setText("Std: " + "Empty data set");
-                }
-
-                TextView q1 = findViewById(R.id.quartile1TextView);
-                TextView q2 = findViewById(R.id.quartile2TextView);
-                TextView q3 = findViewById(R.id.quartile3TextView);
-
-                if (statsDataList.size() >= 3 ) {
-                    double[] quartiles = stats.quartiles(sortedArray);
-                    q1.setText("Quartile 1: "+Double.toString(quartiles[0]));
-                    q2.setText("Quartile 2: "+Double.toString(quartiles[1]));
-                    q3.setText("Quartile 3: "+Double.toString(quartiles[2]));
-                } else {
-
-                    q1.setText("Quartile 1: "+ "Not enough data");
-                    q2.setText("Quartile 2: "+ "Not enough data");
-                    q3.setText("Quartile 3: "+ "Not enough data");
-                }
-
-                if (statsDataList.size() > 0) {
                     double SD = stats.calculateSD(sortedArray);
                     double mean = (double) stats.calcMean(statsDataList);
                     double median = (double) stats.calcMedian(statsDataList);

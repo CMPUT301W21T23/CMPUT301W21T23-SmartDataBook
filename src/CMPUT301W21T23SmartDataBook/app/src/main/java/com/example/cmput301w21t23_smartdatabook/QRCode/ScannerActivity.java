@@ -62,7 +62,6 @@ public class ScannerActivity extends AppCompatActivity implements ZXingScannerVi
 	StringDate stringDate = new StringDate();
 	Experiment experiment;
 	User user = User.getUser();
-	QRCode QRcode = new QRCode();
 
 	@Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -255,37 +254,80 @@ public class ScannerActivity extends AppCompatActivity implements ZXingScannerVi
 				Location location = (Location) returnedObject;
 				LatLng latlng = new LatLng(location.getLatitude(), location.getLongitude());
 				String[] values = rawResult.split(",");
-
-				if (values[3].equals("Binomial")) {
-					//Need to add in given number of binomial trials
-					for (int i = 1; i <= Integer.parseInt(values[2]); i++) {
-						Trial trial = new Trial(Boolean.parseBoolean(values[4]),
-								values[3],
-								Boolean.parseBoolean(values[5]),
-								values[1],
-								UUID.randomUUID().toString(),
-								stringDate.getCurrentDate(),
-								experiment.getRequireLocation() ? latlng : null);
-						database.addTrialToDB(db.collection("Experiments")
+				if (experiment.getExpID().equals(values[0])){
+					if (values[3].equals("Binomial")) {
+						db
+								.collection("Experiments")
 								.document(values[0])
 								.collection("Trials")
-								.document(trial.getTrialID()), trial);
+								.get()
+								.addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
+									@Override
+									public void onComplete(@NonNull Task<QuerySnapshot> task) {
+										if (task.isSuccessful()) {
+											int count = 0;
+											for (QueryDocumentSnapshot document : task.getResult()) {
+												count += 1;
+											}
+											if ((count + Integer.parseInt(values[2])) >= experiment.getMaxTrials()) {
+												Toast.makeText(ScannerActivity.this, "You cannot add more trials than the maximum trials for this experiment at once", Toast.LENGTH_SHORT).show();
+											} else {
+												for (int i = 0; i < Integer.parseInt(values[2]); i++) {
+													Trial trial = new Trial(Boolean.parseBoolean(values[4]),
+															values[3],
+															Boolean.parseBoolean(values[5]),
+															values[1],
+															UUID.randomUUID().toString(),
+															stringDate.getCurrentDate(),
+															experiment.getRequireLocation() ? latlng : null);
+													database.addTrialToDB(db.collection("Experiments")
+															.document(values[0])
+															.collection("Trials")
+															.document(trial.getTrialID()), trial);
+												}
+											}
+										}
+									}
+								});
+					} else {
+						db
+								.collection("Experiments")
+								.document(values[0])
+								.collection("Trials")
+								.get()
+								.addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
+									@Override
+									public void onComplete(@NonNull Task<QuerySnapshot> task) {
+										if (task.isSuccessful()) {
+											int count = 0;
+											for (QueryDocumentSnapshot document : task.getResult()) {
+												count += 1;
+											}
+											if (count< experiment.getMaxTrials()){
+												Trial trial = new Trial(Boolean.parseBoolean(values[4]),
+														values[3],
+														Float.parseFloat(values[2]),
+														values[1],
+														UUID.randomUUID().toString(),
+														stringDate.getCurrentDate(),
+														experiment.getRequireLocation() ? latlng : null);
+
+												database.addTrialToDB(db.collection("Experiments")
+														.document(values[0])
+														.collection("Trials")
+														.document(trial.getTrialID()), trial);
+											}
+										}
+									}
+								});
 					}
 
-				} else {
-					Trial trial = new Trial(Boolean.parseBoolean(values[4]),
-							values[3],
-							Float.parseFloat(values[2]),
-							values[1],
-							UUID.randomUUID().toString(),
-							stringDate.getCurrentDate(),
-							experiment.getRequireLocation() ? latlng : null);
-
-					database.addTrialToDB(db.collection("Experiments")
-							.document(values[0])
-							.collection("Trials")
-							.document(trial.getTrialID()), trial);
+				} else{
+					onBackPressed();
+					Toast.makeText(getBaseContext(), "That QR code is not valid for this experiment", Toast.LENGTH_SHORT).show();
 				}
+
+
 			}
 		});
 	}

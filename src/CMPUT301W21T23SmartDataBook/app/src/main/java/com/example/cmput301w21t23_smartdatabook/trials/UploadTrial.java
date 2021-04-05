@@ -276,7 +276,7 @@ public class UploadTrial extends AppCompatActivity {
                                                                 for (int i = 0; i < Integer.parseInt(numBinomial.getText().toString()); i++) {
                                                                     Trial trial = new Trial(experiment.getRequireLocation(),
                                                                             experiment.getTrialType(),
-                                                                            true,
+                                                                            false,
                                                                             experiment.getOwnerUserID(),
                                                                             UUID.randomUUID().toString(),
                                                                             stringDate.getCurrentDate(),
