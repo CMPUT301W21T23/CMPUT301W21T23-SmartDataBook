@@ -6,6 +6,7 @@ import android.os.Parcelable;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AbsListView;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
@@ -127,6 +128,19 @@ public class homePage extends Fragment {
         searchDataList = new ArrayList<>();
 
         experimentAdapter = new CardList(getContext(), experimentDataList, new Hashtable<String, User>(), 1);
+
+        //Source: ColdFire; https://stackoverflow.com/users/886001/coldfire
+        //Code: https://stackoverflow.com/questions/7093483/why-listview-items-becomes-not-clickable-after-scroll/7104933
+        experimentList.setOnScrollListener(new AbsListView.OnScrollListener(){
+            public void onScrollStateChanged(AbsListView view, int scrollState) {
+                if ( scrollState == AbsListView.OnScrollListener.SCROLL_STATE_IDLE )
+                {
+                    experimentList.invalidateViews();
+                }
+            }
+            @Override
+            public void onScroll(AbsListView arg0, int arg1, int arg2, int arg3) {}
+        });
 
         //Source: Erwin Kurniawan A; https://stackoverflow.com/users/7693494/erwin-kurniawan-a
         //Code: https://stackoverflow.com/questions/61930061/how-to-return-a-value-from-oncompletelistener-while-creating-user-with-email-and
