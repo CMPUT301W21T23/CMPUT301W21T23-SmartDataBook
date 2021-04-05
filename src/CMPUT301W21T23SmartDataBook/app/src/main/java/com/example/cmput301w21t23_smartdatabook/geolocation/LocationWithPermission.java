@@ -40,7 +40,6 @@ import java.util.List;
  */
 public class LocationWithPermission {
 	private AppCompatActivity activity;
-	private boolean success = false;
 
 	public LocationWithPermission(AppCompatActivity activity) {
 		this.activity = activity;
