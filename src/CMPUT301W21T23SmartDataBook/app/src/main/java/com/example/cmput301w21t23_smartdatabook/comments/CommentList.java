@@ -19,6 +19,7 @@ import java.util.ArrayList;
 /**
  * Class: commentList, that is list consists of comments
  * @author Bosco Chan
+ * @see Comment
  */
 public class CommentList extends ArrayAdapter<Comment> {
 
