@@ -77,6 +77,7 @@ public class LocationWithPermission {
 				public void onPermissionDenied(PermissionDeniedResponse permissionDeniedResponse) {
                     Toast.makeText(activity.getBaseContext(), "" + permissionDeniedResponse.isPermanentlyDenied(), Toast.LENGTH_SHORT).show();
 
+                    // Reused code from scanner activity
                     //Source: Opeyemi, https://stackoverflow.com/users/8226150/opeyemi
                     //Code: https://stackoverflow.com/questions/50639292/detecting-wether-a-permission-can-be-requested-or-is-permanently-denied
                     if (permissionDeniedResponse.isPermanentlyDenied()) {

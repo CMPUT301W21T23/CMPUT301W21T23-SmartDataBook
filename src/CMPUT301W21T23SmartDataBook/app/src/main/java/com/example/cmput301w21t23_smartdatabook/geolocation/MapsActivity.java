@@ -42,6 +42,10 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
     Experiment experiment;
     String main;
 
+    /**
+     * onCreate method for MapActivity
+     * @param savedInstanceState
+     */
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -61,6 +65,10 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
         mapFragment.getMapAsync(this);
     }
 
+    /**
+     * This function handles result map, process marker, and put it on map, like callback
+     * @param googleMap: a GoogleMap object
+     */
     @Override
     public void onMapReady(GoogleMap googleMap) {
         mMap = googleMap;
