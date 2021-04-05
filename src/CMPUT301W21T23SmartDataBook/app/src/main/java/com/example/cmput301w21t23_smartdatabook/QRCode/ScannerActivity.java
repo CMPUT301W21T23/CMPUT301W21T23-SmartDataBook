@@ -48,7 +48,8 @@ import me.dm7.barcodescanner.zxing.ZXingScannerView;
  * this class will use the emulators camera to scan the barcode using the Zxing librabry
  * once scanned the rawResult will be added to the database
  * references: https://www.youtube.com/watch?v=AiNi9K94W5c&ab_channel=MdJamal
- * @author Afaq
+ * @author Afaq Nabi
+ * @see QRCode
  */
 
 public class ScannerActivity extends AppCompatActivity implements ZXingScannerView.ResultHandler{
@@ -60,6 +61,12 @@ public class ScannerActivity extends AppCompatActivity implements ZXingScannerVi
 	User user = User.getUser();
 	QRCode QRcode = new QRCode();
 
+	/**
+	 * This functuon sets up the view when the camera us scanning the barcode
+	 * It deals with the user chooses to accept/ deny permission for the app to use the camera
+	 * If the app can't use the phone's camera because the user denied permission, then display a dialog to notify the user
+	 * @param savedInstanceState
+	 */
 	@Override
     protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
@@ -117,6 +124,11 @@ public class ScannerActivity extends AppCompatActivity implements ZXingScannerVi
 			}).check();
 	}
 
+	/**
+	 * This functions handles the captured result from the user's phone camera
+	 * we use serliazable to pass in experiment data, we also use if statmenet to check whether the captured results has a QR code
+	 * @param rawResult
+	 */
 	@Override
 	public void handleResult(Result rawResult) {
 		Log.e("format", rawResult.getBarcodeFormat().toString());
@@ -139,32 +151,46 @@ public class ScannerActivity extends AppCompatActivity implements ZXingScannerVi
 
 	}
 
+	/**
+	 * onPause function, it stops the camera
+	 */
 	@Override
 	protected void onPause() {
 		super.onPause();
 		scannerView.stopCamera();
 	}
 
+	/**
+	 * onResume function, resume the view
+	 */
 	@Override
 	protected void onResume() {
 		super.onResume();
 		scannerView.setResultHandler(this);
 	}
 
+	/**
+	 * onDestroy function, it stops the camera as well
+	 */
 	@Override
 	protected void onDestroy() {
 		super.onDestroy();
 		scannerView.stopCamera();
 	}
 
-	// if a barcode or anything other than a QR code is scanned for th epurpose of
-	// registering it to a trial for an experiment
+	/**
+	 * This function runs if a barcode or anything other than a QR code is scanned for the purpose of registering it to a trial for an experiment
+	 * @param rawResult: string object showing the raw result
+	 * @param experiment: Experiment object represents an experiment
+	 */
 	private void registerBarcode(String rawResult, Experiment experiment){
 		View trialView = LayoutInflater.from(ScannerActivity.this).inflate(R.layout.barcode, null);
 		EditText value = trialView.findViewById(R.id.value);
 		TextView trueFalse = trialView.findViewById(R.id.true_false);
 		Switch switchTF = trialView.findViewById(R.id.switchTF);
 
+		// use if-else statement to handle input type and increment input type
+		// if the trial type is binomial then true false switch will be set to visible
 		int inputType = InputType.TYPE_CLASS_NUMBER;
 		if (experiment.getTrialType().equals("Count")) {
 			inputType += InputType.TYPE_NUMBER_FLAG_SIGNED;
@@ -176,6 +202,7 @@ public class ScannerActivity extends AppCompatActivity implements ZXingScannerVi
 		}
 		value.setInputType(inputType);
 
+		// displaying the switch
 		switchTF.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
 			@Override
 			public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
@@ -187,6 +214,7 @@ public class ScannerActivity extends AppCompatActivity implements ZXingScannerVi
 			}
 		});
 
+		// use a dialog to show enter value for trial
 		AlertDialog.Builder builder = new AlertDialog.Builder(ScannerActivity.this);
 		builder.setTitle("Enter value for trial")
 				.setView(trialView)
