@@ -55,7 +55,6 @@ import me.dm7.barcodescanner.zxing.ZXingScannerView;
  * references: https://www.youtube.com/watch?v=AiNi9K94W5c&ab_channel=MdJamal
  * @author Afaq
  */
-
 public class ScannerActivity extends AppCompatActivity implements ZXingScannerView.ResultHandler{
 	ZXingScannerView scannerView;
 	Database database = Database.getDataBase();

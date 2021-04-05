@@ -55,7 +55,7 @@ public class Experiment implements Serializable, Parcelable {
 
         this.expName = expName;
         this.ownerUserID = ownerUserID;
-        this.ownerUserName = ownerUserName;
+//        this.ownerUserName = ownerUserName;
         this.trialType = trialType;
         this.description = description;
         this.requireLocation = regionOn;

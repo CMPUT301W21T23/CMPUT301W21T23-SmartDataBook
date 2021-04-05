@@ -27,7 +27,7 @@ import java.util.Hashtable;
 /**
  * Archives activity page
  * shows a listview of the experiments that have been "ended"
- * @author Alex Mak
+ * @author Alex Mak, Bosco Chan, Afaq Nabi
  */
 
 public class ArchivePage extends Fragment {
@@ -59,6 +59,11 @@ public class ArchivePage extends Fragment {
         return fragment;
     }
 
+    /**
+     * This function updates the archive page, through fragment transaction, the code has been reused from homePage.java
+     * @param query
+     * @param currentFragment
+     */
     public void doUpdate(String query, Fragment currentFragment) {
 
         currentQuery = query;
@@ -75,6 +80,10 @@ public class ArchivePage extends Fragment {
 
     }
 
+    /**
+     * The onCreate function of Archive Page, the code has been reused from homePage.java
+     * @param savedInstanceState
+     */
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -87,6 +96,13 @@ public class ArchivePage extends Fragment {
         database = new Database();
     }
 
+    /**
+     * The onCreateView function of Archive Page, the code has been reused from homePage.java
+     * @param inflater
+     * @param container
+     * @param savedInstanceState
+     * @return
+     */
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         // Inflate the layout for this fragment
@@ -160,10 +176,12 @@ public class ArchivePage extends Fragment {
 
         return view;
 
-        // same as home page, even same adapter, copy the whole code, change the array adapter and the list
+
     }
 
-    // copied from homePage
+    /**
+     * The onResume function of Archive Page, the code has been reused from homePage.java
+     */
     @Override
     public void onResume() {
         super.onResume();

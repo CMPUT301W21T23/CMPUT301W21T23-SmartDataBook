@@ -150,6 +150,7 @@ public class UploadTrial extends AppCompatActivity {
                         .collection("Trials")
                 , trialDataList, trialArrayAdapter);
 
+        Log.d("trialAdapter", Integer.toString(trialArrayAdapter.getCount()));
 
         // TODO: Users can delete the trials that they entered but owner can delete any trials
         if (experiment.getOwnerUserID().equals(user.getUserUniqueID())) {
