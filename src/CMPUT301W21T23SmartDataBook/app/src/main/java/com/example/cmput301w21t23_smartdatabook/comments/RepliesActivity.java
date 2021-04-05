@@ -30,6 +30,7 @@ import java.util.UUID;
  * Class: Replies Activity
  * shows the activity of the comments
  * @author Bosco Chan, Afaq Nabi
+ * @see Comment, CommentList
  */
 
 public class RepliesActivity extends AppCompatActivity {

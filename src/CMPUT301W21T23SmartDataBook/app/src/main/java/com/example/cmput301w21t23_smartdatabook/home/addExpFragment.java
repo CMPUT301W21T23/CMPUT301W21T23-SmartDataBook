@@ -65,6 +65,15 @@ public class addExpFragment extends Fragment {
     private User user = User.getUser();
     private AppCompatActivity activity;
 
+    /**
+     * The onCreateView function of addExperimentFragment
+     * This functions sets up the visual representation (NumberPicker, TextInputLayout, RadioGroup, Switch Material
+     * This function also displays the errors the user potentially made when they add a new experiment.
+     * @param inflater
+     * @param container
+     * @param savedInstanceState
+     * @return
+     */
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         // Inflate the layout for this fragment
@@ -92,15 +101,15 @@ public class addExpFragment extends Fragment {
         SwitchMaterial LocationToggle = view.findViewById(R.id.newExperimentLocationToggleSwitch);
         SwitchMaterial PublicPrivateToggle = view.findViewById(R.id.newExperimentLocationPublishToggleSwitch);
 
-        //Source: user; https://stackoverflow.com/users/493939/user
-        //Code: https://stackoverflow.com/questions/10356733/getcheckedradiobuttonid-returning-useless-inthttps://stackoverflow.com/questions/10356733/getcheckedradiobuttonid-returning-useless-int
         binomial.setId(binomialID);
         count.setId(countID);
         nonNegative.setId(nonNegativeID);
         measurement.setId(measurementID);
 
+        // we have learned the idea of andorid number picker from the websites below
         //Source: Zoftino; https://www.zoftino.com/
         //Code: https://www.zoftino.com//android-number-picker-tutorial
+
         maxTrials.setMinValue(2);
         maxTrials.setMaxValue(50);
         minTrials.setMinValue(1);
@@ -159,6 +168,7 @@ public class addExpFragment extends Fragment {
                     return;
                 }
                 fusedLocationProviderClient.getLastLocation().addOnSuccessListener(activity, new OnSuccessListener<Location>() {
+                    // displays errors through toasts
                     @Override
                     public void onSuccess(Location location) {
                         LatLng latlng = new LatLng(location.getLatitude(), location.getLongitude());

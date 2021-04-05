@@ -28,6 +28,7 @@ import java.util.UUID;
  * Class: CommentActivity
  * shows the activity of the comments
  * @author Bosco Chan, Afaq Nabi
+ * @see Comment
  */
 public class CommentActivity extends AppCompatActivity {
     // initialize variables

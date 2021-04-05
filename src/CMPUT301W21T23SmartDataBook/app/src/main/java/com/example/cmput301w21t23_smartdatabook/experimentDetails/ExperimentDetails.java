@@ -45,16 +45,21 @@ import java.util.Date;
  * switch button that turns on/ off an experiment's trial location.
  * @author Afaq Nabi, Bosco Chan, Jayden
  * @version 1
- * @see Experiment ,
+ * @see Experiment
  */
 public class ExperimentDetails extends AppCompatActivity {
     User user = User.getUser();
     Database database = Database.getDataBase();
     StringDate date = new StringDate();
 
+    /**
+     * onCreate method that sets up the experiment details page
+     * @param savedInstanceState
+     */
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        //initialize elements in the experiment details page
         setContentView(R.layout.experiment_details);
 
         setSupportActionBar(findViewById(R.id.app_toolbar));
@@ -71,7 +76,6 @@ public class ExperimentDetails extends AppCompatActivity {
 
         View userInfoView = LayoutInflater.from(ExperimentDetails.this).inflate(R.layout.view_profile, null);
 
-
         AppCompatImageButton scan = findViewById(R.id.scanner);
         scan.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -83,6 +87,7 @@ public class ExperimentDetails extends AppCompatActivity {
             }
         });
 
+        // Setting up visual representation(TextView, Button, checkbox) of experiment details page
         TextView username = userInfoView.findViewById(R.id.expOwner);
         username.setText("Username: " + user.getUserName());
 
