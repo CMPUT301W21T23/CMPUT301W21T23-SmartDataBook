@@ -26,6 +26,7 @@ import com.google.android.material.button.MaterialButton;
  * this will call the QR code based on input and show it to the user
  * its the user's responsibility to save the  QR code
  * @author Afaq Nabi, Bosco Chan
+ * @see QRCode
  */
 public class QRCodeActivity extends AppCompatActivity {
     User user = User.getUser();
@@ -33,6 +34,10 @@ public class QRCodeActivity extends AppCompatActivity {
     private static final int passID = 1;
     private static final int failID = 0;
 
+    /**
+     * onCreate method that sets up the screen of generating QR code
+     * @param savedInstanceState
+     */
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -122,6 +127,12 @@ public class QRCodeActivity extends AppCompatActivity {
 
     }//onCreate
 
+    /**
+     * This functions gets Binomial Type, because it has passes and failures
+     * We use a switch case to get the binomial type
+     * @param binoTypeID
+     * @return boolean (either true, false, or null) based of the binomial type
+     */
     public Boolean findBinoType(int binoTypeID) {
         switch (binoTypeID) {
             case passID:
