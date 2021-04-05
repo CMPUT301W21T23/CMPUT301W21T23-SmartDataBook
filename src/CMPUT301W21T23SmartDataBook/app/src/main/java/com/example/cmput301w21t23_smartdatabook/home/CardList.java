@@ -73,13 +73,17 @@ public class CardList extends ArrayAdapter<Experiment> {
     }
 
     /**
-     * Set attributes of the name, date, ownerName, experimentDescription and region in the list
+     * This functions
+     * Initialize elements, like inflates the layout, sets attributes of the name, date, ownerName, experimentDescription and region in the list
+     * Display the visual representation of each experiment card(textview, Button, checkbox etc)
+     * Setting up onclick for clicking the experiment card, as well as buttons and checkbox on the experiment card
      * @param position
      * @param convertView
      * @param parent
      * @return view
      */
 
+    // we have learned how to handle the issue of listview item's positions changed on scroll, through stack overflow
     //Source: Tautvydas; https://stackoverflow.com/users/951894/tautvydas
     //Code: https://stackoverflow.com/questions/22919417/listview-items-change-position-on-scroll/22919488
     public View getView(int position, @Nullable View convertView, @NonNull ViewGroup parent) {
@@ -114,6 +118,7 @@ public class CardList extends ArrayAdapter<Experiment> {
             experimentDescription.setText(experiment.getDescription());
             region.setText(null);
 
+            // when the user click the comment button
             Button comment = v.findViewById(R.id.comment_btn);
             comment.setOnClickListener(new View.OnClickListener() {
                 @Override
@@ -126,8 +131,8 @@ public class CardList extends ArrayAdapter<Experiment> {
                     context.startActivity(intent);
                 }
             });
-
-            // https://developer.android.com/reference/android/widget/CheckBox
+            // We have learned the idea of CheckBox from developer.android.com
+            // URL: https://developer.android.com/reference/android/widget/CheckBox
             CheckBox follow = v.findViewById(R.id.fav);
             db.collection("Users")
                     .document(user.getUserUniqueID())
@@ -144,6 +149,7 @@ public class CardList extends ArrayAdapter<Experiment> {
                 }
             });
 
+            // gets the favourite experiments
             follow.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
                   @Override
                   public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
@@ -179,6 +185,7 @@ public class CardList extends ArrayAdapter<Experiment> {
             TextView email = userInfoView.findViewById(R.id.expContact);;
             email.setText("Email: " + UserName.get(experiment.getOwnerUserID()).getUserContact() );
 
+            // when the user clicks the experiment's owner name
             ownerName.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
