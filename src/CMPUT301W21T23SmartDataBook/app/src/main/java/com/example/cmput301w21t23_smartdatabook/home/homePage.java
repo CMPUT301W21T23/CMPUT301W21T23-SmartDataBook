@@ -105,7 +105,6 @@ public class homePage extends Fragment {
 
         experimentDataList = new ArrayList<>();
         searchDataList = new ArrayList<>();
-
         experimentAdapter = new CardList(getContext(), experimentDataList, new Hashtable<String, User>(), 1);
 
         //Source: Erwin Kurniawan A; https://stackoverflow.com/users/7693494/erwin-kurniawan-a

@@ -8,6 +8,7 @@ import android.os.Parcelable;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.TextView;
@@ -20,6 +21,7 @@ import androidx.appcompat.widget.AppCompatImageButton;
 import com.example.cmput301w21t23_smartdatabook.QRCode.QRCodeActivity;
 import com.example.cmput301w21t23_smartdatabook.QRCode.ScannerActivity;
 import com.example.cmput301w21t23_smartdatabook.StringDate;
+import com.example.cmput301w21t23_smartdatabook.database.GeneralDataCallBack;
 import com.example.cmput301w21t23_smartdatabook.geolocation.MapsActivity;
 import com.example.cmput301w21t23_smartdatabook.stats.StatsView;
 import com.example.cmput301w21t23_smartdatabook.user.User;
@@ -35,6 +37,7 @@ import org.w3c.dom.Text;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
+import java.util.Hashtable;
 
 /**
  * Class:ExperimentDetails
@@ -83,21 +86,43 @@ public class ExperimentDetails extends AppCompatActivity {
             }
         });
 
-        TextView username = userInfoView.findViewById(R.id.expOwner);
-        username.setText("Username: " + user.getUserName());
 
-        TextView email = userInfoView.findViewById(R.id.expContact);;
-        email.setText("Email: " + user.getUserContact());
-
-        TextView Owner = findViewById(R.id.owner);
-        Owner.setText(experiment.getOwnerUserName());
-        Owner.setOnClickListener(new View.OnClickListener() {
+        database.fillUserName(new GeneralDataCallBack() {
             @Override
-            public void onClick(View v) {
-                // TODO: new user details activity
-                AlertDialog.Builder builder = new AlertDialog.Builder(ExperimentDetails.this);
-                builder.setView(userInfoView)
-                        .setNegativeButton("Close", null).create().show();
+            public void onDataReturn(Object returnedObject) {
+                Hashtable<String, User> UserName = (Hashtable<String, User>) returnedObject;
+                TextView username = userInfoView.findViewById(R.id.expOwner);
+                username.setText("Username: " + UserName.get( user.getUserUniqueID() ).getUserName());
+
+                TextView email = userInfoView.findViewById(R.id.expContact);;
+                email.setText("Email: " + UserName.get( user.getUserUniqueID() ).getUserContact());
+
+                TextView Owner = findViewById(R.id.owner);
+
+//              Owner.setText(experiment.getOwnerUserName());
+                Owner.setText(UserName.get( user.getUserUniqueID() ).getUserName());
+
+
+                Owner.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        if (userInfoView.getParent() != null) {
+                            ((ViewGroup) userInfoView.getParent()).removeView(userInfoView);
+                        }
+
+                        AlertDialog.Builder builder = new AlertDialog.Builder(ExperimentDetails.this);
+                        builder.setView(userInfoView)
+                                .setNegativeButton("Close", null)
+                                .create()
+                                .show();
+
+
+                    }
+                });
+
+
+
+
             }
         });
 
