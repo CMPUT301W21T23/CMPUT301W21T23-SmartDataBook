@@ -100,7 +100,6 @@ public class ExperimentDetails extends AppCompatActivity {
 
                 Owner.setText(UserName.get( user.getUserUniqueID() ).getUserName());
 
-
                 Owner.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
@@ -114,8 +113,12 @@ public class ExperimentDetails extends AppCompatActivity {
                                 .create()
                                 .show();
 
+                        ((ViewGroup) userInfoView.getParent()).addView(userInfoView);
+
                     }
                 });
+
+
             }
         });
 

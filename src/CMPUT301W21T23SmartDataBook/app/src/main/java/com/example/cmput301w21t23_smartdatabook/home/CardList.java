@@ -193,6 +193,7 @@ public class CardList extends ArrayAdapter<Experiment> {
                     builder.setView(userInfoView)
                             .setNegativeButton("Close", null).create().show();
 
+                    ((ViewGroup) userInfoView.getParent()).addView(userInfoView);
                 }
             });
 
