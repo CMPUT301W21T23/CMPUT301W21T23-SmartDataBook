@@ -42,6 +42,7 @@ import java.util.Set;
 /**
  * this class will show the various stats required for the experiments and trials
  * @author Afaq, Bosco
+ * @see Trial , Experiment
  */
 public class StatsView extends AppCompatActivity {
 
@@ -52,8 +53,15 @@ public class StatsView extends AppCompatActivity {
     private HashMap<Object, Integer> bins = new HashMap<>();
     StringDate dateClass = new StringDate();
 
+    /**
+     * onCreate function for statsView
+     * This function sets up the view of stats, and display it
+     * It also displays the statistics, such as mean, median, standard deviation
+     * @param savedInstanceState
+     */
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+        // sets up visualization of stats
         super.onCreate(savedInstanceState);
         setContentView(R.layout.graph_layout);
 
@@ -78,6 +86,12 @@ public class StatsView extends AppCompatActivity {
         TextView medianView = findViewById(R.id.medianTextView);
         TextView SDView = findViewById(R.id.stdDeviationTextView);
 
+        /**
+         * onDataReturn method, it:
+         * setting up the barchart and histograms, including their elements like data, axis labels etc.
+         */
+        // The bottom part of the code has been reused from HomePage
+        // We have learned the idea of building android chart from the site below
         // https://weeklycoding.com/mpandroidchart-documentation/getting-started/
         //Source: Erwin Kurniawan A; https://stackoverflow.com/users/7693494/erwin-kurniawan-a
         //Code: https://stackoverflow.com/questions/61930061/how-to-return-a-value-from-oncompletelistener-while-creating-user-with-email-and
@@ -103,6 +117,7 @@ public class StatsView extends AppCompatActivity {
                 for (int i = 0; i<statsDataList.size(); i++) {
                     String key = statsDataList.get(i).get(0).toString();
 
+                    // We have learned the idea on incrementing map values, on the following sites below
                     //Source: gregory; https://stackoverflow.com/users/10204/gregory
                     //Code: https://stackoverflow.com/questions/81346/most-efficient-way-to-increment-a-map-value-in-java#:~:text=Map%20map,a%20value%20with%20simple%20code.
                     Integer count = bins.containsKey(key) ? bins.get(key) : 0;
@@ -130,6 +145,8 @@ public class StatsView extends AppCompatActivity {
                     j+=1;
                 }
 
+
+                // we have learned the idea of setting X-Axis value to date format, from the sites below
                 //Source: sidcgithub; https://github.com/sidcgithub
                 //Code: https://github.com/PhilJay/MPAndroidChart/issues/3705
                 ValueFormatter dateAxisFormatter = new ValueFormatter() {
