@@ -90,7 +90,6 @@ public class ExperimentDetails extends AppCompatActivity {
             }
         });
 
-
         database.fillUserName(new GeneralDataCallBack() {
             @Override
             public void onDataReturn(Object returnedObject) {

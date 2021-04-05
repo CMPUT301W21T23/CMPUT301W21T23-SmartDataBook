@@ -21,15 +21,6 @@ import com.google.firebase.firestore.FirebaseFirestore;
 
 // TODO: change name to User contact instead of settings
 public class SettingsPage extends Fragment {
-	private static final String AP1 = "AP1";
-	private static final String AP2 = "AP2";
-	private static final String TAG1 = "Your";
-	private static final String TAG2 = "Warning";
-	private static final String TAG3 = "Exception";
-
-	private FirebaseFirestore db;
-	private FirebaseAuth mAuth;
-
 	public EditText usernameTextField;
 	public EditText emailTextField;
 
