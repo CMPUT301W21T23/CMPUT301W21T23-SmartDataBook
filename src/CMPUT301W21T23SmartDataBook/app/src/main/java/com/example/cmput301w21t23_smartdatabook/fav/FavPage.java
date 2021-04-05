@@ -34,6 +34,7 @@ import java.util.Hashtable;
  */
 public class FavPage extends Fragment {
 
+    // initialize elements
     private ListView favList;
     private static ArrayAdapter<Experiment> favAdapter;
     private static ArrayList<Experiment> favDataList;
@@ -56,6 +57,10 @@ public class FavPage extends Fragment {
         return fragment;
     }
 
+    /**
+     * onCreate method of Favourite page
+     * @param savedInstanceState
+     */
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -64,6 +69,11 @@ public class FavPage extends Fragment {
         }
     }
 
+    /**
+     * The method updates the favourite page if there are any queries
+     * @param query
+     * @param currentFragment
+     */
     public void doUpdate(String query, Fragment currentFragment) {
 
         currentQuery = query;
@@ -80,7 +90,7 @@ public class FavPage extends Fragment {
     }
 
     /**
-     * this emthod create the view of the user's favourite experiments page
+     * this method create the view of the user's favourite experiments page
      * @param inflater
      * @param container
      * @param savedInstanceState
@@ -161,6 +171,9 @@ public class FavPage extends Fragment {
         return view;
     }//onCreateView
 
+    /**
+     * onResume method of Favourite page
+     */
     @Override
     public void onResume(){
         super.onResume();
