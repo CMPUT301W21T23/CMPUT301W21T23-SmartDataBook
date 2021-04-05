@@ -63,7 +63,6 @@ public class ExperimentDetails extends AppCompatActivity {
         setSupportActionBar(findViewById(R.id.app_toolbar));
         ActionBar toolbar = getSupportActionBar();
         assert toolbar != null;
-        toolbar.setDisplayHomeAsUpEnabled(true);
 
         FirebaseFirestore db = FirebaseFirestore.getInstance();
 
@@ -99,7 +98,6 @@ public class ExperimentDetails extends AppCompatActivity {
 
                 TextView Owner = findViewById(R.id.owner);
 
-//              Owner.setText(experiment.getOwnerUserName());
                 Owner.setText(UserName.get( user.getUserUniqueID() ).getUserName());
 
 
@@ -116,13 +114,8 @@ public class ExperimentDetails extends AppCompatActivity {
                                 .create()
                                 .show();
 
-
                     }
                 });
-
-
-
-
             }
         });
 
