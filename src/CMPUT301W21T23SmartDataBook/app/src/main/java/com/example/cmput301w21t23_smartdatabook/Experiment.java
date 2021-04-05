@@ -2,9 +2,7 @@ package com.example.cmput301w21t23_smartdatabook;
 
 import android.os.Parcel;
 import android.os.Parcelable;
-
 import com.google.android.gms.maps.model.LatLng;
-
 import java.io.Serializable;
 
 
@@ -47,6 +45,8 @@ public class Experiment implements Serializable, Parcelable {
      * @param maxTrials
      * @param isPublic
      * @param date
+     * @param expID
+     * @param isEnd
      */
     public Experiment(String expName, String ownerUserID, String ownerUserName,
                       String trialType, String description, boolean regionOn,
@@ -55,7 +55,7 @@ public class Experiment implements Serializable, Parcelable {
 
         this.expName = expName;
         this.ownerUserID = ownerUserID;
-        this.ownerUserName = ownerUserName;
+//        this.ownerUserName = ownerUserName;
         this.trialType = trialType;
         this.description = description;
         this.requireLocation = regionOn;

@@ -126,7 +126,6 @@ public class homePage extends Fragment {
 
         experimentDataList = new ArrayList<>();
         searchDataList = new ArrayList<>();
-
         experimentAdapter = new CardList(getContext(), experimentDataList, new Hashtable<String, User>(), 1);
 
         //Source: ColdFire; https://stackoverflow.com/users/886001/coldfire

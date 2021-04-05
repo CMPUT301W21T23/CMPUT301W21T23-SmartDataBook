@@ -5,6 +5,7 @@ import android.os.Bundle;
 import android.util.Log;
 import android.widget.TextView;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.example.cmput301w21t23_smartdatabook.Experiment;
@@ -25,7 +26,9 @@ import com.github.mikephil.charting.data.Entry;
 import com.github.mikephil.charting.data.LineData;
 import com.github.mikephil.charting.data.LineDataSet;
 //import com.google.firebase.Timestamp;
+import com.github.mikephil.charting.formatter.IndexAxisValueFormatter;
 import com.github.mikephil.charting.formatter.ValueFormatter;
+import com.google.android.material.slider.LabelFormatter;
 import com.google.firebase.firestore.FirebaseFirestore;
 
 import java.text.SimpleDateFormat;
@@ -39,6 +42,7 @@ import java.util.Set;
 /**
  * this class will show the various stats required for the experiments and trials
  * @author Afaq, Bosco
+ * @see Trial , Experiment
  */
 public class StatsView extends AppCompatActivity {
 
@@ -49,8 +53,15 @@ public class StatsView extends AppCompatActivity {
     private HashMap<Object, Integer> bins = new HashMap<>();
     StringDate dateClass = new StringDate();
 
+    /**
+     * onCreate function for statsView
+     * This function sets up the view of stats, and display it
+     * It also displays the statistics, such as mean, median, standard deviation
+     * @param savedInstanceState
+     */
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+        // sets up visualization of stats
         super.onCreate(savedInstanceState);
         setContentView(R.layout.graph_layout);
 
@@ -75,6 +86,12 @@ public class StatsView extends AppCompatActivity {
         TextView medianView = findViewById(R.id.medianTextView);
         TextView SDView = findViewById(R.id.stdDeviationTextView);
 
+        /**
+         * onDataReturn method, it:
+         * setting up the barchart and histograms, including their elements like data, axis labels etc.
+         */
+        // The bottom part of the code has been reused from HomePage
+        // We have learned the idea of building android chart from the site below
         // https://weeklycoding.com/mpandroidchart-documentation/getting-started/
         //Source: Erwin Kurniawan A; https://stackoverflow.com/users/7693494/erwin-kurniawan-a
         //Code: https://stackoverflow.com/questions/61930061/how-to-return-a-value-from-oncompletelistener-while-creating-user-with-email-and
@@ -100,6 +117,7 @@ public class StatsView extends AppCompatActivity {
                 for (int i = 0; i<statsDataList.size(); i++) {
                     String key = statsDataList.get(i).get(0).toString();
 
+                    // We have learned the idea on incrementing map values, on the following sites below
                     //Source: gregory; https://stackoverflow.com/users/10204/gregory
                     //Code: https://stackoverflow.com/questions/81346/most-efficient-way-to-increment-a-map-value-in-java#:~:text=Map%20map,a%20value%20with%20simple%20code.
                     Integer count = bins.containsKey(key) ? bins.get(key) : 0;
@@ -120,13 +138,15 @@ public class StatsView extends AppCompatActivity {
                 }
 
                 //Add entries to barChart (Histogram)
-                int j = 0;
+                int j = 0; //index counter
                 for (Object key: bins.keySet().toArray()) {
                     Log.d("Bin", "" + key.toString() + "|" + bins.get(key.toString()).toString() );
                     barEntries.add( new BarEntry(j, Float.parseFloat( bins.get(key).toString() )) );
                     j+=1;
                 }
 
+
+                // we have learned the idea of setting X-Axis value to date format, from the sites below
                 //Source: sidcgithub; https://github.com/sidcgithub
                 //Code: https://github.com/PhilJay/MPAndroidChart/issues/3705
                 ValueFormatter dateAxisFormatter = new ValueFormatter() {
@@ -136,14 +156,6 @@ public class StatsView extends AppCompatActivity {
                         SimpleDateFormat sdf = new SimpleDateFormat("HH:mm:ss", Locale.ENGLISH);
 //                        Log.d("Date", ""+ (int) value + "|" + sdf.format( dateClass.getDate( statsDataList.get( (int)value ).get(1).toString() )));
                         return sdf.format( date );
-                    }
-                };
-
-                ValueFormatter binAxisFormatter = new ValueFormatter() {
-                    @Override
-                    public String getFormattedValue(float value) {
-                        int roundedIndex = Math.round(value);
-                        return bins.keySet().toArray()[roundedIndex].toString();
                     }
                 };
 
@@ -161,13 +173,49 @@ public class StatsView extends AppCompatActivity {
 
                 histogramDataSet.setBarBorderWidth(2.0f);
 
+                String[] labels = bins.keySet().toArray(new String[bins.keySet().size()]);
+
+                for (int i = 0; i<labels.length; i++) {
+                    Log.d("label", labels[i]);
+                }
+
+//                ValueFormatter binAxisFormatter = new ValueFormatter() {
+//                    @Override
+//                    public String getFormattedValue(float value) {
+//                        Log.d("Value", "" + value);
+//                        int roundedIndex = Math.round(value);
+//                        return bins.keySet().toArray()[roundedIndex].toString();
+//                    }
+//                };
+
+                ValueFormatter binBinomialFormatter = new ValueFormatter() {
+                    @Override
+                    public String getFormattedValue(float value) {
+                        Log.d("Value", "" + value);
+
+                            if (labels[(int) value].equals("1.0")) {
+                                return "Pass (1.0)";
+                            } else {
+                                return  "Fail (0.0)";
+                            }
+                    }
+                };
+
                 //Source:ProgrammerSought; https://www.programmersought.com
                 //Code: https://www.programmersought.com/article/43275089312/
+//                XAxis barChartXAxis = histogram.getXAxis();
+//                barChartXAxis.setValueFormatter(binAxisFormatter);
                 XAxis barChartXAxis = histogram.getXAxis();
-                barChartXAxis.setValueFormatter(binAxisFormatter);
-                barChartXAxis.setDrawGridLines(false); // Set this to true to draw grid lines for this axis.
+                barChartXAxis.setGranularity(1f);
+                barChartXAxis.setGranularityEnabled(true);
                 barChartXAxis.setLabelCount(bins.size());  // Set the number of labels on the x-axis
                 barChartXAxis.setTextSize(15f); // The size of the label on the x axis
+                barChartXAxis.setDrawGridLines(false); // Set this to true to draw grid lines for this axis.
+                if (experiment.getTrialType().equals("Binomial")){
+                    barChartXAxis.setValueFormatter(binBinomialFormatter);
+                } else {
+                    barChartXAxis.setValueFormatter(new IndexAxisValueFormatter(labels));
+                }
 
                 BarData histogramData = new BarData(histogramDataSet);
 
@@ -227,6 +275,43 @@ public class StatsView extends AppCompatActivity {
                     SDView.setText("Std: " + "Empty data set");
                 }
 
+                TextView q1 = findViewById(R.id.quartile1TextView);
+                TextView q2 = findViewById(R.id.quartile2TextView);
+                TextView q3 = findViewById(R.id.quartile3TextView);
+
+                if (statsDataList.size() >= 3 ) {
+                    double[] quartiles = stats.quartiles(sortedArray);
+                    q1.setText("Quartile 1: "+Double.toString(quartiles[0]));
+                    q2.setText("Quartile 2: "+Double.toString(quartiles[1]));
+                    q3.setText("Quartile 3: "+Double.toString(quartiles[2]));
+                } else {
+
+                    q1.setText("Quartile 1: "+ "Not enough data");
+                    q2.setText("Quartile 2: "+ "Not enough data");
+                    q3.setText("Quartile 3: "+ "Not enough data");
+                }
+
+                if (statsDataList.size() > 0) {
+                    double SD = stats.calculateSD(sortedArray);
+                    double mean = (double) stats.calcMean(statsDataList);
+                    double median = (double) stats.calcMedian(statsDataList);
+
+                    String medianText = String.valueOf(median);
+                    String meanText = String.valueOf(mean);
+
+                    if (experiment.getTrialType().equals("Binomial")) {
+                        meanText = "Mean (Pass %): " + meanText;
+                    } else {
+                        meanText = "Mean (Ave. Value): " + meanText;
+                    }
+                    meanView.setText(meanText);
+                    medianView.setText("Median: " + medianText);
+                    SDView.setText("Std: " + String.valueOf(SD));
+                } else {
+                    meanView.setText("Mean: " + "Empty data set");
+                    medianView.setText("Median: " + "Empty data set");
+                    SDView.setText("Std: " + "Empty data set");
+                }
 
             }
         } , statsDataList, db.collection("Experiments").document(experiment.getExpID()).collection("Trials"));
