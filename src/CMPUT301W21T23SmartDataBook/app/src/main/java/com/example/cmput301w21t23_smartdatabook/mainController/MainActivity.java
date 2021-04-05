@@ -4,7 +4,6 @@ import android.app.SearchManager;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
@@ -15,7 +14,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.SearchView;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentTransaction;
-import com.example.cmput301w21t23_smartdatabook.QRCode.ScannerActivity;
+
 import com.example.cmput301w21t23_smartdatabook.R;
 import com.example.cmput301w21t23_smartdatabook.archives.ArchivePage;
 import com.example.cmput301w21t23_smartdatabook.database.Database;
@@ -26,7 +25,6 @@ import com.example.cmput301w21t23_smartdatabook.home.addExpFragment;
 import com.example.cmput301w21t23_smartdatabook.home.homePage;
 import com.example.cmput301w21t23_smartdatabook.settings.SettingsPage;
 import com.example.cmput301w21t23_smartdatabook.user.User;
-import com.google.android.gms.maps.model.LatLng;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.firebase.auth.FirebaseAuth;
 
@@ -46,7 +44,7 @@ public class MainActivity extends AppCompatActivity{
 
     private ActionBar toolbar;
     private boolean searchShow;
-    private LatLng lkll;
+    private boolean mapShow;
 
     public Database database;
 
@@ -65,15 +63,11 @@ public class MainActivity extends AppCompatActivity{
     public void onAttachFragment(Fragment fragment) {
         super.onAttachFragment(fragment);
         searchShow = fragment instanceof homePage;
+        mapShow = fragment instanceof homePage;
         if (fragment instanceof FavPage) searchShow = true;
         if (fragment instanceof ArchivePage) searchShow = true;
         if (fragment instanceof addExpFragment) bottomNavigation.setVisibility(View.GONE);
         invalidateOptionsMenu();
-    }
-
-
-    public String test() {
-        return "This means you can get the attribute of MainActivity, call made from a Fragment";
     }
 
     /**
@@ -119,16 +113,24 @@ public class MainActivity extends AppCompatActivity{
 
     } //onCreate
 
+    /**
+     * The function runs on the destruction of the main activity, no longer can get insstance of the current user
+     */
     @Override
     public void onDestroy() {
         super.onDestroy();
         FirebaseAuth.getInstance().getCurrentUser().delete();
     }
 
+    /**
+     * This function handles when the user clicked map, it goes to map activity
+     * @param item
+     * @return
+     */
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
-            case R.id.app_bar_qr:
+            case R.id.app_bar_map:
                 Intent intent = new Intent(this, MapsActivity.class);
                 intent.putExtra("main", "true");
                 startActivity(intent);
@@ -140,9 +142,8 @@ public class MainActivity extends AppCompatActivity{
         return true;
     }
 
-
     /**
-     * THis method set up menu's search icon
+     * This method set up menu's search icon
      * @param menu
      * @return
      */
@@ -152,6 +153,7 @@ public class MainActivity extends AppCompatActivity{
         inflater.inflate(R.menu.search_menu, menu); // Make search thing visible
 
         menu.findItem(R.id.app_bar_search).setVisible(searchShow); // This is to change visibility of search according to current fragment or status
+        menu.findItem(R.id.app_bar_map).setVisible(mapShow);
 
         SearchManager searchManager = (SearchManager) getSystemService(Context.SEARCH_SERVICE);
         SearchView searchView = (SearchView) menu.findItem(R.id.app_bar_search).getActionView();
@@ -194,7 +196,7 @@ public class MainActivity extends AppCompatActivity{
     }
 
     /**
-     * This function supports opening fragments
+     * This function supports opening fragments, by using fragment transaction
      * @param fragment
      */
     public void openFragment(Fragment fragment) {

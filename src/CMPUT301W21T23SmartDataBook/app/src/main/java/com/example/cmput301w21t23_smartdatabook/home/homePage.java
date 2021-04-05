@@ -33,7 +33,7 @@ import java.util.Hashtable;
  * It inflate the layout for the experiment's fragment
  * It allows user to add a new experiment by clicking a floating button
  *
- * @author Afaq Nabi, Bosco Chan, Jayden
+ * @author Afaq Nabi, Bosco Chan, Jayden Cho
  * @see Fragment, Firebase
  */
 
@@ -63,6 +63,11 @@ public class homePage extends Fragment {
         return fragment;
     }
 
+    /**
+     * This function updates the Home page, through fragment transaction
+     * @param query
+     * @param currentFragment
+     */
     public void doUpdate(String query, Fragment currentFragment) {
 
         currentQuery = query;
@@ -79,6 +84,9 @@ public class homePage extends Fragment {
 
     }
 
+    /**
+     * The onResume function of the Home Page
+     */
     @Override
     public void onResume() {
         super.onResume();
@@ -86,6 +94,11 @@ public class homePage extends Fragment {
         ((AppCompatActivity) getActivity()).getSupportActionBar().setDisplayHomeAsUpEnabled(false);
     }
 
+    /**
+     * The onCreate function of the Home page
+     * In this functuon, if there are arguments, it gets the user's information
+     * @param savedInstanceState
+     */
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -96,6 +109,13 @@ public class homePage extends Fragment {
         database = new Database();
     }
 
+    /**
+     * The onCreateView function of Home page, the part that most elements on the home page are setted here
+     * @param inflater
+     * @param container
+     * @param savedInstanceState
+     * @return
+     */
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         // Inflate the layout for this fragment
@@ -141,16 +161,13 @@ public class homePage extends Fragment {
 
                                 }
                             }
-
                             experimentAdapter.clear();
                             experimentAdapter.addAll(searchDataList);
-
-                        }else{
+                        }
+                        else {
                             experimentAdapter.addAll(experimentDataList);
                         }
-
                         experimentAdapter.notifyDataSetChanged();
-
                         experimentList.setOnItemClickListener(new AdapterView.OnItemClickListener() {
                             @Override
                             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
@@ -160,13 +177,12 @@ public class homePage extends Fragment {
                                 startActivity(intent);
                             }
                         });
-
                     }//getExpDataList
                 }, experimentAdapter, db.collection("Experiments"), user.getUserUniqueID(), UserName);//fillDataList
             }
         });
 
-
+        // The floating action button is used to add new experiments in the home page
         final FloatingActionButton addExperimentButton = view.findViewById(R.id.add_experiment_button);
         addExperimentButton.setOnClickListener(new View.OnClickListener() {
             @Override

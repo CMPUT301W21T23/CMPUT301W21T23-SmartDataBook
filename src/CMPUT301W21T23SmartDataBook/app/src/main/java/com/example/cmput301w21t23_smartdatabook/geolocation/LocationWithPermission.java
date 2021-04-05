@@ -34,16 +34,22 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
- * @author Jayden
+ * Class: LocationWithPermission
+ * This class is used to obtain the location, while it also handles the problems with permissions.
+ * @author Jayden Cho
  */
 public class LocationWithPermission {
 	private AppCompatActivity activity;
-	private boolean success = false;
 
 	public LocationWithPermission(AppCompatActivity activity) {
 		this.activity = activity;
 	}
 
+	/**
+     * This function gets the view of the trialList
+     * @param generalDataCallBack: CallBack to return the obtained location.
+     * @return fusedLocationClient: returns the FusedLocationProviderClient used to obtain the location.
+     */
 	public FusedLocationProviderClient getLatLng(GeneralDataCallBack generalDataCallBack) {
 		FusedLocationProviderClient fusedLocationClient = LocationServices.getFusedLocationProviderClient(activity);
         Dexter.withContext(activity.getApplicationContext())

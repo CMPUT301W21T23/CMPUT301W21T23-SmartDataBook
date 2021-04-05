@@ -29,11 +29,12 @@ import java.util.UUID;
 /**
  * Class: Replies Activity
  * shows the activity of the comments
- * @author Bosco Chan Afaq Nabi
+ * @author Bosco Chan, Afaq Nabi
+ * @see Comment, CommentList
  */
 
 public class RepliesActivity extends AppCompatActivity {
-
+    // initialize variables
     ArrayAdapter<Comment> repliesAdapter;
     ArrayList<Comment> repliesDataList;
     ListView repliesList;
@@ -53,7 +54,10 @@ public class RepliesActivity extends AppCompatActivity {
     FloatingActionButton addReply;
     StringDate curStringDate = new StringDate();
 
-    @SuppressLint("SetTextI18n")
+    /**
+     * onCreate method of Replies Activity, handles most of Replies activity's functions
+     * @param savedInstanceState
+     */
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -63,6 +67,7 @@ public class RepliesActivity extends AppCompatActivity {
 
         db = FirebaseFirestore.getInstance();
 
+        // setting up the content of replies activity
         Intent intent = getIntent();
         parentComment = (Comment) intent.getSerializableExtra("Comment");
 
@@ -78,7 +83,9 @@ public class RepliesActivity extends AppCompatActivity {
         commentText = findViewById(R.id.commentText);
         commentText.setText(parentComment.getText());
 
-        //    https://stackoverflow.com/questions/19826693/how-can-i-make-a-textview-automatically-scroll-as-i-add-more-lines-of-text
+        // We have used the following website to learn more about how to textview scrollable as there are more text
+        // URL:https://stackoverflow.com/questions/19826693/how-can-i-make-a-textview-automatically-scroll-as-i-add-more-lines-of-text
+        // From: Darwin Louis
         EditText newComment = addCommentView.findViewById(R.id.newComment);
 
         addReply = findViewById(R.id.add_replies_button);

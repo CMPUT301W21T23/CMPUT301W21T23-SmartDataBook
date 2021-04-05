@@ -102,6 +102,11 @@ public class Database {
 		DocRef.delete();
 	}
 
+	/**
+	 * This function adds the trial to the database
+	 * @param genericDocument
+	 * @param trial
+	 */
 	public void addTrialToDB(DocumentReference genericDocument, Trial trial) {
 		LatLng latlng = trial.getLocation();
 		HashMap<String, Object> data = new HashMap<>();
@@ -118,6 +123,12 @@ public class Database {
 		genericDocument.set(data);
 	}
 
+	/**
+	 * This function fills the trial list on the screen
+	 * @param coll
+	 * @param trialDataList
+	 * @param trialArrayAdapter
+	 */
 	public void fillTrialList(CollectionReference coll, ArrayList<Trial> trialDataList, ArrayAdapter<Trial> trialArrayAdapter) {
 
 		coll.get()
@@ -144,7 +155,11 @@ public class Database {
 				});
 	}
 
-
+	/**
+	 * This function adds comments to the database through hashmap
+	 * @param DocRef
+	 * @param comment
+	 */
 	public void addCommentToDB(DocumentReference DocRef, Comment comment) {
 		HashMap<String, Object> data = new HashMap<>();
 		data.put("CommentText", comment.getText());
@@ -154,6 +169,12 @@ public class Database {
 		DocRef.set(data);
 	}
 
+	/**
+	 * THis function fills the comment list if the task is successful
+	 * @param coll
+	 * @param commentList
+	 * @param commentAdapter
+	 */
 	public void fillCommentList(CollectionReference coll, ArrayList<Comment> commentList, ArrayAdapter<Comment> commentAdapter) {
 		coll
 				.get()
@@ -174,6 +195,10 @@ public class Database {
 				});
 	}
 
+	/**
+	 * This functions fills the username, its email and UUID by using hashtable anc callback
+	 * @param generalDataCallBack
+	 */
 	public void fillUserName(GeneralDataCallBack generalDataCallBack) {
 		db = FirebaseFirestore.getInstance();
 
@@ -513,6 +538,13 @@ public class Database {
 
 	}//authenticationAnon
 
+	/**
+	 * This function checks an experiment is archived or not
+	 * @param coll
+	 * @param onOff
+	 * @param experiment
+	 * @param status
+	 */
 	public void publicOrEnd(CollectionReference coll, String onOff, Experiment experiment, String status) {
 		coll.document(experiment.getExpID()).update(status, onOff);
 	}

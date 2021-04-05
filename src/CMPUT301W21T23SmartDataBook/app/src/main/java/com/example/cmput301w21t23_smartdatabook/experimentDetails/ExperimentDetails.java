@@ -8,7 +8,6 @@ import android.os.Parcelable;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
-import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.TextView;
@@ -21,7 +20,6 @@ import androidx.appcompat.widget.AppCompatImageButton;
 import com.example.cmput301w21t23_smartdatabook.QRCode.QRCodeActivity;
 import com.example.cmput301w21t23_smartdatabook.QRCode.ScannerActivity;
 import com.example.cmput301w21t23_smartdatabook.StringDate;
-import com.example.cmput301w21t23_smartdatabook.database.GeneralDataCallBack;
 import com.example.cmput301w21t23_smartdatabook.geolocation.MapsActivity;
 import com.example.cmput301w21t23_smartdatabook.stats.StatsView;
 import com.example.cmput301w21t23_smartdatabook.user.User;
@@ -37,7 +35,6 @@ import org.w3c.dom.Text;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
-import java.util.Hashtable;
 
 /**
  * Class:ExperimentDetails
@@ -48,21 +45,27 @@ import java.util.Hashtable;
  * switch button that turns on/ off an experiment's trial location.
  * @author Afaq Nabi, Bosco Chan, Jayden
  * @version 1
- * @see Experiment ,
+ * @see Experiment
  */
 public class ExperimentDetails extends AppCompatActivity {
     User user = User.getUser();
     Database database = Database.getDataBase();
     StringDate date = new StringDate();
 
+    /**
+     * onCreate method that sets up the experiment details page
+     * @param savedInstanceState
+     */
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        //initialize elements in the experiment details page
         setContentView(R.layout.experiment_details);
 
         setSupportActionBar(findViewById(R.id.app_toolbar));
         ActionBar toolbar = getSupportActionBar();
         assert toolbar != null;
+        toolbar.setDisplayHomeAsUpEnabled(true);
 
         FirebaseFirestore db = FirebaseFirestore.getInstance();
 
@@ -72,7 +75,6 @@ public class ExperimentDetails extends AppCompatActivity {
         toolbar.setTitle(experiment.getExpName());
 
         View userInfoView = LayoutInflater.from(ExperimentDetails.this).inflate(R.layout.view_profile, null);
-
 
         AppCompatImageButton scan = findViewById(R.id.scanner);
         scan.setOnClickListener(new View.OnClickListener() {
@@ -85,37 +87,22 @@ public class ExperimentDetails extends AppCompatActivity {
             }
         });
 
+        // Setting up visual representation(TextView, Button, checkbox) of experiment details page
+        TextView username = userInfoView.findViewById(R.id.expOwner);
+        username.setText("Username: " + user.getUserName());
 
-        database.fillUserName(new GeneralDataCallBack() {
+        TextView email = userInfoView.findViewById(R.id.expContact);;
+        email.setText("Email: " + user.getUserContact());
+
+        TextView Owner = findViewById(R.id.owner);
+        Owner.setText(experiment.getOwnerUserName());
+        Owner.setOnClickListener(new View.OnClickListener() {
             @Override
-            public void onDataReturn(Object returnedObject) {
-                Hashtable<String, User> UserName = (Hashtable<String, User>) returnedObject;
-                TextView username = userInfoView.findViewById(R.id.expOwner);
-                username.setText("Username: " + UserName.get( user.getUserUniqueID() ).getUserName());
-
-                TextView email = userInfoView.findViewById(R.id.expContact);;
-                email.setText("Email: " + UserName.get( user.getUserUniqueID() ).getUserContact());
-
-                TextView Owner = findViewById(R.id.owner);
-
-                Owner.setText(UserName.get( user.getUserUniqueID() ).getUserName());
-
-
-                Owner.setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View v) {
-                        if (userInfoView.getParent() != null) {
-                            ((ViewGroup) userInfoView.getParent()).removeView(userInfoView);
-                        }
-
-                        AlertDialog.Builder builder = new AlertDialog.Builder(ExperimentDetails.this);
-                        builder.setView(userInfoView)
-                                .setNegativeButton("Close", null)
-                                .create()
-                                .show();
-
-                    }
-                });
+            public void onClick(View v) {
+                // TODO: new user details activity
+                AlertDialog.Builder builder = new AlertDialog.Builder(ExperimentDetails.this);
+                builder.setView(userInfoView)
+                        .setNegativeButton("Close", null).create().show();
             }
         });
 
