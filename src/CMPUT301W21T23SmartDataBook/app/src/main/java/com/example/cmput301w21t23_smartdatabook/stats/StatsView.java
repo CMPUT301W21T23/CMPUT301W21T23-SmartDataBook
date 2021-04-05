@@ -156,7 +156,6 @@ public class StatsView extends AppCompatActivity {
 
                 LineData lineData = new LineData(lineDataSet);
                 lineChart.setData(lineData);
-                lineChart.invalidate(); // refresh
 
                 BarDataSet histogramDataSet = new BarDataSet(barEntries, "Frequency");
 
@@ -175,22 +174,60 @@ public class StatsView extends AppCompatActivity {
                 histogramData.setBarWidth(0.5f);
                 histogram.setData(histogramData);
                 histogram.setFitBars(true); // make the x-axis fit exactly all bars
-                histogram.invalidate();
+
+                if( statsDataList.size() > 0){
+                    lineChart.invalidate(); // refresh
+                    histogram.invalidate();
+                }
 
                 stats.bubbleSortByValue(statsDataList); // sort list by value
 
+                //gives a sorted array of only trial values
                 ArrayList<Double> sortedArray = new ArrayList<>();
                 for (int i = 0; i < statsDataList.size(); i++) {
                     sortedArray.add((Double) statsDataList.get(i).get(0));
                 }
-                double[] quartiles = stats.quartiles(sortedArray);
-                double SD = stats.calculateSD(sortedArray);
-                double mean = (double) stats.calcMean(statsDataList);
-                double median = (double) stats.calcMedian(statsDataList);
 
-                meanView.setText("Mean: "+ Double.parseDouble(String.valueOf(mean)));
-                medianView.setText("Median: "+ String.valueOf(median));
-                SDView.setText("Std: "+String.valueOf(SD));
+                TextView q1 = findViewById(R.id.quartile1TextView);
+                TextView q2 = findViewById(R.id.quartile2TextView);
+                TextView q3 = findViewById(R.id.quartile3TextView);
+
+
+
+                if (statsDataList.size() >= 3 ) {
+                    double[] quartiles = stats.quartiles(sortedArray);
+                    q1.setText("Quartile 1: "+Double.toString(quartiles[0]));
+                    q2.setText("Quartile 2: "+Double.toString(quartiles[1]));
+                    q3.setText("Quartile 3: "+Double.toString(quartiles[2]));
+                } else {
+
+                    q1.setText("Quartile 1: "+ "Not enough data");
+                    q2.setText("Quartile 2: "+ "Not enough data");
+                    q3.setText("Quartile 3: "+ "Not enough data");
+                }
+
+                if (statsDataList.size() > 0) {
+
+                    double SD = stats.calculateSD(sortedArray);
+                    double mean = (double) stats.calcMean(statsDataList);
+                    double median = (double) stats.calcMedian(statsDataList);
+
+                    String medianText = String.valueOf(median);
+                    String meanText = String.valueOf(mean);
+
+                    if (experiment.getTrialType().equals("Binomial")) {
+                        meanText = "Mean (Pass %): " + meanText;
+                    } else {
+                        meanText = "Mean (Ave. Value): " + meanText;
+                    }
+                    meanView.setText(meanText);
+                    medianView.setText("Median: " + medianText);
+                    SDView.setText("Std: " + String.valueOf(SD));
+                } else {
+                    meanView.setText("Mean: " + "Empty data set");
+                    medianView.setText("Median: " + "Empty data set");
+                    SDView.setText("Std: " + "Empty data set");
+                }
 
 
             }

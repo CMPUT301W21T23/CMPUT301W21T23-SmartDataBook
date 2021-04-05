@@ -20,6 +20,7 @@ import androidx.appcompat.widget.AppCompatImageButton;
 import com.example.cmput301w21t23_smartdatabook.QRCode.QRCodeActivity;
 import com.example.cmput301w21t23_smartdatabook.QRCode.ScannerActivity;
 import com.example.cmput301w21t23_smartdatabook.StringDate;
+import com.example.cmput301w21t23_smartdatabook.database.GeneralDataCallBack;
 import com.example.cmput301w21t23_smartdatabook.geolocation.MapsActivity;
 import com.example.cmput301w21t23_smartdatabook.stats.StatsView;
 import com.example.cmput301w21t23_smartdatabook.user.User;
@@ -87,24 +88,31 @@ public class ExperimentDetails extends AppCompatActivity {
             }
         });
 
-        // Setting up visual representation(TextView, Button, checkbox) of experiment details page
-        TextView username = userInfoView.findViewById(R.id.expOwner);
-        username.setText("Username: " + user.getUserName());
 
-        TextView email = userInfoView.findViewById(R.id.expContact);;
-        email.setText("Email: " + user.getUserContact());
-
-        TextView Owner = findViewById(R.id.owner);
-        Owner.setText(experiment.getOwnerUserName());
-        Owner.setOnClickListener(new View.OnClickListener() {
+        database.fillUserName(new GeneralDataCallBack() {
             @Override
-            public void onClick(View v) {
-                // TODO: new user details activity
-                AlertDialog.Builder builder = new AlertDialog.Builder(ExperimentDetails.this);
-                builder.setView(userInfoView)
-                        .setNegativeButton("Close", null).create().show();
+            public void onDataReturn(Object returnedObject) {
+                // Setting up visual representation(TextView, Button, checkbox) of experiment details page
+                TextView username = userInfoView.findViewById(R.id.expOwner);
+                username.setText("Username: " + user.getUserName());
+
+                TextView email = userInfoView.findViewById(R.id.expContact);;
+                email.setText("Email: " + user.getUserContact());
+
+                TextView Owner = findViewById(R.id.owner);
+                Owner.setText(experiment.getOwnerUserName());
+                Owner.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        // TODO: new user details activity
+                        AlertDialog.Builder builder = new AlertDialog.Builder(ExperimentDetails.this);
+                        builder.setView(userInfoView)
+                                .setNegativeButton("Close", null).create().show();
+                    }
+                });
             }
         });
+
 
         TextView expDate = findViewById(R.id.ClickedExpdate);
 //        SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSSXXX");
