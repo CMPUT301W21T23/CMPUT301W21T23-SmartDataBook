@@ -275,10 +275,6 @@ public class StatsView extends AppCompatActivity {
                     SDView.setText("Std: " + "Empty data set");
                 }
 
-                TextView q1 = findViewById(R.id.quartile1TextView);
-                TextView q2 = findViewById(R.id.quartile2TextView);
-                TextView q3 = findViewById(R.id.quartile3TextView);
-
                 if (statsDataList.size() >= 3 ) {
                     double[] quartiles = stats.quartiles(sortedArray);
                     q1.setText("Quartile 1: "+Double.toString(quartiles[0]));
