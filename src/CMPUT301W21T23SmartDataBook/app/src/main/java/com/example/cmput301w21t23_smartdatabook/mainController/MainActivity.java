@@ -119,12 +119,20 @@ public class MainActivity extends AppCompatActivity{
 
     } //onCreate
 
+    /**
+     * The function runs on the destruction of the main activity, no longer can get insstance of the current user
+     */
     @Override
     public void onDestroy() {
         super.onDestroy();
         FirebaseAuth.getInstance().getCurrentUser().delete();
     }
 
+    /**
+     * This function handles when the user clicked map, it goes to map activity
+     * @param item
+     * @return
+     */
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
@@ -140,9 +148,8 @@ public class MainActivity extends AppCompatActivity{
         return true;
     }
 
-
     /**
-     * THis method set up menu's search icon
+     * This method set up menu's search icon
      * @param menu
      * @return
      */
@@ -194,7 +201,7 @@ public class MainActivity extends AppCompatActivity{
     }
 
     /**
-     * This function supports opening fragments
+     * This function supports opening fragments, by using fragment transaction
      * @param fragment
      */
     public void openFragment(Fragment fragment) {

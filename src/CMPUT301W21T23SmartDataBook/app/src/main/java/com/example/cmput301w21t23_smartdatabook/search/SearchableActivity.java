@@ -14,7 +14,7 @@ import androidx.appcompat.app.AppCompatActivity;
 public class SearchableActivity extends AppCompatActivity {
 
     /**
-     * This function allows: when user press search button, allows user to search, and a toast message will come out the query user type
+     * This function allows: when user press search button, allows user to search, and a toast message will come out, showing the query user type
      * @param savedInstanceState
      */
     @Override
