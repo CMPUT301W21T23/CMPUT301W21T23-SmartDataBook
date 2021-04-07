@@ -126,9 +126,6 @@ public class ExperimentDetails extends AppCompatActivity {
         TextView description = findViewById(R.id.ClickedExpDesc);
         description.setText(experiment.getDescription());
 
-        TextView region = findViewById(R.id.ClickedExpRegion);
-        region.setText("some location???");
-
         TextView minTrials = findViewById(R.id.MinTrials);
         minTrials.setText("Min Trials: " + Integer.toString(experiment.getMinTrials()));
 
