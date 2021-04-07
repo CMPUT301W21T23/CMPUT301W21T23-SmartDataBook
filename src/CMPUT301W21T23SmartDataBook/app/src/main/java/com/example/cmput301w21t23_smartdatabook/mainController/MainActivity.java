@@ -70,8 +70,13 @@ public class MainActivity extends AppCompatActivity{
         if (fragment instanceof ArchivePage) searchShow = true;
         if (fragment instanceof addExpFragment) bottomNavigation.setVisibility(View.GONE);
         invalidateOptionsMenu();
+        Log.d("MainActivity:73", String.valueOf(getSupportFragmentManager().getBackStackEntryCount()));
     }
 
+    /**
+     * This receives a request from other fragments to update the selected item of the bottom navigation, without triggering the onNavigationItemSelectedListener.
+     * @param targetMenu
+     */
     public void setBottomNavigationItem(int targetMenu) {
         // Touch this, and you will fall in a never-ending loop of onAttachFragment -> BottomNavigationView.onClickListner -> Open new fragment -> onAttachFragment
         from_user = false;
