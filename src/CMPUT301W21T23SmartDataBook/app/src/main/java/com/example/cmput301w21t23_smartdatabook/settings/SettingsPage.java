@@ -46,7 +46,7 @@ public class SettingsPage extends Fragment {
 	@Override
     public void onResume() {
         super.onResume();
-        activity.getSupportActionBar().setTitle("Home");
+        activity.getSupportActionBar().setTitle("Settings");
         activity.onAttachFragment(this);
         activity.setBottomNavigationItem(R.id.settings_nav);
     }
