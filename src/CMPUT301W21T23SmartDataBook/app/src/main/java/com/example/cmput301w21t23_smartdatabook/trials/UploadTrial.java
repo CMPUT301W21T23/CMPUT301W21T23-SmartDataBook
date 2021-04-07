@@ -149,8 +149,6 @@ public class UploadTrial extends AppCompatActivity {
                         .collection("Trials")
                 , trialDataList, trialArrayAdapter);
 
-        Log.d("trialAdapter", Integer.toString(trialArrayAdapter.getCount()));
-
         // TODO: Users can delete the trials that they entered but owner can delete any trials
         if (experiment.getOwnerUserID().equals(user.getUserUniqueID())) {
             trialsList.setOnItemClickListener(new AdapterView.OnItemClickListener() {
@@ -238,10 +236,7 @@ public class UploadTrial extends AppCompatActivity {
                                                                            UUID.randomUUID().toString(),
                                                                            stringDate.getCurrentDate(),
                                                                            experiment.getRequireLocation() ? latlng : null);
-                                                                   database.addTrialToDB(db.collection("Experiments")
-                                                                           .document(experiment.getExpID())
-                                                                           .collection("Trials")
-                                                                           .document(trial.getTrialID()), trial);
+                                                                   collectionRefToDB(trial, experiment);
                                                                }
                                                            }
                                                            recreate();
@@ -285,10 +280,7 @@ public class UploadTrial extends AppCompatActivity {
                                                                             UUID.randomUUID().toString(),
                                                                             stringDate.getCurrentDate(),
                                                                             experiment.getRequireLocation() ? latlng : null);
-                                                                    database.addTrialToDB(db.collection("Experiments")
-                                                                            .document(experiment.getExpID())
-                                                                            .collection("Trials")
-                                                                            .document(trial.getTrialID()), trial);
+                                                                    collectionRefToDB(trial, experiment);
                                                                 }
                                                             }
                                                             recreate();
@@ -325,11 +317,7 @@ public class UploadTrial extends AppCompatActivity {
                                             UUID.randomUUID().toString(),
                                             stringDate.getCurrentDate(),
                                             experiment.getRequireLocation() ? latlng : null);
-                                    database.addTrialToDB(db
-                                            .collection("Experiments")
-                                            .document(experiment.getExpID())
-                                            .collection("Trials")
-                                            .document(trial.getTrialID()), trial);
+                                    collectionRefToDB(trial, experiment);
                                     recreate();
                                 }
                             }).create().show();
@@ -359,11 +347,7 @@ public class UploadTrial extends AppCompatActivity {
                                                 UUID.randomUUID().toString(),
                                                 stringDate.getCurrentDate(),
                                                 experiment.getRequireLocation() ? latlng : null);
-                                        database.addTrialToDB(db
-                                                .collection("Experiments")
-                                                .document(experiment.getExpID())
-                                                .collection("Trials")
-                                                .document(trial.getTrialID()), trial);
+                                        collectionRefToDB(trial, experiment);
                                     }
                                     recreate();
                                 }
@@ -400,16 +384,20 @@ public class UploadTrial extends AppCompatActivity {
                                             UUID.randomUUID().toString(),
                                             stringDate.getCurrentDate(),
                                             experiment.getRequireLocation() ? latlng : null);
-                                    database.addTrialToDB(db
-                                            .collection("Experiments")
-                                            .document(experiment.getExpID())
-                                            .collection("Trials")
-                                            .document(trial.getTrialID()), trial);
+                                    collectionRefToDB(trial, experiment);
                                     recreate();
                                 }
                             }).create().show();
             } }
         });
+    }
+
+    void collectionRefToDB(Trial trial, Experiment experiment){
+        database.addTrialToDB(db
+                .collection("Experiments")
+                .document(experiment.getExpID())
+                .collection("Trials")
+                .document(trial.getTrialID()), trial);
     }
 
 }
