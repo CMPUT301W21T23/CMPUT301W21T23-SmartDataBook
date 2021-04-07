@@ -199,18 +199,17 @@ public class ExperimentDetails extends AppCompatActivity {
         TextView endExp = findViewById(R.id.endExp);
         AppCompatImageButton arch = findViewById(R.id.endExpImageView);
         String title;
-        if (!experiment.getIsEnd()) {
-            title = "Archive";
+
+        if (user.getUserUniqueID().equals(experiment.getOwnerUserID())){
+            if (!experiment.getIsEnd()) {
+                title = "Archive";
+            } else {
+                title = "Un-Archive";
+            }
             upload.setVisibility(View.VISIBLE);
             arch.setVisibility(View.VISIBLE);
+            endExp.setText(title);
 
-        } else {
-            title = "Un-Archive";
-            upload.setVisibility(View.INVISIBLE);
-            arch.setVisibility(View.INVISIBLE);
-        }
-        endExp.setText(title);
-        if (user.getUserUniqueID().equals(experiment.getOwnerUserID())){
             endExp.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {

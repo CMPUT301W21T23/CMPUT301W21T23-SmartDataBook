@@ -5,6 +5,7 @@ import android.os.Bundle;
 import android.util.Log;
 import android.widget.TextView;
 
+import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.example.cmput301w21t23_smartdatabook.experiment.Experiment;
@@ -57,10 +58,17 @@ public class StatsView extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         // sets up visualization of stats
         super.onCreate(savedInstanceState);
+
         setContentView(R.layout.graph_layout);
+        setSupportActionBar(findViewById(R.id.app_toolbar));
+
+        ActionBar toolbar = getSupportActionBar();
+        assert toolbar != null;
 
         database = new Database();
         db = FirebaseFirestore.getInstance();
+
+        toolbar.setTitle("Statistics");
 
         Intent intent = getIntent();
         Experiment experiment = (Experiment) intent.getSerializableExtra("experiment");
