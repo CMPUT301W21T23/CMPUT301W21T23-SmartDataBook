@@ -79,18 +79,19 @@
             android:id="@+id/ClickedExpDesc"
             android:layout_width="296dp"
             android:layout_height="60dp"
-            android:layout_marginTop="12dp"
+            android:layout_marginTop="8dp"
+            android:fadeScrollbars="true"
             android:scrollbars="vertical"
             android:text="DESCRIPTION PARAGRAPH"
             android:textColor="@color/theme_default"
             android:textSize="17sp"
+            app:layout_constraintBottom_toTopOf="@+id/ViewStatsBTN"
             app:layout_constraintEnd_toEndOf="@+id/ExpType"
             app:layout_constraintHorizontal_bias="0.0"
             app:layout_constraintLeft_toLeftOf="parent"
             app:layout_constraintRight_toRightOf="parent"
             app:layout_constraintStart_toStartOf="@+id/ExpType"
-            app:layout_constraintTop_toBottomOf="@id/ExpType"
-            android:fadeScrollbars="true"/>
+            app:layout_constraintTop_toBottomOf="@id/ExpType" />
 
         <TextView
                 android:id="@+id/Publish_text"

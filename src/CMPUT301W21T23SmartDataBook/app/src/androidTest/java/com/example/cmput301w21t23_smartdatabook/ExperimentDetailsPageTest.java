@@ -28,8 +28,7 @@ import static org.junit.Assert.assertNull;
 
 public class ExperimentDetailsPageTest {
     private Solo solo;
-    private View addTrialsBtn;
-    private View addExpButton;
+
 
     @Rule
     public ActivityTestRule<MainActivity> rule = new ActivityTestRule<MainActivity>(MainActivity.class, true, true);
@@ -37,8 +36,6 @@ public class ExperimentDetailsPageTest {
     @Before
     public void setUp() {
         solo = new Solo(InstrumentationRegistry.getInstrumentation(), rule.getActivity());
-        addExpButton = rule.getActivity().findViewById(R.id.add_experiment_button);
-
     }
 
     /**
@@ -104,7 +101,7 @@ public class ExperimentDetailsPageTest {
         solo.assertCurrentActivity("Wrong Class", MainActivity.class);
         solo.waitForFragmentById(R.layout.home_page, 1000);
         solo.sleep(7000);
-        solo.clickOnView(addExpButton);
+//        solo.clickOnView(addExpButton);
         solo.waitForFragmentById(R.layout.new_experiment_location_on, 1000);
 
         //Source: Bouabane Mohamed Salah; https://stackoverflow.com/users/1600405/bouabane-mohamed-salah
