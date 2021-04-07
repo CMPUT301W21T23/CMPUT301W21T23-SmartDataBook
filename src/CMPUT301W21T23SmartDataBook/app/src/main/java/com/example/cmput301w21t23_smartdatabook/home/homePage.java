@@ -3,6 +3,7 @@ package com.example.cmput301w21t23_smartdatabook.home;
 import android.content.Intent;
 import android.os.Bundle;
 import android.os.Parcelable;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -43,7 +44,7 @@ public class homePage extends Fragment {
     private ListView experimentList;
     private ArrayList<Experiment> experimentDataList;
     private static ArrayAdapter<Experiment> experimentAdapter;
-    private MainActivity mainActivity;
+    private MainActivity activity;
 
     private User user;
     private Database database;
@@ -92,8 +93,9 @@ public class homePage extends Fragment {
     public void onResume() {
         super.onResume();
         experimentAdapter.notifyDataSetChanged();
-        ((AppCompatActivity) getActivity()).getSupportActionBar().setDisplayHomeAsUpEnabled(false);
-        ((MainActivity) getActivity()).onAttachFragment(this);
+        activity.getSupportActionBar().setTitle("Home");
+        activity.onAttachFragment(this);
+        activity.setBottomNavigationItem(R.id.home_nav);
     }
 
     /**
@@ -107,7 +109,7 @@ public class homePage extends Fragment {
         if (getArguments() != null) {
             user = User.getUser();
         }
-        mainActivity = (MainActivity) getActivity();
+        activity = (MainActivity) getActivity();
         database = new Database();
     }
 
@@ -236,6 +238,7 @@ public class homePage extends Fragment {
      */
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
+        Log.d("onBack", "working?");
 
         int addExpFragmentResultCode = 1;
         int addExpFragmentRequestCode = 0;

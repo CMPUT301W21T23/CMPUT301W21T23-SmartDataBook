@@ -17,6 +17,7 @@ import androidx.fragment.app.FragmentTransaction;
 
 import com.example.cmput301w21t23_smartdatabook.database.Database;
 import com.example.cmput301w21t23_smartdatabook.database.GeneralDataCallBack;
+import com.example.cmput301w21t23_smartdatabook.mainController.MainActivity;
 import com.example.cmput301w21t23_smartdatabook.user.User;
 import com.example.cmput301w21t23_smartdatabook.experimentDetails.ExperimentDetails;
 import com.example.cmput301w21t23_smartdatabook.home.CardList;
@@ -42,6 +43,7 @@ public class FavPage extends Fragment {
 
     private User user;
     private Database database;
+    private MainActivity activity;
 
     private String currentQuery;
 
@@ -67,6 +69,7 @@ public class FavPage extends Fragment {
         if (getArguments() != null) {
             user = User.getUser();
         }
+        activity = (MainActivity) getActivity();
     }
 
     /**
@@ -178,6 +181,10 @@ public class FavPage extends Fragment {
     public void onResume(){
         super.onResume();
         favAdapter.notifyDataSetChanged();
+        activity.getSupportActionBar().setTitle("Favorites");
+        activity.onAttachFragment(this);
+        activity.setBottomNavigationItem(R.id.fav_nav);
     }
+
 
 }

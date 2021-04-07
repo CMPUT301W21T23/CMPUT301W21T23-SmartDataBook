@@ -42,7 +42,7 @@ public class ArchivePage extends Fragment {
     private ListView archiveExperimentList;
     private ArrayList<Experiment> archiveExperimentDataList;
     private ArrayList<Experiment> searchDataList;
-    private MainActivity mainActivity;
+    private MainActivity activity;
     private static ArrayAdapter<Experiment> archiveExperimentAdapter;
 
     FirebaseFirestore db = FirebaseFirestore.getInstance();
@@ -92,7 +92,7 @@ public class ArchivePage extends Fragment {
         }
 
         // added stuff
-        mainActivity = (MainActivity) getActivity();
+        activity = (MainActivity) getActivity();
         database = new Database();
     }
 
@@ -186,7 +186,9 @@ public class ArchivePage extends Fragment {
     public void onResume() {
         super.onResume();
         archiveExperimentAdapter.notifyDataSetChanged();
-        ((AppCompatActivity) getActivity()).getSupportActionBar().setDisplayHomeAsUpEnabled(false);
+        activity.getSupportActionBar().setTitle("Archived");
+        activity.onAttachFragment(this);
+        activity.setBottomNavigationItem(R.id.archived_nav);
     }
 
 }

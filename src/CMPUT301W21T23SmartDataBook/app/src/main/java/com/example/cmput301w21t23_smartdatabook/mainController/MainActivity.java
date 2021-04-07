@@ -4,6 +4,7 @@ import android.app.SearchManager;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
@@ -45,6 +46,7 @@ public class MainActivity extends AppCompatActivity{
     private ActionBar toolbar;
     private boolean searchShow;
     private boolean mapShow;
+    private boolean from_user;
 
     public Database database;
 
@@ -70,6 +72,13 @@ public class MainActivity extends AppCompatActivity{
         invalidateOptionsMenu();
     }
 
+    public void setBottomNavigationItem(int targetMenu) {
+        // Touch this, and you will fall in a never-ending loop of onAttachFragment -> BottomNavigationView.onClickListner -> Open new fragment -> onAttachFragment
+        from_user = false;
+
+        bottomNavigation.setSelectedItemId(targetMenu);
+    }
+
     /**
      * This method runs on the creation of the main activity
      * @param savedInstanceState
@@ -82,6 +91,7 @@ public class MainActivity extends AppCompatActivity{
         setSupportActionBar(findViewById(R.id.app_toolbar));
         toolbar = getSupportActionBar();
         database = new Database();
+        from_user = true;
 
         bottomNavigation = findViewById(R.id.bottom_navigation);
         bottomNavigation.setOnNavigationItemSelectedListener(mOnNavigationItemSelectedListener);
@@ -210,26 +220,27 @@ public class MainActivity extends AppCompatActivity{
             new BottomNavigationView.OnNavigationItemSelectedListener() {
                 @Override
                 public boolean onNavigationItemSelected(@NonNull MenuItem item) {
-                    switch (item.getItemId()) {
-                        case R.id.home_nav:
-                            toolbar.setTitle("Home");
-                            openFragment(homePage.newInstance(""));
-                            return true;
+                    if (from_user) {
+                        switch (item.getItemId()) {
+                            case R.id.home_nav:
+                                openFragment(homePage.newInstance(""));
+                                return true;
 
-                        case R.id.fav_nav:
-                            toolbar.setTitle("Favorites");
-                            openFragment(FavPage.newInstance(""));
-                            return true;
+                            case R.id.fav_nav:
+                                openFragment(FavPage.newInstance(""));
+                                return true;
 
-                        case R.id.settings_nav:
-                            toolbar.setTitle("Settings");
-                            openFragment(SettingsPage.newInstance(""));
-                            return true;
+                            case R.id.settings_nav:
+                                openFragment(SettingsPage.newInstance(""));
+                                return true;
 
-                        case R.id.archived_nav:
-                            toolbar.setTitle("Archived");
-                            openFragment(ArchivePage.newInstance(""));
-                            return true;
+                            case R.id.archived_nav:
+                                openFragment(ArchivePage.newInstance(""));
+                                return true;
+                        }
+                    } else {
+                        from_user = true;
+                        return true;
                     }
                     return false;
                 }

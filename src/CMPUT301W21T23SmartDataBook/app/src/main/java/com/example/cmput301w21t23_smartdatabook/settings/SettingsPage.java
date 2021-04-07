@@ -10,6 +10,7 @@ import android.widget.Toast;
 import androidx.fragment.app.Fragment;
 import com.example.cmput301w21t23_smartdatabook.database.Database;
 import com.example.cmput301w21t23_smartdatabook.R;
+import com.example.cmput301w21t23_smartdatabook.mainController.MainActivity;
 import com.example.cmput301w21t23_smartdatabook.user.User;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.firestore.FirebaseFirestore;
@@ -27,6 +28,7 @@ public class SettingsPage extends Fragment {
 	public Button saveButtonView;
 
 	private User user;
+	private MainActivity activity;
 
 	public Database database = new Database();
 
@@ -42,11 +44,20 @@ public class SettingsPage extends Fragment {
 	}
 
 	@Override
+    public void onResume() {
+        super.onResume();
+        activity.getSupportActionBar().setTitle("Home");
+        activity.onAttachFragment(this);
+        activity.setBottomNavigationItem(R.id.settings_nav);
+    }
+
+	@Override
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		if (getArguments() != null) {
 			user = User.getUser();
 		}
+		activity = (MainActivity) getActivity();
 	}
 
 	@Override
