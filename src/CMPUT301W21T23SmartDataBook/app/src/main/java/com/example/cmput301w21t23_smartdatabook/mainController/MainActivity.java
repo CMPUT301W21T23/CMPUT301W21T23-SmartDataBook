@@ -70,13 +70,41 @@ public class MainActivity extends AppCompatActivity{
         if (fragment instanceof ArchivePage) searchShow = true;
         if (fragment instanceof addExpFragment) bottomNavigation.setVisibility(View.GONE);
         invalidateOptionsMenu();
+        Log.d("MainActivity:73", String.valueOf(getSupportFragmentManager().getBackStackEntryCount()));
     }
 
+    /**
+     * This receives a request from other fragments to update the selected item of the bottom navigation, without triggering the onNavigationItemSelectedListener.
+     * @param targetMenu
+     */
     public void setBottomNavigationItem(int targetMenu) {
         // Touch this, and you will fall in a never-ending loop of onAttachFragment -> BottomNavigationView.onClickListner -> Open new fragment -> onAttachFragment
         from_user = false;
 
         bottomNavigation.setSelectedItemId(targetMenu);
+    }
+
+    /**
+     * This handles the action of the back button pressed of the android device while on MainActivity.
+     */
+    @Override
+    public void onBackPressed() {
+        // From stackoverflow: https://stackoverflow.com/questions/5448653/how-to-implement-onbackpressed-in-fragments
+        // Answer: https://stackoverflow.com/posts/24881908/revisions
+        // By Hw.Master: https://stackoverflow.com/users/1072254/hw-master
+
+        int count = getSupportFragmentManager().getBackStackEntryCount();
+
+        if (count == 1) {
+            // From stackoverflow: https://stackoverflow.com/questions/3105673/how-to-kill-an-application-with-all-its-activities
+            // Answer: https://stackoverflow.com/posts/10597017/revisions
+            // By Thirumalvalavan: https://stackoverflow.com/users/1404798/thirumalvalavan
+            android.os.Process.killProcess(android.os.Process.myPid());
+            //additional code
+        } else {
+            getSupportFragmentManager().popBackStack();
+        }
+
     }
 
     /**
