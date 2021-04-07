@@ -79,19 +79,30 @@ public class FavPage extends Fragment {
 	 * @param query
 	 * @param currentFragment
 	 */
-	public void doUpdate(String query, Fragment currentFragment) {
+	public void doUpdate(String query) {
 
-		currentQuery = query;
+		currentQuery = query.toLowerCase();
 
-		if (currentQuery != null) {
-			//Source: Michele Lacorte; https://stackoverflow.com/users/4529790/michele-lacorte
-			//Code: https://stackoverflow.com/questions/32359727/method-to-refresh-fragment-content-when-data-changed-like-recall-oncreateview
-			//Refresh the current fragment after assigning a the currentQuery
-			FragmentTransaction fragmentTransaction = getFragmentManager().beginTransaction();
-			fragmentTransaction.detach(currentFragment);
-			fragmentTransaction.attach(currentFragment);
-			fragmentTransaction.commit();
-		}
+		database.fillUserName(new GeneralDataCallBack() {
+			@Override
+			public void onDataReturn(Object returnedObject) {
+				Hashtable<String, User> UserName = (Hashtable<String, User>) returnedObject;
+				ArrayList<Experiment> temp = new ArrayList<>();
+
+				for (int i = 0; i < favDataList.size(); i++) {
+					Experiment experiment = favDataList.get(i);
+					if (experiment.getExpName().toLowerCase().contains(currentQuery) ||
+						UserName.get(experiment.getOwnerUserID()).getUserName().toLowerCase().contains(currentQuery) ||
+						experiment.getDate().toLowerCase().contains(currentQuery) ||
+						experiment.getDescription().toLowerCase().contains(currentQuery) ||
+						experiment.getTrialType().toLowerCase().contains(currentQuery)) temp.add(experiment);
+				}
+
+				favAdapter = new CardList(getContext(), temp, UserName, 1);
+				favList.setAdapter(favAdapter);
+
+			}
+		});
 	}
 
 	/**

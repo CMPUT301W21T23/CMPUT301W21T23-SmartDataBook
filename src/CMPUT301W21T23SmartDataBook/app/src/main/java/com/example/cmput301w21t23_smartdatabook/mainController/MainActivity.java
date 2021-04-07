@@ -203,16 +203,15 @@ public class MainActivity extends AppCompatActivity{
             @Override
             public boolean onQueryTextSubmit(String query) {
                 Fragment currentFragment = getSupportFragmentManager().findFragmentById(R.id.container);
-                if (currentFragment != null && currentFragment.isVisible() && !query.equals("")) {
-
+                if (currentFragment != null && currentFragment.isVisible()) {
                     if (currentFragment instanceof homePage) {
-                        ((homePage)currentFragment).doUpdate(query, currentFragment);
+                        ((homePage)currentFragment).doUpdate(query);
                     }
                     if (currentFragment instanceof FavPage) {
-                        ((FavPage)currentFragment).doUpdate(query, currentFragment);
+                        ((FavPage)currentFragment).doUpdate(query);
                     }
                     if (currentFragment instanceof ArchivePage) {
-                        ((ArchivePage)currentFragment).doUpdate(query, currentFragment);
+                        ((ArchivePage)currentFragment).doUpdate(query);
                     }
 
                 }
