@@ -2,7 +2,6 @@
 package com.example.cmput301w21t23_smartdatabook.database;
 
 import android.content.Context;
-import android.util.Log;
 import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.CheckBox;
@@ -11,7 +10,7 @@ import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 
-import com.example.cmput301w21t23_smartdatabook.Experiment;
+import com.example.cmput301w21t23_smartdatabook.experiment.Experiment;
 import com.example.cmput301w21t23_smartdatabook.comments.Comment;
 import com.example.cmput301w21t23_smartdatabook.trials.Trial;
 import com.example.cmput301w21t23_smartdatabook.user.User;
@@ -39,16 +38,11 @@ import java.util.Map;
  * This class consists database, it has the attributes call back which handles synchronous and asychronous functions, and an arraylist of experiment
  * It passes/ takes information to firestore
  *
- * @author Bosco Chan Afaq Nabi, Jayden Cho
+ * @author Bosco Chan, Afaq Nabi, Jayden Cho
  */
 public class Database {
 
 	private ArrayList<Experiment> experimentDataList = new ArrayList<>();
-	private static final String TAG1 = "Your";
-	private static final String TAG2 = "Warning";
-	private static final String TAG3 = "Exception";
-
-	private User user = User.getUser();
 	private static Database database;
 
 	FirebaseAuth mAuth;
@@ -61,8 +55,6 @@ public class Database {
 	 */
 	public Database() {
 	}
-
-	;
 
 	//Singleton implementation
 	public static Database getDataBase() {

@@ -1,9 +1,8 @@
 package com.example.cmput301w21t23_smartdatabook.user;
 
-import com.example.cmput301w21t23_smartdatabook.Experiment;
+import com.example.cmput301w21t23_smartdatabook.experiment.Experiment;
 
 import java.io.Serializable;
-import java.util.ArrayList;
 
 /**
  * Singleton User class

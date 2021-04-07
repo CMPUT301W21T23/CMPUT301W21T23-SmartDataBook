@@ -43,7 +43,6 @@ public class MainActivity extends AppCompatActivity{
 
     BottomNavigationView bottomNavigation;
 
-    private ActionBar toolbar;
     private boolean searchShow;
     private boolean mapShow;
     private boolean from_user;
@@ -117,7 +116,7 @@ public class MainActivity extends AppCompatActivity{
         setContentView(R.layout.activity_main);
 
         setSupportActionBar(findViewById(R.id.app_toolbar));
-        toolbar = getSupportActionBar();
+        ActionBar toolbar = getSupportActionBar();
         database = new Database();
         from_user = true;
 

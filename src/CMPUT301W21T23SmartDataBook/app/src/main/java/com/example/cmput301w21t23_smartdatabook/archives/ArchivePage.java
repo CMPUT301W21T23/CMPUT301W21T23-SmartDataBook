@@ -9,14 +9,14 @@ import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
-import androidx.appcompat.app.AppCompatActivity;
+
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentTransaction;
-import com.example.cmput301w21t23_smartdatabook.Experiment;
+import com.example.cmput301w21t23_smartdatabook.experiment.Experiment;
 import com.example.cmput301w21t23_smartdatabook.R;
 import com.example.cmput301w21t23_smartdatabook.database.Database;
 import com.example.cmput301w21t23_smartdatabook.database.GeneralDataCallBack;
-import com.example.cmput301w21t23_smartdatabook.experimentDetails.ExperimentDetails;
+import com.example.cmput301w21t23_smartdatabook.experiment.ExperimentDetails;
 import com.example.cmput301w21t23_smartdatabook.home.CardList;
 import com.example.cmput301w21t23_smartdatabook.mainController.MainActivity;
 import com.example.cmput301w21t23_smartdatabook.user.User;
@@ -31,11 +31,7 @@ import java.util.Hashtable;
  */
 
 public class ArchivePage extends Fragment {
-    private static final String AP1 = "AP1";
-    private static final String AP2 = "AP2";
     private User user = User.getUser();
-
-    //things I added from homePage
     private Database database;
     private String currentQuery;
 
@@ -87,9 +83,6 @@ public class ArchivePage extends Fragment {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        if (getArguments() != null) {
-            User user = (User) getArguments().getSerializable("user");
-        }
 
         // added stuff
         activity = (MainActivity) getActivity();

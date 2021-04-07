@@ -1,6 +1,5 @@
 package com.example.cmput301w21t23_smartdatabook;
 
-import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -10,7 +9,8 @@ import android.widget.NumberPicker;
 import androidx.test.platform.app.InstrumentationRegistry;
 import androidx.test.rule.ActivityTestRule;
 
-import com.example.cmput301w21t23_smartdatabook.experimentDetails.ExperimentDetails;
+import com.example.cmput301w21t23_smartdatabook.experiment.Experiment;
+import com.example.cmput301w21t23_smartdatabook.experiment.ExperimentDetails;
 import com.example.cmput301w21t23_smartdatabook.mainController.MainActivity;
 import com.example.cmput301w21t23_smartdatabook.trials.UploadTrial;
 import com.robotium.solo.Solo;
@@ -19,8 +19,6 @@ import org.junit.After;
 import org.junit.Before;
 import org.junit.Rule;
 import org.junit.Test;
-
-import java.util.ArrayList;
 
 public class StatsViewTest {
     private Solo solo;
