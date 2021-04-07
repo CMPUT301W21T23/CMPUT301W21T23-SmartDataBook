@@ -254,6 +254,7 @@ public class UploadTrial extends AppCompatActivity {
                                                 });
                                     }
 //                                    recreate();
+                                    dialog.cancel();
                                 }
                             })
                             .setNegativeButton("Add failure", new DialogInterface.OnClickListener() {
@@ -301,9 +302,11 @@ public class UploadTrial extends AppCompatActivity {
                                     }
 
 //                                    recreate();
+                                    dialog.cancel();
                                 }
                             })
                             .setPositiveButton("Cancel", null).create().show();
+
                 }
                 // 2nd case: if the experiment's trial type is count
                 // Q1: how to take input?

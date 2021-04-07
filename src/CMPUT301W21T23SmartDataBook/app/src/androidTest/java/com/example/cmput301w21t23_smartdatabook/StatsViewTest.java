@@ -1,6 +1,8 @@
 package com.example.cmput301w21t23_smartdatabook;
 
+import android.util.Log;
 import android.view.View;
+import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ListView;
 import android.widget.NumberPicker;
@@ -10,6 +12,7 @@ import androidx.test.rule.ActivityTestRule;
 
 import com.example.cmput301w21t23_smartdatabook.experimentDetails.ExperimentDetails;
 import com.example.cmput301w21t23_smartdatabook.mainController.MainActivity;
+import com.example.cmput301w21t23_smartdatabook.trials.UploadTrial;
 import com.robotium.solo.Solo;
 
 import org.junit.After;
@@ -17,9 +20,12 @@ import org.junit.Before;
 import org.junit.Rule;
 import org.junit.Test;
 
+import java.util.ArrayList;
+
 public class StatsViewTest {
     private Solo solo;
     private View addExpButton;
+    private Button uploadTrial;
 
     @Rule
     public ActivityTestRule<MainActivity> rule = new ActivityTestRule<MainActivity>(MainActivity.class, true, true);
@@ -28,6 +34,7 @@ public class StatsViewTest {
     public void setUp() {
         solo = new Solo(InstrumentationRegistry.getInstrumentation(), rule.getActivity());
         addExpButton = rule.getActivity().findViewById(R.id.add_experiment_button);
+        uploadTrial = rule.getActivity().findViewById(R.id.UploadTrialsBTN);
     }
 
     //Finally, add tearDown() method using the @After tag to run after every test method.
@@ -40,7 +47,7 @@ public class StatsViewTest {
     @Test
     public void testStatsView() {
 
-//        createExperiment();
+        createExperiment();
         addTrials();
 
     }
@@ -49,6 +56,16 @@ public class StatsViewTest {
         solo.assertCurrentActivity("Wrong Activity", MainActivity.class);
         solo.clickInList(0);
         solo.assertCurrentActivity("Wrong Activity", ExperimentDetails.class);
+        solo.clickOnButton("UPLOAD TRIALS");
+        solo.assertCurrentActivity("Wrong Activity", UploadTrial.class);
+        solo.clickOnButton("add new trials");
+//        solo.enterText( (EditText) solo.getView(R.id.), "Binomial");
+        solo.sleep(1000);
+        ArrayList<View> views = solo.getCurrentViews();
+        for (View v: views) {
+            Log.d("View", "" + v);
+        }
+
     }
 
     //Create a working experiment
@@ -80,7 +97,7 @@ public class StatsViewTest {
         solo.sleep(1000);
         solo.enterText( (EditText) solo.getView(R.id.newExperimentLocationOnExperimentDescriptionEditText), "Coin Flip");
         solo.sleep(1000);
-        solo.clickOnRadioButton(1);
+        solo.clickOnRadioButton(0);
         solo.sleep(1000);
         solo.clickOnView(rule.getActivity().findViewById(R.id.newExperimentLocationToggleSwitch));
         solo.sleep(1000);
