@@ -337,47 +337,46 @@ public class ScannerActivity extends AppCompatActivity implements ZXingScannerVi
 															onBackPressed();
 //															Integer.parseInt(String.valueOf((values[2])) )
 														} else{
-														if (experiment.getTrialType().equals("Binomial")){
-															if ((count + (int)document.get("Value"))>  experiment.getMaxTrials()){
-																onBackPressed();
-															}
-															else {
-																for (int i = 1; i <= Integer.parseInt((String) document.get("Value")); i++) {
-																	Trial trial = new Trial(experiment.getRequireLocation(),
-																			experiment.getTrialType(),
-																			document.get("Bool"),
-																			user.getUserUniqueID(),
-																			UUID.randomUUID().toString(),
-																			stringDate.getCurrentDate(),
-																			experiment.getRequireLocation() ? latlng : null);
+															if (experiment.getTrialType().equals("Binomial")){
+																if ((count + (int)document.get("Value"))>  experiment.getMaxTrials()){
+																	onBackPressed();
+																}
+																else {
+																	for (int i = 1; i <= Integer.parseInt((String) document.get("Value")); i++) {
+																		Trial trial = new Trial(experiment.getRequireLocation(),
+																				experiment.getTrialType(),
+																				document.get("Bool"),
+																				user.getUserUniqueID(),
+																				UUID.randomUUID().toString(),
+																				stringDate.getCurrentDate(),
+																				experiment.getRequireLocation() ? latlng : null);
 
-																	database.addTrialToDB(db
-																			.collection("Experiments")
-																			.document(experiment.getExpID())
-																			.collection("Trials")
-																			.document(trial.getTrialID()), trial);
+																		database.addTrialToDB(db
+																				.collection("Experiments")
+																				.document(experiment.getExpID())
+																				.collection("Trials")
+																				.document(trial.getTrialID()), trial);
+																	}
+																}
 															}
-															}
-														}
-														else{
-															Trial trial = new Trial(experiment.getRequireLocation(),
-																	experiment.getTrialType(),
-																	document.get("Value"),
-																	user.getUserUniqueID(),
-																	UUID.randomUUID().toString(),
-																	stringDate.getCurrentDate());
+															else{
+																Trial trial = new Trial(experiment.getRequireLocation(),
+																		experiment.getTrialType(),
+																		document.get("Value"),
+																		user.getUserUniqueID(),
+																		UUID.randomUUID().toString(),
+																		stringDate.getCurrentDate());
 
-															database.addTrialToDB(db
-																	.collection("Experiments")
-																	.document(experiment.getExpID())
-																	.collection("Trials")
-																	.document(trial.getTrialID()), trial);
-														}
+																database.addTrialToDB(db
+																		.collection("Experiments")
+																		.document(experiment.getExpID())
+																		.collection("Trials")
+																		.document(trial.getTrialID()), trial);
+															}
 														}
 													}
 												}
 											});
-
 								}
 							}
 						}
