@@ -38,6 +38,7 @@ import com.google.firebase.firestore.QuerySnapshot;
 
 import java.math.BigDecimal;
 import java.util.ArrayList;
+import java.util.Hashtable;
 import java.util.UUID;
 
 /**
@@ -83,8 +84,15 @@ public class UploadTrial extends AppCompatActivity {
         TextView name = findViewById(R.id.actual_experiment_name);
         name.setText(experiment.getExpName());
 
-        TextView userName = findViewById(R.id.actual_user_name);
-        userName.setText(experiment.getOwnerUserID());
+        database.fillUserName(new GeneralDataCallBack() {
+            @Override
+            public void onDataReturn(Object returnedObject) {
+                Hashtable<String, User> UserName = (Hashtable<String, User>) returnedObject;
+                TextView userName = findViewById(R.id.actual_user_name);
+                userName.setText( UserName.get(experiment.getOwnerUserID()).getUserName() );
+            }
+        });
+
 
         // Set Headers
         TextView nameHeader = findViewById(R.id.experiment_name);
