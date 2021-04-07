@@ -159,8 +159,6 @@ public class CardList extends ArrayAdapter<Experiment> {
                                   .collection("Favorites");
                           database.addExperimentToDB(experiment, favExpCollection, user.getUserUniqueID());
 
-                          System.out.println("Checked");
-
                       } else {
 
                               final DocumentReference ref = db.collection("Users")
@@ -169,8 +167,6 @@ public class CardList extends ArrayAdapter<Experiment> {
                                       .document(experiment.getExpID());
 
                               database.followStatus( ref, experiment, getContext(), follow, user.getUserUniqueID() );
-
-                              System.out.println("Un-Checked");
                           }
                       }
                   }
