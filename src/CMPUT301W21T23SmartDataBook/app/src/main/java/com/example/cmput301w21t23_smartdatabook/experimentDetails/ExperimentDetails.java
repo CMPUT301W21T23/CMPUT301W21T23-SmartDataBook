@@ -68,7 +68,7 @@ public class ExperimentDetails extends AppCompatActivity {
         setSupportActionBar(findViewById(R.id.app_toolbar));
         ActionBar toolbar = getSupportActionBar();
         assert toolbar != null;
-        toolbar.setDisplayHomeAsUpEnabled(true);
+//        toolbar.setDisplayHomeAsUpEnabled(true);
 
         FirebaseFirestore db = FirebaseFirestore.getInstance();
 
