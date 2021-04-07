@@ -40,7 +40,7 @@ import java.util.Hashtable;
  * @see Fragment, Firebase
  */
 
-public class homePage extends Fragment {
+public class HomePage extends Fragment {
 
 	private ListView experimentList;
 	private ArrayList<Experiment> experimentDataList;
@@ -55,11 +55,11 @@ public class homePage extends Fragment {
 
 	FirebaseFirestore db = FirebaseFirestore.getInstance();
 
-	public homePage() {
+	public HomePage() {
 	}
 
-	public static homePage newInstance(String user) {
-		homePage fragment = new homePage();
+	public static HomePage newInstance(String user) {
+		HomePage fragment = new HomePage();
 		Bundle args = new Bundle();
 		args.putString("", user);
 		fragment.setArguments(args);
@@ -229,7 +229,7 @@ public class homePage extends Fragment {
 
 				addExpFrag.setArguments(args);
 
-				addExpFrag.setTargetFragment(homePage.this, 0);
+				addExpFrag.setTargetFragment(HomePage.this, 0);
 				FragmentTransaction ft = getActivity().getSupportFragmentManager().beginTransaction();
 				ft.replace(R.id.container, addExpFrag, "addExpFragment");
 				ft.addToBackStack("addExpFragment");
@@ -255,7 +255,6 @@ public class homePage extends Fragment {
 	 */
 	public void onActivityResult(int requestCode, int resultCode, Intent data) {
 		super.onActivityResult(requestCode, resultCode, data);
-		Log.d("onBack", "working?");
 
 		int addExpFragmentResultCode = 1;
 		int addExpFragmentRequestCode = 0;

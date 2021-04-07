@@ -108,13 +108,11 @@ public class CardList extends ArrayAdapter<Experiment> {
             TextView dateView = v.findViewById(R.id.dateCreated);
             TextView ownerName = v.findViewById(R.id.Owner);
             TextView experimentDescription = v.findViewById(R.id.Experiment_descr);
-            TextView region = v.findViewById(R.id.Region);
 
             experimentName.setText(experiment.getExpName());
             dateView.setText(""+ date.getDate(experiment.getDate()));
             ownerName.setText(experiment.getOwnerUserName());
             experimentDescription.setText(experiment.getDescription());
-            region.setText(null);
 
             // when the user click the comment button
             Button comment = v.findViewById(R.id.comment_btn);
