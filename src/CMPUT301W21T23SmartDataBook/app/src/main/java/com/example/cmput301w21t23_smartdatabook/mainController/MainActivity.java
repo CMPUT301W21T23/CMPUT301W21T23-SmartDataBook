@@ -23,7 +23,7 @@ import com.example.cmput301w21t23_smartdatabook.database.GeneralDataCallBack;
 import com.example.cmput301w21t23_smartdatabook.fav.FavPage;
 import com.example.cmput301w21t23_smartdatabook.geolocation.MapsActivity;
 import com.example.cmput301w21t23_smartdatabook.home.addExpFragment;
-import com.example.cmput301w21t23_smartdatabook.home.homePage;
+import com.example.cmput301w21t23_smartdatabook.home.HomePage;
 import com.example.cmput301w21t23_smartdatabook.settings.SettingsPage;
 import com.example.cmput301w21t23_smartdatabook.user.User;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
@@ -63,8 +63,8 @@ public class MainActivity extends AppCompatActivity{
     @Override
     public void onAttachFragment(Fragment fragment) {
         super.onAttachFragment(fragment);
-        searchShow = fragment instanceof homePage;
-        mapShow = fragment instanceof homePage;
+        searchShow = fragment instanceof HomePage;
+        mapShow = fragment instanceof HomePage;
         if (fragment instanceof FavPage) searchShow = true;
         if (fragment instanceof ArchivePage) searchShow = true;
         if (fragment instanceof addExpFragment) bottomNavigation.setVisibility(View.GONE);
@@ -140,7 +140,7 @@ public class MainActivity extends AppCompatActivity{
                 }
 
                 final FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
-                transaction.replace(R.id.container, homePage.newInstance(""));
+                transaction.replace(R.id.container, HomePage.newInstance(""));
                 transaction.addToBackStack(null);
                 transaction.commitAllowingStateLoss();
 
@@ -204,8 +204,8 @@ public class MainActivity extends AppCompatActivity{
             public boolean onQueryTextSubmit(String query) {
                 Fragment currentFragment = getSupportFragmentManager().findFragmentById(R.id.container);
                 if (currentFragment != null && currentFragment.isVisible()) {
-                    if (currentFragment instanceof homePage) {
-                        ((homePage)currentFragment).doUpdate(query);
+                    if (currentFragment instanceof HomePage) {
+                        ((HomePage)currentFragment).doUpdate(query);
                     }
                     if (currentFragment instanceof FavPage) {
                         ((FavPage)currentFragment).doUpdate(query);
@@ -246,30 +246,38 @@ public class MainActivity extends AppCompatActivity{
             new BottomNavigationView.OnNavigationItemSelectedListener() {
                 @Override
                 public boolean onNavigationItemSelected(@NonNull MenuItem item) {
-                    if (from_user) {
-                        switch (item.getItemId()) {
-                            case R.id.home_nav:
-                                openFragment(homePage.newInstance(""));
-                                return true;
+                    Fragment currentFragment = getSupportFragmentManager().findFragmentById(R.id.container);
+                    if (currentFragment != null && currentFragment.isVisible()) {
+                        if (from_user) {
+                            switch (item.getItemId()) {
+                                case R.id.home_nav:
+                                    if (currentFragment instanceof HomePage) getSupportFragmentManager().popBackStack();
+                                    openFragment(HomePage.newInstance(""));
+                                    return true;
 
-                            case R.id.fav_nav:
-                                openFragment(FavPage.newInstance(""));
-                                return true;
+                                case R.id.fav_nav:
+                                    if (currentFragment instanceof FavPage) getSupportFragmentManager().popBackStack();
+                                    openFragment(FavPage.newInstance(""));
+                                    return true;
 
-                            case R.id.settings_nav:
-                                openFragment(SettingsPage.newInstance(""));
-                                return true;
+                                case R.id.settings_nav:
+                                    if (currentFragment instanceof SettingsPage) getSupportFragmentManager().popBackStack();
+                                    openFragment(SettingsPage.newInstance(""));
+                                    return true;
 
-                            case R.id.archived_nav:
-                                openFragment(ArchivePage.newInstance(""));
-                                return true;
+                                case R.id.archived_nav:
+                                    if (currentFragment instanceof ArchivePage) getSupportFragmentManager().popBackStack();
+                                    openFragment(ArchivePage.newInstance(""));
+                                    return true;
+                            }
+                        } else {
+                            from_user = true;
+                            return true;
                         }
-                    } else {
-                        from_user = true;
-                        return true;
                     }
                     return false;
                 }
+
             };
 
 
