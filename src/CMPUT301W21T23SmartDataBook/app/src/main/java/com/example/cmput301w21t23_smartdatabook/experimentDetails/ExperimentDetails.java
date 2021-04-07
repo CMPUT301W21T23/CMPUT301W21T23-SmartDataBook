@@ -258,8 +258,10 @@ public class ExperimentDetails extends AppCompatActivity {
         publish.setChecked(experiment.isPublic());
         if (user.getUserUniqueID().equals(experiment.getOwnerUserID())) {
             endExp.setVisibility(View.VISIBLE);
-            publish.setVisibility(View.VISIBLE);
-            publish_text.setVisibility(View.VISIBLE);
+            if (!experiment.getIsEnd()) {
+                publish.setVisibility(View.VISIBLE);
+                publish_text.setVisibility(View.VISIBLE);
+            }
         }
 
         publish.setOnClickListener(new View.OnClickListener() {
