@@ -10,7 +10,7 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 
-import com.example.cmput301w21t23_smartdatabook.StringDate;
+import com.example.cmput301w21t23_smartdatabook.stats.StringDate;
 import com.example.cmput301w21t23_smartdatabook.R;
 import com.example.cmput301w21t23_smartdatabook.user.User;
 

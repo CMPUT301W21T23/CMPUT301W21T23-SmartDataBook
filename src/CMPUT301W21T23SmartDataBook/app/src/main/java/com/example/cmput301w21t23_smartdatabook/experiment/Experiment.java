@@ -1,4 +1,4 @@
-package com.example.cmput301w21t23_smartdatabook;
+package com.example.cmput301w21t23_smartdatabook.experiment;
 
 import android.os.Parcel;
 import android.os.Parcelable;

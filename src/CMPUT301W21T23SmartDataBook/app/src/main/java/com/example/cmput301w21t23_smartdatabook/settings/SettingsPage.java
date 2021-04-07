@@ -17,7 +17,7 @@ import com.google.firebase.firestore.FirebaseFirestore;
 
 /**
  * THe User Contact page where users can change and edit their information freely
- * @author Krutik, Natnail
+ * @author Krutik, Natnail, Jayden Cho
  */
 
 // TODO: change name to User contact instead of settings
@@ -46,7 +46,7 @@ public class SettingsPage extends Fragment {
 	@Override
     public void onResume() {
         super.onResume();
-        activity.getSupportActionBar().setTitle("Home");
+        activity.getSupportActionBar().setTitle("Settings");
         activity.onAttachFragment(this);
         activity.setBottomNavigationItem(R.id.settings_nav);
     }
@@ -71,7 +71,6 @@ public class SettingsPage extends Fragment {
 
 		usernameTextField.setHint(user.getUserName());
 
-		Toast.makeText(getContext(), "" + user.getUserUniqueID(), Toast.LENGTH_LONG).show();
 		database.editUser(usernameTextField, emailTextField, saveButtonView, getContext(), user.getUserUniqueID(), user);
 
 		return view;

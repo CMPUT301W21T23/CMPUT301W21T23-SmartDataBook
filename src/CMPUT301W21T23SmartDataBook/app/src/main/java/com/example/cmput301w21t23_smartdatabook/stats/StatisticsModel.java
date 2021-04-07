@@ -1,7 +1,5 @@
 package com.example.cmput301w21t23_smartdatabook.stats;
 
-import com.example.cmput301w21t23_smartdatabook.StringDate;
-
 import java.util.ArrayList;
 import java.util.Date;
 

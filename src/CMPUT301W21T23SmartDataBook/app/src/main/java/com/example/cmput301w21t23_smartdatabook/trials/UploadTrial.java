@@ -5,7 +5,6 @@ import android.content.Intent;
 import android.location.Location;
 import android.os.Bundle;
 import android.text.InputType;
-import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
@@ -19,9 +18,9 @@ import androidx.annotation.NonNull;
 import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
-import com.example.cmput301w21t23_smartdatabook.StringDate;
+import com.example.cmput301w21t23_smartdatabook.stats.StringDate;
 import com.example.cmput301w21t23_smartdatabook.database.Database;
-import com.example.cmput301w21t23_smartdatabook.Experiment;
+import com.example.cmput301w21t23_smartdatabook.experiment.Experiment;
 import com.example.cmput301w21t23_smartdatabook.R;
 import com.example.cmput301w21t23_smartdatabook.database.GeneralDataCallBack;
 import com.example.cmput301w21t23_smartdatabook.geolocation.LocationWithPermission;
@@ -29,9 +28,6 @@ import com.example.cmput301w21t23_smartdatabook.user.User;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
-import com.google.firebase.auth.FirebaseAuth;
-import com.google.firebase.auth.FirebaseUser;
-import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.QueryDocumentSnapshot;
 import com.google.firebase.firestore.QuerySnapshot;
@@ -44,7 +40,7 @@ import java.util.UUID;
 /**
  * Class: UploadTrial activity
  * displays the upload trials page
- * @author Afaq Nabi, Krutik Soni
+ * @author Afaq Nabi, Krutik Soni, Jayden Cho, Bosco Chan
  * @see TrialList, Trial
  */
 public class UploadTrial extends AppCompatActivity {

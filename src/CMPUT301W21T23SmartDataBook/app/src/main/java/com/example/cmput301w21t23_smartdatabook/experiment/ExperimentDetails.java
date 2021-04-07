@@ -1,11 +1,10 @@
-package com.example.cmput301w21t23_smartdatabook.experimentDetails;
+package com.example.cmput301w21t23_smartdatabook.experiment;
 
 import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.os.Parcelable;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -20,23 +19,17 @@ import androidx.appcompat.widget.AppCompatImageButton;
 
 import com.example.cmput301w21t23_smartdatabook.QRCode.QRCodeActivity;
 import com.example.cmput301w21t23_smartdatabook.QRCode.ScannerActivity;
-import com.example.cmput301w21t23_smartdatabook.StringDate;
+import com.example.cmput301w21t23_smartdatabook.stats.StringDate;
 import com.example.cmput301w21t23_smartdatabook.database.GeneralDataCallBack;
 import com.example.cmput301w21t23_smartdatabook.geolocation.MapsActivity;
 import com.example.cmput301w21t23_smartdatabook.stats.StatsView;
 import com.example.cmput301w21t23_smartdatabook.user.User;
 import com.example.cmput301w21t23_smartdatabook.comments.CommentActivity;
 import com.example.cmput301w21t23_smartdatabook.database.Database;
-import com.example.cmput301w21t23_smartdatabook.Experiment;
 import com.example.cmput301w21t23_smartdatabook.R;
 import com.example.cmput301w21t23_smartdatabook.trials.UploadTrial;
 import com.google.firebase.firestore.FirebaseFirestore;
 
-import org.w3c.dom.Text;
-
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
-import java.util.Date;
 import java.util.Hashtable;
 
 /**
@@ -46,7 +39,7 @@ import java.util.Hashtable;
  * An experiment's name and description
  * Radio button to choose which type of the trial the experiment has (binomial/ measurement/count/ non-negtaive count trials)
  * switch button that turns on/ off an experiment's trial location.
- * @author Afaq Nabi, Bosco Chan, Jayden
+ * @author Afaq Nabi, Bosco Chan, Jayden Cho
  * @version 1
  * @see Experiment
  */

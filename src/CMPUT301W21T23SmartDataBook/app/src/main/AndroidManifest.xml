@@ -47,7 +47,7 @@
                        android:resource="@xml/searchable"/>
         </activity>
 
-        <activity android:name=".experimentDetails.ExperimentDetails">
+        <activity android:name=".experiment.ExperimentDetails">
 
         </activity>
 
