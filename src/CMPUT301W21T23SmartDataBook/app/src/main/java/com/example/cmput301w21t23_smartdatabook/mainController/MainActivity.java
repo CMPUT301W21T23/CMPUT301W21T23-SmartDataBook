@@ -70,7 +70,7 @@ public class MainActivity extends AppCompatActivity{
         if (fragment instanceof ArchivePage) searchShow = true;
         if (fragment instanceof addExpFragment) bottomNavigation.setVisibility(View.GONE);
         invalidateOptionsMenu();
-        Log.d("MainActivity:73", String.valueOf(getSupportFragmentManager().getBackStackEntryCount()));
+        Log.d("MainActivity:73", String.valueOf(getSupportFragmentManager().getBackStackEntryCount()) + " (Size of the stack. 1 = home)");
     }
 
     /**
