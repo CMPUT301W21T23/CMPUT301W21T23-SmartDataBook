@@ -81,7 +81,7 @@ public class StatsView extends AppCompatActivity {
 
         /**
          * onDataReturn method, it:
-         * setting up the barchart and histograms, including their elements like data, axis labels etc.
+         * setting up the bar chart and histograms, including their elements like data, axis labels etc.
          */
         // The bottom part of the code has been reused from HomePage
         // We have learned the idea of building android chart from the site below
@@ -120,7 +120,7 @@ public class StatsView extends AppCompatActivity {
                 Log.d("statsDataListSize", "" + statsDataList.size());
                 Log.d("BinSize", ""+bins.size());
 
-                //Adds entries to the linechart. Requires that the statsDataList is sorted by date
+                //Adds entries to the line chart. Requires that the statsDataList is sorted by date
                 for (int i = 0; i<statsDataList.size(); i++){
 
                     trialValue = statsDataList.get(i).get(0).toString();
@@ -147,7 +147,6 @@ public class StatsView extends AppCompatActivity {
                     public String getAxisLabel(float value, AxisBase axis) {
                         Date date = dates.get( (int) value );
                         SimpleDateFormat sdf = new SimpleDateFormat("HH:mm:ss", Locale.ENGLISH);
-//                        Log.d("Date", ""+ (int) value + "|" + sdf.format( dateClass.getDate( statsDataList.get( (int)value ).get(1).toString() )));
                         return sdf.format( date );
                     }
                 };
