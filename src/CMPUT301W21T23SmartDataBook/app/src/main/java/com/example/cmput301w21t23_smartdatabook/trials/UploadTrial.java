@@ -93,7 +93,6 @@ public class UploadTrial extends AppCompatActivity {
             }
         });
 
-
         // Set Headers
         TextView nameHeader = findViewById(R.id.experiment_name);
         nameHeader.setText("Experiment Name: ");
@@ -192,6 +191,7 @@ public class UploadTrial extends AppCompatActivity {
                     Toast.makeText(UploadTrial.this, "Please open up the google map and obtain your location at least once.", Toast.LENGTH_LONG).show();
                     return;
                 }
+
                 LatLng latlng = new LatLng(location.getLatitude(), location.getLongitude());
 
                 // 1. 4 different cases for dialog
@@ -215,7 +215,7 @@ public class UploadTrial extends AppCompatActivity {
                             .setNeutralButton("Add passes", new DialogInterface.OnClickListener() {
                                 @Override
                                 public void onClick(DialogInterface dialog, int which) {
-                                    if (Integer.parseInt(numBinomial.getText().toString())>= experiment.getMaxTrials()){
+                                    if (Integer.parseInt(numBinomial.getText().toString()) > experiment.getMaxTrials()){
                                         Toast.makeText(UploadTrial.this, "You cannot add more trials than the maximum trials for this experiment at once", Toast.LENGTH_SHORT).show();
                                     } else {
                                         db
@@ -231,7 +231,8 @@ public class UploadTrial extends AppCompatActivity {
                                                            for (QueryDocumentSnapshot document : task.getResult()) {
                                                                count+=1;
                                                            }
-                                                           if (count+Integer.parseInt(numBinomial.getText().toString())>=experiment.getMaxTrials()){
+                                                           Log.e("Count", ""+count);
+                                                           if (count+Integer.parseInt(numBinomial.getText().toString()) > experiment.getMaxTrials()){
                                                                Toast.makeText(UploadTrial.this, "You cannot add more trials than the maximum trials for this experiment at once", Toast.LENGTH_SHORT).show();
                                                            }
                                                            else{
@@ -258,7 +259,7 @@ public class UploadTrial extends AppCompatActivity {
                             .setNegativeButton("Add failure", new DialogInterface.OnClickListener() {
                                 @Override
                                 public void onClick(DialogInterface dialog, int which) {
-                                    if (Integer.parseInt(numBinomial.getText().toString())>= experiment.getMaxTrials()){
+                                    if (Integer.parseInt(numBinomial.getText().toString()) > experiment.getMaxTrials()){
                                         Toast.makeText(UploadTrial.this, "You cannot add more trials than the maximum trials for this experiment at once", Toast.LENGTH_SHORT).show();
                                         return;
                                     }
@@ -276,7 +277,8 @@ public class UploadTrial extends AppCompatActivity {
                                                             for (QueryDocumentSnapshot document : task.getResult()) {
                                                                 count+=1;
                                                             }
-                                                            if (count+Integer.parseInt(numBinomial.getText().toString())>=experiment.getMaxTrials()){
+
+                                                            if ( count+Integer.parseInt(numBinomial.getText().toString()) > experiment.getMaxTrials() ){
                                                                 Toast.makeText(UploadTrial.this, "You cannot add more trials than the maximum trials for this experiment at once", Toast.LENGTH_SHORT).show();
                                                             }
                                                             else{
