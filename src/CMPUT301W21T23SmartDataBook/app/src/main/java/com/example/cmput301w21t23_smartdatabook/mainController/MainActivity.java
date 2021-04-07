@@ -85,6 +85,29 @@ public class MainActivity extends AppCompatActivity{
     }
 
     /**
+     * This handles the action of the back button pressed of the android device while on MainActivity.
+     */
+    @Override
+    public void onBackPressed() {
+        // From stackoverflow: https://stackoverflow.com/questions/5448653/how-to-implement-onbackpressed-in-fragments
+        // Answer: https://stackoverflow.com/posts/24881908/revisions
+        // By Hw.Master: https://stackoverflow.com/users/1072254/hw-master
+
+        int count = getSupportFragmentManager().getBackStackEntryCount();
+
+        if (count == 1) {
+            // From stackoverflow: https://stackoverflow.com/questions/3105673/how-to-kill-an-application-with-all-its-activities
+            // Answer: https://stackoverflow.com/posts/10597017/revisions
+            // By Thirumalvalavan: https://stackoverflow.com/users/1404798/thirumalvalavan
+            android.os.Process.killProcess(android.os.Process.myPid());
+            //additional code
+        } else {
+            getSupportFragmentManager().popBackStack();
+        }
+
+    }
+
+    /**
      * This method runs on the creation of the main activity
      * @param savedInstanceState
      */
