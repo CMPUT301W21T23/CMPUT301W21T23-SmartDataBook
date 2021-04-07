@@ -82,7 +82,7 @@ public class CommentActivity extends AppCompatActivity {
             public void onClick(View v) {
                 AlertDialog.Builder builder = new AlertDialog.Builder(CommentActivity.this);
                 builder.setView(addCommentView);
-                builder.setTitle("New Rpely");
+                builder.setTitle("New Reply");
                 builder.setNegativeButton("Cancel", null)
                         .setPositiveButton("Add Comment", new DialogInterface.OnClickListener() {
                             @Override

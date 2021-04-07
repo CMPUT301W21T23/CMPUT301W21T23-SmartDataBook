@@ -33,7 +33,6 @@ import static org.junit.Assert.assertTrue;
 public class StatsViewTest {
     private Solo solo;
     private View addExpButton;
-    private Button uploadTrial;
 
     @Rule
     public ActivityTestRule<MainActivity> rule = new ActivityTestRule<MainActivity>(MainActivity.class, true, true);
@@ -42,7 +41,6 @@ public class StatsViewTest {
     public void setUp() {
         solo = new Solo(InstrumentationRegistry.getInstrumentation(), rule.getActivity());
         addExpButton = rule.getActivity().findViewById(R.id.add_experiment_button);
-        uploadTrial = rule.getActivity().findViewById(R.id.UploadTrialsBTN);
     }
 
     //Finally, add tearDown() method using the @After tag to run after every test method.
