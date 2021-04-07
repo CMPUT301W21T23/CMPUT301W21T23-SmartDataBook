@@ -395,6 +395,5 @@ public class ScannerActivity extends AppCompatActivity implements ZXingScannerVi
 				.create()
 				.show();
 	}
-
 }
 
