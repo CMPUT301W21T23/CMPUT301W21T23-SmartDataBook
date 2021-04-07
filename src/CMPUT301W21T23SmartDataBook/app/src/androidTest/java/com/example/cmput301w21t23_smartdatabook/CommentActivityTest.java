@@ -62,10 +62,10 @@ public class CommentActivityTest {
         solo.clickOnText("Comments");
 //        solo.clickOnScreen(300, 666);
         solo.assertCurrentActivity("Wrong Activity", CommentActivity.class);
-        solo.sleep(3000);
         solo.clickOnScreen(980, 2053);
         solo.enterText( solo.getEditText("Comment Text"), "Hello!");
         solo.clickOnText("Add Comment");
+        solo.waitForActivity("CommentActivity",1000);
 
         ListView commentList = solo.getCurrentActivity().findViewById(R.id.comment_list);
         Comment comment = (Comment) commentList.getItemAtPosition(0);
