@@ -77,9 +77,8 @@ public class MainActivity extends AppCompatActivity{
      * @param targetMenu
      */
     public void setBottomNavigationItem(int targetMenu) {
-        // Touch this, and you will fall in a never-ending loop of onAttachFragment -> BottomNavigationView.onClickListner -> Open new fragment -> onAttachFragment
+        // Touch this, and you will fall in a never-ending loop of onAttachFragment -> BottomNavigationView.onClickListener -> Open new fragment -> onAttachFragment
         from_user = false;
-
         bottomNavigation.setSelectedItemId(targetMenu);
     }
 
@@ -91,15 +90,11 @@ public class MainActivity extends AppCompatActivity{
         // From stackoverflow: https://stackoverflow.com/questions/5448653/how-to-implement-onbackpressed-in-fragments
         // Answer: https://stackoverflow.com/posts/24881908/revisions
         // By Hw.Master: https://stackoverflow.com/users/1072254/hw-master
-
-        int count = getSupportFragmentManager().getBackStackEntryCount();
-
-        if (count == 1) {
+        if (getSupportFragmentManager().getBackStackEntryCount() == 1) {
             // From stackoverflow: https://stackoverflow.com/questions/3105673/how-to-kill-an-application-with-all-its-activities
             // Answer: https://stackoverflow.com/posts/10597017/revisions
             // By Thirumalvalavan: https://stackoverflow.com/users/1404798/thirumalvalavan
             android.os.Process.killProcess(android.os.Process.myPid());
-            //additional code
         } else {
             getSupportFragmentManager().popBackStack();
         }

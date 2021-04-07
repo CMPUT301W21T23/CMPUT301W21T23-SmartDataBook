@@ -255,7 +255,6 @@ public class HomePage extends Fragment {
 	 */
 	public void onActivityResult(int requestCode, int resultCode, Intent data) {
 		super.onActivityResult(requestCode, resultCode, data);
-		Log.d("onBack", "working?");
 
 		int addExpFragmentResultCode = 1;
 		int addExpFragmentRequestCode = 0;
