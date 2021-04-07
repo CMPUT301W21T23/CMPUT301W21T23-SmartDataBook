@@ -290,7 +290,7 @@ public class ScannerActivity extends AppCompatActivity implements ZXingScannerVi
 		});
 	}
 
-	// if barcode is scanned ofr hte purpose of adding a trila to the experiment
+	// if barcode is scanned for the purpose of adding a trial to the experiment
 	private void BarcodeScanned(String rawResult, Experiment experiment) {
 		new LocationWithPermission(ScannerActivity.this).getLatLng(new GeneralDataCallBack() {
 			@Override

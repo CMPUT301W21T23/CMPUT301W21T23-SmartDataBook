@@ -239,8 +239,9 @@ public class UploadTrial extends AppCompatActivity {
                                                                    collectionRefToDB(trial, experiment);
                                                                }
                                                            }
-                                                           recreate();
+//                                                           recreate();
                                                        }
+                                                       recreate();
                                                    }
                                                 });
                                     }
@@ -283,9 +284,9 @@ public class UploadTrial extends AppCompatActivity {
                                                                     collectionRefToDB(trial, experiment);
                                                                 }
                                                             }
-                                                            recreate();
-
+//                                                            recreate();
                                                         }
+                                                        recreate();
                                                     }
                                                 });
                                     }
