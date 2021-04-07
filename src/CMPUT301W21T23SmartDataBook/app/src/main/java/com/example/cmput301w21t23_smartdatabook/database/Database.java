@@ -343,34 +343,6 @@ public class Database {
 				});
 	}
 
-//	/**
-//	 * Checks if the status of  "PublicStatus" and "LocationStatus" found in the database
-//	 * is "on" or "of" and gives respective boolean.
-//	 *
-//	 * @param status
-//	 * @return a boolean that is either "true" or "false"
-//	 * @author Bosco Chan
-//	 */
-//	public boolean giveBoolean(String status) {
-//		return status.equals("On");
-//	}
-//
-//	/**
-//	 * Checks if the boolean condition of "getRegionOn" and "isPublic" is "true" or "false"
-//	 * and gives the respective "on" or "off" string
-//	 *
-//	 * @param condition the boolean that determines if region or isPublic is true or false
-//	 * @return a string that is either "on" or "off"
-//	 * @author Bosco Chan
-//	 */
-//	public String giveString(boolean condition) {
-//		if (condition) {
-//			return "On";
-//		} else {
-//			return "Off";
-//		}
-//	}
-
 	/**
 	 * Add a new experiment object to the Firebase database by assigning a unique experiment ID.
 	 * An experiment is added by firstly checking if the collection contains any

@@ -115,12 +115,6 @@ public class ExperimentDetails extends AppCompatActivity {
 
 
         TextView expDate = findViewById(R.id.ClickedExpdate);
-//        SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSSXXX");
-//        try {
-//            date = format.parse(experiment.getDate());
-//        } catch (ParseException e) {
-//            e.printStackTrace();
-//        }
         expDate.setText(""+ date.getDate(experiment.getDate()));
 
         TextView description = findViewById(R.id.ClickedExpDesc);
@@ -161,16 +155,24 @@ public class ExperimentDetails extends AppCompatActivity {
         });
 
         TextView showMap = findViewById(R.id.ShowMap);
-        showMap.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                // TODO: new show map activity
-                Intent intent = new Intent(ExperimentDetails.this, MapsActivity.class);
-                intent.putExtra("experiment", (Parcelable) experiment);
-                intent.putExtra("main", "false");
-                startActivity(intent);
-            }
-        });
+        AppCompatImageButton map = findViewById(R.id.mapButton);
+        if (!experiment.getRequireLocation()){
+            showMap.setVisibility(View.INVISIBLE);
+            map.setVisibility(View.INVISIBLE);
+        }
+        else{
+            showMap.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    // TODO: new show map activity
+                    Intent intent = new Intent(ExperimentDetails.this, MapsActivity.class);
+                    intent.putExtra("experiment", (Parcelable) experiment);
+                    intent.putExtra("main", "false");
+                    startActivity(intent);
+                }
+            });
+        }
+
 
         TextView QRCode = findViewById(R.id.generateCodeTextView);
         QRCode.setOnClickListener(new View.OnClickListener() {
@@ -195,13 +197,17 @@ public class ExperimentDetails extends AppCompatActivity {
         });
 
         TextView endExp = findViewById(R.id.endExp);
+        AppCompatImageButton arch = findViewById(R.id.endExpImageView);
         String title;
         if (!experiment.getIsEnd()) {
             title = "Archive";
             upload.setVisibility(View.VISIBLE);
+            arch.setVisibility(View.VISIBLE);
+
         } else {
             title = "Un-Archive";
             upload.setVisibility(View.INVISIBLE);
+            arch.setVisibility(View.INVISIBLE);
         }
         endExp.setText(title);
         if (user.getUserUniqueID().equals(experiment.getOwnerUserID())){

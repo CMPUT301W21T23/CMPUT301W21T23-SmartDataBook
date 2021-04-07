@@ -97,7 +97,7 @@ public class addExpFragment extends Fragment {
 		//Code: https://www.zoftino.com//android-number-picker-tutorial
 
 		maxTrials.setMinValue(2);
-		maxTrials.setMaxValue(50);
+		maxTrials.setMaxValue(999);
 		minTrials.setMinValue(1);
 		minTrials.setMaxValue(50);
 

@@ -70,7 +70,7 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
 
 		if (main.equals("true")) {
 			db.collection("Experiments")
-					.whereEqualTo("requireLocation", "On")
+					.whereEqualTo("requireLocation", true)
 					.get()
 					.addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
 						@Override
