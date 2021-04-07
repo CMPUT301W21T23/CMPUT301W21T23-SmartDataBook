@@ -215,7 +215,10 @@ public class UploadTrial extends AppCompatActivity {
                             .setNeutralButton("Add passes", new DialogInterface.OnClickListener() {
                                 @Override
                                 public void onClick(DialogInterface dialog, int which) {
-                                    if (Integer.parseInt(numBinomial.getText().toString()) > experiment.getMaxTrials()){
+                                    if (numBinomial.getText().toString().length() == 0){
+                                        Toast.makeText(UploadTrial.this, "Trial value field must not be empty", Toast.LENGTH_SHORT).show();
+                                        dialog.cancel();
+                                    }else if (Integer.parseInt(numBinomial.getText().toString()) > experiment.getMaxTrials()){
                                         Toast.makeText(UploadTrial.this, "You cannot add more trials than the maximum trials for this experiment at once", Toast.LENGTH_SHORT).show();
                                     } else {
                                         db
@@ -231,11 +234,10 @@ public class UploadTrial extends AppCompatActivity {
                                                            for (QueryDocumentSnapshot document : task.getResult()) {
                                                                count+=1;
                                                            }
-                                                           Log.e("Count", ""+count);
+
                                                            if (count+Integer.parseInt(numBinomial.getText().toString()) > experiment.getMaxTrials()){
                                                                Toast.makeText(UploadTrial.this, "You cannot add more trials than the maximum trials for this experiment at once", Toast.LENGTH_SHORT).show();
-                                                           }
-                                                           else{
+                                                           } else{
                                                                for (int i = 0; i < Integer.parseInt(numBinomial.getText().toString()); i++) {
                                                                    Trial trial = new Trial(experiment.getRequireLocation(),
                                                                            experiment.getTrialType(),
@@ -260,7 +262,11 @@ public class UploadTrial extends AppCompatActivity {
                             .setNegativeButton("Add failure", new DialogInterface.OnClickListener() {
                                 @Override
                                 public void onClick(DialogInterface dialog, int which) {
-                                    if (Integer.parseInt(numBinomial.getText().toString()) > experiment.getMaxTrials()){
+                                    if (numBinomial.getText().toString().length() == 0) {
+                                        Toast.makeText(UploadTrial.this, "Trial value field must not be empty", Toast.LENGTH_SHORT).show();
+                                        dialog.cancel();
+
+                                    } else if (Integer.parseInt(numBinomial.getText().toString()) > experiment.getMaxTrials()){
                                         Toast.makeText(UploadTrial.this, "You cannot add more trials than the maximum trials for this experiment at once", Toast.LENGTH_SHORT).show();
                                         return;
                                     }
@@ -323,15 +329,20 @@ public class UploadTrial extends AppCompatActivity {
                             .setPositiveButton("Add Trials", new DialogInterface.OnClickListener() {
                                 @Override
                                 public void onClick(DialogInterface dialog, int which) {
-                                    Trial trial = new Trial(experiment.getRequireLocation(),
-                                            experiment.getTrialType(),
-                                            Integer.parseInt(numCount.getText().toString()),
-                                            experiment.getOwnerUserID(),
-                                            UUID.randomUUID().toString(),
-                                            stringDate.getCurrentDate(),
-                                            experiment.getRequireLocation() ? latlng : null);
-                                    collectionRefToDB(trial, experiment);
-                                    recreate();
+                                    if (numCount.getText().toString().length() == 0) {
+                                        Toast.makeText(UploadTrial.this, "Trial value field must not be empty", Toast.LENGTH_SHORT).show();
+                                        dialog.cancel();
+                                    } else {
+                                        Trial trial = new Trial(experiment.getRequireLocation(),
+                                                experiment.getTrialType(),
+                                                Integer.parseInt(numCount.getText().toString()),
+                                                experiment.getOwnerUserID(),
+                                                UUID.randomUUID().toString(),
+                                                stringDate.getCurrentDate(),
+                                                experiment.getRequireLocation() ? latlng : null);
+                                        collectionRefToDB(trial, experiment);
+                                        recreate();
+                                    }
                                 }
                             }).create().show();
                 }
@@ -361,6 +372,9 @@ public class UploadTrial extends AppCompatActivity {
                                                 stringDate.getCurrentDate(),
                                                 experiment.getRequireLocation() ? latlng : null);
                                         collectionRefToDB(trial, experiment);
+                                    } else {
+                                        Toast.makeText(UploadTrial.this, "Trial value field must not be empty", Toast.LENGTH_SHORT).show();
+                                        dialog.cancel();
                                     }
                                     recreate();
                                 }
@@ -385,20 +399,25 @@ public class UploadTrial extends AppCompatActivity {
                                     // Q2: how to save information
                                     // check input for
 
-                                    // source: https://docs.oracle.com/javase/8/docs/api/java/math/BigDecimal.html
-                                    // I have use the idea of BigDecimal object to handle float returning not exactly the same valye
-                                    // by Alex Mak
-                                    BigDecimal roundedVal = new BigDecimal(measurementInput.getText().toString());
-                                    double finalVal = roundedVal.doubleValue();
-                                    Trial trial = new Trial(experiment.getRequireLocation(),
-                                            experiment.getTrialType(),
-                                            finalVal,
-                                            experiment.getOwnerUserID(),
-                                            UUID.randomUUID().toString(),
-                                            stringDate.getCurrentDate(),
-                                            experiment.getRequireLocation() ? latlng : null);
-                                    collectionRefToDB(trial, experiment);
-                                    recreate();
+                                    if (measurementInput.getText().toString().length() == 0) {
+                                        Toast.makeText(UploadTrial.this, "Trial value field must not be empty", Toast.LENGTH_SHORT).show();
+                                        dialog.cancel();
+                                    } else {
+                                        // source: https://docs.oracle.com/javase/8/docs/api/java/math/BigDecimal.html
+                                        // I have use the idea of BigDecimal object to handle float returning not exactly the same valye
+                                        // by Alex Mak
+                                        BigDecimal roundedVal = new BigDecimal(measurementInput.getText().toString());
+                                        double finalVal = roundedVal.doubleValue();
+                                        Trial trial = new Trial(experiment.getRequireLocation(),
+                                                experiment.getTrialType(),
+                                                finalVal,
+                                                experiment.getOwnerUserID(),
+                                                UUID.randomUUID().toString(),
+                                                stringDate.getCurrentDate(),
+                                                experiment.getRequireLocation() ? latlng : null);
+                                        collectionRefToDB(trial, experiment);
+                                        recreate();
+                                    }
                                 }
                             }).create().show();
             } }
