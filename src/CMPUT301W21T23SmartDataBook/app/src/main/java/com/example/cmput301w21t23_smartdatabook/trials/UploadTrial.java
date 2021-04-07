@@ -73,7 +73,7 @@ public class UploadTrial extends AppCompatActivity {
         ActionBar toolbar = getSupportActionBar();
 
         assert toolbar != null;
-        toolbar.setDisplayHomeAsUpEnabled(true);
+//        toolbar.setDisplayHomeAsUpEnabled(true);
 
         toolbar.setTitle("Upload Trials");
 
