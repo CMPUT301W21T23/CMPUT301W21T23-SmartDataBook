@@ -27,6 +27,7 @@ import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.GeoPoint;
 import com.google.firebase.firestore.QueryDocumentSnapshot;
 import com.google.firebase.firestore.QuerySnapshot;
+import com.google.protobuf.StringValue;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -303,11 +304,11 @@ public class Database {
 //                        ("Experiments".equals(collection.getPath())
 						if (task.isSuccessful()) {
 							for (QueryDocumentSnapshot document : task.getResult()) {
-								if ((collection.getPath().equals("Experiments")) && document.getData().get("ExpID") != null && giveBoolean(document.getData().get("PublicStatus").toString()) ||
+								if ((collection.getPath().equals("Experiments")) && document.getData().get("ExpID") != null && ((Boolean) document.getData().get("PublicStatus")) ||
 										(collection.getPath().equals(db.collection("Users").document(currentID).collection("Favorites").getPath())) ||
 										(collection.getPath().equals("Archived"))) {
 
-									boolean requireLocation = giveBoolean(document.getData().get("requireLocation").toString());
+									boolean requireLocation = (Boolean) document.getData().get("requireLocation");
 									GeoPoint geoPoint = (GeoPoint) document.getData().get("Location");
 									LatLng latlng = requireLocation ? (new LatLng(geoPoint.getLatitude(), geoPoint.getLongitude())) : null;
 
@@ -318,17 +319,16 @@ public class Database {
 													document.getData().get("Trial Type").toString(),
 													document.getData().get("Description").toString(),
 													requireLocation,
-													Integer.parseInt(document.getData().get("Minimum Trials").toString()),
-													Integer.parseInt(document.getData().get("Maximum Trials").toString()),
-													giveBoolean(document.getData().get("PublicStatus").toString()),
+													Integer.parseInt(String.valueOf(document.getData().get("Minimum Trials"))),
+													Integer.parseInt(String.valueOf(document.getData().get("Maximum Trials"))),
+													(Boolean) document.getData().get("PublicStatus"),
 													(String) document.getData().get("StringDate"),
 													document.getData().get("ExpID").toString(),
-													giveBoolean(document.getData().get("isEnd").toString()),
+													(Boolean) document.getData().get("isEnd"),
 													latlng
 											)
 									);
 								}
-
 
 							}//for
 
@@ -343,33 +343,33 @@ public class Database {
 				});
 	}
 
-	/**
-	 * Checks if the status of  "PublicStatus" and "LocationStatus" found in the database
-	 * is "on" or "of" and gives respective boolean.
-	 *
-	 * @param status
-	 * @return a boolean that is either "true" or "false"
-	 * @author Bosco Chan
-	 */
-	public boolean giveBoolean(String status) {
-		return status.equals("On");
-	}
-
-	/**
-	 * Checks if the boolean condition of "getRegionOn" and "isPublic" is "true" or "false"
-	 * and gives the respective "on" or "off" string
-	 *
-	 * @param condition the boolean that determines if region or isPublic is true or false
-	 * @return a string that is either "on" or "off"
-	 * @author Bosco Chan
-	 */
-	public String giveString(boolean condition) {
-		if (condition) {
-			return "On";
-		} else {
-			return "Off";
-		}
-	}
+//	/**
+//	 * Checks if the status of  "PublicStatus" and "LocationStatus" found in the database
+//	 * is "on" or "of" and gives respective boolean.
+//	 *
+//	 * @param status
+//	 * @return a boolean that is either "true" or "false"
+//	 * @author Bosco Chan
+//	 */
+//	public boolean giveBoolean(String status) {
+//		return status.equals("On");
+//	}
+//
+//	/**
+//	 * Checks if the boolean condition of "getRegionOn" and "isPublic" is "true" or "false"
+//	 * and gives the respective "on" or "off" string
+//	 *
+//	 * @param condition the boolean that determines if region or isPublic is true or false
+//	 * @return a string that is either "on" or "off"
+//	 * @author Bosco Chan
+//	 */
+//	public String giveString(boolean condition) {
+//		if (condition) {
+//			return "On";
+//		} else {
+//			return "Off";
+//		}
+//	}
 
 	/**
 	 * Add a new experiment object to the Firebase database by assigning a unique experiment ID.
@@ -387,14 +387,14 @@ public class Database {
 		data.put("Name", newExperiment.getExpName());
 		data.put("Description", newExperiment.getDescription());
 		data.put("Trial Type", newExperiment.getTrialType());
-		data.put("requireLocation", giveString(newExperiment.getRequireLocation()));
-		data.put("PublicStatus", giveString(newExperiment.isPublic()));
+		data.put("requireLocation", newExperiment.getRequireLocation());
+		data.put("PublicStatus", newExperiment.isPublic());
 		data.put("UUID", newExperiment.getOwnerUserID());
-		data.put("Minimum Trials", "" + newExperiment.getMinTrials());
-		data.put("Maximum Trials", "" + newExperiment.getMaxTrials());
+		data.put("Minimum Trials",  newExperiment.getMinTrials());
+		data.put("Maximum Trials", newExperiment.getMaxTrials());
 		data.put("StringDate", newExperiment.getDate());
 		data.put("ExpID", newExperiment.getExpID());
-		data.put("isEnd", giveString(newExperiment.getIsEnd()));
+		data.put("isEnd", newExperiment.getIsEnd());
 		if (newExperiment.getRequireLocation()) {
 			GeoPoint geoPoint = new GeoPoint(newExperiment.getLatLng().latitude, newExperiment.getLatLng().longitude);
 			data.put("Location", geoPoint);
