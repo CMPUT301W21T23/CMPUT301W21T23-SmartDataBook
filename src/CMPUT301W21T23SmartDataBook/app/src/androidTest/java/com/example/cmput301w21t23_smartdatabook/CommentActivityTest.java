@@ -57,10 +57,9 @@ public class CommentActivityTest {
     @Test
     public void testAddComment() {
         solo.assertCurrentActivity("Wrong Activity", MainActivity.class);
-//        createExperiment();
-//        solo.goBack();
+        createExperiment();
+        solo.goBack();
         solo.clickOnText("Comments");
-//        solo.clickOnScreen(300, 666);
         solo.assertCurrentActivity("Wrong Activity", CommentActivity.class);
         solo.clickOnScreen(980, 2053);
         solo.enterText( solo.getEditText("Comment Text"), "Hello!");
