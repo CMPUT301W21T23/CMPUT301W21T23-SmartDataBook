@@ -335,7 +335,6 @@ public class ScannerActivity extends AppCompatActivity implements ZXingScannerVi
 														}
 														if (count >= experiment.getMaxTrials()){
 															onBackPressed();
-//															Integer.parseInt(String.valueOf((values[2])) )
 														} else{
 															if (experiment.getTrialType().equals("Binomial")){
 																if ((count + (int)document.get("Value"))>  experiment.getMaxTrials()){

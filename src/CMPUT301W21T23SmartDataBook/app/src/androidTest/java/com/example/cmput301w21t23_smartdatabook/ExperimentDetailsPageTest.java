@@ -211,8 +211,6 @@ public class ExperimentDetailsPageTest {
 
         solo.clickInList(0);
 
-//        solo.clickOnScreen(73, 1920); //"Home" Menu Item
-
         solo.clickOnText("checkPublishedBoxUnchecked()");
 
         assertEquals(solo.getView(R.id.Publish_text).getVisibility(), (View.VISIBLE));

@@ -16,7 +16,10 @@
         android:layout_height="wrap_content"
         android:padding="10dp"
         android:text="ExperimentName"
-        android:textSize="30sp"></TextView>
+        android:textSize="30sp"
+        android:maxLength="32">
+
+    </TextView>
 
     <TextView
         android:id="@+id/Owner"
@@ -47,17 +50,17 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:text="Description"
-        android:layout_marginLeft="10dp">
-<!--        android:textIsSelectable="false"-->
-
+        android:layout_marginLeft="10dp"
+        android:maxLength="32">
     </TextView>
 
     <TextView
         android:id="@+id/Region"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="Region"
+        android:text="Geolocation: Required"
         android:layout_marginLeft="10dp"
+        android:visibility="invisible"
         >
     </TextView>
 

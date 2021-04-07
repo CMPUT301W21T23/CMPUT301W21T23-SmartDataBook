@@ -32,6 +32,8 @@ import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
 
+import org.w3c.dom.Text;
+
 /**
  * This classs is simply to display the information from the experiment list adapters onto the screen
  * @Author Afaq, Bosco, Krutik
@@ -108,6 +110,11 @@ public class CardList extends ArrayAdapter<Experiment> {
             TextView dateView = v.findViewById(R.id.dateCreated);
             TextView ownerName = v.findViewById(R.id.Owner);
             TextView experimentDescription = v.findViewById(R.id.Experiment_descr);
+            TextView region = v.findViewById(R.id.Region);
+
+            if (experiment.getRequireLocation()){
+                region.setVisibility(View.VISIBLE);
+            }
 
             experimentName.setText(experiment.getExpName());
             dateView.setText(""+ date.getDate(experiment.getDate()));
