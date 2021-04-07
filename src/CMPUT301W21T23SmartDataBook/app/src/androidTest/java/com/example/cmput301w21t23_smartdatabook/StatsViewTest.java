@@ -47,9 +47,8 @@ public class StatsViewTest {
     @Test
     public void testStatsView() {
 
-        createExperiment();
+//        createExperiment();
         addTrials();
-
     }
 
     public void addTrials() {
@@ -59,12 +58,12 @@ public class StatsViewTest {
         solo.clickOnButton("UPLOAD TRIALS");
         solo.assertCurrentActivity("Wrong Activity", UploadTrial.class);
         solo.clickOnButton("add new trials");
-//        solo.enterText( (EditText) solo.getView(R.id.), "Binomial");
+        solo.enterText( (EditText) solo.getEditText("Enter positive number of passes/failures"), "2");
         solo.sleep(1000);
-        ArrayList<View> views = solo.getCurrentViews();
-        for (View v: views) {
-            Log.d("View", "" + v);
-        }
+//        ArrayList<View> views = solo.getCurrentViews();
+//        for (View v: views) {
+//            Log.d("View", "" + v);
+//        }
 
     }
 
