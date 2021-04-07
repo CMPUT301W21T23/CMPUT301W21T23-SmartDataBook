@@ -93,6 +93,7 @@ public class homePage extends Fragment {
         super.onResume();
         experimentAdapter.notifyDataSetChanged();
         ((AppCompatActivity) getActivity()).getSupportActionBar().setDisplayHomeAsUpEnabled(false);
+        ((MainActivity) getActivity()).onAttachFragment(this);
     }
 
     /**
