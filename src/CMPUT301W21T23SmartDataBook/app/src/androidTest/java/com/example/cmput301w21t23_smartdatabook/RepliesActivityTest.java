@@ -1,4 +1,9 @@
 package com.example.cmput301w21t23_smartdatabook;
+
+import android.widget.EditText;
+import android.widget.NumberPicker;
+
+import com.example.cmput301w21t23_smartdatabook.mainController.MainActivity;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -25,9 +30,12 @@ import org.junit.Test;
 import java.io.File;
 
 import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertNotNull;
+import static org.junit.Assert.assertNull;
+import static org.junit.Assert.assertTrue;
 
-
-public class CommentActivityTest {
+public class RepliesActivityTest {
 
     private Solo solo;
     private View addExpButton;
@@ -52,10 +60,20 @@ public class CommentActivityTest {
     }
 
     @Test
-    public void testAddComment() {
+    public void testAddReplies() {
+//        createExperiment();
+//        addComment();
         solo.assertCurrentActivity("Wrong Activity", MainActivity.class);
-        createExperiment();
-        solo.goBack();
+        ListView experimentList = rule.getActivity().findViewById(R.id.experiment_list);
+//        Experiment experiment = (Experiment) experimentList.getItemAtPosition(0);
+//        assertEquals(experiment.getExpName(), "Name");
+
+        solo.clickInList(0,0);
+
+    }
+
+    //Add a comment to an experiment
+    public void addComment() {
         solo.clickOnText("Comments");
         solo.assertCurrentActivity("Wrong Activity", CommentActivity.class);
         solo.clickOnScreen(980, 2053);
@@ -103,6 +121,6 @@ public class CommentActivityTest {
         solo.sleep(1000);
         solo.clickOnButton("Create");
         solo.sleep(1000);
-
     }
+
 }
