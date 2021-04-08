@@ -1,9 +1,10 @@
-package com.example.cmput301w21t23_smartdatabook.home;
+package com.example.cmput301w21t23_smartdatabook.experiment;
 
 import android.content.Intent;
 import android.location.Location;
 import android.os.Bundle;
 import android.os.Parcelable;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -17,7 +18,6 @@ import android.widget.Toast;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
 
-import com.example.cmput301w21t23_smartdatabook.experiment.Experiment;
 import com.example.cmput301w21t23_smartdatabook.R;
 import com.example.cmput301w21t23_smartdatabook.stats.StringDate;
 import com.example.cmput301w21t23_smartdatabook.database.GeneralDataCallBack;
@@ -147,6 +147,7 @@ public class addExpFragment extends Fragment {
 					public void onDataReturn(Object returnedObject) {
 						Location location = (Location) returnedObject;
 						if (location == null) {
+						Log.d(getClass().getSimpleName(), "150: why is it not working, makes no sense");
 							Toast.makeText(activity.getApplicationContext(), "Please open up the google map and obtain your location at least once.", Toast.LENGTH_LONG).show();
 							return;
 						}

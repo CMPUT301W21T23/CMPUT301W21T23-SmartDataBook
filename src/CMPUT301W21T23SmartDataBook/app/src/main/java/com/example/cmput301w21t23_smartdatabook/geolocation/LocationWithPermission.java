@@ -9,7 +9,9 @@ import android.location.Location;
 import android.net.Uri;
 import android.os.Looper;
 import android.provider.Settings;
+import android.util.Log;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.app.ActivityCompat;
 
@@ -18,7 +20,9 @@ import com.google.android.gms.location.FusedLocationProviderClient;
 import com.google.android.gms.location.LocationCallback;
 import com.google.android.gms.location.LocationRequest;
 import com.google.android.gms.location.LocationServices;
+import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.android.gms.tasks.Task;
 import com.karumi.dexter.Dexter;
 import com.karumi.dexter.PermissionToken;
 import com.karumi.dexter.listener.PermissionDeniedResponse;
@@ -58,11 +62,10 @@ public class LocationWithPermission {
 							}, Looper.myLooper());
 
 							// Below method executes when location is successfully obtained, deprecated due to above mLocationCallback
-							fusedLocationClient.getLastLocation().addOnSuccessListener(activity, new OnSuccessListener<Location>() {
+							fusedLocationClient.getLastLocation().addOnCompleteListener(activity, new OnCompleteListener<Location>() {
 								@Override
-								public void onSuccess(Location location) {
-									// Got last known location. In some rare situations this can be null.
-									generalDataCallBack.onDataReturn(location);
+								public void onComplete(@NonNull Task<Location> task) {
+									generalDataCallBack.onDataReturn(task.getResult());
 								}
 							});
 						}
