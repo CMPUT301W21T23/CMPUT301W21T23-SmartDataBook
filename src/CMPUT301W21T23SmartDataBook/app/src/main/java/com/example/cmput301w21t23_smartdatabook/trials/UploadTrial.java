@@ -240,18 +240,16 @@ public class UploadTrial extends AppCompatActivity {
                                                                            true,
                                                                            experiment.getOwnerUserID(),
                                                                            UUID.randomUUID().toString(),
-                                                                           stringDate.getCurrentDate(),
+                                                                           stringDate.getShortDate(),
                                                                            experiment.getRequireLocation() ? latlng : null);
                                                                    collectionRefToDB(trial, experiment);
                                                                }
                                                            }
-//                                                           recreate();
                                                        }
                                                        recreate();
                                                    }
                                                 });
                                     }
-//                                    recreate();
                                     dialog.cancel();
                                 }
                             })
@@ -291,7 +289,7 @@ public class UploadTrial extends AppCompatActivity {
                                                                             false,
                                                                             experiment.getOwnerUserID(),
                                                                             UUID.randomUUID().toString(),
-                                                                            stringDate.getCurrentDate(),
+                                                                            stringDate.getShortDate(),
                                                                             experiment.getRequireLocation() ? latlng : null);
                                                                     collectionRefToDB(trial, experiment);
                                                                 }
@@ -334,7 +332,7 @@ public class UploadTrial extends AppCompatActivity {
                                                 Integer.parseInt(numCount.getText().toString()),
                                                 experiment.getOwnerUserID(),
                                                 UUID.randomUUID().toString(),
-                                                stringDate.getCurrentDate(),
+                                                stringDate.getShortDate(),
                                                 experiment.getRequireLocation() ? latlng : null);
                                         collectionRefToDB(trial, experiment);
                                         recreate();
@@ -365,7 +363,7 @@ public class UploadTrial extends AppCompatActivity {
                                                 Integer.parseInt(numNonNegCount.getText().toString()),
                                                 experiment.getOwnerUserID(),
                                                 UUID.randomUUID().toString(),
-                                                stringDate.getCurrentDate(),
+                                                stringDate.getShortDate(),
                                                 experiment.getRequireLocation() ? latlng : null);
                                         collectionRefToDB(trial, experiment);
                                     } else {
@@ -409,7 +407,7 @@ public class UploadTrial extends AppCompatActivity {
                                                 finalVal,
                                                 experiment.getOwnerUserID(),
                                                 UUID.randomUUID().toString(),
-                                                stringDate.getCurrentDate(),
+                                                stringDate.getShortDate(),
                                                 experiment.getRequireLocation() ? latlng : null);
                                         collectionRefToDB(trial, experiment);
                                         recreate();
