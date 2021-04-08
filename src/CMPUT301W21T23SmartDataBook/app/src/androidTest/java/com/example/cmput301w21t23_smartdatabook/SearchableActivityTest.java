@@ -46,23 +46,26 @@ public class SearchableActivityTest {
     @Test
     public void testSearch() {
 
-//        SearchView searchView = (SearchView) menu.findItem(R.id.app_bar_search).getActionView();
-
-//        createExperiment("Binomial", "Coin Flip", 0);
-//        createExperiment("Count", "Traffic Car Count", 1);
-//        createExperiment("Non-Negative Count", "Broken Eggs in carton", 2);
-//        createExperiment("Measurement", "Car Temperature", 3);
-        solo.clickOnScreen(863, 124);
-//        solo.enterText( (EditText) , "Count");
-        solo.sleep(2000);
+        createExperiment("Binomial", "Coin Flip", 0);
+        createExperiment("Count", "Traffic Car Count", 1);
+        createExperiment("Non-Negative Count", "Broken Eggs in carton", 2);
+        createExperiment("Measurement", "Car Temperature", 3);
 
         ListView experimentList = rule.getActivity().findViewById(R.id.experiment_list);
-        Experiment experiment = (Experiment) experimentList.getItemAtPosition(2);
+        solo.sleep(1000);
+        solo.clickOnScreen(863, 124);
+        //search by description
+        solo.enterText( (EditText) solo.getView(androidx.appcompat.R.id.search_src_text), "Broken Eggs in carton");
+        solo.clickOnScreen(628, 274);
+        assertTrue(solo.searchText("Broken Eggs in carton"));
+        solo.goBack();
 
-        //go to experiment details for Non-Negative Count
-//        solo.clickInList(2);
-//        assertTrue("Non-Negative Count".equals(experiment.getExpName()));
-
+        solo.clickOnScreen(863, 124);
+        //Search by experiment name
+        solo.enterText( (EditText) solo.getView(androidx.appcompat.R.id.search_src_text), "Binomial");
+        solo.clickOnScreen(628, 274);
+        assertTrue(solo.searchText("Binomial"));
+        solo.sleep(2000);
     }
 
     //Create a working experiment

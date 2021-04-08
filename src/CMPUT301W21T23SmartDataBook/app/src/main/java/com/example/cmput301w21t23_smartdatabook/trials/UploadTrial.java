@@ -152,10 +152,10 @@ public class UploadTrial extends AppCompatActivity {
                 , trialDataList, trialArrayAdapter);
 
         // TODO: Users can delete the trials that they entered but owner can delete any trials
-        if (experiment.getOwnerUserID().equals(user.getUserUniqueID())) {
-            trialsList.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-                @Override
-                public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+        trialsList.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                if (experiment.getOwnerUserID().equals(user.getUserUniqueID())) {
                     AlertDialog.Builder builder = new AlertDialog.Builder(UploadTrial.this);
                     builder.setTitle("Delete Trial?");
                     builder.setNegativeButton("cancel", null)
@@ -171,11 +171,12 @@ public class UploadTrial extends AppCompatActivity {
                                     recreate();
                                 }
                             }).create().show();
+                } else {
+                    Toast.makeText(UploadTrial.this, "You don't have the privilege to delete trials", Toast.LENGTH_SHORT).show();
                 }
-            });
-        } else {
-            Toast.makeText(UploadTrial.this, "You don't have the privilege to delete trials", Toast.LENGTH_SHORT).show();
-        }
+            }
+        });
+
     }
 
     private void addTrialDialogs(String expType, Experiment experiment) {

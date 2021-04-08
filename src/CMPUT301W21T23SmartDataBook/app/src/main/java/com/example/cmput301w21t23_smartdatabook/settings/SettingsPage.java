@@ -23,7 +23,7 @@ import com.google.firebase.firestore.FirebaseFirestore;
 // TODO: change name to User contact instead of settings
 public class SettingsPage extends Fragment {
 	public EditText usernameTextField;
-	public EditText emailTextField;
+	public EditText contactTextField;
 
 	public Button saveButtonView;
 
@@ -66,12 +66,12 @@ public class SettingsPage extends Fragment {
 		// Inflate the layout for this fragment
 		View view = inflater.inflate(R.layout.settings, container, false);
 		usernameTextField = (EditText) view.findViewById(R.id.usernameTextField);
-		emailTextField = (EditText) view.findViewById(R.id.emailTextField);
+		contactTextField = (EditText) view.findViewById(R.id.emailTextField);
 		saveButtonView = (Button) view.findViewById(R.id.saveButtonView);
 
 		usernameTextField.setHint(user.getUserName());
 
-		database.editUser(usernameTextField, emailTextField, saveButtonView, getContext(), user.getUserUniqueID(), user);
+		database.editUser(usernameTextField, contactTextField, saveButtonView, getContext(), user.getUserUniqueID(), user);
 
 		return view;
 	}
