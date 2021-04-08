@@ -129,4 +129,9 @@ public class HomePageTest {
 
     }
 
+    @Test
+    public void checkClickUser(){
+
+    }
+
 }
