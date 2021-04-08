@@ -159,6 +159,7 @@ public class HomePage extends Fragment {
 
 			@Override
 			public void onScroll(AbsListView arg0, int arg1, int arg2, int arg3) {
+				experimentList.invalidateViews();
 			}
 		});
 

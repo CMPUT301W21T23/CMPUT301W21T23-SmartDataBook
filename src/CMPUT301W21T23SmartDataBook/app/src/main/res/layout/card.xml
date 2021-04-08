@@ -11,6 +11,9 @@
     android:paddingLeft="10dp">
 
     <TextView
+        android:focusableInTouchMode="false"
+        android:focusable="false"
+
         android:id="@+id/experimentName"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -19,9 +22,13 @@
         android:textSize="30sp"
         android:maxLength="32">
 
+
     </TextView>
 
     <TextView
+        android:focusableInTouchMode="false"
+        android:focusable="false"
+
         android:id="@+id/Experiment_descr"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -33,7 +40,7 @@
 <!--    android:onClick="onClick"-->
 
     <TextView
-        android:clickable="false"
+        android:focusableInTouchMode="false"
         android:focusable="false"
 
         android:id="@+id/Owner"
@@ -48,6 +55,9 @@
     </TextView>
 
     <TextView
+        android:focusableInTouchMode="false"
+        android:focusable="false"
+
         android:id="@+id/dateCreated"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -58,6 +68,9 @@
 
 
     <TextView
+        android:focusableInTouchMode="false"
+        android:focusable="false"
+
         android:id="@+id/Region"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -68,6 +81,9 @@
     </TextView>
 
     <CheckBox
+        android:focusableInTouchMode="false"
+        android:focusable="false"
+
         android:id="@+id/fav"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -80,6 +96,9 @@
     </CheckBox>
 
     <Button
+        android:focusableInTouchMode="false"
+        android:focusable="false"
+
         android:id="@+id/comment_btn"
         android:layout_width="204dp"
         android:layout_height="wrap_content"
@@ -88,6 +107,9 @@
         android:text="Comments" />
 
     <TextView
+        android:focusableInTouchMode="false"
+        android:focusable="false"
+
         android:id="@+id/follow"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
