@@ -20,21 +20,23 @@ Editing Profile:
   - Your inputs will now be seen publicly by you and other users
 
 Add An Experiment:
-  - Select the "Home" tab on the nagivation bar on the bottom of the app
-  - Click the Red-circle-plus sign to add a new experiment
-  - It will present you with a new "Experiment Details" screen 
-  - Input values into the presented empty fields, such as the experiment's name and description
+  - Select the "Explore" tab on the nagivation bar on the bottom left of the app interface
+  - Click the Red, circle plus sign to add a new experiment
+  - It will present you with a new screen, with the title "Add new experiment"
+  - Input information into the presented empty fields, such as the experiment's name and description
   - Set the minimum and maximum of trials for the experiment
   - Select either binomial, count, non-negative count, and measurement for the type of tests of the experiment
   - Activate or deactivate the location of your experiment
   - Allow or deny the experiment of being public and shared its contents with others
-  - Select "Create&Publish" to publish the experiment so other users may, and you, may see it
+  - Select "Create" to publish the experiment so other users, including you, may see it
 
 Select An Experiment:
-  - The home page shows the list of experiments, as well as its name, the experiment owner's ID, the experiment created date, and its description.
+  - The home page shows the list of experiments, as well as each of their name, owner's ID, created date, description, as well as an message notifying geolocation required.
   - Users can choose to follow the experiment by ticking on the check box on the experiment. Once an experiment is followed, it will appear on the Favourite page on the bottom of the app.
-  - Once clicked to an experiment, the user is transferred to experiment details page and its additional information will be displayed
-  - Users will be able to perform more actions regarrds to the experiment
+  - Users can also specifically click the experiment owner's name on the experiment, to see their username and email
+  - Once clicked to an experiment, the user is transferred to experiment details page and the clicked experiment's additional information will be displayed
+  - Users will be able to perform more actions regards to the experiment, like: 
+  - >Viewing experiment statisics like mean, median, standard deviation, and quartiles
 
 On The Favoutie page:
   - The favourite page shows all the experiments you have followed
