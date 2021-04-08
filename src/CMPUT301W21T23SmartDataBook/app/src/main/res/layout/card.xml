@@ -22,6 +22,14 @@
     </TextView>
 
     <TextView
+        android:id="@+id/Experiment_descr"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="10dp"
+        android:maxLength="32"
+        android:text="Description"></TextView>
+
+    <TextView
         android:id="@+id/Owner"
         android:layout_width="278dp"
         android:layout_height="wrap_content"
@@ -44,15 +52,6 @@
         >
     </TextView>
 
-
-    <TextView
-        android:id="@+id/Experiment_descr"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="Description"
-        android:layout_marginLeft="10dp"
-        android:maxLength="32">
-    </TextView>
 
     <TextView
         android:id="@+id/Region"

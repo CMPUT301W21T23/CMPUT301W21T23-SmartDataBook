@@ -64,10 +64,12 @@ public class StatsViewTest {
         assertTrue( Float.parseFloat( ((TextView)solo.getView(R.id.meanTextView)).getText().toString().replace("Mean (Pass %): ", "") ) > 0 );
         assertTrue( Float.parseFloat( ((TextView)solo.getView(R.id.medianTextView)).getText().toString().replace("Median: ", "") ) > 0 );
         assertTrue( Float.parseFloat( ((TextView)solo.getView(R.id.stdDeviationTextView)).getText().toString().replace("Std: ", "") ) > 0 );
+
+        //Binomial will give either a 0.0 or 1.0 for quartile value
         assertTrue( Float.parseFloat( ((TextView)solo.getView(R.id.quartile1TextView)).getText().toString().replace("Quartile 1: ", "") ) >= 0 );
     }
 
-    //Adds 4 test trials to the experiment
+    //Adds 8 test trials to the experiment
     public void addTrials() {
         solo.assertCurrentActivity("Wrong Activity", MainActivity.class);
         solo.clickInList(0);

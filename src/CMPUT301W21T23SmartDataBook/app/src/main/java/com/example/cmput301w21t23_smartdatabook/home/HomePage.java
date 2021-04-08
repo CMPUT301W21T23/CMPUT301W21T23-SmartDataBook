@@ -20,6 +20,7 @@ import com.example.cmput301w21t23_smartdatabook.R;
 import com.example.cmput301w21t23_smartdatabook.database.Database;
 import com.example.cmput301w21t23_smartdatabook.database.GeneralDataCallBack;
 import com.example.cmput301w21t23_smartdatabook.experiment.ExperimentDetails;
+import com.example.cmput301w21t23_smartdatabook.experiment.addExpFragment;
 import com.example.cmput301w21t23_smartdatabook.mainController.MainActivity;
 import com.example.cmput301w21t23_smartdatabook.user.User;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;

@@ -22,7 +22,7 @@ import com.example.cmput301w21t23_smartdatabook.database.Database;
 import com.example.cmput301w21t23_smartdatabook.database.GeneralDataCallBack;
 import com.example.cmput301w21t23_smartdatabook.fav.FavPage;
 import com.example.cmput301w21t23_smartdatabook.geolocation.MapsActivity;
-import com.example.cmput301w21t23_smartdatabook.home.addExpFragment;
+import com.example.cmput301w21t23_smartdatabook.experiment.addExpFragment;
 import com.example.cmput301w21t23_smartdatabook.home.HomePage;
 import com.example.cmput301w21t23_smartdatabook.settings.SettingsPage;
 import com.example.cmput301w21t23_smartdatabook.user.User;
