@@ -11,6 +11,9 @@
     android:paddingLeft="10dp">
 
     <TextView
+        android:focusableInTouchMode="false"
+        android:focusable="false"
+
         android:id="@+id/experimentName"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -19,9 +22,13 @@
         android:textSize="30sp"
         android:maxLength="32">
 
+
     </TextView>
 
     <TextView
+        android:focusableInTouchMode="false"
+        android:focusable="false"
+
         android:id="@+id/Experiment_descr"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -29,14 +36,18 @@
         android:maxLength="32"
         android:text="Description"></TextView>
 
+<!--    android:clickable="true"-->
+<!--    android:onClick="onClick"-->
+
     <TextView
+        android:focusableInTouchMode="false"
+        android:focusable="false"
+
         android:id="@+id/Owner"
         android:layout_width="278dp"
         android:layout_height="wrap_content"
         android:layout_marginLeft="10dp"
         android:layout_marginTop="0dp"
-        android:clickable="true"
-        android:onClick="onClick"
         android:text="Owner Name"
         android:textColor="@color/purple_500"
         android:textSize="20sp">
@@ -44,6 +55,9 @@
     </TextView>
 
     <TextView
+        android:focusableInTouchMode="false"
+        android:focusable="false"
+
         android:id="@+id/dateCreated"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -54,6 +68,9 @@
 
 
     <TextView
+        android:focusableInTouchMode="false"
+        android:focusable="false"
+
         android:id="@+id/Region"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -64,6 +81,9 @@
     </TextView>
 
     <CheckBox
+        android:focusableInTouchMode="false"
+        android:focusable="false"
+
         android:id="@+id/fav"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -76,6 +96,9 @@
     </CheckBox>
 
     <Button
+        android:focusableInTouchMode="false"
+        android:focusable="false"
+
         android:id="@+id/comment_btn"
         android:layout_width="204dp"
         android:layout_height="wrap_content"
@@ -84,6 +107,9 @@
         android:text="Comments" />
 
     <TextView
+        android:focusableInTouchMode="false"
+        android:focusable="false"
+
         android:id="@+id/follow"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"

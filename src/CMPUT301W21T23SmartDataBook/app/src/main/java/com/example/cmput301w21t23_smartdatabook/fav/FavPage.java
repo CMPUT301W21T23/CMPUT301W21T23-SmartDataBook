@@ -146,26 +146,6 @@ public class FavPage extends Fragment {
 						//experimentDataList with added items ONLY exist inside the scope of this getExpDataList function
 						favDataList = DataList;
 
-						//Create a new searchDataList depending on the query
-//						if (currentQuery != null) {
-//							for (Experiment experiment : favDataList) {
-//								if (experiment.getExpName().contains(currentQuery) ||
-//										UserName.get(experiment.getOwnerUserID()).getUserName().contains(currentQuery) ||
-//										experiment.getDate().toString().contains(currentQuery) ||
-//										experiment.getDescription().contains(currentQuery)) {
-//
-//									searchDataList.add(experiment);
-//
-//								}
-//							}
-//
-//							favAdapter.clear();
-//							favAdapter.addAll(searchDataList);
-//
-//						} else {
-//							favAdapter.addAll(favDataList);
-//						}
-
 						favAdapter.addAll(favDataList);
 						favAdapter.notifyDataSetChanged();
 

@@ -54,8 +54,6 @@ public class HomePage extends Fragment {
 	private String currentQuery;
 	private ArrayList<Experiment> searchDataList;
 
-	private ArrayAdapter<Experiment> tempAdapter;
-
 	FirebaseFirestore db = FirebaseFirestore.getInstance();
 
 	public HomePage() {
@@ -154,12 +152,12 @@ public class HomePage extends Fragment {
 			public void onScrollStateChanged(AbsListView view, int scrollState) {
 				if (scrollState == AbsListView.OnScrollListener.SCROLL_STATE_IDLE) {
 					experimentList.invalidateViews();
+
 				}
 			}
 
 			@Override
-			public void onScroll(AbsListView arg0, int arg1, int arg2, int arg3) {
-			}
+			public void onScroll(AbsListView arg0, int arg1, int arg2, int arg3) { }
 		});
 
 		//Source: Erwin Kurniawan A; https://stackoverflow.com/users/7693494/erwin-kurniawan-a
@@ -184,23 +182,6 @@ public class HomePage extends Fragment {
 						//experimentDataList with added items ONLY exist inside the scope of this getExpDataList function
 						experimentDataList = DataList;
 
-//						//Create a new searchDataList depending on the query
-//						if (currentQuery != null) {
-//							for (Experiment experiment : experimentDataList) {
-//								if (experiment.getExpName().contains(currentQuery) ||
-//										UserName.get(experiment.getOwnerUserID()).getUserName().contains(currentQuery) ||
-//										experiment.getDate().toString().contains(currentQuery) ||
-//										experiment.getDescription().contains(currentQuery)) {
-//
-//									searchDataList.add(experiment);
-//
-//								}
-//							}
-//							experimentAdapter.clear();
-//							experimentAdapter.addAll(searchDataList);
-//						} else {
-//							experimentAdapter.addAll(experimentDataList);
-//						}
 
 						experimentAdapter.addAll(experimentDataList);
 						experimentAdapter.notifyDataSetChanged();

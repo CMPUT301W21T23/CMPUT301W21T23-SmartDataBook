@@ -45,6 +45,18 @@ public class SearchableActivityTest {
 
     @Test
     public void testSearch() {
+//        createExperiment("Count", "Traffic Car Count", 1);
+
+        SearchView searchView = (SearchView) solo.getView(R.id.app_bar_search);
+        solo.clickOnView(searchView);
+        solo.sleep(2000);
+        int id = searchView.getContext()
+                .getResources()
+                .getIdentifier("android:id/search_src_text", null, null);
+        solo.sleep(1000);
+        EditText editText = (EditText) searchView.findViewById(id);
+        solo.sleep(1000);
+        solo.enterText(editText, "Count");
 
         createExperiment("Binomial", "Coin Flip", 0);
         createExperiment("Count", "Traffic Car Count", 1);
