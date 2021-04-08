@@ -4,6 +4,7 @@ import android.Manifest;
 import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.pm.PackageManager;
 import android.location.Location;
 import android.net.Uri;
 import android.os.Bundle;
@@ -19,6 +20,8 @@ import android.widget.TextView;
 import android.widget.Toast;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.app.ActivityCompat;
+
 import com.example.cmput301w21t23_smartdatabook.stats.StringDate;
 import com.example.cmput301w21t23_smartdatabook.experiment.Experiment;
 import com.example.cmput301w21t23_smartdatabook.R;
@@ -28,6 +31,7 @@ import com.example.cmput301w21t23_smartdatabook.geolocation.LocationWithPermissi
 import com.example.cmput301w21t23_smartdatabook.trials.Trial;
 import com.example.cmput301w21t23_smartdatabook.trials.UploadTrial;
 import com.example.cmput301w21t23_smartdatabook.user.User;
+import com.google.android.gms.location.LocationServices;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
@@ -121,11 +125,13 @@ public class ScannerActivity extends AppCompatActivity implements ZXingScannerVi
 		Intent intent = getIntent();
 		experiment = (Experiment) intent.getSerializableExtra("experiment");
 		String type = intent.getStringExtra("Flag");
-		new LocationWithPermission(ScannerActivity.this).getLatLng(new GeneralDataCallBack() {
-			@Override
-			public void onDataReturn(Object returnedObject) {
-				Location location = (Location) returnedObject;
-				Log.e("LOACTION", String.valueOf(location.getLatitude()));
+		if (ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) == PackageManager.PERMISSION_GRANTED) {
+			LocationServices.getFusedLocationProviderClient(this).getLastLocation().addOnSuccessListener(location -> {
+				if (location == null) {
+					new LocationWithPermission(this).requestLocationUpdate();
+					Toast.makeText(this, "Preparing location.. Please wait up to 10 seconds and try again.", Toast.LENGTH_LONG).show();
+					return;
+				}
 				LatLng latlng = new LatLng(location.getLatitude(), location.getLongitude());
 				if (type.equals("Scan")) {
 					if (rawResult.getBarcodeFormat().toString().contains("QR_CODE")) {
@@ -138,10 +144,8 @@ public class ScannerActivity extends AppCompatActivity implements ZXingScannerVi
 					registerBarcode(rawResult.toString(), experiment);
 				}
 				onBackPressed();
-			}
-		});
-
-
+			});
+		}
 	}
 
 	@Override
