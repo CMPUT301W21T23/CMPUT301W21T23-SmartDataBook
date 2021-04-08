@@ -270,12 +270,13 @@ public class ScannerActivity extends AppCompatActivity implements ZXingScannerVi
 							}
 							if (count >= experiment.getMaxTrials()){
 								onBackPressed();
-//								Toast.makeText(UploadTrial.this, "You cannot add more trials than the maximum trials for this experiment at once", Toast.LENGTH_SHORT).show();
+								Toast.makeText(getBaseContext(), "You cannot add more trials than the maximum trials for this experiment at once", Toast.LENGTH_LONG).show();
 							} else{
 								if (values[3].equals("Binomial")) {
 									//Need to add in given number of binomial trials
 									if (count+Integer.parseInt(String.valueOf((values[2])))> experiment.getMaxTrials()){
 										onBackPressed();
+										Toast.makeText(getBaseContext(), "You cannot add more trials than the maximum trials for this experiment at once", Toast.LENGTH_LONG).show();
 									}
 									else{
 										for (int i = 1; i <= Integer.parseInt(values[2]); i++) {

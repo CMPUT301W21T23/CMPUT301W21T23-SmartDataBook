@@ -260,7 +260,7 @@
                 android:maxWidth="300dp" />
 
         <androidx.appcompat.widget.AppCompatImageButton
-                android:id="@+id/scanner"
+                android:id="@+id/scannerimg"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_centerHorizontal="true"

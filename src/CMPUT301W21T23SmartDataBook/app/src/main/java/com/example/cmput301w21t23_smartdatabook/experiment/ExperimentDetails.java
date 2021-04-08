@@ -71,7 +71,7 @@ public class ExperimentDetails extends AppCompatActivity {
 
         View userInfoView = LayoutInflater.from(ExperimentDetails.this).inflate(R.layout.view_profile, null);
 
-        AppCompatImageButton scan = findViewById(R.id.scanner);
+        AppCompatImageButton scan = findViewById(R.id.scannerimg);
         scan.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
