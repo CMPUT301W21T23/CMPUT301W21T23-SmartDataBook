@@ -79,8 +79,7 @@ public class UploadTrialTest {
         Experiment experiment = (Experiment) experimentList.getItemAtPosition(0);
         assertEquals(experiment.getExpName(), "Name");
 
-
-
+        solo.clickOnText("Name");
 
     }
 }
