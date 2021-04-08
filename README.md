@@ -36,7 +36,14 @@ Select An Experiment:
   - Users can also specifically click the experiment owner's name on the experiment, to see their username and email
   - Once clicked to an experiment, the user is transferred to experiment details page and the clicked experiment's additional information will be displayed
   - Users will be able to perform more actions regards to the experiment, like: 
-  - >Viewing experiment statisics like mean, median, standard deviation, and quartiles
+  - By clicking the "View Stats" button, users can view experiment statisics like mean, median, standard deviation, and quartiles
+  - By clicking the "Upload Trials" button, users can upload their trials onto the selected experiment.
+  - By clicking the "generate map" text, users can see the locations of different trials that are uploaded in the selected experiment, through google maps
+  - By clicking the "generate QR code" text, users can add trials through scanning QR code
+  - By clicking the "asking question" test, users can ask questions about the selected experiment, which other users can view and answer them
+  - If the experiment owners select their own experiment:
+  - ...More to be added...
+
 
 On The Favoutie page:
   - The favourite page shows all the experiments you have followed
