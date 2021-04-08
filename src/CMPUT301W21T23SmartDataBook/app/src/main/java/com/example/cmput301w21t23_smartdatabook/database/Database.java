@@ -304,7 +304,7 @@ public class Database {
 //                        ("Experiments".equals(collection.getPath())
 						if (task.isSuccessful()) {
 							for (QueryDocumentSnapshot document : task.getResult()) {
-								if ((collection.getPath().equals("Experiments")) && document.getData().get("ExpID") != null && ((Boolean) document.getData().get("PublicStatus")) ||
+								if ((collection.getPath().equals("Experiments")) && document.getData().get("ExpID") != null && ((Boolean) document.get("PublicStatus")) ||
 										(collection.getPath().equals(db.collection("Users").document(currentID).collection("Favorites").getPath())) ||
 										(collection.getPath().equals("Archived"))) {
 
