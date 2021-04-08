@@ -61,14 +61,17 @@ public class RepliesActivityTest {
 
     @Test
     public void testAddReplies() {
-//        createExperiment();
-//        addComment();
-        solo.assertCurrentActivity("Wrong Activity", MainActivity.class);
-        ListView experimentList = rule.getActivity().findViewById(R.id.experiment_list);
-//        Experiment experiment = (Experiment) experimentList.getItemAtPosition(0);
-//        assertEquals(experiment.getExpName(), "Name");
+        createExperiment();
+        addComment();
+        solo.clickInList(0);
+        solo.clickOnScreen(948,1909);
+        solo.enterText( solo.getEditText("Comment Text"), "World!");
+        solo.clickOnText("Add Comment");
+        solo.sleep(2000);
 
-        solo.clickInList(0,0);
+        ListView replyList = solo.getCurrentActivity().findViewById(R.id.replies_list);
+        Comment comment = (Comment) replyList.getItemAtPosition(0);
+        assertEquals(comment.getText(), "World!");
 
     }
 
@@ -76,10 +79,10 @@ public class RepliesActivityTest {
     public void addComment() {
         solo.clickOnText("Comments");
         solo.assertCurrentActivity("Wrong Activity", CommentActivity.class);
-        solo.clickOnScreen(980, 2053);
+        solo.clickOnScreen(980, 1930);
         solo.enterText( solo.getEditText("Comment Text"), "Hello!");
         solo.clickOnText("Add Comment");
-        solo.waitForActivity("CommentActivity",1000);
+        solo.sleep(2000);
 
         ListView commentList = solo.getCurrentActivity().findViewById(R.id.comment_list);
         Comment comment = (Comment) commentList.getItemAtPosition(0);
@@ -90,7 +93,7 @@ public class RepliesActivityTest {
     public void createExperiment() {
         solo.assertCurrentActivity("Wrong Class", MainActivity.class);
         solo.waitForFragmentById(R.layout.home_page, 1000);
-        solo.clickOnView(addExpButton);
+        solo.clickOnScreen(974, 1750);
         solo.waitForFragmentById(R.layout.new_experiment_location_on, 1000);
 
         //Source: Bouabane Mohamed Salah; https://stackoverflow.com/users/1600405/bouabane-mohamed-salah
@@ -112,15 +115,11 @@ public class RepliesActivityTest {
         });
 
         solo.enterText( (EditText) solo.getView(R.id.newExperimentLocationOnExperimentNameEditText), "Binomial");
-        solo.sleep(1000);
         solo.enterText( (EditText) solo.getView(R.id.newExperimentLocationOnExperimentDescriptionEditText), "Coin Flip");
-        solo.sleep(1000);
         solo.clickOnRadioButton(0);
-        solo.sleep(1000);
         solo.clickOnView(rule.getActivity().findViewById(R.id.newExperimentLocationToggleSwitch));
-        solo.sleep(1000);
         solo.clickOnButton("Create");
-        solo.sleep(1000);
+
     }
 
 }
