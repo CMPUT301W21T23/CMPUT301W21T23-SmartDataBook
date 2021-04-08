@@ -1,10 +1,12 @@
 package com.example.cmput301w21t23_smartdatabook.home;
 
+import android.annotation.SuppressLint;
 import android.app.AlertDialog;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Parcelable;
 import android.view.LayoutInflater;
+import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
@@ -185,6 +187,7 @@ public class CardList extends ArrayAdapter<Experiment> {
             TextView email = userInfoView.findViewById(R.id.expContact);;
             email.setText("Email: " + UserName.get(experiment.getOwnerUserID()).getUserContact() );
 
+            ownerName.setClickable(true);
             // when the user clicks the experiment's owner name
             ownerName.setOnClickListener(new View.OnClickListener() {
                 @Override

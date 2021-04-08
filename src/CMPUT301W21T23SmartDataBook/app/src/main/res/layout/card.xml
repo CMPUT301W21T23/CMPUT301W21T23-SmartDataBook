@@ -29,14 +29,18 @@
         android:maxLength="32"
         android:text="Description"></TextView>
 
+<!--    android:clickable="true"-->
+<!--    android:onClick="onClick"-->
+
     <TextView
+        android:clickable="false"
+        android:focusable="false"
+
         android:id="@+id/Owner"
         android:layout_width="278dp"
         android:layout_height="wrap_content"
         android:layout_marginLeft="10dp"
         android:layout_marginTop="0dp"
-        android:clickable="true"
-        android:onClick="onClick"
         android:text="Owner Name"
         android:textColor="@color/purple_500"
         android:textSize="20sp">
