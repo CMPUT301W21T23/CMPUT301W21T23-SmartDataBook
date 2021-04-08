@@ -25,7 +25,6 @@ import static org.junit.Assert.assertNull;
 public class AddExpFragIntentTest {
 
     private Solo solo;
-    private View addExpButton;
 
     @Rule
     public ActivityTestRule<MainActivity> rule = new ActivityTestRule<MainActivity>(MainActivity.class, true, true);
@@ -33,7 +32,6 @@ public class AddExpFragIntentTest {
     @Before
     public void setUp() {
         solo = new Solo(InstrumentationRegistry.getInstrumentation(), rule.getActivity());
-        addExpButton = rule.getActivity().findViewById(R.id.add_experiment_button);
     }
 
     //Finally, add tearDown() method using the @After tag to run after every test method.
@@ -50,7 +48,7 @@ public class AddExpFragIntentTest {
     public void checkInvalidText() {
         solo.assertCurrentActivity("Wrong Class", MainActivity.class);
         solo.waitForFragmentById(R.layout.home_page, 1000);
-        solo.clickOnView(addExpButton);
+        solo.clickOnScreen(974, 1750);
         solo.waitForFragmentById(R.layout.new_experiment_location_on, 1000);
         solo.clickOnButton("Create");
         solo.sleep(1000);
@@ -65,7 +63,7 @@ public class AddExpFragIntentTest {
     public void checkEqualMinMax() {
         solo.assertCurrentActivity("Wrong Class", MainActivity.class);
         solo.waitForFragmentById(R.layout.home_page, 1000);
-        solo.clickOnView(addExpButton);
+        solo.clickOnScreen(974, 1750);
         solo.waitForFragmentById(R.layout.new_experiment_location_on, 1000);
 
         //Source: Bouabane Mohamed Salah; https://stackoverflow.com/users/1600405/bouabane-mohamed-salah
@@ -101,7 +99,7 @@ public class AddExpFragIntentTest {
     public void checkValidCreation() {
         solo.assertCurrentActivity("Wrong Class", MainActivity.class);
         solo.waitForFragmentById(R.layout.home_page, 1000);
-        solo.clickOnView(addExpButton);
+        solo.clickOnScreen(974, 1750);
         solo.waitForFragmentById(R.layout.new_experiment_location_on, 1000);
 
         //Source: Bouabane Mohamed Salah; https://stackoverflow.com/users/1600405/bouabane-mohamed-salah
