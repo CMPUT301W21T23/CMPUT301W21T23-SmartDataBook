@@ -171,7 +171,7 @@ public class FavPage extends Fragment {
 						favList.setOnItemClickListener(new AdapterView.OnItemClickListener() {
 							@Override
 							public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-								Experiment exp = favDataList.get(position); // get the experiment from list
+								Experiment exp = (Experiment) parent.getAdapter().getItem(position); // get the experiment from list
 								Intent intent = new Intent(getActivity(), ExperimentDetails.class);
 								intent.putExtra("currentID", user.getUserUniqueID()); // pass position to ExperimentDetails class
 								intent.putExtra("experiment", (Parcelable) exp); // pass experiment object

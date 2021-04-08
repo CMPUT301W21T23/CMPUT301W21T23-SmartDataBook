@@ -165,7 +165,7 @@ public class ArchivePage extends Fragment {
                         archiveExperimentList.setOnItemClickListener(new AdapterView.OnItemClickListener() {
                             @Override
                             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                                Experiment exp = archiveExperimentDataList.get(position); // get the experiment from list
+                                Experiment exp = (Experiment) parent.getAdapter().getItem(position); // get the experiment from list
                                 Intent intent = new Intent(getActivity(), ExperimentDetails.class);
                                 intent.putExtra("experiment", (Parcelable) exp); // pass experiment object
                                 startActivity(intent);

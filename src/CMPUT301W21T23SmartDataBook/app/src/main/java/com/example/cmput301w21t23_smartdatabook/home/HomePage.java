@@ -53,6 +53,8 @@ public class HomePage extends Fragment {
 	private String currentQuery;
 	private ArrayList<Experiment> searchDataList;
 
+	private ArrayAdapter<Experiment> tempAdapter;
+
 	FirebaseFirestore db = FirebaseFirestore.getInstance();
 
 	public HomePage() {
@@ -70,7 +72,6 @@ public class HomePage extends Fragment {
 	 * This function updates the Home page, through fragment transaction
 	 *
 	 * @param query
-	 * @param currentFragment
 	 */
 	public void doUpdate(String query) {
 
@@ -113,7 +114,7 @@ public class HomePage extends Fragment {
 
 	/**
 	 * The onCreate function of the Home page
-	 * In this functuon, if there are arguments, it gets the user's information
+	 * In this function, if there are arguments, it gets the user's information
 	 *
 	 * @param savedInstanceState
 	 */
@@ -147,7 +148,7 @@ public class HomePage extends Fragment {
 		experimentAdapter = new CardList(getContext(), experimentDataList, new Hashtable<String, User>(), 1);
 
 		//Source: ColdFire; https://stackoverflow.com/users/886001/coldfire
-		//Code: https://stackoverflow.com/questions/7093483/why-listview-items-becomes-not-clickable-after-scroll/7104933
+		Code: https://stackoverflow.com/questions/7093483/why-listview-items-becomes-not-clickable-after-scroll/7104933
 		experimentList.setOnScrollListener(new AbsListView.OnScrollListener() {
 			public void onScrollStateChanged(AbsListView view, int scrollState) {
 				if (scrollState == AbsListView.OnScrollListener.SCROLL_STATE_IDLE) {
@@ -182,33 +183,38 @@ public class HomePage extends Fragment {
 						//experimentDataList with added items ONLY exist inside the scope of this getExpDataList function
 						experimentDataList = DataList;
 
-						//Create a new searchDataList depending on the query
-						if (currentQuery != null) {
-							for (Experiment experiment : experimentDataList) {
-								if (experiment.getExpName().contains(currentQuery) ||
-										UserName.get(experiment.getOwnerUserID()).getUserName().contains(currentQuery) ||
-										experiment.getDate().toString().contains(currentQuery) ||
-										experiment.getDescription().contains(currentQuery)) {
+//						//Create a new searchDataList depending on the query
+//						if (currentQuery != null) {
+//							for (Experiment experiment : experimentDataList) {
+//								if (experiment.getExpName().contains(currentQuery) ||
+//										UserName.get(experiment.getOwnerUserID()).getUserName().contains(currentQuery) ||
+//										experiment.getDate().toString().contains(currentQuery) ||
+//										experiment.getDescription().contains(currentQuery)) {
+//
+//									searchDataList.add(experiment);
+//
+//								}
+//							}
+//							experimentAdapter.clear();
+//							experimentAdapter.addAll(searchDataList);
+//						} else {
+//							experimentAdapter.addAll(experimentDataList);
+//						}
 
-									searchDataList.add(experiment);
-
-								}
-							}
-							experimentAdapter.clear();
-							experimentAdapter.addAll(searchDataList);
-						} else {
-							experimentAdapter.addAll(experimentDataList);
-						}
+						experimentAdapter.addAll(experimentDataList);
 						experimentAdapter.notifyDataSetChanged();
+
 						experimentList.setOnItemClickListener(new AdapterView.OnItemClickListener() {
 							@Override
 							public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-								Experiment exp = experimentDataList.get(position); // get the experiment from list
+								Log.e("Exp pos", ""+position);
+								Experiment exp = (Experiment) parent.getAdapter().getItem(position); // get the experiment from list
 								Intent intent = new Intent(getActivity(), ExperimentDetails.class);
 								intent.putExtra("experiment", (Parcelable) exp); // pass experiment object
 								startActivity(intent);
 							}
 						});
+
 					}//getExpDataList
 				}, experimentAdapter, db.collection("Experiments"), user.getUserUniqueID(), UserName);//fillDataList
 			}
