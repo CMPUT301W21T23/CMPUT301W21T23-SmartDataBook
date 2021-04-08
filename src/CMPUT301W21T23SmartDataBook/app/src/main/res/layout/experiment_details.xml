@@ -259,34 +259,34 @@
                 app:layout_constraintTop_toTopOf="parent"
                 android:maxWidth="300dp" />
 
-<!--        <androidx.appcompat.widget.AppCompatImageButton-->
-<!--                android:id="@+id/scanner"-->
-<!--                android:layout_width="wrap_content"-->
-<!--                android:layout_height="wrap_content"-->
-<!--                android:layout_centerHorizontal="true"-->
-<!--                android:layout_marginBottom="76dp"-->
-<!--                android:background="@color/white"-->
-<!--                android:src="@drawable/ic_qr_image"-->
-<!--                app:layout_constraintBottom_toBottomOf="parent"-->
-<!--                app:layout_constraintEnd_toEndOf="parent"-->
-<!--                app:layout_constraintHorizontal_bias="0.498"-->
-<!--                app:layout_constraintStart_toStartOf="parent" />-->
+        <androidx.appcompat.widget.AppCompatImageButton
+                android:id="@+id/scanner"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerHorizontal="true"
+                android:layout_marginBottom="76dp"
+                android:background="@color/white"
+                android:src="@drawable/ic_qr_image"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="0.498"
+                app:layout_constraintStart_toStartOf="parent" />
 
-<!--        <TextView-->
-<!--                android:layout_width="wrap_content"-->
-<!--                android:layout_height="wrap_content"-->
-<!--                android:layout_below="@id/scanner"-->
-<!--                android:layout_centerHorizontal="true"-->
-<!--                android:text="SCAN QR CODE"-->
-<!--                android:textColor="@color/theme_default"-->
-<!--                android:textSize="9dp"-->
-<!--                android:textStyle="bold"-->
-<!--                app:layout_constraintBottom_toBottomOf="parent"-->
-<!--                app:layout_constraintEnd_toEndOf="@+id/scanner"-->
-<!--                app:layout_constraintHorizontal_bias="0.0"-->
-<!--                app:layout_constraintStart_toStartOf="@+id/scanner"-->
-<!--                app:layout_constraintTop_toBottomOf="@+id/scanner"-->
-<!--                app:layout_constraintVertical_bias="0.0" />-->
+        <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/scanner"
+                android:layout_centerHorizontal="true"
+                android:text="SCAN QR CODE"
+                android:textColor="@color/theme_default"
+                android:textSize="9dp"
+                android:textStyle="bold"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="@+id/scanner"
+                app:layout_constraintHorizontal_bias="0.0"
+                app:layout_constraintStart_toStartOf="@+id/scanner"
+                app:layout_constraintTop_toBottomOf="@+id/scanner"
+                app:layout_constraintVertical_bias="0.0" />
 
 
     </androidx.constraintlayout.widget.ConstraintLayout>

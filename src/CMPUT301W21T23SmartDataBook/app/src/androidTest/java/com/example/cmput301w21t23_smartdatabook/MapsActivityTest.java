@@ -14,7 +14,6 @@ import org.junit.Rule;
 
 public class MapsActivityTest {
     private Solo solo;
-    private View addExpButton;
 
     @Rule
     public ActivityTestRule<MainActivity> rule = new ActivityTestRule<MainActivity>(MainActivity.class, true, true);
@@ -22,7 +21,6 @@ public class MapsActivityTest {
     @Before
     public void setUp() {
         solo = new Solo(InstrumentationRegistry.getInstrumentation(), rule.getActivity());
-        addExpButton = rule.getActivity().findViewById(R.id.add_experiment_button);
     }
 
     //Finally, add tearDown() method using the @After tag to run after every test method.
@@ -31,6 +29,5 @@ public class MapsActivityTest {
     public void tearDown() {
         solo.finishOpenedActivities();
     }
-
 
 }
