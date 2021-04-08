@@ -54,8 +54,6 @@ public class HomePage extends Fragment {
 	private String currentQuery;
 	private ArrayList<Experiment> searchDataList;
 
-	private ArrayAdapter<Experiment> tempAdapter;
-
 	FirebaseFirestore db = FirebaseFirestore.getInstance();
 
 	public HomePage() {
@@ -158,9 +156,7 @@ public class HomePage extends Fragment {
 			}
 
 			@Override
-			public void onScroll(AbsListView arg0, int arg1, int arg2, int arg3) {
-				experimentList.invalidateViews();
-			}
+			public void onScroll(AbsListView arg0, int arg1, int arg2, int arg3) { }
 		});
 
 		//Source: Erwin Kurniawan A; https://stackoverflow.com/users/7693494/erwin-kurniawan-a
