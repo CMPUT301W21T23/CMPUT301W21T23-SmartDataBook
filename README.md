@@ -30,23 +30,29 @@ Add An Experiment:
   - Allow or deny the experiment of being public and shared its contents with others
   - Select "Create" to publish the experiment so other users, including you, may see it
 
-Select An Experiment:
+Select An Experiment from the Explore page:
   - The home page shows the list of experiments, as well as each of their name, owner's ID, created date, description, as well as an message notifying geolocation required.
   - Users can choose to follow the experiment by ticking on the check box on the experiment. Once an experiment is followed, it will appear on the Favourite page on the bottom of the app.
-  - Users can also specifically click the experiment owner's name on the experiment, to see their username and email
-  - Once clicked to an experiment, the user is transferred to experiment details page and the clicked experiment's additional information will be displayed
+  - Users can specifically click the experiment owner's name on the experiment, to see their username and email
+  - Users can click the "comments" button, to see list of comments about the selected experiment
+  - Once the users click to an experiment, it will lead them to the experiment details page, showing more information about the clicked experiment
+
+Showing more details about selected experiment in the experiment details page:
+  - The home page shows the list of experiments, as well as each of their name, owner's ID, created date, description, as well as an message notifying geolocation required.
+  - Once the user clicked to an experiment, the user is transferred to experiment details page and the clicked experiment's additional information will be displayed
   - Users will be able to perform more actions regards to the experiment, like: 
   - By clicking the "View Stats" button, users can view experiment statisics like mean, median, standard deviation, and quartiles
   - By clicking the "Upload Trials" button, users can upload their trials onto the selected experiment.
-  - By clicking the "generate map" text, users can see the locations of different trials that are uploaded in the selected experiment, through google maps
-  - By clicking the "generate QR code" text, users can add trials through scanning QR code
-  - By clicking the "asking question" test, users can ask questions about the selected experiment, which other users can view and answer them
-  - If the experiment owners select their own experiment:
-  - ...More to be added...
+  - By clicking the "Generate/ Register code" text, users can add trials through scanning QR code
+  - By clicking the "Ask Question" test, users can ask questions about the selected experiment, which other users can view and answer them
+
+  - If the experiment owners select their own experiment, there are functions owners can access, such as:
+  - By clicking the "Show map" text, users can see the locations of different trials that are uploaded in the selected experiment, through google maps
 
 
 On The Favoutie page:
   - The favourite page shows all the experiments you have followed
   - When clicked onto an experiment, it will act directly leads to the experiment' details page and show all of the experiment's content.
+  - 
 
 ...More to be added...
