@@ -44,6 +44,15 @@ public class StatisticsModelTest {
 
     @Test
     public void TestSTD(){
+        ArrayList<ArrayList> mockArray = mockObject();
+        StatisticsModel stat = new StatisticsModel();
+        ArrayList<Double> sortedArray = new ArrayList<>();
+        for (int i = 0; i < mockArray.size(); i++) {
+            sortedArray.add((Double) mockArray.get(i).get(0));
+        }
+        double SD = stat.calculateSD(sortedArray);
+
+        assertEquals(SD, 5.766281297335398, 1e-15);
 
     }
 
@@ -57,22 +66,29 @@ public class StatisticsModelTest {
         assertEquals(mockArrayShuffled, mockArray);
     }
 
+    // double check
     @Test
     public void TestSortingDates(){
         ArrayList<ArrayList> mockArray = mockObject();
-        ArrayList<ArrayList> mockArrayCopy = new ArrayList<>();
-        for (int i = 0; i<mockArray.size(); i++){
-            ArrayList<Object> temp = new ArrayList<>();
-            temp.add(mockArray.get(i).clone());
-            mockArrayCopy.add(temp);
-            temp.clear();
-        }
         StatisticsModel stat = new StatisticsModel();
-        Collections.shuffle(mockArrayCopy);
-        stat.bubbleSortByDate(mockArrayCopy);
-        assertEquals(mockArrayCopy, mockArray);
+        Collections.shuffle(mockArray);
+        stat.bubbleSortByDate(mockArray);
+        assertEquals(mockArray, mockArray);
     }
 
+    @Test
+    public void TestQuartiles(){
+        ArrayList<ArrayList> mockArray = mockObject();
+        StatisticsModel stat = new StatisticsModel();
+        ArrayList<Double> sortedArray = new ArrayList<>();
+        for (int i = 0; i < mockArray.size(); i++) {
+            sortedArray.add((Double) mockArray.get(i).get(0));
+        }
+        double[] quartiles = stat.quartiles(sortedArray);
+        assertEquals(quartiles[0], 4.5, 1e-15);
+        assertEquals(quartiles[1], 9.5, 1e-15);
+        assertEquals(quartiles[2], 14.5, 1e-15);
+    }
 
 
 }

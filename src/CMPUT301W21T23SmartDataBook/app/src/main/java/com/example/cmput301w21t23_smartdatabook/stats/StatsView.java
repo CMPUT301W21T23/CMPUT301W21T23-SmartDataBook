@@ -126,9 +126,6 @@ public class StatsView extends AppCompatActivity {
                     bins.put(key, count + 1);
                 }
 
-                Log.d("statsDataListSize", "" + statsDataList.size());
-                Log.d("BinSize", ""+bins.size());
-
                 //Adds entries to the line chart. Requires that the statsDataList is sorted by date
                 for (int i = 0; i<statsDataList.size(); i++){
 
