@@ -13,9 +13,9 @@ import android.widget.ListView;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 
-import com.example.cmput301w21t23_smartdatabook.StringDate;
+import com.example.cmput301w21t23_smartdatabook.stats.StringDate;
 import com.example.cmput301w21t23_smartdatabook.database.Database;
-import com.example.cmput301w21t23_smartdatabook.Experiment;
+import com.example.cmput301w21t23_smartdatabook.experiment.Experiment;
 import com.example.cmput301w21t23_smartdatabook.user.User;
 import com.example.cmput301w21t23_smartdatabook.R;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
@@ -36,7 +36,6 @@ public class CommentActivity extends AppCompatActivity {
     ArrayAdapter<Comment> commentAdapter;
     ArrayList<Comment> commentDataList;
 
-    private String currentID;
     private Experiment experiment;
 
     FirebaseFirestore db;
@@ -58,7 +57,6 @@ public class CommentActivity extends AppCompatActivity {
         db = FirebaseFirestore.getInstance();
 
         Intent getIntent = getIntent();
-        currentID = getIntent.getExtras().getString("currentID");
         experiment = (Experiment) getIntent.getSerializableExtra("Experiment");
 
         commentList = findViewById(R.id.comment_list);
@@ -84,7 +82,7 @@ public class CommentActivity extends AppCompatActivity {
             public void onClick(View v) {
                 AlertDialog.Builder builder = new AlertDialog.Builder(CommentActivity.this);
                 builder.setView(addCommentView);
-                builder.setTitle("New Rpely");
+                builder.setTitle("New Reply");
                 builder.setNegativeButton("Cancel", null)
                         .setPositiveButton("Add Comment", new DialogInterface.OnClickListener() {
                             @Override

@@ -8,7 +8,7 @@ import android.view.View;
 import android.widget.CheckBox;
 
 import com.example.cmput301w21t23_smartdatabook.database.Database;
-import com.example.cmput301w21t23_smartdatabook.experimentDetails.ExperimentDetails;
+import com.example.cmput301w21t23_smartdatabook.experiment.ExperimentDetails;
 import com.example.cmput301w21t23_smartdatabook.mainController.MainActivity;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
@@ -128,9 +128,5 @@ public class HomePageTest {
         assertTrue(box.isChecked()); //Box shouldn't return a false as the owner can't unfollow their own experiment
 
     }
-
-
-
-
 
 }

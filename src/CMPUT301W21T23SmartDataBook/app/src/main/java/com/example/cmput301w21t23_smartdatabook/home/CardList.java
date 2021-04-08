@@ -4,7 +4,6 @@ import android.app.AlertDialog;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Parcelable;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -20,11 +19,11 @@ import java.util.Map;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 
-import com.example.cmput301w21t23_smartdatabook.StringDate;
+import com.example.cmput301w21t23_smartdatabook.stats.StringDate;
 import com.example.cmput301w21t23_smartdatabook.user.User;
 import com.example.cmput301w21t23_smartdatabook.comments.CommentActivity;
 import com.example.cmput301w21t23_smartdatabook.database.Database;
-import com.example.cmput301w21t23_smartdatabook.Experiment;
+import com.example.cmput301w21t23_smartdatabook.experiment.Experiment;
 import com.example.cmput301w21t23_smartdatabook.R;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
@@ -32,6 +31,8 @@ import com.google.firebase.firestore.CollectionReference;
 import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
+
+import org.w3c.dom.Text;
 
 /**
  * This classs is simply to display the information from the experiment list adapters onto the screen
@@ -111,12 +112,14 @@ public class CardList extends ArrayAdapter<Experiment> {
             TextView experimentDescription = v.findViewById(R.id.Experiment_descr);
             TextView region = v.findViewById(R.id.Region);
 
+            if (experiment.getRequireLocation()){
+                region.setVisibility(View.VISIBLE);
+            }
 
             experimentName.setText(experiment.getExpName());
             dateView.setText(""+ date.getDate(experiment.getDate()));
             ownerName.setText(experiment.getOwnerUserName());
             experimentDescription.setText(experiment.getDescription());
-            region.setText(null);
 
             // when the user click the comment button
             Button comment = v.findViewById(R.id.comment_btn);
@@ -160,8 +163,6 @@ public class CardList extends ArrayAdapter<Experiment> {
                                   .collection("Favorites");
                           database.addExperimentToDB(experiment, favExpCollection, user.getUserUniqueID());
 
-                          System.out.println("Checked");
-
                       } else {
 
                               final DocumentReference ref = db.collection("Users")
@@ -170,8 +171,6 @@ public class CardList extends ArrayAdapter<Experiment> {
                                       .document(experiment.getExpID());
 
                               database.followStatus( ref, experiment, getContext(), follow, user.getUserUniqueID() );
-
-                              System.out.println("Un-Checked");
                           }
                       }
                   }
@@ -202,7 +201,6 @@ public class CardList extends ArrayAdapter<Experiment> {
                             .setNegativeButton("Close", null).create().show();
                 }
             });
-
 
             views.put(position, v);
 

@@ -9,7 +9,8 @@ import android.widget.NumberPicker;
 import androidx.test.platform.app.InstrumentationRegistry;
 import androidx.test.rule.ActivityTestRule;
 
-import com.example.cmput301w21t23_smartdatabook.experimentDetails.ExperimentDetails;
+import com.example.cmput301w21t23_smartdatabook.experiment.Experiment;
+import com.example.cmput301w21t23_smartdatabook.experiment.ExperimentDetails;
 import com.example.cmput301w21t23_smartdatabook.mainController.MainActivity;
 import com.example.cmput301w21t23_smartdatabook.trials.UploadTrial;
 import com.robotium.solo.Solo;
@@ -27,8 +28,7 @@ import static org.junit.Assert.assertNull;
 
 public class ExperimentDetailsPageTest {
     private Solo solo;
-    private View addTrialsBtn;
-    private View addExpButton;
+
 
     @Rule
     public ActivityTestRule<MainActivity> rule = new ActivityTestRule<MainActivity>(MainActivity.class, true, true);
@@ -36,8 +36,6 @@ public class ExperimentDetailsPageTest {
     @Before
     public void setUp() {
         solo = new Solo(InstrumentationRegistry.getInstrumentation(), rule.getActivity());
-        addExpButton = rule.getActivity().findViewById(R.id.add_experiment_button);
-
     }
 
     /**
@@ -103,7 +101,7 @@ public class ExperimentDetailsPageTest {
         solo.assertCurrentActivity("Wrong Class", MainActivity.class);
         solo.waitForFragmentById(R.layout.home_page, 1000);
         solo.sleep(7000);
-        solo.clickOnView(addExpButton);
+//        solo.clickOnView(addExpButton);
         solo.waitForFragmentById(R.layout.new_experiment_location_on, 1000);
 
         //Source: Bouabane Mohamed Salah; https://stackoverflow.com/users/1600405/bouabane-mohamed-salah
@@ -209,8 +207,6 @@ public class ExperimentDetailsPageTest {
         solo.sleep(2000);
 
         solo.clickInList(0);
-
-//        solo.clickOnScreen(73, 1920); //"Home" Menu Item
 
         solo.clickOnText("checkPublishedBoxUnchecked()");
 

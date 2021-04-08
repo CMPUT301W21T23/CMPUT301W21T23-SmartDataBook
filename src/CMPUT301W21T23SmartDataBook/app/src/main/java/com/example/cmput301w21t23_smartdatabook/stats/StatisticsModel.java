@@ -1,13 +1,11 @@
 package com.example.cmput301w21t23_smartdatabook.stats;
 
-import com.example.cmput301w21t23_smartdatabook.StringDate;
-
 import java.util.ArrayList;
 import java.util.Date;
 
 /**
  * this class will calculate various values needed in the statistics view
- * @author Afaq, Bosco
+ * @author Afaq Nabi, Bosco Chan
  */
 public class StatisticsModel {
 
@@ -16,6 +14,7 @@ public class StatisticsModel {
     public StatisticsModel() {
     }
 
+    // Calculating mean: add each element, divided by the size
     public Number calcMean(ArrayList<ArrayList> statsDataList){
         double sum = 0;
         for (int i = 0; i < statsDataList.size(); i++){
@@ -26,9 +25,9 @@ public class StatisticsModel {
         }else{
             return sum/statsDataList.size();
         }
-
     }
 
+    // Calculating median: find the middle value of the statistic data in an sorted order
     public Number calcMedian(ArrayList<ArrayList> statsDataList) {
         int middle = statsDataList.size()/2; // index
         if (statsDataList.size()%2 == 1) {
@@ -38,6 +37,7 @@ public class StatisticsModel {
         }
     }
 
+    // we use bubble sort as the sort to sort the statistics data, by value
     public void bubbleSortByValue(ArrayList<ArrayList> statsDataList){
         for (int i = 0; i < statsDataList.size(); i++) {
             for (int j = 0; j < statsDataList.size()-i-1; j++){
@@ -52,6 +52,7 @@ public class StatisticsModel {
         }
     }
 
+    // // we use bubble sort as the sort to sort the statistics data, by date
     public void bubbleSortByDate(ArrayList<ArrayList> statsDataList){
         for (int i = 0; i < statsDataList.size(); i++) {
             for (int j = 0; j < statsDataList.size()-i-1; j++){
@@ -66,7 +67,9 @@ public class StatisticsModel {
         }//for
     }//bubbleSortByDate
 
-    // https://stackoverflow.com/questions/42381759/finding-first-quartile-and-third-quartile-in-integer-array-using-java
+    // we used the link below to understand how to find quartiles in a array list of doubles, on stack overflow, from vasilis vittis
+    // site URL: https://stackoverflow.com/questions/42381759/finding-first-quartile-and-third-quartile-in-integer-array-using-java
+    // user URL: https://stackoverflow.com/users/14060960/vasilis-vittis
     public double[] quartiles(ArrayList<Double> val) {
         double ans[] = new double[3];
         for (int quartileType = 1; quartileType < 4; quartileType++) {
@@ -85,6 +88,7 @@ public class StatisticsModel {
         return ans;
     }
 
+    // We have used the site below to understand how to calculate stand deviation
     // https://www.programiz.com/java-programming/examples/standard-deviation
     public static double calculateSD(ArrayList<Double> numArray) {
         double sum = 0.0, standardDeviation = 0.0;

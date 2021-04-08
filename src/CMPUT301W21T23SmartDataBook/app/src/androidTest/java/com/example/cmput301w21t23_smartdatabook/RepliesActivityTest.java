@@ -1,5 +1,9 @@
 package com.example.cmput301w21t23_smartdatabook;
 
+import android.widget.EditText;
+import android.widget.NumberPicker;
+
+import com.example.cmput301w21t23_smartdatabook.mainController.MainActivity;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -10,6 +14,8 @@ import android.widget.TextView;
 import androidx.test.platform.app.InstrumentationRegistry;
 import androidx.test.rule.ActivityTestRule;
 
+import com.example.cmput301w21t23_smartdatabook.comments.Comment;
+import com.example.cmput301w21t23_smartdatabook.comments.CommentActivity;
 import com.example.cmput301w21t23_smartdatabook.experiment.Experiment;
 import com.example.cmput301w21t23_smartdatabook.experiment.ExperimentDetails;
 import com.example.cmput301w21t23_smartdatabook.mainController.MainActivity;
@@ -29,10 +35,11 @@ import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertNull;
 import static org.junit.Assert.assertTrue;
 
+public class RepliesActivityTest {
 
-public class StatsViewTest {
     private Solo solo;
     private View addExpButton;
+    private View addCommentButton;
 
     @Rule
     public ActivityTestRule<MainActivity> rule = new ActivityTestRule<MainActivity>(MainActivity.class, true, true);
@@ -41,6 +48,8 @@ public class StatsViewTest {
     public void setUp() {
         solo = new Solo(InstrumentationRegistry.getInstrumentation(), rule.getActivity());
         addExpButton = rule.getActivity().findViewById(R.id.add_experiment_button);
+        addCommentButton = rule.getActivity().findViewById(R.id.add_comment_button);
+
     }
 
     //Finally, add tearDown() method using the @After tag to run after every test method.
@@ -51,42 +60,40 @@ public class StatsViewTest {
     }
 
     @Test
-    public void testStatsView() {
-
+    public void testAddReplies() {
         createExperiment();
-        addTrials();
-        solo.goBack();
-        solo.assertCurrentActivity("Wrong Activity", MainActivity.class);
-        solo.clickInList(3);
-        solo.assertCurrentActivity("Wrong Activity", ExperimentDetails.class);
-        solo.clickOnButton("VIEW STATS");
+        addComment();
+        solo.clickInList(0);
+        solo.clickOnScreen(948,1909);
+        solo.enterText( solo.getEditText("Comment Text"), "World!");
+        solo.clickOnText("Add Comment");
+        solo.sleep(2000);
 
-        assertTrue( Float.parseFloat( ((TextView)solo.getView(R.id.meanTextView)).getText().toString().replace("Mean (Pass %): ", "") ) > 0 );
-        assertTrue( Float.parseFloat( ((TextView)solo.getView(R.id.medianTextView)).getText().toString().replace("Median: ", "") ) > 0 );
-        assertTrue( Float.parseFloat( ((TextView)solo.getView(R.id.stdDeviationTextView)).getText().toString().replace("Std: ", "") ) > 0 );
-        assertTrue( Float.parseFloat( ((TextView)solo.getView(R.id.quartile1TextView)).getText().toString().replace("Quartile 1: ", "") ) >= 0 );
+        ListView replyList = solo.getCurrentActivity().findViewById(R.id.replies_list);
+        Comment comment = (Comment) replyList.getItemAtPosition(0);
+        assertEquals(comment.getText(), "World!");
+
     }
 
-    //Adds 4 test trials to the experiment
-    public void addTrials() {
-        solo.assertCurrentActivity("Wrong Activity", MainActivity.class);
-        solo.clickInList(0);
-        solo.assertCurrentActivity("Wrong Activity", ExperimentDetails.class);
-        solo.clickOnButton("UPLOAD TRIALS");
-        solo.assertCurrentActivity("Wrong Activity", UploadTrial.class);
-        solo.clickOnButton("add new trials");
-        solo.enterText( (EditText) solo.getEditText("Enter positive number of passes/failures"), "5");
-        solo.clickOnText("Add passes");
-        solo.clickOnButton("add new trials");
-        solo.enterText( (EditText) solo.getEditText("Enter positive number of passes/failures"), "3");
-        solo.clickOnText("Add failure");
+    //Add a comment to an experiment
+    public void addComment() {
+        solo.clickOnText("Comments");
+        solo.assertCurrentActivity("Wrong Activity", CommentActivity.class);
+        solo.clickOnScreen(980, 1930);
+        solo.enterText( solo.getEditText("Comment Text"), "Hello!");
+        solo.clickOnText("Add Comment");
+        solo.sleep(2000);
+
+        ListView commentList = solo.getCurrentActivity().findViewById(R.id.comment_list);
+        Comment comment = (Comment) commentList.getItemAtPosition(0);
+        assertEquals(comment.getText(), "Hello!");
     }
 
     //Create a working experiment
     public void createExperiment() {
         solo.assertCurrentActivity("Wrong Class", MainActivity.class);
         solo.waitForFragmentById(R.layout.home_page, 1000);
-        solo.clickOnView(addExpButton);
+        solo.clickOnScreen(974, 1750);
         solo.waitForFragmentById(R.layout.new_experiment_location_on, 1000);
 
         //Source: Bouabane Mohamed Salah; https://stackoverflow.com/users/1600405/bouabane-mohamed-salah
@@ -108,18 +115,11 @@ public class StatsViewTest {
         });
 
         solo.enterText( (EditText) solo.getView(R.id.newExperimentLocationOnExperimentNameEditText), "Binomial");
-        solo.sleep(1000);
         solo.enterText( (EditText) solo.getView(R.id.newExperimentLocationOnExperimentDescriptionEditText), "Coin Flip");
-        solo.sleep(1000);
         solo.clickOnRadioButton(0);
-        solo.sleep(1000);
         solo.clickOnView(rule.getActivity().findViewById(R.id.newExperimentLocationToggleSwitch));
-        solo.sleep(1000);
         solo.clickOnButton("Create");
-        solo.sleep(1000);
 
-        ListView experimentList = rule.getActivity().findViewById(R.id.experiment_list);
-        Experiment experiment = (Experiment) experimentList.getItemAtPosition(0);
     }
 
 }

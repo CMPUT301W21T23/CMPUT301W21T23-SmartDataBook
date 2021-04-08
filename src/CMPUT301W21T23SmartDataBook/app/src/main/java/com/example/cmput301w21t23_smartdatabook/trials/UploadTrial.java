@@ -5,7 +5,6 @@ import android.content.Intent;
 import android.location.Location;
 import android.os.Bundle;
 import android.text.InputType;
-import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
@@ -19,9 +18,9 @@ import androidx.annotation.NonNull;
 import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
-import com.example.cmput301w21t23_smartdatabook.StringDate;
+import com.example.cmput301w21t23_smartdatabook.stats.StringDate;
 import com.example.cmput301w21t23_smartdatabook.database.Database;
-import com.example.cmput301w21t23_smartdatabook.Experiment;
+import com.example.cmput301w21t23_smartdatabook.experiment.Experiment;
 import com.example.cmput301w21t23_smartdatabook.R;
 import com.example.cmput301w21t23_smartdatabook.database.GeneralDataCallBack;
 import com.example.cmput301w21t23_smartdatabook.geolocation.LocationWithPermission;
@@ -29,22 +28,20 @@ import com.example.cmput301w21t23_smartdatabook.user.User;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
-import com.google.firebase.auth.FirebaseAuth;
-import com.google.firebase.auth.FirebaseUser;
-import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.QueryDocumentSnapshot;
 import com.google.firebase.firestore.QuerySnapshot;
 
 import java.math.BigDecimal;
 import java.util.ArrayList;
+import java.util.Hashtable;
 import java.util.UUID;
 
 /**
  * Class: UploadTrial activity
  * displays the upload trials page
- * @author Afaq Nabi, Krutik Soni, Alex
- * @see TrialList
+ * @author Afaq Nabi, Krutik Soni, Jayden Cho, Bosco Chan
+ * @see TrialList, Trial
  */
 public class UploadTrial extends AppCompatActivity {
     ListView trialsList;
@@ -61,8 +58,7 @@ public class UploadTrial extends AppCompatActivity {
     StringDate stringDate = new StringDate();
 
     /**
-     * This function create the uploadTrial view
-     *
+     * This function sets up the uploadTrial view
      * @param savedInstanceState
      */
     @Override
@@ -74,7 +70,6 @@ public class UploadTrial extends AppCompatActivity {
         ActionBar toolbar = getSupportActionBar();
 
         assert toolbar != null;
-        toolbar.setDisplayHomeAsUpEnabled(true);
 
         toolbar.setTitle("Upload Trials");
 
@@ -85,8 +80,14 @@ public class UploadTrial extends AppCompatActivity {
         TextView name = findViewById(R.id.actual_experiment_name);
         name.setText(experiment.getExpName());
 
-        TextView userName = findViewById(R.id.actual_user_name);
-        userName.setText(experiment.getOwnerUserID());
+        database.fillUserName(new GeneralDataCallBack() {
+            @Override
+            public void onDataReturn(Object returnedObject) {
+                Hashtable<String, User> UserName = (Hashtable<String, User>) returnedObject;
+                TextView userName = findViewById(R.id.actual_user_name);
+                userName.setText( UserName.get(experiment.getOwnerUserID()).getUserName() );
+            }
+        });
 
         // Set Headers
         TextView nameHeader = findViewById(R.id.experiment_name);
@@ -182,6 +183,11 @@ public class UploadTrial extends AppCompatActivity {
             @Override
             public void onDataReturn(Object returnedObject) {
                 Location location = (Location) returnedObject;
+                if (location == null) {
+                    Toast.makeText(UploadTrial.this, "Please open up the google map and obtain your location at least once.", Toast.LENGTH_LONG).show();
+                    return;
+                }
+
                 LatLng latlng = new LatLng(location.getLatitude(), location.getLongitude());
 
                 // 1. 4 different cases for dialog
@@ -205,7 +211,10 @@ public class UploadTrial extends AppCompatActivity {
                             .setNeutralButton("Add passes", new DialogInterface.OnClickListener() {
                                 @Override
                                 public void onClick(DialogInterface dialog, int which) {
-                                    if (Integer.parseInt(numBinomial.getText().toString())>= experiment.getMaxTrials()){
+                                    if (numBinomial.getText().toString().length() == 0){
+                                        Toast.makeText(UploadTrial.this, "Trial value field must not be empty", Toast.LENGTH_SHORT).show();
+                                        dialog.cancel();
+                                    }else if (Integer.parseInt(numBinomial.getText().toString()) > experiment.getMaxTrials()){
                                         Toast.makeText(UploadTrial.this, "You cannot add more trials than the maximum trials for this experiment at once", Toast.LENGTH_SHORT).show();
                                     } else {
                                         db
@@ -221,10 +230,10 @@ public class UploadTrial extends AppCompatActivity {
                                                            for (QueryDocumentSnapshot document : task.getResult()) {
                                                                count+=1;
                                                            }
-                                                           if (count+Integer.parseInt(numBinomial.getText().toString())>=experiment.getMaxTrials()){
+
+                                                           if (count+Integer.parseInt(numBinomial.getText().toString()) > experiment.getMaxTrials()){
                                                                Toast.makeText(UploadTrial.this, "You cannot add more trials than the maximum trials for this experiment at once", Toast.LENGTH_SHORT).show();
-                                                           }
-                                                           else{
+                                                           } else{
                                                                for (int i = 0; i < Integer.parseInt(numBinomial.getText().toString()); i++) {
                                                                    Trial trial = new Trial(experiment.getRequireLocation(),
                                                                            experiment.getTrialType(),
@@ -236,18 +245,24 @@ public class UploadTrial extends AppCompatActivity {
                                                                    collectionRefToDB(trial, experiment);
                                                                }
                                                            }
-
+//                                                           recreate();
                                                        }
+                                                       recreate();
                                                    }
                                                 });
                                     }
-                                    recreate();
+//                                    recreate();
+                                    dialog.cancel();
                                 }
                             })
                             .setNegativeButton("Add failure", new DialogInterface.OnClickListener() {
                                 @Override
                                 public void onClick(DialogInterface dialog, int which) {
-                                    if (Integer.parseInt(numBinomial.getText().toString())>= experiment.getMaxTrials()){
+                                    if (numBinomial.getText().toString().length() == 0) {
+                                        Toast.makeText(UploadTrial.this, "Trial value field must not be empty", Toast.LENGTH_SHORT).show();
+                                        dialog.cancel();
+
+                                    } else if (Integer.parseInt(numBinomial.getText().toString()) > experiment.getMaxTrials()){
                                         Toast.makeText(UploadTrial.this, "You cannot add more trials than the maximum trials for this experiment at once", Toast.LENGTH_SHORT).show();
                                         return;
                                     }
@@ -265,14 +280,15 @@ public class UploadTrial extends AppCompatActivity {
                                                             for (QueryDocumentSnapshot document : task.getResult()) {
                                                                 count+=1;
                                                             }
-                                                            if (count+Integer.parseInt(numBinomial.getText().toString())>=experiment.getMaxTrials()){
+
+                                                            if ( count+Integer.parseInt(numBinomial.getText().toString()) > experiment.getMaxTrials() ){
                                                                 Toast.makeText(UploadTrial.this, "You cannot add more trials than the maximum trials for this experiment at once", Toast.LENGTH_SHORT).show();
                                                             }
                                                             else{
                                                                 for (int i = 0; i < Integer.parseInt(numBinomial.getText().toString()); i++) {
                                                                     Trial trial = new Trial(experiment.getRequireLocation(),
                                                                             experiment.getTrialType(),
-                                                                            true,
+                                                                            false,
                                                                             experiment.getOwnerUserID(),
                                                                             UUID.randomUUID().toString(),
                                                                             stringDate.getCurrentDate(),
@@ -280,16 +296,19 @@ public class UploadTrial extends AppCompatActivity {
                                                                     collectionRefToDB(trial, experiment);
                                                                 }
                                                             }
-
+//                                                            recreate();
                                                         }
+                                                        recreate();
                                                     }
                                                 });
                                     }
 
-                                    recreate();
+//                                    recreate();
+                                    dialog.cancel();
                                 }
                             })
                             .setPositiveButton("Cancel", null).create().show();
+
                 }
                 // 2nd case: if the experiment's trial type is count
                 // Q1: how to take input?
@@ -306,15 +325,20 @@ public class UploadTrial extends AppCompatActivity {
                             .setPositiveButton("Add Trials", new DialogInterface.OnClickListener() {
                                 @Override
                                 public void onClick(DialogInterface dialog, int which) {
-                                    Trial trial = new Trial(experiment.getRequireLocation(),
-                                            experiment.getTrialType(),
-                                            Integer.parseInt(numCount.getText().toString()),
-                                            experiment.getOwnerUserID(),
-                                            UUID.randomUUID().toString(),
-                                            stringDate.getCurrentDate(),
-                                            experiment.getRequireLocation() ? latlng : null);
-                                    collectionRefToDB(trial, experiment);
-                                    recreate();
+                                    if (numCount.getText().toString().length() == 0) {
+                                        Toast.makeText(UploadTrial.this, "Trial value field must not be empty", Toast.LENGTH_SHORT).show();
+                                        dialog.cancel();
+                                    } else {
+                                        Trial trial = new Trial(experiment.getRequireLocation(),
+                                                experiment.getTrialType(),
+                                                Integer.parseInt(numCount.getText().toString()),
+                                                experiment.getOwnerUserID(),
+                                                UUID.randomUUID().toString(),
+                                                stringDate.getCurrentDate(),
+                                                experiment.getRequireLocation() ? latlng : null);
+                                        collectionRefToDB(trial, experiment);
+                                        recreate();
+                                    }
                                 }
                             }).create().show();
                 }
@@ -344,6 +368,9 @@ public class UploadTrial extends AppCompatActivity {
                                                 stringDate.getCurrentDate(),
                                                 experiment.getRequireLocation() ? latlng : null);
                                         collectionRefToDB(trial, experiment);
+                                    } else {
+                                        Toast.makeText(UploadTrial.this, "Trial value field must not be empty", Toast.LENGTH_SHORT).show();
+                                        dialog.cancel();
                                     }
                                     recreate();
                                 }
@@ -368,20 +395,25 @@ public class UploadTrial extends AppCompatActivity {
                                     // Q2: how to save information
                                     // check input for
 
-                                    // source: https://docs.oracle.com/javase/8/docs/api/java/math/BigDecimal.html
-                                    // I have use the idea of BigDecimal object to handle float returning not exactly the same valye
-                                    // by Alex Mak
-                                    BigDecimal roundedVal = new BigDecimal(measurementInput.getText().toString());
-                                    double finalVal = roundedVal.doubleValue();
-                                    Trial trial = new Trial(experiment.getRequireLocation(),
-                                            experiment.getTrialType(),
-                                            finalVal,
-                                            experiment.getOwnerUserID(),
-                                            UUID.randomUUID().toString(),
-                                            stringDate.getCurrentDate(),
-                                            experiment.getRequireLocation() ? latlng : null);
-                                    collectionRefToDB(trial, experiment);
-                                    recreate();
+                                    if (measurementInput.getText().toString().length() == 0) {
+                                        Toast.makeText(UploadTrial.this, "Trial value field must not be empty", Toast.LENGTH_SHORT).show();
+                                        dialog.cancel();
+                                    } else {
+                                        // source: https://docs.oracle.com/javase/8/docs/api/java/math/BigDecimal.html
+                                        // I have use the idea of BigDecimal object to handle float returning not exactly the same valye
+                                        // by Alex Mak
+                                        BigDecimal roundedVal = new BigDecimal(measurementInput.getText().toString());
+                                        double finalVal = roundedVal.doubleValue();
+                                        Trial trial = new Trial(experiment.getRequireLocation(),
+                                                experiment.getTrialType(),
+                                                finalVal,
+                                                experiment.getOwnerUserID(),
+                                                UUID.randomUUID().toString(),
+                                                stringDate.getCurrentDate(),
+                                                experiment.getRequireLocation() ? latlng : null);
+                                        collectionRefToDB(trial, experiment);
+                                        recreate();
+                                    }
                                 }
                             }).create().show();
             } }

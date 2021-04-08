@@ -5,9 +5,6 @@ import com.example.cmput301w21t23_smartdatabook.user.User;
 import java.lang.String;
 
 import java.io.Serializable;
-import java.lang.String;
-import java.util.ArrayList;
-import java.util.Date;
 
 /**
  * class: Comment
@@ -31,7 +28,6 @@ public class Comment implements Serializable {
      * @param commentID
      */
     public Comment(String text, String userUniqueID, String commentID, String date) {
-//        super(null, null, userUniqueID);
         this.text = text;
         this.userUniqueID = userUniqueID;
         this.commentID = commentID;

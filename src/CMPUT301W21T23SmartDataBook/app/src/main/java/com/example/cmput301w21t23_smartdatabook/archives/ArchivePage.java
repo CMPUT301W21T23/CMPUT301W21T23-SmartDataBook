@@ -9,14 +9,14 @@ import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
-import androidx.appcompat.app.AppCompatActivity;
+
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentTransaction;
-import com.example.cmput301w21t23_smartdatabook.Experiment;
+import com.example.cmput301w21t23_smartdatabook.experiment.Experiment;
 import com.example.cmput301w21t23_smartdatabook.R;
 import com.example.cmput301w21t23_smartdatabook.database.Database;
 import com.example.cmput301w21t23_smartdatabook.database.GeneralDataCallBack;
-import com.example.cmput301w21t23_smartdatabook.experimentDetails.ExperimentDetails;
+import com.example.cmput301w21t23_smartdatabook.experiment.ExperimentDetails;
 import com.example.cmput301w21t23_smartdatabook.home.CardList;
 import com.example.cmput301w21t23_smartdatabook.mainController.MainActivity;
 import com.example.cmput301w21t23_smartdatabook.user.User;
@@ -31,18 +31,14 @@ import java.util.Hashtable;
  */
 
 public class ArchivePage extends Fragment {
-    private static final String AP1 = "AP1";
-    private static final String AP2 = "AP2";
     private User user = User.getUser();
-
-    //things I added from homePage
     private Database database;
     private String currentQuery;
 
     private ListView archiveExperimentList;
     private ArrayList<Experiment> archiveExperimentDataList;
     private ArrayList<Experiment> searchDataList;
-    private MainActivity mainActivity;
+    private MainActivity activity;
     private static ArrayAdapter<Experiment> archiveExperimentAdapter;
 
     FirebaseFirestore db = FirebaseFirestore.getInstance();
@@ -64,19 +60,30 @@ public class ArchivePage extends Fragment {
      * @param query
      * @param currentFragment
      */
-    public void doUpdate(String query, Fragment currentFragment) {
+    public void doUpdate(String query) {
 
-        currentQuery = query;
+        currentQuery = query.toLowerCase();
 
-        if (currentQuery != null){
-            //Source: Michele Lacorte; https://stackoverflow.com/users/4529790/michele-lacorte
-            //Code: https://stackoverflow.com/questions/32359727/method-to-refresh-fragment-content-when-data-changed-like-recall-oncreateview
-            //Refresh the current fragment after assigning a the currentQuery
-            FragmentTransaction fragmentTransaction = getFragmentManager().beginTransaction();
-            fragmentTransaction.detach(currentFragment);
-            fragmentTransaction.attach(currentFragment);
-            fragmentTransaction.commit();
-        }
+        database.fillUserName(new GeneralDataCallBack() {
+			@Override
+			public void onDataReturn(Object returnedObject) {
+				Hashtable<String, User> UserName = (Hashtable<String, User>) returnedObject;
+				ArrayList<Experiment> temp = new ArrayList<>();
+
+				for (int i = 0; i < archiveExperimentDataList.size(); i++) {
+					Experiment experiment = archiveExperimentDataList.get(i);
+					if (experiment.getExpName().toLowerCase().contains(currentQuery) ||
+                        UserName.get(experiment.getOwnerUserID()).getUserName().toLowerCase().contains(currentQuery) ||
+                        experiment.getDate().toLowerCase().contains(currentQuery) ||
+                        experiment.getDescription().toLowerCase().contains(currentQuery) ||
+                        experiment.getTrialType().toLowerCase().contains(currentQuery)) temp.add(experiment);
+				}
+
+				archiveExperimentAdapter = new CardList(getContext(), temp, UserName, 1);
+				archiveExperimentList.setAdapter(archiveExperimentAdapter);
+
+			}
+		});
 
     }
 
@@ -87,12 +94,9 @@ public class ArchivePage extends Fragment {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        if (getArguments() != null) {
-            User user = (User) getArguments().getSerializable("user");
-        }
 
         // added stuff
-        mainActivity = (MainActivity) getActivity();
+        activity = (MainActivity) getActivity();
         database = new Database();
     }
 
@@ -186,7 +190,9 @@ public class ArchivePage extends Fragment {
     public void onResume() {
         super.onResume();
         archiveExperimentAdapter.notifyDataSetChanged();
-        ((AppCompatActivity) getActivity()).getSupportActionBar().setDisplayHomeAsUpEnabled(false);
+        activity.getSupportActionBar().setTitle("Archived");
+        activity.onAttachFragment(this);
+        activity.setBottomNavigationItem(R.id.archived_nav);
     }
 
 }

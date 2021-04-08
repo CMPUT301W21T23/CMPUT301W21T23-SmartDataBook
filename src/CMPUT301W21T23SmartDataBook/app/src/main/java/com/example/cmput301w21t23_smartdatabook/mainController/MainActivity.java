@@ -4,6 +4,7 @@ import android.app.SearchManager;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
@@ -22,7 +23,7 @@ import com.example.cmput301w21t23_smartdatabook.database.GeneralDataCallBack;
 import com.example.cmput301w21t23_smartdatabook.fav.FavPage;
 import com.example.cmput301w21t23_smartdatabook.geolocation.MapsActivity;
 import com.example.cmput301w21t23_smartdatabook.home.addExpFragment;
-import com.example.cmput301w21t23_smartdatabook.home.homePage;
+import com.example.cmput301w21t23_smartdatabook.home.HomePage;
 import com.example.cmput301w21t23_smartdatabook.settings.SettingsPage;
 import com.example.cmput301w21t23_smartdatabook.user.User;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
@@ -42,9 +43,9 @@ public class MainActivity extends AppCompatActivity{
 
     BottomNavigationView bottomNavigation;
 
-    private ActionBar toolbar;
     private boolean searchShow;
     private boolean mapShow;
+    private boolean from_user;
 
     public Database database;
 
@@ -62,12 +63,42 @@ public class MainActivity extends AppCompatActivity{
     @Override
     public void onAttachFragment(Fragment fragment) {
         super.onAttachFragment(fragment);
-        searchShow = fragment instanceof homePage;
-        mapShow = fragment instanceof homePage;
+        searchShow = fragment instanceof HomePage;
+        mapShow = fragment instanceof HomePage;
         if (fragment instanceof FavPage) searchShow = true;
         if (fragment instanceof ArchivePage) searchShow = true;
         if (fragment instanceof addExpFragment) bottomNavigation.setVisibility(View.GONE);
         invalidateOptionsMenu();
+        Log.d("MainActivity:73", String.valueOf(getSupportFragmentManager().getBackStackEntryCount()) + " (Size of the stack. 1 = home)");
+    }
+
+    /**
+     * This receives a request from other fragments to update the selected item of the bottom navigation, without triggering the onNavigationItemSelectedListener.
+     * @param targetMenu
+     */
+    public void setBottomNavigationItem(int targetMenu) {
+        // Touch this, and you will fall in a never-ending loop of onAttachFragment -> BottomNavigationView.onClickListener -> Open new fragment -> onAttachFragment
+        from_user = false;
+        bottomNavigation.setSelectedItemId(targetMenu);
+    }
+
+    /**
+     * This handles the action of the back button pressed of the android device while on MainActivity.
+     */
+    @Override
+    public void onBackPressed() {
+        // From stackoverflow: https://stackoverflow.com/questions/5448653/how-to-implement-onbackpressed-in-fragments
+        // Answer: https://stackoverflow.com/posts/24881908/revisions
+        // By Hw.Master: https://stackoverflow.com/users/1072254/hw-master
+        if (getSupportFragmentManager().getBackStackEntryCount() == 1) {
+            // From stackoverflow: https://stackoverflow.com/questions/3105673/how-to-kill-an-application-with-all-its-activities
+            // Answer: https://stackoverflow.com/posts/10597017/revisions
+            // By Thirumalvalavan: https://stackoverflow.com/users/1404798/thirumalvalavan
+            android.os.Process.killProcess(android.os.Process.myPid());
+        } else {
+            getSupportFragmentManager().popBackStack();
+        }
+
     }
 
     /**
@@ -80,8 +111,9 @@ public class MainActivity extends AppCompatActivity{
         setContentView(R.layout.activity_main);
 
         setSupportActionBar(findViewById(R.id.app_toolbar));
-        toolbar = getSupportActionBar();
+        ActionBar toolbar = getSupportActionBar();
         database = new Database();
+        from_user = true;
 
         bottomNavigation = findViewById(R.id.bottom_navigation);
         bottomNavigation.setOnNavigationItemSelectedListener(mOnNavigationItemSelectedListener);
@@ -103,7 +135,7 @@ public class MainActivity extends AppCompatActivity{
                 }
 
                 final FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
-                transaction.replace(R.id.container, homePage.newInstance(""));
+                transaction.replace(R.id.container, HomePage.newInstance(""));
                 transaction.addToBackStack(null);
                 transaction.commitAllowingStateLoss();
 
@@ -166,16 +198,15 @@ public class MainActivity extends AppCompatActivity{
             @Override
             public boolean onQueryTextSubmit(String query) {
                 Fragment currentFragment = getSupportFragmentManager().findFragmentById(R.id.container);
-                if (currentFragment != null && currentFragment.isVisible() && !query.equals("")) {
-
-                    if (currentFragment instanceof homePage) {
-                        ((homePage)currentFragment).doUpdate(query, currentFragment);
+                if (currentFragment != null && currentFragment.isVisible()) {
+                    if (currentFragment instanceof HomePage) {
+                        ((HomePage)currentFragment).doUpdate(query);
                     }
                     if (currentFragment instanceof FavPage) {
-                        ((FavPage)currentFragment).doUpdate(query, currentFragment);
+                        ((FavPage)currentFragment).doUpdate(query);
                     }
                     if (currentFragment instanceof ArchivePage) {
-                        ((ArchivePage)currentFragment).doUpdate(query, currentFragment);
+                        ((ArchivePage)currentFragment).doUpdate(query);
                     }
 
                 }
@@ -210,29 +241,38 @@ public class MainActivity extends AppCompatActivity{
             new BottomNavigationView.OnNavigationItemSelectedListener() {
                 @Override
                 public boolean onNavigationItemSelected(@NonNull MenuItem item) {
-                    switch (item.getItemId()) {
-                        case R.id.home_nav:
-                            toolbar.setTitle("Home");
-                            openFragment(homePage.newInstance(""));
-                            return true;
+                    Fragment currentFragment = getSupportFragmentManager().findFragmentById(R.id.container);
+                    if (currentFragment != null && currentFragment.isVisible()) {
+                        if (from_user) {
+                            switch (item.getItemId()) {
+                                case R.id.home_nav:
+                                    if (currentFragment instanceof HomePage) getSupportFragmentManager().popBackStack();
+                                    openFragment(HomePage.newInstance(""));
+                                    return true;
 
-                        case R.id.fav_nav:
-                            toolbar.setTitle("Favorites");
-                            openFragment(FavPage.newInstance(""));
-                            return true;
+                                case R.id.fav_nav:
+                                    if (currentFragment instanceof FavPage) getSupportFragmentManager().popBackStack();
+                                    openFragment(FavPage.newInstance(""));
+                                    return true;
 
-                        case R.id.settings_nav:
-                            toolbar.setTitle("Settings");
-                            openFragment(SettingsPage.newInstance(""));
-                            return true;
+                                case R.id.settings_nav:
+                                    if (currentFragment instanceof SettingsPage) getSupportFragmentManager().popBackStack();
+                                    openFragment(SettingsPage.newInstance(""));
+                                    return true;
 
-                        case R.id.archived_nav:
-                            toolbar.setTitle("Archived");
-                            openFragment(ArchivePage.newInstance(""));
+                                case R.id.archived_nav:
+                                    if (currentFragment instanceof ArchivePage) getSupportFragmentManager().popBackStack();
+                                    openFragment(ArchivePage.newInstance(""));
+                                    return true;
+                            }
+                        } else {
+                            from_user = true;
                             return true;
+                        }
                     }
                     return false;
                 }
+
             };
 
 

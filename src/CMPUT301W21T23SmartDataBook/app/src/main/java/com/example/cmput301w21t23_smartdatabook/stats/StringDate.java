@@ -1,4 +1,4 @@
-package com.example.cmput301w21t23_smartdatabook;
+package com.example.cmput301w21t23_smartdatabook.stats;
 
 import java.text.DateFormat;
 import java.text.ParseException;
@@ -30,6 +30,11 @@ public class StringDate {
         return dateFormat.format(new Date());
     }
 
+    /**
+     * This function gets the date back from the string, opposite for the getCurrentDate() method
+     * @param dateString: a string variable showing date
+     * @return result1, the date object showing the date
+     */
     // https://stackoverflow.com/questions/2201925/converting-iso-8601-compliant-string-to-java-util-date
     public Date getDate(String dateString){
         DateFormat df1 = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSSXXX");

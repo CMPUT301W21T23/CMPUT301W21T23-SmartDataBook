@@ -1,11 +1,10 @@
-package com.example.cmput301w21t23_smartdatabook.experimentDetails;
+package com.example.cmput301w21t23_smartdatabook.experiment;
 
 import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.os.Parcelable;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -20,22 +19,18 @@ import androidx.appcompat.widget.AppCompatImageButton;
 
 import com.example.cmput301w21t23_smartdatabook.QRCode.QRCodeActivity;
 import com.example.cmput301w21t23_smartdatabook.QRCode.ScannerActivity;
-import com.example.cmput301w21t23_smartdatabook.StringDate;
+import com.example.cmput301w21t23_smartdatabook.stats.StringDate;
+import com.example.cmput301w21t23_smartdatabook.database.GeneralDataCallBack;
 import com.example.cmput301w21t23_smartdatabook.geolocation.MapsActivity;
 import com.example.cmput301w21t23_smartdatabook.stats.StatsView;
 import com.example.cmput301w21t23_smartdatabook.user.User;
 import com.example.cmput301w21t23_smartdatabook.comments.CommentActivity;
 import com.example.cmput301w21t23_smartdatabook.database.Database;
-import com.example.cmput301w21t23_smartdatabook.Experiment;
 import com.example.cmput301w21t23_smartdatabook.R;
 import com.example.cmput301w21t23_smartdatabook.trials.UploadTrial;
 import com.google.firebase.firestore.FirebaseFirestore;
 
-import org.w3c.dom.Text;
-
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
-import java.util.Date;
+import java.util.Hashtable;
 
 /**
  * Class:ExperimentDetails
@@ -44,7 +39,7 @@ import java.util.Date;
  * An experiment's name and description
  * Radio button to choose which type of the trial the experiment has (binomial/ measurement/count/ non-negtaive count trials)
  * switch button that turns on/ off an experiment's trial location.
- * @author Afaq Nabi, Bosco Chan, Jayden
+ * @author Afaq Nabi, Bosco Chan, Jayden Cho
  * @version 1
  * @see Experiment
  */
@@ -66,7 +61,6 @@ public class ExperimentDetails extends AppCompatActivity {
         setSupportActionBar(findViewById(R.id.app_toolbar));
         ActionBar toolbar = getSupportActionBar();
         assert toolbar != null;
-        toolbar.setDisplayHomeAsUpEnabled(true);
 
         FirebaseFirestore db = FirebaseFirestore.getInstance();
 
@@ -88,45 +82,43 @@ public class ExperimentDetails extends AppCompatActivity {
             }
         });
 
-        // Setting up visual representation(TextView, Button, checkbox) of experiment details page
-        TextView username = userInfoView.findViewById(R.id.expOwner);
-        username.setText("Username: " + user.getUserName());
-
-        TextView email = userInfoView.findViewById(R.id.expContact);;
-        email.setText("Email: " + user.getUserContact());
-
-        TextView Owner = findViewById(R.id.owner);
-        Owner.setText(experiment.getOwnerUserName());
-        Owner.setOnClickListener(new View.OnClickListener() {
+        database.fillUserName(new GeneralDataCallBack() {
             @Override
-            public void onClick(View v) {
-                if (userInfoView.getParent() != null) {
-                    ((ViewGroup) userInfoView.getParent()).removeView(userInfoView);
-                }
+            public void onDataReturn(Object returnedObject) {
+                Hashtable<String, User> UserName = (Hashtable<String, User>) returnedObject;
 
-                AlertDialog.Builder builder = new AlertDialog.Builder(ExperimentDetails.this);
-                builder.setView(userInfoView)
-                        .setNegativeButton("Close", null)
-                        .create()
-                        .show();
+                // Setting up visual representation(TextView, Button, checkbox) of experiment details page
+                TextView username = userInfoView.findViewById(R.id.expOwner);
+                username.setText("Username: " + UserName.get(experiment.getOwnerUserID()).getUserName());
 
+                TextView email = userInfoView.findViewById(R.id.expContact);;
+                email.setText("Email: " + UserName.get(experiment.getOwnerUserID()).getUserContact());
+
+                TextView Owner = findViewById(R.id.owner);
+                Owner.setText( UserName.get(experiment.getOwnerUserID()).getUserName() );
+                Owner.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        //Source: Johnny Five; https://stackoverflow.com/users/6325722/johnny-five
+                        //Code: https://stackoverflow.com/questions/28071349/the-specified-child-already-has-a-parent-you-must-call-removeview-on-the-chil
+                        if (userInfoView.getParent() != null) {
+                            ((ViewGroup) userInfoView.getParent()).removeView(userInfoView);
+                        }
+
+                        AlertDialog.Builder builder = new AlertDialog.Builder(ExperimentDetails.this);
+                        builder.setView(userInfoView)
+                                .setNegativeButton("Close", null).create().show();
+                    }
+                });
             }
         });
 
+
         TextView expDate = findViewById(R.id.ClickedExpdate);
-//        SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSSXXX");
-//        try {
-//            date = format.parse(experiment.getDate());
-//        } catch (ParseException e) {
-//            e.printStackTrace();
-//        }
         expDate.setText(""+ date.getDate(experiment.getDate()));
 
         TextView description = findViewById(R.id.ClickedExpDesc);
         description.setText(experiment.getDescription());
-
-        TextView region = findViewById(R.id.ClickedExpRegion);
-        region.setText("some location???");
 
         TextView minTrials = findViewById(R.id.MinTrials);
         minTrials.setText("Min Trials: " + Integer.toString(experiment.getMinTrials()));
@@ -163,16 +155,24 @@ public class ExperimentDetails extends AppCompatActivity {
         });
 
         TextView showMap = findViewById(R.id.ShowMap);
-        showMap.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                // TODO: new show map activity
-                Intent intent = new Intent(ExperimentDetails.this, MapsActivity.class);
-                intent.putExtra("experiment", (Parcelable) experiment);
-                intent.putExtra("main", "false");
-                startActivity(intent);
-            }
-        });
+        AppCompatImageButton map = findViewById(R.id.mapButton);
+        if (!experiment.getRequireLocation()){
+            showMap.setVisibility(View.INVISIBLE);
+            map.setVisibility(View.INVISIBLE);
+        }
+        else{
+            showMap.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    // TODO: new show map activity
+                    Intent intent = new Intent(ExperimentDetails.this, MapsActivity.class);
+                    intent.putExtra("experiment", (Parcelable) experiment);
+                    intent.putExtra("main", "false");
+                    startActivity(intent);
+                }
+            });
+        }
+
 
         TextView QRCode = findViewById(R.id.generateCodeTextView);
         QRCode.setOnClickListener(new View.OnClickListener() {
@@ -197,16 +197,19 @@ public class ExperimentDetails extends AppCompatActivity {
         });
 
         TextView endExp = findViewById(R.id.endExp);
+        AppCompatImageButton arch = findViewById(R.id.endExpImageView);
         String title;
-        if (!experiment.getIsEnd()) {
-            title = "Archive";
-            upload.setVisibility(View.VISIBLE);
-        } else {
-            title = "Un-Archive";
-            upload.setVisibility(View.INVISIBLE);
-        }
-        endExp.setText(title);
+
         if (user.getUserUniqueID().equals(experiment.getOwnerUserID())){
+            if (!experiment.getIsEnd()) {
+                title = "Archive";
+            } else {
+                title = "Un-Archive";
+            }
+            upload.setVisibility(View.VISIBLE);
+            arch.setVisibility(View.VISIBLE);
+            endExp.setText(title);
+
             endExp.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
@@ -250,8 +253,10 @@ public class ExperimentDetails extends AppCompatActivity {
         publish.setChecked(experiment.isPublic());
         if (user.getUserUniqueID().equals(experiment.getOwnerUserID())) {
             endExp.setVisibility(View.VISIBLE);
-            publish.setVisibility(View.VISIBLE);
-            publish_text.setVisibility(View.VISIBLE);
+            if (!experiment.getIsEnd()) {
+                publish.setVisibility(View.VISIBLE);
+                publish_text.setVisibility(View.VISIBLE);
+            }
         }
 
         publish.setOnClickListener(new View.OnClickListener() {
