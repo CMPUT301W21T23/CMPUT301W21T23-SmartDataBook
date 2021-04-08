@@ -151,7 +151,6 @@ public class UploadTrial extends AppCompatActivity {
                         .collection("Trials")
                 , trialDataList, trialArrayAdapter);
 
-        // TODO: Users can delete the trials that they entered but owner can delete any trials
         trialsList.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
@@ -295,14 +294,11 @@ public class UploadTrial extends AppCompatActivity {
                                                                     collectionRefToDB(trial, experiment);
                                                                 }
                                                             }
-//                                                            recreate();
                                                         }
                                                         recreate();
                                                     }
                                                 });
                                     }
-
-//                                    recreate();
                                     dialog.cancel();
                                 }
                             })
