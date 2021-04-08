@@ -108,6 +108,8 @@ public class CardList extends ArrayAdapter<Experiment> {
             inflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
             View v = inflater.inflate(R.layout.card, null);
 
+            v.setFocusable(false);
+
             TextView experimentName = v.findViewById(R.id.experimentName);
             TextView dateView = v.findViewById(R.id.dateCreated);
             TextView ownerName = v.findViewById(R.id.Owner);
@@ -187,7 +189,6 @@ public class CardList extends ArrayAdapter<Experiment> {
             TextView email = userInfoView.findViewById(R.id.expContact);;
             email.setText("Email: " + UserName.get(experiment.getOwnerUserID()).getUserContact() );
 
-            ownerName.setClickable(true);
             // when the user clicks the experiment's owner name
             ownerName.setOnClickListener(new View.OnClickListener() {
                 @Override
