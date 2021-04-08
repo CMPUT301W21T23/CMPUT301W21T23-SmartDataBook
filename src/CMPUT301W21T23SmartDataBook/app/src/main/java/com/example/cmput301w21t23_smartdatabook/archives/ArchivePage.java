@@ -141,24 +141,6 @@ public class ArchivePage extends Fragment {
                         //experimentDataList with added items ONLY exist inside the scope of this getExpDataList function
                         archiveExperimentDataList = DataList;
 
-                        //Create a new searchDataList depending on the query
-//                        if (currentQuery != null) {
-//                            for (Experiment experiment : archiveExperimentDataList) {
-//                                if (experiment.getExpName().contains(currentQuery) ||
-//                                        UserName.get(experiment.getOwnerUserID()).getUserName().contains(currentQuery) ||
-//                                        experiment.getDate().toString().contains(currentQuery) ||
-//                                        experiment.getDescription().contains(currentQuery)) {
-//
-//                                    searchDataList.add(experiment);
-//
-//                                }
-//                            }
-//                            archiveExperimentAdapter.clear();
-//                            archiveExperimentAdapter.addAll(searchDataList);
-//
-//                        }else{
-//                            archiveExperimentAdapter.addAll(archiveExperimentDataList);
-//                        }
                         archiveExperimentAdapter.addAll(archiveExperimentDataList);
                         archiveExperimentAdapter.notifyDataSetChanged();
 
