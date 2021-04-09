@@ -32,6 +32,8 @@ import com.example.cmput301w21t23_smartdatabook.experiment.addExpFragment;
 import com.example.cmput301w21t23_smartdatabook.home.HomePage;
 import com.example.cmput301w21t23_smartdatabook.settings.SettingsPage;
 import com.example.cmput301w21t23_smartdatabook.user.User;
+import com.google.android.gms.auth.api.signin.GoogleSignInOptions;
+import com.google.android.gms.common.api.GoogleApiClient;
 import com.google.android.gms.location.LocationCallback;
 import com.google.android.gms.location.LocationRequest;
 import com.google.android.gms.location.LocationServices;
@@ -55,6 +57,7 @@ public class MainActivity extends AppCompatActivity {
     private boolean searchShow;
     private boolean mapShow;
     private boolean from_user;
+    private GoogleApiClient apiClient;
 
     public Database database;
 
@@ -119,6 +122,8 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
+        apiClient = new GoogleApiClient.Builder(this).enableAutoManage(this, null).addApi(LocationServices.API).build();
+        apiClient.connect();
         new LocationWithPermission(this).requestLocationUpdate();
 
         setSupportActionBar(findViewById(R.id.app_toolbar));
@@ -163,6 +168,7 @@ public class MainActivity extends AppCompatActivity {
     public void onDestroy() {
         super.onDestroy();
         FirebaseAuth.getInstance().getCurrentUser().delete();
+        apiClient.disconnect();
     }
 
     /**
