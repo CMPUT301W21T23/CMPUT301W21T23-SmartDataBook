@@ -273,20 +273,21 @@
                 app:layout_constraintStart_toStartOf="parent" />
 
         <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_below="@id/scanner"
-                android:layout_centerHorizontal="true"
-                android:text="SCAN QR CODE"
-                android:textColor="@color/theme_default"
-                android:textSize="9dp"
-                android:textStyle="bold"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintEnd_toEndOf="@+id/scanner"
-                app:layout_constraintHorizontal_bias="0.0"
-                app:layout_constraintStart_toStartOf="@+id/scanner"
-                app:layout_constraintTop_toBottomOf="@+id/scanner"
-                app:layout_constraintVertical_bias="0.0" />
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/scannerimg"
+            android:layout_centerHorizontal="true"
+            android:layout_marginBottom="64dp"
+            android:text="SCAN QR CODE"
+            android:textColor="@color/theme_default"
+            android:textSize="9dp"
+            android:textStyle="bold"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="@+id/scannerimg"
+            app:layout_constraintHorizontal_bias="0.0"
+            app:layout_constraintStart_toStartOf="@+id/scannerimg"
+            app:layout_constraintTop_toBottomOf="@+id/scannerimg"
+            app:layout_constraintVertical_bias="0.0" />
 
 
     </androidx.constraintlayout.widget.ConstraintLayout>
