@@ -44,6 +44,9 @@ public class LocationWithPermission {
 		this.activity = activity;
 	}
 
+	/**
+	 * This method initiate request for location update, while handling permissions as well.
+	 */
 	public void requestLocationUpdate() {
 		Dexter.withContext(activity.getApplicationContext())
 			.withPermission(Manifest.permission.ACCESS_FINE_LOCATION)
@@ -68,8 +71,8 @@ public class LocationWithPermission {
 					if (permissionDeniedResponse.isPermanentlyDenied()) {
 						//permission is permanently denied navigate to user setting
 						new AlertDialog.Builder(activity)
-								.setTitle("Camera permission was denied permanently.")
-								.setMessage("Allow Camera access through your settings.")
+								.setTitle("Location permission was denied permanently.")
+								.setMessage("Allow Location access through your settings.")
 								.setPositiveButton("Go To Settings", new DialogInterface.OnClickListener() {
 									@Override
 									public void onClick(DialogInterface dialog, int which) {
@@ -96,74 +99,5 @@ public class LocationWithPermission {
 
 				}
 			}).check();
-	}
-
-	/**
-	 * This function gets the view of the trialList
-	 *
-	 * @param generalDataCallBack : CallBack to return the obtained location.
-	 */
-	public void getLatLng(GeneralDataCallBack generalDataCallBack) {
-		LocationCallback mLocationCallback = new LocationCallback() {
-			@Override
-			public void onLocationResult(LocationResult locationResult) {
-				if (locationResult == null) return;
-				Log.d(getClass().getSimpleName(), "option 1");
-				generalDataCallBack.onDataReturn(locationResult.getLastLocation());
-			}
-		};
-		FusedLocationProviderClient fusedLocationClient = LocationServices.getFusedLocationProviderClient(activity);
-		Dexter.withContext(activity.getApplicationContext())
-				.withPermission(Manifest.permission.ACCESS_FINE_LOCATION)
-				.withListener(new PermissionListener() {
-					@Override
-					public void onPermissionGranted(PermissionGrantedResponse permissionGrantedResponse) {
-						if (ActivityCompat.checkSelfPermission(activity.getApplicationContext(), Manifest.permission.ACCESS_FINE_LOCATION) == PackageManager.PERMISSION_GRANTED) {
-							// Following check removed from conditionals
-							// ActivityCompat.checkSelfPermission(activity.getApplicationContext(), Manifest.permission.ACCESS_COARSE_LOCATION) == PackageManager.PERMISSION_GRANTED
-							fusedLocationClient.requestLocationUpdates(LocationRequest.create().setInterval(30000).setFastestInterval(1000).setPriority(LocationRequest.PRIORITY_BALANCED_POWER_ACCURACY), mLocationCallback, Looper.myLooper());
-
-							// Below method executes when location is successfully obtained, deprecated due to above mLocationCallback
-//							fusedLocationClient.getLastLocation().addOnSuccessListener(activity, generalDataCallBack::onDataReturn);
-						}
-					}
-
-					@Override
-					public void onPermissionDenied(PermissionDeniedResponse permissionDeniedResponse) {
-						// Reused code from scanner activity
-						//Source: Opeyemi, https://stackoverflow.com/users/8226150/opeyemi
-						//Code: https://stackoverflow.com/questions/50639292/detecting-wether-a-permission-can-be-requested-or-is-permanently-denied
-						if (permissionDeniedResponse.isPermanentlyDenied()) {
-							//permission is permanently denied navigate to user setting
-							new AlertDialog.Builder(activity)
-									.setTitle("Camera permission was denied permanently.")
-									.setMessage("Allow Camera access through your settings.")
-									.setPositiveButton("Go To Settings", new DialogInterface.OnClickListener() {
-										@Override
-										public void onClick(DialogInterface dialog, int which) {
-											Intent intent = new Intent(Settings.ACTION_APPLICATION_DETAILS_SETTINGS);
-											Uri uri = Uri.fromParts("package", activity.getPackageName(), null);
-											intent.setData(uri);
-											activity.startActivityForResult(intent, 101);
-											dialog.cancel();
-										}
-									})
-									.setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
-												@Override
-												public void onClick(DialogInterface dialog, int which) {
-													dialog.cancel();
-												}
-											}
-									).show();
-						}
-					}
-
-					@Override
-					public void onPermissionRationaleShouldBeShown(PermissionRequest permissionRequest, PermissionToken permissionToken) {
-						permissionToken.continuePermissionRequest();
-
-					}
-				}).check();
-		generalDataCallBack.onDataReturn(null);
 	}
 }
