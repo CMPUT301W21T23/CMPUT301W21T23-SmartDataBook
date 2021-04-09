@@ -80,7 +80,9 @@ public class UploadTrial extends AppCompatActivity {
 
 		toolbar.setTitle("Trials for: " + experiment.getExpName());
 
-		if (experiment.getRequireLocation()) Toast.makeText(this, "!WARNING! This experiment \nrequires location on each trial added.", Toast.LENGTH_LONG).show();
+		if (experiment.getRequireLocation()) {
+			Toast.makeText(this, "!WARNING! This experiment \nrequires location on each trial added.", Toast.LENGTH_LONG).show();
+		}
 
 
 		// Set Headers
