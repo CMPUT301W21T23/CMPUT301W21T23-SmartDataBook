@@ -1,6 +1,6 @@
 # Team members
 
-Format:CCID Github User
+Format:CCID Github_user
 
 bosco2 bosco4
 amak Alex-Mak-MCW
