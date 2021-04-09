@@ -245,7 +245,6 @@ public class ScannerActivity extends AppCompatActivity implements ZXingScannerVi
 											} else {
 												data.put("Value", Integer.parseInt(value.getText().toString()));
 											}
-											Log.e("value", String.valueOf(value.getText()));
 
 											db.collection("Barcode")
 													.document(experiment.getExpID())
@@ -306,13 +305,25 @@ public class ScannerActivity extends AppCompatActivity implements ZXingScannerVi
 											}
 										}
 									} else {
-										Trial trial = new Trial(Boolean.parseBoolean(values[4]),
-												values[3],
-												Float.parseFloat(values[2]),
-												values[1],
-												UUID.randomUUID().toString(),
-												stringDate.getCurrentDate(),
-												experiment.getRequireLocation() ? latlng : null);
+										Trial trial;
+										if (values[3].equals("Measurement")){
+											trial = new Trial(Boolean.parseBoolean(values[4]),
+													values[3],
+													Float.parseFloat(values[2]),
+													values[1],
+													UUID.randomUUID().toString(),
+													stringDate.getCurrentDate(),
+													experiment.getRequireLocation() ? latlng : null);
+										}
+										else{
+											trial = new Trial(Boolean.parseBoolean(values[4]),
+													values[3],
+													Integer.parseInt(values[2]),
+													values[1],
+													UUID.randomUUID().toString(),
+													stringDate.getCurrentDate(),
+													experiment.getRequireLocation() ? latlng : null);
+										}
 
 										database.addTrialToDB(db.collection("Experiments")
 												.document(values[0])
