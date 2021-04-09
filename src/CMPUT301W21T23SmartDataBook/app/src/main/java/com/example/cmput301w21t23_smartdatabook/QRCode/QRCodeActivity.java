@@ -107,7 +107,6 @@ public class QRCodeActivity extends AppCompatActivity {
             public void onClick(View v) {
 
                 String QRCodeMessage;
-                Log.d("Value", "" + value.getText().toString());
 
                 if (experiment.getTrialType().equals("Binomial")){
 
