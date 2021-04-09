@@ -78,7 +78,7 @@ public class UploadTrial extends AppCompatActivity {
         Intent intent = getIntent();
         Experiment experiment = (Experiment) intent.getSerializableExtra("experiment"); // get the experiment object
 
-        toolbar.setTitle("Trials for " + experiment.getExpName());
+        toolbar.setTitle("Trials for: " + experiment.getExpName());
 
 
         // Set Headers

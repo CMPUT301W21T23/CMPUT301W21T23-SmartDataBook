@@ -68,10 +68,10 @@ public class StatsView extends AppCompatActivity {
         database = new Database();
         db = FirebaseFirestore.getInstance();
 
-        toolbar.setTitle("Statistics");
-
         Intent intent = getIntent();
         Experiment experiment = (Experiment) intent.getSerializableExtra("experiment");
+
+        toolbar.setTitle("Statistics for: " + experiment.getExpName());
 
         statsDataList = new ArrayList<>();
 
