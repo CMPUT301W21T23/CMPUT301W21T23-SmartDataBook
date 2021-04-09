@@ -133,8 +133,6 @@ public class ArchivePage extends Fragment {
 
                         archiveExperimentList.setAdapter(archiveExperimentAdapter);
 
-//                        Toast.makeText(getContext(), "" + user.getUserName(), Toast.LENGTH_LONG).show();
-
                         //Reset the experiment adapter for every onCreateView call
                         archiveExperimentAdapter.clear();
 
