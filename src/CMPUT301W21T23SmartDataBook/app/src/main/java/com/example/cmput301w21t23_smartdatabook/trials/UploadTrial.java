@@ -107,46 +107,50 @@ public class UploadTrial extends AppCompatActivity {
         if (experiment.getIsEnd()){
             addTrials.setVisibility(View.INVISIBLE);
         }
+        else{
+            addTrials.setVisibility(View.VISIBLE);
+            /**
+             * Methods to handle upload trials based on different types of trials in experiment by using dialog
+             * @author Alex Mak
+             */
+            addTrials.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+
+                    if (!experiment.getIsEnd()) {
+                        expType = experiment.getTrialType();
+                        db
+                                .collection("Experiments")
+                                .document(experiment.getExpID())
+                                .collection("Trials")
+                                .get()
+                                .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
+                                    @Override
+                                    public void onComplete(@NonNull Task<QuerySnapshot> task) {
+                                        if (task.isSuccessful()) {
+                                            int count = 0;
+                                            boolean found = false;
+                                            for (QueryDocumentSnapshot document : task.getResult()) {
+                                                count += 1;
+                                                if (count == experiment.getMaxTrials()) {
+                                                    found = true;
+                                                    Toast.makeText(UploadTrial.this, "This Experiment has reached the max number of trials", Toast.LENGTH_SHORT).show();
+                                                }
+                                            }
+                                            if (!found) {
+                                                addTrialDialogs(expType, experiment);
+                                            }
+                                        }
+                                    }
+                                });
+                    }
+                }
+            });
+        }
 
         // add conditional to make sure archived experiments can't upload trials
 
-        /**
-         * Methods to handle upload trials based on different types of trials in experiment by using dialog
-         * @author Alex Mak
-         */
-        addTrials.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
 
-                if (!experiment.getIsEnd()) {
-                    expType = experiment.getTrialType();
-                    db
-                        .collection("Experiments")
-                        .document(experiment.getExpID())
-                        .collection("Trials")
-                        .get()
-                        .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
-                            @Override
-                            public void onComplete(@NonNull Task<QuerySnapshot> task) {
-                                if (task.isSuccessful()) {
-                                    int count = 0;
-                                    boolean found = false;
-                                    for (QueryDocumentSnapshot document : task.getResult()) {
-                                        count += 1;
-                                        if (count == experiment.getMaxTrials()) {
-                                            found = true;
-                                            Toast.makeText(UploadTrial.this, "This Experiment has reached the max number of trials", Toast.LENGTH_SHORT).show();
-                                        }
-                                    }
-                                    if (!found) {
-                                        addTrialDialogs(expType, experiment);
-                                    }
-                                }
-                            }
-                        });
-                }
-            }
-        });
         trialsList = findViewById(R.id.uploaded_trials);
         trialDataList = new ArrayList<>();
 
