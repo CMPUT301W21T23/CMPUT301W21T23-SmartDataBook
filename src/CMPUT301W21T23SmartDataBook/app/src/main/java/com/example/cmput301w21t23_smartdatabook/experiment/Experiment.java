@@ -176,27 +176,11 @@ public class Experiment implements Serializable, Parcelable {
     }
 
     /**
-     * Setter for the experiments name
-     * @param expName
-     */
-    public void setExpName(String expName) {
-        this.expName = expName;
-    }
-
-    /**
      * Getter for the owners user ID which is a hashed code assigned by the app
      * @return
      */
     public String getOwnerUserID() {
         return ownerUserID;
-    }
-
-    /**
-     * Setter for the owners users ID
-     * @param ownerUserID
-     */
-    public void setOwnerUserID(String ownerUserID) {
-        this.ownerUserID = ownerUserID;
     }
 
     /**
@@ -208,14 +192,6 @@ public class Experiment implements Serializable, Parcelable {
     }
 
     /**
-     * Setter for the type of trial
-     * @param trialType
-     */
-    public void setTrialType(String trialType) {
-        this.trialType = trialType;
-    }
-
-    /**
      * Getter for the description of the experiment
      * @return String of description of the experiment
      */
@@ -224,28 +200,11 @@ public class Experiment implements Serializable, Parcelable {
     }
 
     /**
-     * Setter for the description of the experiment
-     * @param description
-     */
-    public void setDescription(String description) {
-        this.description = description;
-    }
-
-    /**
      * Returns if the regionOn is True/False for the expeiment
      * @return Boolean to represent True/False for regionOn attrubute
      */
     public boolean getRequireLocation() {
         return requireLocation;
-    }
-
-
-    /**
-     * Set the regionOn attribute of experiment to True/False
-     * @param requireLocation
-     */
-    public void setRequireLocation(boolean requireLocation) {
-        this.requireLocation = requireLocation;
     }
 
     /**
@@ -257,27 +216,11 @@ public class Experiment implements Serializable, Parcelable {
     }
 
     /**
-     * Setter for the minimun number of trials the experiment can have
-     * @param minTrials
-     */
-    public void setMinTrials(int minTrials) {
-        this.minTrials = minTrials;
-    }
-
-    /**
      * Getter for the max number of trials for the experiment
      * @return Int representing max number fo the trials for the experiment
      */
     public int getMaxTrials() {
         return maxTrials;
-    }
-
-    /**
-     * Setter for the max trials the experiment can have
-     * @param maxTrials
-     */
-    public void setMaxTrials(int maxTrials) {
-        this.maxTrials = maxTrials;
     }
 
     /**
@@ -297,23 +240,6 @@ public class Experiment implements Serializable, Parcelable {
     }
 
     /**
-     * Boolean to represent whether the experiment the location setting to be on or off
-     * @return Boolean that is True/False to represent on/off requireLocation setting
-     */
-    public boolean requiresLocation() {
-        return requireLocation;
-    }
-
-    /**
-     * Flips the current setting for requireLocation from
-     * on -> off
-     * or off -> on
-     */
-    public void toggleRequireLocation() {
-        this.requireLocation = !this.requireLocation;
-    }
-
-    /**
      * Getter for the location of the experiment
      * @return Location object
      */
@@ -322,27 +248,11 @@ public class Experiment implements Serializable, Parcelable {
     }
 
     /**
-     * Setter for the location of the experiment using a Location object
-     * @param latlng
-     */
-    public void setLatLng(LatLng latlng) {
-        this.latlng = latlng;
-    }
-
-    /**
      * Getters for expID
      * @return expID: a string object consists the experiment ID
      */
     public String getExpID() {
         return expID;
-    }
-
-    /**
-     * Setters for expID
-     * @param expID
-     */
-    public void setExpID(String expID) {
-        this.expID = expID;
     }
 
     @Override

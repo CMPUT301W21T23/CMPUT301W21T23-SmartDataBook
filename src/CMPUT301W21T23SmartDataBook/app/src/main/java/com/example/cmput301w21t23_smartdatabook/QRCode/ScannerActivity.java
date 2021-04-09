@@ -337,8 +337,10 @@ public class ScannerActivity extends AppCompatActivity implements ZXingScannerVi
 					@Override
 					public void onComplete(@NonNull Task<QuerySnapshot> task) {
 						if (task.isSuccessful()) {
+							boolean found = false;
 							for (QueryDocumentSnapshot document : task.getResult()) {
 								if (rawResult.equals(document.get("RawResult"))) {
+									found = true;
 									db
 											.collection("Experiments")
 											.document(experiment.getExpID())
@@ -404,6 +406,11 @@ public class ScannerActivity extends AppCompatActivity implements ZXingScannerVi
 											});
 								}
 							}
+							if (!found){
+								onBackPressed();
+								Toast.makeText(getBaseContext(), "Invalid Barcode", Toast.LENGTH_SHORT).show();
+							}
+
 						}
 						else {
 							onBackPressed();
@@ -414,11 +421,4 @@ public class ScannerActivity extends AppCompatActivity implements ZXingScannerVi
 	}
 }
 
-//```
-//		- invalid inputs for qr and barcode
-//		- invalid inputs for generating qr code
-//		- scanning qr code or barcode past the max trials
-//		- scanning qr code or barcode without location
-//		- register the same barcode for same experiment
-//		```
 

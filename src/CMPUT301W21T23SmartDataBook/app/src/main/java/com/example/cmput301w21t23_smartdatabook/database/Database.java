@@ -515,7 +515,7 @@ public class Database {
 	 * @param experiment
 	 * @param status
 	 */
-	public void publicOrEnd(CollectionReference coll, String onOff, Experiment experiment, String status) {
+	public void publicOrEnd(CollectionReference coll, boolean onOff, Experiment experiment, String status) {
 		coll.document(experiment.getExpID()).update(status, onOff);
 	}
 

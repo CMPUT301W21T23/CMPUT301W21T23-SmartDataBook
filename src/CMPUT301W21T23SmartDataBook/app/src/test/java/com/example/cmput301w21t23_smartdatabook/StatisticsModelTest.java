@@ -9,25 +9,25 @@ import org.junit.Test;
 import static org.junit.Assert.*;
 
 import java.util.ArrayList;
-import java.util.Collection;
 import java.util.Collections;
 
 public class StatisticsModelTest {
 
-    public ArrayList<ArrayList> mockObject(){
+    public ArrayList<ArrayList> mockObject() throws InterruptedException {
         ArrayList<ArrayList> mockArray = new ArrayList<>();
         StringDate date = new StringDate();
         for (int i = 0; i<20; i++){
             ArrayList<Object> mockSubArray = new ArrayList<>();
             mockSubArray.add((double) i);
             mockSubArray.add(date.getCurrentDate());
+            Thread.sleep(100);
             mockArray.add(mockSubArray);
         }
         return mockArray;
     }
 
     @Test
-    public void TestMean(){
+    public void TestMean() throws InterruptedException {
         ArrayList<ArrayList> mockArray = mockObject();
         StatisticsModel stat = new StatisticsModel();
         Number mean = stat.calcMean(mockArray);
@@ -35,7 +35,7 @@ public class StatisticsModelTest {
     }
 
     @Test
-    public void TestMedian(){
+    public void TestMedian() throws InterruptedException {
         ArrayList<ArrayList> mockArray = mockObject();
         StatisticsModel stat = new StatisticsModel();
         Number median = stat.calcMedian(mockArray);
@@ -43,7 +43,7 @@ public class StatisticsModelTest {
     }
 
     @Test
-    public void TestSTD(){
+    public void TestSTD() throws InterruptedException {
         ArrayList<ArrayList> mockArray = mockObject();
         StatisticsModel stat = new StatisticsModel();
         ArrayList<Double> sortedArray = new ArrayList<>();
@@ -57,7 +57,7 @@ public class StatisticsModelTest {
     }
 
     @Test
-    public void TestSortingValues(){
+    public void TestSortingValues() throws InterruptedException {
         ArrayList<ArrayList> mockArray = mockObject();
         ArrayList<ArrayList> mockArrayShuffled = mockObject();
         StatisticsModel stat = new StatisticsModel();
@@ -66,18 +66,21 @@ public class StatisticsModelTest {
         assertEquals(mockArrayShuffled, mockArray);
     }
 
-    // double check
     @Test
-    public void TestSortingDates(){
+    public void TestSortingDates() throws InterruptedException {
         ArrayList<ArrayList> mockArray = mockObject();
         StatisticsModel stat = new StatisticsModel();
-        Collections.shuffle(mockArray);
-        stat.bubbleSortByDate(mockArray);
-        assertEquals(mockArray, mockArray);
+        ArrayList<ArrayList> mockArrayCopy = new ArrayList<>();
+        for (int i = 0; i < mockArray.size(); i++){
+            mockArrayCopy.add((ArrayList) mockArray.get(i).clone());
+        }
+        Collections.shuffle(mockArrayCopy);
+        stat.bubbleSortByDate(mockArrayCopy);
+        assertEquals(mockArrayCopy, mockArray);
     }
 
     @Test
-    public void TestQuartiles(){
+    public void TestQuartiles() throws InterruptedException {
         ArrayList<ArrayList> mockArray = mockObject();
         StatisticsModel stat = new StatisticsModel();
         ArrayList<Double> sortedArray = new ArrayList<>();

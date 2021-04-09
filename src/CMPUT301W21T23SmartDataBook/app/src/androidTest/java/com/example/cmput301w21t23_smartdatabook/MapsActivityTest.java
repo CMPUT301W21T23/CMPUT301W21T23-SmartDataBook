@@ -5,12 +5,14 @@ import android.view.View;
 import androidx.test.platform.app.InstrumentationRegistry;
 import androidx.test.rule.ActivityTestRule;
 
+import com.example.cmput301w21t23_smartdatabook.geolocation.MapsActivity;
 import com.example.cmput301w21t23_smartdatabook.mainController.MainActivity;
 import com.robotium.solo.Solo;
 
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Rule;
+import org.junit.Test;
 
 public class MapsActivityTest {
     private Solo solo;
@@ -28,6 +30,14 @@ public class MapsActivityTest {
     @After
     public void tearDown() {
         solo.finishOpenedActivities();
+    }
+
+    @Test
+    public void checkOpenMap(){
+        solo.clickOnScreen(1013, 133);
+        solo.assertCurrentActivity("Right Activity", MapsActivity.class);
+        solo.goBack();
+        solo.assertCurrentActivity("Right Activity", MainActivity.class);
     }
 
 }
