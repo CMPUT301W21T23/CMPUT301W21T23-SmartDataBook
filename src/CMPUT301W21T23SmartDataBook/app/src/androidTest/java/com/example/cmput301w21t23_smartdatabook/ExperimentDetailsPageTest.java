@@ -86,9 +86,8 @@ public class ExperimentDetailsPageTest {
     public void checkExpInfoForOwner(){
         solo.assertCurrentActivity("Wrong Class", MainActivity.class);
         solo.waitForFragmentById(R.layout.home_page, 1000);
-        solo.sleep(7000);
-//        solo.clickOnView(addExpButton);
-        solo.waitForFragmentById(R.layout.new_experiment_location_on, 1000);
+        solo.clickOnScreen(974, 1750);
+        solo.waitForFragmentById(R.layout.add_experiment, 1000);
 
         //Source: Bouabane Mohamed Salah; https://stackoverflow.com/users/1600405/bouabane-mohamed-salah
         //Code: https://stackoverflow.com/questions/30456474/set-numberpicker-value-with-robotium
@@ -108,16 +107,17 @@ public class ExperimentDetailsPageTest {
             }
         });
 
-        solo.enterText( (EditText) solo.getView(R.id.newExperimentLocationOnExperimentNameEditText), "checkExpInfoForOwner()");
+        solo.enterText( (EditText) solo.getView(R.id.newExperimentLocationOnExperimentNameEditText), "Binomial");
         solo.sleep(1000);
-        solo.enterText( (EditText) solo.getView(R.id.newExperimentLocationOnExperimentDescriptionEditText), "checkExpInfoForOwner()");
+        solo.enterText( (EditText) solo.getView(R.id.descriptionField), "Coin Flip");
         solo.sleep(1000);
-        solo.clickOnRadioButton(2);
+        solo.clickOnRadioButton(0);
         solo.sleep(1000);
         solo.clickOnView(rule.getActivity().findViewById(R.id.newExperimentLocationToggleSwitch));
         solo.sleep(1000);
         solo.clickOnButton("Create");
         solo.sleep(1000);
+
         solo.assertCurrentActivity("Wrong Class", MainActivity.class);
 
         solo.sleep(3000);
@@ -141,9 +141,8 @@ public class ExperimentDetailsPageTest {
     public void checkPublishedBoxUnchecked(){
         solo.assertCurrentActivity("Wrong Class", MainActivity.class);
         solo.waitForFragmentById(R.layout.home_page, 1000);
-        solo.sleep(9000);
-        solo.clickOnScreen(975, 1799);
-        solo.waitForFragmentById(R.layout.new_experiment_location_on, 1000);
+        solo.clickOnScreen(974, 1750);
+        solo.waitForFragmentById(R.layout.add_experiment, 1000);
 
         //Source: Bouabane Mohamed Salah; https://stackoverflow.com/users/1600405/bouabane-mohamed-salah
         //Code: https://stackoverflow.com/questions/30456474/set-numberpicker-value-with-robotium
@@ -163,18 +162,17 @@ public class ExperimentDetailsPageTest {
             }
         });
 
-        solo.enterText( (EditText) solo.getView(R.id.newExperimentLocationOnExperimentNameEditText), "checkPublishedBoxUnchecked()");
+        solo.enterText( (EditText) solo.getView(R.id.newExperimentLocationOnExperimentNameEditText), "Binomial");
         solo.sleep(1000);
-        solo.enterText( (EditText) solo.getView(R.id.newExperimentLocationOnExperimentDescriptionEditText), "checkPublishedBoxUnchecked()");
+        solo.enterText( (EditText) solo.getView(R.id.descriptionField), "Coin Flip");
         solo.sleep(1000);
-        solo.clickOnRadioButton(2);
+        solo.clickOnRadioButton(0);
         solo.sleep(1000);
         solo.clickOnView(rule.getActivity().findViewById(R.id.newExperimentLocationToggleSwitch));
         solo.sleep(1000);
-        solo.clickOnView(rule.getActivity().findViewById(R.id.newExperimentLocationPublishToggleSwitch));
-        solo.sleep(2000);
         solo.clickOnButton("Create");
         solo.sleep(1000);
+
         solo.assertCurrentActivity("Wrong Class", MainActivity.class);
 
         solo.sleep(3000);
@@ -207,9 +205,8 @@ public class ExperimentDetailsPageTest {
     public void checkClickPublish(){
         solo.assertCurrentActivity("Wrong Class", MainActivity.class);
         solo.waitForFragmentById(R.layout.home_page, 1000);
-        solo.sleep(9000);
-        solo.clickOnScreen(975, 1799);
-        solo.waitForFragmentById(R.layout.new_experiment_location_on, 1000);
+        solo.clickOnScreen(974, 1750);
+        solo.waitForFragmentById(R.layout.add_experiment, 1000);
 
         //Source: Bouabane Mohamed Salah; https://stackoverflow.com/users/1600405/bouabane-mohamed-salah
         //Code: https://stackoverflow.com/questions/30456474/set-numberpicker-value-with-robotium
@@ -229,18 +226,17 @@ public class ExperimentDetailsPageTest {
             }
         });
 
-        solo.enterText( (EditText) solo.getView(R.id.newExperimentLocationOnExperimentNameEditText), "checkClickPublish()");
+        solo.enterText( (EditText) solo.getView(R.id.newExperimentLocationOnExperimentNameEditText), "Binomial");
         solo.sleep(1000);
-        solo.enterText( (EditText) solo.getView(R.id.newExperimentLocationOnExperimentDescriptionEditText), "checkClickPublish()");
+        solo.enterText( (EditText) solo.getView(R.id.descriptionField), "Coin Flip");
         solo.sleep(1000);
-        solo.clickOnRadioButton(2);
+        solo.clickOnRadioButton(0);
         solo.sleep(1000);
         solo.clickOnView(rule.getActivity().findViewById(R.id.newExperimentLocationToggleSwitch));
         solo.sleep(1000);
-        solo.clickOnView(rule.getActivity().findViewById(R.id.newExperimentLocationPublishToggleSwitch));
-        solo.sleep(2000);
         solo.clickOnButton("Create");
         solo.sleep(1000);
+
         solo.assertCurrentActivity("Wrong Class", MainActivity.class);
 
         solo.sleep(3000);
@@ -294,7 +290,7 @@ public class ExperimentDetailsPageTest {
         solo.assertCurrentActivity("Wrong Class", MainActivity.class);
         solo.waitForFragmentById(R.layout.home_page, 1000);
         solo.clickOnScreen(974, 1750);
-        solo.waitForFragmentById(R.layout.new_experiment_location_on, 1000);
+        solo.waitForFragmentById(R.layout.add_experiment, 1000);
 
         //Source: Bouabane Mohamed Salah; https://stackoverflow.com/users/1600405/bouabane-mohamed-salah
         //Code: https://stackoverflow.com/questions/30456474/set-numberpicker-value-with-robotium
@@ -314,16 +310,17 @@ public class ExperimentDetailsPageTest {
             }
         });
 
-        solo.enterText( (EditText) solo.getView(R.id.newExperimentLocationOnExperimentNameEditText), "checkUserDialogTest()");
+        solo.enterText( (EditText) solo.getView(R.id.newExperimentLocationOnExperimentNameEditText), "Binomial");
         solo.sleep(1000);
-        solo.enterText( (EditText) solo.getView(R.id.newExperimentLocationOnExperimentDescriptionEditText), "checkUserDialogTest()");
+        solo.enterText( (EditText) solo.getView(R.id.descriptionField), "Coin Flip");
         solo.sleep(1000);
-        solo.clickOnRadioButton(2);
+        solo.clickOnRadioButton(0);
         solo.sleep(1000);
         solo.clickOnView(rule.getActivity().findViewById(R.id.newExperimentLocationToggleSwitch));
         solo.sleep(1000);
         solo.clickOnButton("Create");
         solo.sleep(1000);
+
 
         solo.clickOnText("checkUserDialogTest()");
         TextView user = (TextView) solo.getView(R.id.owner);

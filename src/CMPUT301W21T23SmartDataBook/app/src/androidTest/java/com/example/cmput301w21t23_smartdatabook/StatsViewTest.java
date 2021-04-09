@@ -88,7 +88,7 @@ public class StatsViewTest {
     public void createExperiment() {
         solo.assertCurrentActivity("Wrong Class", MainActivity.class);
         solo.waitForFragmentById(R.layout.home_page, 1000);
-        solo.clickOnView(addExpButton);
+        solo.clickOnScreen(974, 1750);
         solo.waitForFragmentById(R.layout.add_experiment, 1000);
 
         //Source: Bouabane Mohamed Salah; https://stackoverflow.com/users/1600405/bouabane-mohamed-salah
