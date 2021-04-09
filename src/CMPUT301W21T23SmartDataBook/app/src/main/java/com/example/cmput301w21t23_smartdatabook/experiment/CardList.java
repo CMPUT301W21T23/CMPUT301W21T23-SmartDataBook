@@ -50,7 +50,6 @@ public class CardList extends ArrayAdapter<Experiment> {
     private final Context context;
     private final int index;
     private final User user = User.getUser();
-    private final Hashtable<String, User> UserName;
     /**
      * Public Constructor for the CardList class
      *
@@ -58,12 +57,11 @@ public class CardList extends ArrayAdapter<Experiment> {
      * @param experiments
      * @param index
      */
-    public CardList(Context context, ArrayList<Experiment> experiments, Hashtable<String, User> UserName, int index) {
+    public CardList(Context context, ArrayList<Experiment> experiments, int index) {
         super(context, 0, experiments);
         this.experiments = experiments;
         this.context = context;
         this.index = index;
-        this.UserName = UserName;
     }
 
     public ArrayList<Experiment> getExperiments() {
@@ -155,51 +153,59 @@ public class CardList extends ArrayAdapter<Experiment> {
 
             // gets the favourite experiments
             follow.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
-                                                  @Override
-                                                  public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
-                                                      if (isChecked) {
-                                                          final CollectionReference favExpCollection = db.collection("Users")
-                                                                  .document(user.getUserUniqueID())
-                                                                  .collection("Favorites");
-                                                          database.addExperimentToDB(experiment, favExpCollection, user.getUserUniqueID());
+                @Override
+                public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+                    if (isChecked) {
+                        final CollectionReference favExpCollection = db.collection("Users")
+                              .document(user.getUserUniqueID())
+                              .collection("Favorites");
+                        database.addExperimentToDB(experiment, favExpCollection, user.getUserUniqueID());
 
-                                                      } else {
+                    } else {
+                        final DocumentReference ref = db.collection("Users")
+                                .document(user.getUserUniqueID())
+                                .collection("Favorites")
+                                .document(experiment.getExpID());
 
-                                                          final DocumentReference ref = db.collection("Users")
-                                                                  .document(user.getUserUniqueID())
-                                                                  .collection("Favorites")
-                                                                  .document(experiment.getExpID());
-
-                                                          database.followStatus(ref, experiment, getContext(), follow, user.getUserUniqueID());
-                                                      }
-                                                  }
-                                              }
-            );
+                      database.followStatus(ref, experiment, getContext(), follow, user.getUserUniqueID());
+                    }
+                }
+            });
 
 
             View userInfoView = LayoutInflater.from(getContext()).inflate(R.layout.view_profile, null);
 
-            TextView username = userInfoView.findViewById(R.id.expOwner);
-            username.setText(UserName.get(experiment.getOwnerUserID()).getUserName());
+            database.fillUserName(returnedObject -> {
+                Hashtable<String, User> UserName = (Hashtable<String, User>) returnedObject;
+                TextView username = userInfoView.findViewById(R.id.expOwner);
+                username.setText(UserName.get(experiment.getOwnerUserID()).getUserName());
 
-            TextView email = userInfoView.findViewById(R.id.expContact);
-            email.setText(UserName.get(experiment.getOwnerUserID()).getUserContact());
-
-            // when the user clicks the experiment's owner name
-            ownerName.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-
-                    //Source: Johnny Five; https://stackoverflow.com/users/6325722/johnny-five
-                    //Code: https://stackoverflow.com/questions/28071349/the-specified-child-already-has-a-parent-you-must-call-removeview-on-the-chil
-                    if (userInfoView.getParent() != null) {
-                        ((ViewGroup) userInfoView.getParent()).removeView(userInfoView);
-                    }
-
-                    AlertDialog.Builder builder = new AlertDialog.Builder(getContext());
-                    builder.setView(userInfoView)
-                            .setNegativeButton("Close", null).create().show();
+                TextView email = userInfoView.findViewById(R.id.expContact);
+                String emailAddress = UserName.get(experiment.getOwnerUserID()).getUserContact();
+                if (emailAddress.equals("")) {
+                    TextView contact = userInfoView.findViewById(R.id.contact_text);
+                    ((ViewGroup)email.getParent()).removeView(email);
+                    ((ViewGroup)contact.getParent()).removeView(contact);
+                } else {
+                    email.setText(emailAddress);
                 }
+
+                // when the user clicks the experiment's owner name
+                ownerName.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+
+                        //Source: Johnny Five; https://stackoverflow.com/users/6325722/johnny-five
+                        //Code: https://stackoverflow.com/questions/28071349/the-specified-child-already-has-a-parent-you-must-call-removeview-on-the-chil
+                        if (userInfoView.getParent() != null) {
+                            ((ViewGroup) userInfoView.getParent()).removeView(userInfoView);
+                        }
+
+                        AlertDialog.Builder builder = new AlertDialog.Builder(getContext());
+                        builder.setView(userInfoView)
+                                .setNegativeButton("Close", null).create().show();
+                    }
+                });
             });
 
             views.put(position, v);

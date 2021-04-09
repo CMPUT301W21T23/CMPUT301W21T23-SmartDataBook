@@ -95,7 +95,7 @@ public class FavPage extends Fragment {
                         temp.add(experiment);
                 }
 
-                favAdapter = new CardList(getContext(), temp, UserName, 1);
+                favAdapter = new CardList(getContext(), temp, 1);
                 favList.setAdapter(favAdapter);
 
             }
@@ -121,7 +121,7 @@ public class FavPage extends Fragment {
         searchDataList = new ArrayList<>();
         database = new Database();
 
-        favAdapter = new CardList(getContext(), favDataList, new Hashtable<String, User>(), 1);
+        favAdapter = new CardList(getContext(), favDataList, 1);
 
         database.fillUserName(new GeneralDataCallBack() {
             @Override
@@ -132,7 +132,7 @@ public class FavPage extends Fragment {
                     public void onDataReturn(Object returnedData) {
                         ArrayList<Experiment> DataList = (ArrayList<Experiment>) returnedData;
 
-                        favAdapter = new CardList(getContext(), favDataList, UserName, 1);
+                        favAdapter = new CardList(getContext(), favDataList, 1);
 
                         favList.setAdapter(favAdapter);
 

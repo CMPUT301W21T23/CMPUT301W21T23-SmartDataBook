@@ -81,7 +81,7 @@ public class ArchivePage extends Fragment {
                         temp.add(experiment);
                 }
 
-                archiveExperimentAdapter = new CardList(getContext(), temp, UserName, 1);
+                archiveExperimentAdapter = new CardList(getContext(), temp, 1);
                 archiveExperimentList.setAdapter(archiveExperimentAdapter);
 
             }
@@ -121,7 +121,7 @@ public class ArchivePage extends Fragment {
         archiveExperimentDataList = new ArrayList<>();
         searchDataList = new ArrayList<>();
 
-        archiveExperimentAdapter = new CardList(getContext(), archiveExperimentDataList, new Hashtable<String, User>(), 1);
+        archiveExperimentAdapter = new CardList(getContext(), archiveExperimentDataList, 1);
 
         database.fillUserName(new GeneralDataCallBack() {
             @Override
@@ -132,7 +132,7 @@ public class ArchivePage extends Fragment {
                     public void onDataReturn(Object returnedObject) {
                         ArrayList<Experiment> DataList = (ArrayList<Experiment>) returnedObject;
 
-                        archiveExperimentAdapter = new CardList(getContext(), archiveExperimentDataList, UserName, 1);
+                        archiveExperimentAdapter = new CardList(getContext(), archiveExperimentDataList, 1);
 
                         archiveExperimentList.setAdapter(archiveExperimentAdapter);
 

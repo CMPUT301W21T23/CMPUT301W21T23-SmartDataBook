@@ -90,7 +90,7 @@ public class HomePage extends Fragment {
                         temp.add(experiment);
                 }
 
-                experimentAdapter = new CardList(getContext(), temp, UserName, 1);
+                experimentAdapter = new CardList(getContext(), temp, 1);
                 experimentList.setAdapter(experimentAdapter);
 
             }
@@ -143,7 +143,7 @@ public class HomePage extends Fragment {
 
         experimentDataList = new ArrayList<>();
         searchDataList = new ArrayList<>();
-        experimentAdapter = new CardList(getContext(), experimentDataList, new Hashtable<String, User>(), 1);
+        experimentAdapter = new CardList(getContext(), experimentDataList, 1);
 
         //Source: ColdFire; https://stackoverflow.com/users/886001/coldfire
 //		Code: https://stackoverflow.com/questions/7093483/why-listview-items-becomes-not-clickable-after-scroll/7104933
@@ -171,7 +171,7 @@ public class HomePage extends Fragment {
                     public void onDataReturn(Object returnedObject) {
                         ArrayList<Experiment> DataList = (ArrayList<Experiment>) returnedObject;
 
-                        experimentAdapter = new CardList(getContext(), experimentDataList, UserName, 1);
+                        experimentAdapter = new CardList(getContext(), experimentDataList, 1);
 
                         experimentList.setAdapter(experimentAdapter);
 
