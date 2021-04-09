@@ -104,6 +104,9 @@ public class UploadTrial extends AppCompatActivity {
         trialsHeader.setText("YOUR TRIALS");
 
         Button addTrials = findViewById(R.id.add_trial_button);
+        if (experiment.getIsEnd()){
+            addTrials.setVisibility(View.INVISIBLE);
+        }
 
         // add conditional to make sure archived experiments can't upload trials
 

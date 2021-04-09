@@ -134,16 +134,21 @@ public class ScannerActivity extends AppCompatActivity implements ZXingScannerVi
 				}
 				LatLng latlng = new LatLng(location.getLatitude(), location.getLongitude());
 				if (type.equals("Scan")) {
-					if (rawResult.getBarcodeFormat().toString().contains("QR_CODE")) {
-						QRCodeScanned(rawResult.toString(), latlng);
+					if (!experiment.getIsEnd()){
+						if (rawResult.getBarcodeFormat().toString().contains("QR_CODE")) {
+							QRCodeScanned(rawResult.toString(), latlng);
 
-					} else {
-						BarcodeScanned(rawResult.toString(), experiment, latlng);
+						} else {
+							BarcodeScanned(rawResult.toString(), experiment, latlng);
+						}
+					}
+					else{
+						onBackPressed();
+						Toast.makeText(getBaseContext(), "Trial has been Archived new trials cannot be added", Toast.LENGTH_SHORT).show();
 					}
 				} else {
 					registerBarcode(rawResult.toString(), experiment);
 				}
-//				onBackPressed();
 			});
 		}
 	}
