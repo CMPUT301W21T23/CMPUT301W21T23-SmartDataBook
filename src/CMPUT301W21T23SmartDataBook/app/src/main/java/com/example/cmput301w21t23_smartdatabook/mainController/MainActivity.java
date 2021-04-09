@@ -206,8 +206,9 @@ public class MainActivity extends AppCompatActivity {
 
         searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
 
+            // This gets called every time text is updated, AND search edittext is clicked
             @Override
-            public boolean onQueryTextSubmit(String query) {
+            public boolean onQueryTextChange(String query) {
                 Fragment currentFragment = getSupportFragmentManager().findFragmentById(R.id.container);
                 if (currentFragment != null && currentFragment.isVisible()) {
                     if (currentFragment instanceof HomePage) {
@@ -221,15 +222,12 @@ public class MainActivity extends AppCompatActivity {
                     }
 
                 }
-
-
                 return false;
             }
 
-            // This gets called every time text is updated, AND search edittext is clicked
             @Override
-            public boolean onQueryTextChange(String newText) {
-                onQueryTextSubmit(newText);
+            public boolean onQueryTextSubmit(String query) {
+                onQueryTextChange(query);
                 return false;
             }
         });

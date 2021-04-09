@@ -426,12 +426,18 @@ public class Database {
 							public void onClick(View v) {
 								String username = usernameTextField.getText().toString();
 								String contact = contactTextField.getText().toString();
-								user.setUserName(username);
-								user.setUserContact(contact);
+								String message;
+								if (username.equals("")) {
+									message = "Username field should not be empty";
+								} else {
+									user.setUserName(username);
+									user.setUserContact(contact);
 
-								docRef.update("UserName", username);
-
-								docRef.update("Contact", contact);
+									docRef.update("UserName", username);
+									docRef.update("Contact", contact);
+									message = "Profile successfully saved";
+								}
+								Toast.makeText(context, message, Toast.LENGTH_SHORT).show();
 							}
 						});
 					}
