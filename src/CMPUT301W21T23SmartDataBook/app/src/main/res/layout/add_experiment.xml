@@ -102,16 +102,16 @@
             app:boxStrokeColor="@color/theme_default">
 
             <com.google.android.material.textfield.TextInputEditText
-                android:id="@+id/description"
-                android:layout_width="match_parent"
-                android:layout_height="113dp"
-                android:ems="10"
-                android:gravity="start"
-                android:inputType="textMultiLine"
-                android:maxLength="96"
-                android:maxLines="4"
-                android:scrollbars="vertical"
-                android:singleLine="false" />
+                    android:id="@+id/description"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:ems="10"
+                    android:gravity="start"
+                    android:inputType="textMultiLine"
+                    android:maxLength="96"
+                    android:maxLines="2"
+                    android:singleLine="false"
+                    android:scrollbars="vertical" />
 
         </com.google.android.material.textfield.TextInputLayout>
 
