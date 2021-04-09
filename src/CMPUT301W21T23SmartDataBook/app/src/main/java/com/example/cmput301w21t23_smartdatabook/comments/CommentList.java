@@ -29,7 +29,6 @@ public class CommentList extends ArrayAdapter<Comment> {
 
     private final ArrayList<Comment> comments;
     private final Context context;
-    User user = User.getUser();
 
     StringDate stringDate = new StringDate();
 
