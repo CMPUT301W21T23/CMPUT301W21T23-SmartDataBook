@@ -68,15 +68,14 @@ public class StatisticsModel {
     }//bubbleSortByDate
 
     // we used the link below to understand how to find quartiles in a array list of doubles, on stack overflow, from vasilis vittis
-    // site URL: https://stackoverflow.com/questions/42381759/finding-first-quartile-and-third-quartile-in-integer-array-using-java
-    // user URL: https://stackoverflow.com/users/14060960/vasilis-vittis
+    // URL: https://stackoverflow.com/questions/42381759/finding-first-quartile-and-third-quartile-in-integer-array-using-java
+    // Source: vasilis vittis; https://stackoverflow.com/users/14060960/vasilis-vittis
     public double[] quartiles(ArrayList<Double> val) {
         double ans[] = new double[3];
         for (int quartileType = 1; quartileType < 4; quartileType++) {
             double length = val.size() + 1;
             double quartile;
             double newArraySize = (length * ((double) (quartileType) * 25 / 100)) - 1;
-//            Arrays.sort(val);
             if (newArraySize % 1 == 0) {
                 quartile = val.get((int) (newArraySize));
             } else {
@@ -89,6 +88,7 @@ public class StatisticsModel {
     }
 
     // We have used the site below to understand how to calculate stand deviation
+    // Source: www.programiz.com
     // https://www.programiz.com/java-programming/examples/standard-deviation
     public static double calculateSD(ArrayList<Double> numArray) {
         double sum = 0.0, standardDeviation = 0.0;

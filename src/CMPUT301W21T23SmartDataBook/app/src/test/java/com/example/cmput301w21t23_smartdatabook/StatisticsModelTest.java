@@ -1,22 +1,21 @@
 package com.example.cmput301w21t23_smartdatabook;
 
-import android.util.Log;
-
 import com.example.cmput301w21t23_smartdatabook.stats.StatisticsModel;
 import com.example.cmput301w21t23_smartdatabook.stats.StringDate;
 
 import org.junit.Test;
-import static org.junit.Assert.*;
 
 import java.util.ArrayList;
 import java.util.Collections;
+
+import static org.junit.Assert.assertEquals;
 
 public class StatisticsModelTest {
 
     public ArrayList<ArrayList> mockObject() throws InterruptedException {
         ArrayList<ArrayList> mockArray = new ArrayList<>();
         StringDate date = new StringDate();
-        for (int i = 0; i<20; i++){
+        for (int i = 0; i < 20; i++) {
             ArrayList<Object> mockSubArray = new ArrayList<>();
             mockSubArray.add((double) i);
             mockSubArray.add(date.getCurrentDate());
@@ -71,7 +70,7 @@ public class StatisticsModelTest {
         ArrayList<ArrayList> mockArray = mockObject();
         StatisticsModel stat = new StatisticsModel();
         ArrayList<ArrayList> mockArrayCopy = new ArrayList<>();
-        for (int i = 0; i < mockArray.size(); i++){
+        for (int i = 0; i < mockArray.size(); i++) {
             mockArrayCopy.add((ArrayList) mockArray.get(i).clone());
         }
         Collections.shuffle(mockArrayCopy);

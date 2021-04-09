@@ -13,10 +13,10 @@ import android.widget.TextView;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 
+import com.example.cmput301w21t23_smartdatabook.R;
 import com.example.cmput301w21t23_smartdatabook.database.Database;
 import com.example.cmput301w21t23_smartdatabook.database.GeneralDataCallBack;
 import com.example.cmput301w21t23_smartdatabook.stats.StringDate;
-import com.example.cmput301w21t23_smartdatabook.R;
 import com.example.cmput301w21t23_smartdatabook.user.User;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.firebase.firestore.FirebaseFirestore;
@@ -28,6 +28,7 @@ import java.util.UUID;
 /**
  * Class: Replies Activity
  * shows the activity of the comments
+ *
  * @author Bosco Chan, Afaq Nabi
  * @see Comment, CommentList
  */
@@ -37,25 +38,21 @@ public class RepliesActivity extends AppCompatActivity {
     ArrayAdapter<Comment> repliesAdapter;
     ArrayList<Comment> repliesDataList;
     ListView repliesList;
-
-    private Comment parentComment;
-
     FirebaseFirestore db;
     Database database = new Database();
-
     TextView owner;
     TextView dateView;
     TextView commentID;
     TextView commentText;
     TextView replyTo;
-
-    private User user = User.getUser();
-
     FloatingActionButton addReply;
     StringDate curStringDate = new StringDate();
+    private Comment parentComment;
+    private final User user = User.getUser();
 
     /**
      * onCreate method of Replies Activity, handles most of Replies activity's functions
+     *
      * @param savedInstanceState
      */
     @Override
@@ -79,29 +76,29 @@ public class RepliesActivity extends AppCompatActivity {
                 owner.setText(UserName.get(parentComment.getUserUniqueID()).getUserName());
 
                 replyTo = findViewById(R.id.reply_to);
-                replyTo.setText("Reply to " + parentComment.getCommentID().substring(0,6));
+                replyTo.setText("Reply to " + parentComment.getCommentID().substring(0, 6));
             }
         });
 
         dateView = findViewById(R.id.commentDate);
-        dateView.setText(""+curStringDate.getDate(parentComment.getDate()));
+        dateView.setText("" + curStringDate.getDate(parentComment.getDate()));
 
         commentID = findViewById(R.id.commentID);
-        commentID.setText(parentComment.getCommentID().substring(0,6));
+        commentID.setText(parentComment.getCommentID().substring(0, 6));
 
         commentText = findViewById(R.id.commentText);
         commentText.setText(parentComment.getText());
 
         // We have used the following website to learn more about how to textview scrollable as there are more text
         // URL:https://stackoverflow.com/questions/19826693/how-can-i-make-a-textview-automatically-scroll-as-i-add-more-lines-of-text
-        // From: Darwin Louis
+        // From: Darwin Louis; https://stackoverflow.com/users/1521424/darwinlouis
         EditText newComment = addCommentView.findViewById(R.id.newComment);
 
         addReply = findViewById(R.id.add_replies_button);
         addReply.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                AlertDialog.Builder builder= new AlertDialog.Builder(RepliesActivity.this);
+                AlertDialog.Builder builder = new AlertDialog.Builder(RepliesActivity.this);
                 builder.setView(addCommentView);
                 builder.setTitle("New Comment");
                 builder.setNegativeButton("Cancel", null)

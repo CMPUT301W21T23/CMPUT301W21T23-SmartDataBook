@@ -2,40 +2,51 @@ package com.example.cmput301w21t23_smartdatabook.experiment;
 
 import android.os.Parcel;
 import android.os.Parcelable;
+
 import com.google.android.gms.maps.model.LatLng;
+
 import java.io.Serializable;
 
 
 /**
  * Class: Experiment
  * class that constructs the experiment
+ *
  * @author Afaq Nabi, Bosco Chan
  */
 public class Experiment implements Serializable, Parcelable {
 
-    private String expID;
-    private String expName;
-    private String ownerUserID;
+    public static final Creator<Experiment> CREATOR = new Creator<Experiment>() {
+        @Override
+        public Experiment createFromParcel(Parcel in) {
+            return new Experiment(in);
+        }
 
+        @Override
+        public Experiment[] newArray(int size) {
+            return new Experiment[size];
+        }
+    };
+    private final String expID;
+    private final String expName;
+    private final String ownerUserID;
     private String ownerUserName;
-    private String trialType;
-    private String description;
-
+    private final String trialType;
+    private final String description;
     // private Map region;
-    private int minTrials;
-    private int maxTrials;
+    private final int minTrials;
+    private final int maxTrials;
     private boolean isPublic;
-
     // private Trial Array<Trial>;
-    private boolean requireLocation;
+    private final boolean requireLocation;
     private String date;
-    private LatLng latlng;
-
+    private final LatLng latlng;
     // end experiment
     private boolean isEnd;
 
     /**
      * Public constructor for Experiment without location settings
+     *
      * @param expName
      * @param ownerUserID
      * @param trialType
@@ -85,25 +96,9 @@ public class Experiment implements Serializable, Parcelable {
         isEnd = in.readByte() != 0;
     }
 
-    public static final Creator<Experiment> CREATOR = new Creator<Experiment>() {
-        @Override
-        public Experiment createFromParcel(Parcel in) {
-            return new Experiment(in);
-        }
-
-        @Override
-        public Experiment[] newArray(int size) {
-            return new Experiment[size];
-        }
-    };
-
-    public String getOwnerUserName() {
-        return ownerUserName;
-    }
-
-    // TODO: update following method description
     /**
      * Public constructor for the Experiment with location settings
+     *
      * @param expName
      * @param ownerUserID
      * @param trialType
@@ -134,8 +129,15 @@ public class Experiment implements Serializable, Parcelable {
         this.latlng = latlng;
     }
 
+    // TODO: update following method description
+
+    public String getOwnerUserName() {
+        return ownerUserName;
+    }
+
     /**
      * Setters for isEnd
+     *
      * @param end
      */
 
@@ -145,6 +147,7 @@ public class Experiment implements Serializable, Parcelable {
 
     /**
      * Getters for isEnd
+     *
      * @return isEnd: a boolean variable checking whether an experiment has been ended or not
      */
     public boolean getIsEnd() {
@@ -153,6 +156,7 @@ public class Experiment implements Serializable, Parcelable {
 
     /**
      * getter for the date of the experiment
+     *
      * @return String of date
      */
     public String getDate() {
@@ -161,6 +165,7 @@ public class Experiment implements Serializable, Parcelable {
 
     /**
      * Setter for the date attribute of the class
+     *
      * @param date
      */
     public void setDate(String date) {
@@ -169,6 +174,7 @@ public class Experiment implements Serializable, Parcelable {
 
     /**
      * Getter for the experiment name of the experiment
+     *
      * @return String of experiments name
      */
     public String getExpName() {
@@ -177,6 +183,7 @@ public class Experiment implements Serializable, Parcelable {
 
     /**
      * Getter for the owners user ID which is a hashed code assigned by the app
+     *
      * @return
      */
     public String getOwnerUserID() {
@@ -185,6 +192,7 @@ public class Experiment implements Serializable, Parcelable {
 
     /**
      * Getter for the type of the trial (Count, Binomial...)
+     *
      * @return String for the type the trial is
      */
     public String getTrialType() {
@@ -193,6 +201,7 @@ public class Experiment implements Serializable, Parcelable {
 
     /**
      * Getter for the description of the experiment
+     *
      * @return String of description of the experiment
      */
     public String getDescription() {
@@ -201,6 +210,7 @@ public class Experiment implements Serializable, Parcelable {
 
     /**
      * Returns if the regionOn is True/False for the expeiment
+     *
      * @return Boolean to represent True/False for regionOn attrubute
      */
     public boolean getRequireLocation() {
@@ -209,6 +219,7 @@ public class Experiment implements Serializable, Parcelable {
 
     /**
      * Getter for the min number of trials for the experiment
+     *
      * @return Int that is the minimun number of trials for the experiment
      */
     public int getMinTrials() {
@@ -217,6 +228,7 @@ public class Experiment implements Serializable, Parcelable {
 
     /**
      * Getter for the max number of trials for the experiment
+     *
      * @return Int representing max number fo the trials for the experiment
      */
     public int getMaxTrials() {
@@ -225,6 +237,7 @@ public class Experiment implements Serializable, Parcelable {
 
     /**
      * Gets Boolean to represent whether the experiment is public or private
+     *
      * @return Boolean True/False representing private/public state of the experiment
      */
     public boolean isPublic() {
@@ -233,6 +246,7 @@ public class Experiment implements Serializable, Parcelable {
 
     /**
      * Sets the state of the experiment to be public or private
+     *
      * @param aPublic which is either True/False
      */
     public void setPublic(boolean aPublic) {
@@ -241,6 +255,7 @@ public class Experiment implements Serializable, Parcelable {
 
     /**
      * Getter for the location of the experiment
+     *
      * @return Location object
      */
     public LatLng getLatLng() {
@@ -249,6 +264,7 @@ public class Experiment implements Serializable, Parcelable {
 
     /**
      * Getters for expID
+     *
      * @return expID: a string object consists the experiment ID
      */
     public String getExpID() {
@@ -262,6 +278,7 @@ public class Experiment implements Serializable, Parcelable {
 
     /**
      * This functionm writes the experiment's content to the parcel
+     *
      * @param dest
      * @param flags
      */

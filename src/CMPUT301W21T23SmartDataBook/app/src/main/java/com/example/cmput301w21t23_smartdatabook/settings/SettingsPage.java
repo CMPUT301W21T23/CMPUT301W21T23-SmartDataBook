@@ -6,14 +6,13 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
-import android.widget.Toast;
+
 import androidx.fragment.app.Fragment;
-import com.example.cmput301w21t23_smartdatabook.database.Database;
+
 import com.example.cmput301w21t23_smartdatabook.R;
+import com.example.cmput301w21t23_smartdatabook.database.Database;
 import com.example.cmput301w21t23_smartdatabook.mainController.MainActivity;
 import com.example.cmput301w21t23_smartdatabook.user.User;
-import com.google.firebase.auth.FirebaseAuth;
-import com.google.firebase.firestore.FirebaseFirestore;
 
 /**
  * THe User Contact page where users can change and edit their information freely

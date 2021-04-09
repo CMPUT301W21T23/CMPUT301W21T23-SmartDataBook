@@ -1,12 +1,10 @@
 package com.example.cmput301w21t23_smartdatabook.experiment;
 
-import android.annotation.SuppressLint;
 import android.app.AlertDialog;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Parcelable;
 import android.view.LayoutInflater;
-import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
@@ -14,19 +12,15 @@ import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.CompoundButton;
 import android.widget.TextView;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.Hashtable;
-import java.util.Map;
+
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 
-import com.example.cmput301w21t23_smartdatabook.stats.StringDate;
-import com.example.cmput301w21t23_smartdatabook.user.User;
+import com.example.cmput301w21t23_smartdatabook.R;
 import com.example.cmput301w21t23_smartdatabook.comments.CommentActivity;
 import com.example.cmput301w21t23_smartdatabook.database.Database;
-import com.example.cmput301w21t23_smartdatabook.experiment.Experiment;
-import com.example.cmput301w21t23_smartdatabook.R;
+import com.example.cmput301w21t23_smartdatabook.stats.StringDate;
+import com.example.cmput301w21t23_smartdatabook.user.User;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.firestore.CollectionReference;
@@ -34,45 +28,46 @@ import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
 
-import org.w3c.dom.Text;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Hashtable;
+import java.util.Map;
 
 /**
  * This classs is simply to display the information from the experiment list adapters onto the screen
+ *
  * @Author Afaq, Bosco, Krutik
  * @return view the view of the card which contains a couple buttons and brief information about the experiment
  */
 
 public class CardList extends ArrayAdapter<Experiment> {
 
-    private ArrayList<Experiment> experiments;
-    private Context context;
-    private int index;
-    private User user = User.getUser();
-
-    private Hashtable<String, User> UserName;
-
     StringDate date = new StringDate();
-
-    public ArrayList<Experiment> getExperiments() {
-        return experiments;
-    }
-
     Database database;
     FirebaseFirestore db;
     Map<Integer, View> views = new HashMap<Integer, View>();
-
+    private final ArrayList<Experiment> experiments;
+    private final Context context;
+    private final int index;
+    private final User user = User.getUser();
+    private final Hashtable<String, User> UserName;
     /**
      * Public Constructor for the CardList class
+     *
      * @param context
      * @param experiments
      * @param index
      */
     public CardList(Context context, ArrayList<Experiment> experiments, Hashtable<String, User> UserName, int index) {
-        super(context,0, experiments);
+        super(context, 0, experiments);
         this.experiments = experiments;
         this.context = context;
         this.index = index;
         this.UserName = UserName;
+    }
+
+    public ArrayList<Experiment> getExperiments() {
+        return experiments;
     }
 
     /**
@@ -80,6 +75,7 @@ public class CardList extends ArrayAdapter<Experiment> {
      * Initialize elements, like inflates the layout, sets attributes of the name, date, ownerName, experimentDescription and region in the list
      * Display the visual representation of each experiment card(textview, Button, checkbox etc)
      * Setting up onclick for clicking the experiment card, as well as buttons and checkbox on the experiment card
+     *
      * @param position
      * @param convertView
      * @param parent
@@ -101,7 +97,7 @@ public class CardList extends ArrayAdapter<Experiment> {
 
         if (index == 1) {
 
-            if (views.containsKey(position) ){
+            if (views.containsKey(position)) {
                 return views.get(position);
             }
 
@@ -116,12 +112,12 @@ public class CardList extends ArrayAdapter<Experiment> {
             TextView experimentDescription = v.findViewById(R.id.Experiment_descr);
             TextView region = v.findViewById(R.id.Region);
 
-            if (!experiment.getRequireLocation()){
-                ((ViewGroup)region.getParent()).removeView(region);
+            if (!experiment.getRequireLocation()) {
+                ((ViewGroup) region.getParent()).removeView(region);
             }
 
             experimentName.setText(experiment.getExpName());
-            dateView.setText(""+ date.getDate(experiment.getDate()));
+            dateView.setText("" + date.getDate(experiment.getDate()));
             ownerName.setText(experiment.getOwnerUserName());
             experimentDescription.setText(experiment.getDescription());
 
@@ -150,7 +146,7 @@ public class CardList extends ArrayAdapter<Experiment> {
                 public void onComplete(@NonNull Task<DocumentSnapshot> task) {
                     if (task.isSuccessful()) {
                         DocumentSnapshot document = task.getResult();
-                        if(document.exists()){
+                        if (document.exists()) {
                             follow.setChecked(true);
                         }
                     }
@@ -159,25 +155,25 @@ public class CardList extends ArrayAdapter<Experiment> {
 
             // gets the favourite experiments
             follow.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
-                  @Override
-                  public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
-                      if(isChecked){
-                          final CollectionReference favExpCollection = db.collection("Users")
-                                  .document(user.getUserUniqueID())
-                                  .collection("Favorites");
-                          database.addExperimentToDB(experiment, favExpCollection, user.getUserUniqueID());
+                                                  @Override
+                                                  public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+                                                      if (isChecked) {
+                                                          final CollectionReference favExpCollection = db.collection("Users")
+                                                                  .document(user.getUserUniqueID())
+                                                                  .collection("Favorites");
+                                                          database.addExperimentToDB(experiment, favExpCollection, user.getUserUniqueID());
 
-                      } else {
+                                                      } else {
 
-                              final DocumentReference ref = db.collection("Users")
-                                      .document(user.getUserUniqueID())
-                                      .collection("Favorites")
-                                      .document(experiment.getExpID());
+                                                          final DocumentReference ref = db.collection("Users")
+                                                                  .document(user.getUserUniqueID())
+                                                                  .collection("Favorites")
+                                                                  .document(experiment.getExpID());
 
-                              database.followStatus( ref, experiment, getContext(), follow, user.getUserUniqueID() );
-                          }
-                      }
-                  }
+                                                          database.followStatus(ref, experiment, getContext(), follow, user.getUserUniqueID());
+                                                      }
+                                                  }
+                                              }
             );
 
 
@@ -186,8 +182,8 @@ public class CardList extends ArrayAdapter<Experiment> {
             TextView username = userInfoView.findViewById(R.id.expOwner);
             username.setText(UserName.get(experiment.getOwnerUserID()).getUserName());
 
-            TextView email = userInfoView.findViewById(R.id.expContact);;
-            email.setText(UserName.get(experiment.getOwnerUserID()).getUserContact() );
+            TextView email = userInfoView.findViewById(R.id.expContact);
+            email.setText(UserName.get(experiment.getOwnerUserID()).getUserContact());
 
             // when the user clicks the experiment's owner name
             ownerName.setOnClickListener(new View.OnClickListener() {

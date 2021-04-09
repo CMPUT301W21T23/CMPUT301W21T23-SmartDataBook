@@ -8,10 +8,10 @@ import android.widget.TextView;
 import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
 
-import com.example.cmput301w21t23_smartdatabook.experiment.Experiment;
 import com.example.cmput301w21t23_smartdatabook.R;
 import com.example.cmput301w21t23_smartdatabook.database.Database;
 import com.example.cmput301w21t23_smartdatabook.database.GeneralDataCallBack;
+import com.example.cmput301w21t23_smartdatabook.experiment.Experiment;
 import com.example.cmput301w21t23_smartdatabook.trials.Trial;
 import com.github.mikephil.charting.charts.BarChart;
 import com.github.mikephil.charting.charts.LineChart;
@@ -95,6 +95,8 @@ public class StatsView extends AppCompatActivity {
         // The bottom part of the code has been reused from HomePage
         // We have learned the idea of building android chart from the site below
         // https://weeklycoding.com/mpandroidchart-documentation/getting-started/
+        // Under: APACHE LICENSE, VERSION 2.0
+
         //Source: Erwin Kurniawan A; https://stackoverflow.com/users/7693494/erwin-kurniawan-a
         //Code: https://stackoverflow.com/questions/61930061/how-to-return-a-value-from-oncompletelistener-while-creating-user-with-email-and
         database.fillStatsList(new GeneralDataCallBack() {
@@ -144,10 +146,6 @@ public class StatsView extends AppCompatActivity {
                     j+=1;
                 }
 
-
-                // we have learned the idea of setting X-Axis value to date format, from the sites below
-                //Source: sidcgithub; https://github.com/sidcgithub
-                //Code: https://github.com/PhilJay/MPAndroidChart/issues/3705
                 ValueFormatter dateAxisFormatter = new ValueFormatter() {
                     @Override
                     public String getAxisLabel(float value, AxisBase axis) {
@@ -192,8 +190,6 @@ public class StatsView extends AppCompatActivity {
 
                 //Source:ProgrammerSought; https://www.programmersought.com
                 //Code: https://www.programmersought.com/article/43275089312/
-//                XAxis barChartXAxis = histogram.getXAxis();
-//                barChartXAxis.setValueFormatter(binAxisFormatter);
                 XAxis barChartXAxis = histogram.getXAxis();
                 barChartXAxis.setGranularity(1f);
                 barChartXAxis.setGranularityEnabled(true);

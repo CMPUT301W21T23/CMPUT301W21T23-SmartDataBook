@@ -12,12 +12,12 @@ import android.widget.ListView;
 
 import androidx.fragment.app.Fragment;
 
-import com.example.cmput301w21t23_smartdatabook.experiment.Experiment;
 import com.example.cmput301w21t23_smartdatabook.R;
 import com.example.cmput301w21t23_smartdatabook.database.Database;
 import com.example.cmput301w21t23_smartdatabook.database.GeneralDataCallBack;
-import com.example.cmput301w21t23_smartdatabook.experiment.ExperimentDetails;
 import com.example.cmput301w21t23_smartdatabook.experiment.CardList;
+import com.example.cmput301w21t23_smartdatabook.experiment.Experiment;
+import com.example.cmput301w21t23_smartdatabook.experiment.ExperimentDetails;
 import com.example.cmput301w21t23_smartdatabook.mainController.MainActivity;
 import com.example.cmput301w21t23_smartdatabook.user.User;
 import com.google.firebase.firestore.FirebaseFirestore;
@@ -33,150 +33,148 @@ import java.util.Hashtable;
  */
 public class FavPage extends Fragment {
 
-	// initialize elements
-	private ListView favList;
-	private static ArrayAdapter<Experiment> favAdapter;
-	private static ArrayList<Experiment> favDataList;
-	private static ArrayList<Experiment> searchDataList;
+    private static ArrayAdapter<Experiment> favAdapter;
+    private static ArrayList<Experiment> favDataList;
+    private static ArrayList<Experiment> searchDataList;
+    FirebaseFirestore db = FirebaseFirestore.getInstance();
+    // initialize elements
+    private ListView favList;
+    private User user;
+    private Database database;
+    private MainActivity activity;
+    private String currentQuery;
 
-	private User user;
-	private Database database;
-	private MainActivity activity;
+    public FavPage() {
+    }
 
-	private String currentQuery;
+    public static FavPage newInstance(String user) {
+        FavPage fragment = new FavPage();
+        Bundle args = new Bundle();
+        args.putString("", user);
+        fragment.setArguments(args);
+        return fragment;
+    }
 
-	FirebaseFirestore db = FirebaseFirestore.getInstance();
+    /**
+     * onCreate method of Favourite page
+     *
+     * @param savedInstanceState
+     */
+    @Override
+    public void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        if (getArguments() != null) {
+            user = User.getUser();
+        }
+        activity = (MainActivity) getActivity();
+    }
 
-	public FavPage() {
-	}
+    /**
+     * The method updates the favourite page if there are any queries
+     *
+     * @param query
+     * @param currentFragment
+     */
+    public void doUpdate(String query) {
 
-	public static FavPage newInstance(String user) {
-		FavPage fragment = new FavPage();
-		Bundle args = new Bundle();
-		args.putString("", user);
-		fragment.setArguments(args);
-		return fragment;
-	}
+        currentQuery = query.toLowerCase();
 
-	/**
-	 * onCreate method of Favourite page
-	 *
-	 * @param savedInstanceState
-	 */
-	@Override
-	public void onCreate(Bundle savedInstanceState) {
-		super.onCreate(savedInstanceState);
-		if (getArguments() != null) {
-			user = User.getUser();
-		}
-		activity = (MainActivity) getActivity();
-	}
+        database.fillUserName(new GeneralDataCallBack() {
+            @Override
+            public void onDataReturn(Object returnedObject) {
+                Hashtable<String, User> UserName = (Hashtable<String, User>) returnedObject;
+                ArrayList<Experiment> temp = new ArrayList<>();
 
-	/**
-	 * The method updates the favourite page if there are any queries
-	 *
-	 * @param query
-	 * @param currentFragment
-	 */
-	public void doUpdate(String query) {
+                for (int i = 0; i < favDataList.size(); i++) {
+                    Experiment experiment = favDataList.get(i);
+                    if (experiment.getExpName().toLowerCase().contains(currentQuery) ||
+                            UserName.get(experiment.getOwnerUserID()).getUserName().toLowerCase().contains(currentQuery) ||
+                            experiment.getDate().toLowerCase().contains(currentQuery) ||
+                            experiment.getDescription().toLowerCase().contains(currentQuery) ||
+                            experiment.getTrialType().toLowerCase().contains(currentQuery))
+                        temp.add(experiment);
+                }
 
-		currentQuery = query.toLowerCase();
+                favAdapter = new CardList(getContext(), temp, UserName, 1);
+                favList.setAdapter(favAdapter);
 
-		database.fillUserName(new GeneralDataCallBack() {
-			@Override
-			public void onDataReturn(Object returnedObject) {
-				Hashtable<String, User> UserName = (Hashtable<String, User>) returnedObject;
-				ArrayList<Experiment> temp = new ArrayList<>();
+            }
+        });
+    }
 
-				for (int i = 0; i < favDataList.size(); i++) {
-					Experiment experiment = favDataList.get(i);
-					if (experiment.getExpName().toLowerCase().contains(currentQuery) ||
-						UserName.get(experiment.getOwnerUserID()).getUserName().toLowerCase().contains(currentQuery) ||
-						experiment.getDate().toLowerCase().contains(currentQuery) ||
-						experiment.getDescription().toLowerCase().contains(currentQuery) ||
-						experiment.getTrialType().toLowerCase().contains(currentQuery)) temp.add(experiment);
-				}
+    /**
+     * this method create the view of the user's favourite experiments page
+     *
+     * @param inflater
+     * @param container
+     * @param savedInstanceState
+     * @return View, the view of the page
+     */
+    @Override
+    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
+        // Inflate the layout for this fragment
 
-				favAdapter = new CardList(getContext(), temp, UserName, 1);
-				favList.setAdapter(favAdapter);
+        View view = inflater.inflate(R.layout.followed_experiments, container, false);
 
-			}
-		});
-	}
+        favList = view.findViewById(R.id.followedExpListView);
+        favDataList = new ArrayList<>();
+        searchDataList = new ArrayList<>();
+        database = new Database();
 
-	/**
-	 * this method create the view of the user's favourite experiments page
-	 *
-	 * @param inflater
-	 * @param container
-	 * @param savedInstanceState
-	 * @return View, the view of the page
-	 */
-	@Override
-	public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-		// Inflate the layout for this fragment
+        favAdapter = new CardList(getContext(), favDataList, new Hashtable<String, User>(), 1);
 
-		View view = inflater.inflate(R.layout.followed_experiments, container, false);
+        database.fillUserName(new GeneralDataCallBack() {
+            @Override
+            public void onDataReturn(Object returnedData) {
+                Hashtable<String, User> UserName = (Hashtable<String, User>) returnedData;
+                database.fillDataList(new GeneralDataCallBack() {
+                    @Override
+                    public void onDataReturn(Object returnedData) {
+                        ArrayList<Experiment> DataList = (ArrayList<Experiment>) returnedData;
 
-		favList = view.findViewById(R.id.followedExpListView);
-		favDataList = new ArrayList<>();
-		searchDataList = new ArrayList<>();
-		database = new Database();
+                        favAdapter = new CardList(getContext(), favDataList, UserName, 1);
 
-		favAdapter = new CardList(getContext(), favDataList, new Hashtable<String, User>(), 1);
+                        favList.setAdapter(favAdapter);
 
-		database.fillUserName(new GeneralDataCallBack() {
-			@Override
-			public void onDataReturn(Object returnedData) {
-				Hashtable<String, User> UserName = (Hashtable<String, User>) returnedData;
-				database.fillDataList(new GeneralDataCallBack() {
-					@Override
-					public void onDataReturn(Object returnedData) {
-						ArrayList<Experiment> DataList = (ArrayList<Experiment>) returnedData;
+                        //Reset the experiment adapter for every onCreateView call
+                        favAdapter.clear();
+                        searchDataList.clear();
 
-						favAdapter = new CardList(getContext(), favDataList, UserName, 1);
+                        //experimentDataList with added items ONLY exist inside the scope of this getExpDataList function
+                        favDataList = DataList;
 
-						favList.setAdapter(favAdapter);
+                        favAdapter.addAll(favDataList);
+                        favAdapter.notifyDataSetChanged();
 
-						//Reset the experiment adapter for every onCreateView call
-						favAdapter.clear();
-						searchDataList.clear();
+                        favList.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+                            @Override
+                            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                                Experiment exp = (Experiment) parent.getAdapter().getItem(position); // get the experiment from list
+                                Intent intent = new Intent(getActivity(), ExperimentDetails.class);
+                                intent.putExtra("currentID", user.getUserUniqueID()); // pass position to ExperimentDetails class
+                                intent.putExtra("experiment", (Parcelable) exp); // pass experiment object
+                                startActivity(intent);
+                            }
+                        });
 
-						//experimentDataList with added items ONLY exist inside the scope of this getExpDataList function
-						favDataList = DataList;
+                    }//getExpDataList
+                }, favAdapter, db.collection("Users").document(user.getUserUniqueID()).collection("Favorites"), user.getUserUniqueID(), UserName);//fillDataList
+            }
+        });
+        return view;
+    }//onCreateView
 
-						favAdapter.addAll(favDataList);
-						favAdapter.notifyDataSetChanged();
-
-						favList.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-							@Override
-							public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-								Experiment exp = (Experiment) parent.getAdapter().getItem(position); // get the experiment from list
-								Intent intent = new Intent(getActivity(), ExperimentDetails.class);
-								intent.putExtra("currentID", user.getUserUniqueID()); // pass position to ExperimentDetails class
-								intent.putExtra("experiment", (Parcelable) exp); // pass experiment object
-								startActivity(intent);
-							}
-						});
-
-					}//getExpDataList
-				}, favAdapter, db.collection("Users").document(user.getUserUniqueID()).collection("Favorites"), user.getUserUniqueID(), UserName);//fillDataList
-			}
-		});
-		return view;
-	}//onCreateView
-
-	/**
-	 * onResume method of Favourite page
-	 */
-	@Override
-	public void onResume() {
-		super.onResume();
-		favAdapter.notifyDataSetChanged();
-		activity.getSupportActionBar().setTitle("Favorites");
-		activity.onAttachFragment(this);
-		activity.setBottomNavigationItem(R.id.fav_nav);
-	}
+    /**
+     * onResume method of Favourite page
+     */
+    @Override
+    public void onResume() {
+        super.onResume();
+        favAdapter.notifyDataSetChanged();
+        activity.getSupportActionBar().setTitle("Favorites");
+        activity.onAttachFragment(this);
+        activity.setBottomNavigationItem(R.id.fav_nav);
+    }
 
 
 }
