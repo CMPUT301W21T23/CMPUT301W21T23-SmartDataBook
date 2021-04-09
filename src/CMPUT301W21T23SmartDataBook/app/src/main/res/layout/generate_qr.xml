@@ -92,14 +92,6 @@
             android:orientation="horizontal"
             android:paddingLeft="30dp">
 
-            <CheckBox
-                android:id="@+id/TrialLocationCheckBox"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:buttonTint="@color/theme_default"
-                android:checked="true"
-                android:clickable="true"
-                android:text="add location to QR" />
         </LinearLayout>
 
         <LinearLayout

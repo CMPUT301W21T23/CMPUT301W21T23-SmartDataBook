@@ -88,19 +88,6 @@ public class QRCodeActivity extends AppCompatActivity {
         }
         value.setInputType(inputType);
 
-        CheckBox location = findViewById(R.id.TrialLocationCheckBox);
-
-        if (experiment.getRequireLocation()) {
-            location.setChecked(true);
-        }
-
-        location.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Toast.makeText(getBaseContext(), "Location was turned " + experiment.getRequireLocation() + " for this experiment.", Toast.LENGTH_SHORT).show();
-            }
-        });
-
         MaterialButton generate = findViewById(R.id.generateCodeBTN);
 
         generate.setOnClickListener(new View.OnClickListener() {
