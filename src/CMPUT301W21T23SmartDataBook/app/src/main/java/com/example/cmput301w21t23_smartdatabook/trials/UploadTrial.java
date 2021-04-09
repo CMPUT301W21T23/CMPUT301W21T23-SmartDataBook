@@ -96,7 +96,6 @@ public class UploadTrial extends AppCompatActivity {
             addTrials.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-
                     if (!experiment.getIsEnd()) {
                         expType = experiment.getTrialType();
                         db
@@ -404,7 +403,6 @@ public class UploadTrial extends AppCompatActivity {
                 }
             });
         }
-
     }
 
     void collectionRefToDB(Trial trial, Experiment experiment){

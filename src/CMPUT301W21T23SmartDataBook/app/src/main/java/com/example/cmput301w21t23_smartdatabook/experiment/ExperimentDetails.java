@@ -72,15 +72,21 @@ public class ExperimentDetails extends AppCompatActivity {
         View userInfoView = LayoutInflater.from(ExperimentDetails.this).inflate(R.layout.view_profile, null);
 
         AppCompatImageButton scan = findViewById(R.id.scannerimg);
-        scan.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent intent = new Intent(ExperimentDetails.this, ScannerActivity.class);
-                intent.putExtra("experiment", (Parcelable) experiment);
-                intent.putExtra("Flag", "Scan");
-                startActivity(intent);
-            }
-        });
+        TextView scanTV = findViewById(R.id.scanner_tv);
+        if (experiment.getIsEnd()){
+            scan.setVisibility(View.INVISIBLE);
+            scanTV.setVisibility(View.INVISIBLE);
+        } else{
+            scan.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    Intent intent = new Intent(ExperimentDetails.this, ScannerActivity.class);
+                    intent.putExtra("experiment", (Parcelable) experiment);
+                    intent.putExtra("Flag", "Scan");
+                    startActivity(intent);
+                }
+            });
+        }
 
         database.fillUserName(new GeneralDataCallBack() {
             @Override

@@ -47,6 +47,7 @@ public class StringDate {
      * @param dateString: a string variable showing date
      * @return result1, the date object showing the date
      */
+    //
     // https://stackoverflow.com/questions/2201925/converting-iso-8601-compliant-string-to-java-util-date
     public Date getDate(String dateString){
         DateFormat df1 = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSSXXX");

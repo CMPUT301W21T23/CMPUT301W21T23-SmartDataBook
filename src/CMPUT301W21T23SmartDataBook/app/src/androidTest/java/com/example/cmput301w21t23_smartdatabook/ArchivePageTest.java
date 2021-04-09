@@ -1,6 +1,7 @@
 package com.example.cmput301w21t23_smartdatabook;
 
 import android.view.View;
+import android.widget.Button;
 import android.widget.EditText;
 import android.widget.NumberPicker;
 
@@ -104,7 +105,8 @@ public class ArchivePageTest {
         solo.sleep(2000);
         solo.assertCurrentActivity("Wrong Class", UploadTrial.class);
         solo.sleep(2000);
-        Assert.assertFalse(solo.searchText("add new trials"));
+        Button add = (Button) solo.getView(R.id.add_trial_button);
+        Assert.assertEquals(add.getVisibility(), View.INVISIBLE);
         solo.sleep(2000);
 
         // check that one can un-archive experiment
