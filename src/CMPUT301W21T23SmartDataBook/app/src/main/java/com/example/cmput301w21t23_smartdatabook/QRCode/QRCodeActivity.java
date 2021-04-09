@@ -105,9 +105,12 @@ public class QRCodeActivity extends AppCompatActivity {
         generate.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if (Integer.parseInt(value.getText().toString()) > experiment.getMaxTrials()){
-                    Toast.makeText(getBaseContext(), "Cannot ad more than the max trials", Toast.LENGTH_SHORT).show();
-                } else {
+                if (experiment.getTrialType().equals("Binomial")){
+                    if (Integer.parseInt(value.getText().toString()) > experiment.getMaxTrials()){
+                        Toast.makeText(getBaseContext(), "Cannot ad more than the max trials", Toast.LENGTH_SHORT).show();
+                    }
+                }
+                else{
                     String QRCodeMessage;
                     if (experiment.getTrialType().equals("Binomial")){
                         QRCodeMessage = experiment.getExpID()+","+user.getUserUniqueID()+"," + value.getText().toString() +","+experiment.getTrialType()+","+experiment.getRequireLocation() + "," + findBinoType(binoChoice.getCheckedRadioButtonId());
@@ -118,6 +121,7 @@ public class QRCodeActivity extends AppCompatActivity {
                     ImageView QRCode = findViewById(R.id.ReplaceImageQrCode);
                     QRCode.setImageBitmap(QRcode.generate(QRCodeMessage));
                 }
+
                 value.setText("");
             }
         });
