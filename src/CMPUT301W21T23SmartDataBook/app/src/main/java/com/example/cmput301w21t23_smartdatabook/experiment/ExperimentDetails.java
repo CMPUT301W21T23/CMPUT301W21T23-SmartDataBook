@@ -263,11 +263,7 @@ public class ExperimentDetails extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 boolean onOff;
-                if (publish.isChecked()) {
-                    onOff = true;
-                } else {
-                    onOff = false;
-                }
+                onOff = publish.isChecked();
 
                 database.publicOrEnd(db.collection("Experiments"), onOff, experiment, "PublicStatus");
                 database.publicOrEnd((db.collection("Users")
