@@ -40,7 +40,6 @@ public class ArchivePage extends Fragment {
     private String currentQuery;
     private ListView archiveExperimentList;
     private ArrayList<Experiment> archiveExperimentDataList;
-    private ArrayList<Experiment> searchDataList;
     private MainActivity activity;
 
 
@@ -59,7 +58,6 @@ public class ArchivePage extends Fragment {
      * This function updates the archive page, through fragment transaction, the code has been reused from homePage.java
      *
      * @param query
-     * @param currentFragment
      */
     public void doUpdate(String query) {
 
@@ -81,7 +79,7 @@ public class ArchivePage extends Fragment {
                         temp.add(experiment);
                 }
 
-                archiveExperimentAdapter = new CardList(getContext(), temp, UserName, 1);
+                archiveExperimentAdapter = new CardList(getContext(), temp, 1);
                 archiveExperimentList.setAdapter(archiveExperimentAdapter);
 
             }
@@ -119,9 +117,8 @@ public class ArchivePage extends Fragment {
         // added stuff
         archiveExperimentList = view.findViewById(R.id.archive_experiment_list);
         archiveExperimentDataList = new ArrayList<>();
-        searchDataList = new ArrayList<>();
 
-        archiveExperimentAdapter = new CardList(getContext(), archiveExperimentDataList, new Hashtable<String, User>(), 1);
+        archiveExperimentAdapter = new CardList(getContext(), archiveExperimentDataList, 1);
 
         database.fillUserName(new GeneralDataCallBack() {
             @Override
@@ -132,7 +129,7 @@ public class ArchivePage extends Fragment {
                     public void onDataReturn(Object returnedObject) {
                         ArrayList<Experiment> DataList = (ArrayList<Experiment>) returnedObject;
 
-                        archiveExperimentAdapter = new CardList(getContext(), archiveExperimentDataList, UserName, 1);
+                        archiveExperimentAdapter = new CardList(getContext(), archiveExperimentDataList, 1);
 
                         archiveExperimentList.setAdapter(archiveExperimentAdapter);
 
@@ -140,7 +137,6 @@ public class ArchivePage extends Fragment {
 
                         //Reset the experiment adapter for every onCreateView call
                         archiveExperimentAdapter.clear();
-                        searchDataList.clear();
 
                         //experimentDataList with added items ONLY exist inside the scope of this getExpDataList function
                         archiveExperimentDataList = DataList;
