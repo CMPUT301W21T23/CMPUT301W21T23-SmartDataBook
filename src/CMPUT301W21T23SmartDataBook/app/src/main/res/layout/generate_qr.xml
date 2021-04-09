@@ -4,6 +4,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical">
+
     <include
         layout="@layout/app_toolbar"
         android:layout_width="match_parent"
@@ -50,7 +51,6 @@
                 android:textColorHint="@color/theme_opaque" />
 
 
-
         </LinearLayout>
 
 
@@ -73,7 +73,7 @@
                     android:layout_height="match_parent"
                     android:buttonTint="@color/theme_default"
                     android:text="Pass"
-                    android:visibility="invisible"/>
+                    android:visibility="invisible" />
 
                 <RadioButton
                     android:id="@+id/fail_radio_button"
@@ -81,7 +81,7 @@
                     android:layout_height="match_parent"
                     android:buttonTint="@color/theme_default"
                     android:text="Fail"
-                    android:visibility="invisible"/>
+                    android:visibility="invisible" />
             </RadioGroup>
 
         </LinearLayout>
@@ -96,10 +96,10 @@
                 android:id="@+id/TrialLocationCheckBox"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="add location to QR"
-                android:clickable="true"
+                android:buttonTint="@color/theme_default"
                 android:checked="true"
-                android:buttonTint="@color/theme_default"/>
+                android:clickable="true"
+                android:text="add location to QR" />
         </LinearLayout>
 
         <LinearLayout
@@ -118,24 +118,24 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content">
 
-<!--            <androidx.appcompat.widget.AppCompatImageButton-->
-<!--                android:id="@+id/qrScanImageButtonView"-->
-<!--                android:layout_width="wrap_content"-->
-<!--                android:layout_height="wrap_content"-->
-<!--                android:layout_centerHorizontal="true"-->
-<!--                android:layout_marginTop="50dp"-->
-<!--                android:background="@color/white"-->
-<!--                android:src="@drawable/ic_qr_image" />-->
+            <!--            <androidx.appcompat.widget.AppCompatImageButton-->
+            <!--                android:id="@+id/qrScanImageButtonView"-->
+            <!--                android:layout_width="wrap_content"-->
+            <!--                android:layout_height="wrap_content"-->
+            <!--                android:layout_centerHorizontal="true"-->
+            <!--                android:layout_marginTop="50dp"-->
+            <!--                android:background="@color/white"-->
+            <!--                android:src="@drawable/ic_qr_image" />-->
 
-<!--            <TextView-->
-<!--                android:layout_width="wrap_content"-->
-<!--                android:layout_height="wrap_content"-->
-<!--                android:layout_below="@id/qrScanImageButtonView"-->
-<!--                android:layout_centerHorizontal="true"-->
-<!--                android:text="SCAN QR CODE"-->
-<!--                android:textColor="@color/theme_default"-->
-<!--                android:textSize="9dp"-->
-<!--                android:textStyle="bold" />-->
+            <!--            <TextView-->
+            <!--                android:layout_width="wrap_content"-->
+            <!--                android:layout_height="wrap_content"-->
+            <!--                android:layout_below="@id/qrScanImageButtonView"-->
+            <!--                android:layout_centerHorizontal="true"-->
+            <!--                android:text="SCAN QR CODE"-->
+            <!--                android:textColor="@color/theme_default"-->
+            <!--                android:textSize="9dp"-->
+            <!--                android:textStyle="bold" />-->
 
             <Button
                 android:id="@+id/barcode"

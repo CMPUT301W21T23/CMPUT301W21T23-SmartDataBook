@@ -13,7 +13,6 @@ import androidx.test.rule.ActivityTestRule;
 import com.example.cmput301w21t23_smartdatabook.experiment.Experiment;
 import com.example.cmput301w21t23_smartdatabook.experiment.ExperimentDetails;
 import com.example.cmput301w21t23_smartdatabook.mainController.MainActivity;
-import com.example.cmput301w21t23_smartdatabook.trials.UploadTrial;
 import com.robotium.solo.Solo;
 
 import org.junit.After;
@@ -21,18 +20,14 @@ import org.junit.Before;
 import org.junit.Rule;
 import org.junit.Test;
 
-import static org.junit.Assert.assertEquals;
 import static junit.framework.TestCase.assertTrue;
+import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
-import static org.junit.Assert.assertNotNull;
-import static org.junit.Assert.assertNull;
 
 public class ExperimentDetailsPageTest {
-    private Solo solo;
-
-
     @Rule
     public ActivityTestRule<MainActivity> rule = new ActivityTestRule<MainActivity>(MainActivity.class, true, true);
+    private Solo solo;
 
     @Before
     public void setUp() {
@@ -41,10 +36,11 @@ public class ExperimentDetailsPageTest {
 
     /**
      * Gets the Activity
+     *
      * @throws Exception
      */
     @Test
-    public void start() throws Exception{
+    public void start() throws Exception {
         Activity activity = rule.getActivity();
     }
 
@@ -58,7 +54,7 @@ public class ExperimentDetailsPageTest {
     // check if the fav page experiments displays the details fo the experiment properly
     // Pre-Req: that there exists an experiment in the home Fragment
     @Test
-    public void checkExpInfo(){
+    public void checkExpInfo() {
         solo.sleep(6000);
 
         solo.assertCurrentActivity("Wrong Acitvity", MainActivity.class);
@@ -73,8 +69,8 @@ public class ExperimentDetailsPageTest {
         assertTrue(solo.searchText(experiment.getDate()));
         assertTrue(solo.searchText(experiment.getDescription()));
         assertTrue(solo.searchText(experiment.getOwnerUserID()));
-        assertTrue(solo.searchText("Max Trials: "+String.valueOf(experiment.getMaxTrials())));
-        assertTrue(solo.searchText("Min Trials: "+String.valueOf(experiment.getMinTrials())));
+        assertTrue(solo.searchText("Max Trials: " + experiment.getMaxTrials()));
+        assertTrue(solo.searchText("Min Trials: " + experiment.getMinTrials()));
         assertTrue(solo.searchText(experiment.getTrialType()));
         assertEquals(solo.getView(R.id.Publish_text).getVisibility(), (View.INVISIBLE));
         assertEquals(solo.getView(R.id.endExp).getVisibility(), (View.INVISIBLE));
@@ -83,7 +79,7 @@ public class ExperimentDetailsPageTest {
     // check if the option to end experiment and and publish are visible for owner also check if the publish checkBox is checked
     // Pre-Req: that there exists an experiment in the favorite fragment
     @Test
-    public void checkExpInfoForOwner(){
+    public void checkExpInfoForOwner() {
         solo.assertCurrentActivity("Wrong Class", MainActivity.class);
         solo.waitForFragmentById(R.layout.home_page, 1000);
         solo.clickOnScreen(974, 1750);
@@ -107,9 +103,9 @@ public class ExperimentDetailsPageTest {
             }
         });
 
-        solo.enterText( (EditText) solo.getView(R.id.newExperimentLocationOnExperimentNameEditText), "Binomial");
+        solo.enterText((EditText) solo.getView(R.id.newExperimentLocationOnExperimentNameEditText), "Binomial");
         solo.sleep(1000);
-        solo.enterText( (EditText) solo.getView(R.id.description), "Coin Flip");
+        solo.enterText((EditText) solo.getView(R.id.description), "Coin Flip");
         solo.sleep(1000);
         solo.clickOnRadioButton(0);
         solo.sleep(1000);
@@ -138,7 +134,7 @@ public class ExperimentDetailsPageTest {
     // also check thats the experiment is not added in the homePage fragment
     // Pre-Req: the created experiment must be the first experiment made by the user
     @Test
-    public void checkPublishedBoxUnchecked(){
+    public void checkPublishedBoxUnchecked() {
         solo.assertCurrentActivity("Wrong Class", MainActivity.class);
         solo.waitForFragmentById(R.layout.home_page, 1000);
         solo.clickOnScreen(974, 1750);
@@ -162,9 +158,9 @@ public class ExperimentDetailsPageTest {
             }
         });
 
-        solo.enterText( (EditText) solo.getView(R.id.newExperimentLocationOnExperimentNameEditText), "Binomial");
+        solo.enterText((EditText) solo.getView(R.id.newExperimentLocationOnExperimentNameEditText), "Binomial");
         solo.sleep(1000);
-        solo.enterText( (EditText) solo.getView(R.id.description), "Coin Flip");
+        solo.enterText((EditText) solo.getView(R.id.description), "Coin Flip");
         solo.sleep(1000);
         solo.clickOnRadioButton(0);
         solo.sleep(1000);
@@ -202,7 +198,7 @@ public class ExperimentDetailsPageTest {
 
     // check if the publish box is unchecked if the experiment is not published on creation and clicks publish to see if it appears in homePage fragment
     @Test
-    public void checkClickPublish(){
+    public void checkClickPublish() {
         solo.assertCurrentActivity("Wrong Class", MainActivity.class);
         solo.waitForFragmentById(R.layout.home_page, 1000);
         solo.clickOnScreen(974, 1750);
@@ -226,9 +222,9 @@ public class ExperimentDetailsPageTest {
             }
         });
 
-        solo.enterText( (EditText) solo.getView(R.id.newExperimentLocationOnExperimentNameEditText), "Binomial");
+        solo.enterText((EditText) solo.getView(R.id.newExperimentLocationOnExperimentNameEditText), "Binomial");
         solo.sleep(1000);
-        solo.enterText( (EditText) solo.getView(R.id.description), "Coin Flip");
+        solo.enterText((EditText) solo.getView(R.id.description), "Coin Flip");
         solo.sleep(1000);
         solo.clickOnRadioButton(0);
         solo.sleep(1000);
@@ -272,7 +268,7 @@ public class ExperimentDetailsPageTest {
     // check if the experimenter is able to see the publish and end experiment fields
     // pre-req: there must be one experiment on the homePage Fragment that is not made by the current user
     @Test
-    public void checkExpInfoForExperimenter(){
+    public void checkExpInfoForExperimenter() {
         solo.assertCurrentActivity("Wrong Class", MainActivity.class);
 
         solo.clickInList(0);
@@ -286,7 +282,7 @@ public class ExperimentDetailsPageTest {
     }
 
     @Test
-    public void checkUserDialogTest(){
+    public void checkUserDialogTest() {
         solo.assertCurrentActivity("Wrong Class", MainActivity.class);
         solo.waitForFragmentById(R.layout.home_page, 1000);
         solo.clickOnScreen(974, 1750);
@@ -310,9 +306,9 @@ public class ExperimentDetailsPageTest {
             }
         });
 
-        solo.enterText( (EditText) solo.getView(R.id.newExperimentLocationOnExperimentNameEditText), "Binomial");
+        solo.enterText((EditText) solo.getView(R.id.newExperimentLocationOnExperimentNameEditText), "Binomial");
         solo.sleep(1000);
-        solo.enterText( (EditText) solo.getView(R.id.description), "Coin Flip");
+        solo.enterText((EditText) solo.getView(R.id.description), "Coin Flip");
         solo.sleep(1000);
         solo.clickOnRadioButton(0);
         solo.sleep(1000);

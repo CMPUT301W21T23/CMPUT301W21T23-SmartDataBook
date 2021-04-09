@@ -1,7 +1,5 @@
 package com.example.cmput301w21t23_smartdatabook;
 
-import android.view.View;
-
 import androidx.test.platform.app.InstrumentationRegistry;
 import androidx.test.rule.ActivityTestRule;
 
@@ -33,7 +31,7 @@ public class MapsActivityTest {
     }
 
     @Test
-    public void checkOpenMap(){
+    public void checkOpenMap() {
         solo.clickOnScreen(1013, 133);
         solo.assertCurrentActivity("Right Activity", MapsActivity.class);
         solo.goBack();

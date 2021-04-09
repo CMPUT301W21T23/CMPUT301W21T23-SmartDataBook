@@ -4,13 +4,10 @@ import android.view.View;
 import android.widget.EditText;
 import android.widget.ListView;
 import android.widget.NumberPicker;
-import android.widget.RelativeLayout;
-import android.widget.TextView;
 
 import androidx.test.platform.app.InstrumentationRegistry;
 import androidx.test.rule.ActivityTestRule;
 
-import com.example.cmput301w21t23_smartdatabook.experiment.Experiment;
 import com.example.cmput301w21t23_smartdatabook.experiment.ExperimentDetails;
 import com.example.cmput301w21t23_smartdatabook.mainController.MainActivity;
 import com.example.cmput301w21t23_smartdatabook.trials.UploadTrial;
@@ -24,7 +21,6 @@ import org.junit.Test;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
-import static org.junit.Assert.assertTrue;
 
 public class UploadTrialTest {
     private Solo solo;
@@ -47,7 +43,7 @@ public class UploadTrialTest {
     }
 
     @Test
-    public void uploadTrialTest(){
+    public void uploadTrialTest() {
         // run test on empty database
         createExperiment();
         solo.clickOnText("Binomial");
@@ -66,7 +62,7 @@ public class UploadTrialTest {
     }
 
     @Test
-    public void addTooManyTrials(){
+    public void addTooManyTrials() {
         createExperiment();
         solo.clickOnText("Binomial");
         solo.assertCurrentActivity("Wrong Class", ExperimentDetails.class);
@@ -79,7 +75,7 @@ public class UploadTrialTest {
     }
 
     @Test
-    public void deleteTrialExperimenterTest(){
+    public void deleteTrialExperimenterTest() {
         solo.clickOnText("Binomial");
         solo.assertCurrentActivity("Wrong Class", ExperimentDetails.class);
         solo.clickOnButton("UPLOAD TRIALS");
@@ -89,7 +85,7 @@ public class UploadTrialTest {
     }
 
     @Test
-    public void deleteTrialOwnerTest(){
+    public void deleteTrialOwnerTest() {
         solo.assertCurrentActivity("Wrong Class", MainActivity.class);
         solo.waitForFragmentById(R.layout.home_page, 1000);
         solo.clickOnView(addExpButton);
@@ -113,9 +109,9 @@ public class UploadTrialTest {
             }
         });
 
-        solo.enterText( (EditText) solo.getView(R.id.newExperimentLocationOnExperimentNameEditText), "Binomial");
+        solo.enterText((EditText) solo.getView(R.id.newExperimentLocationOnExperimentNameEditText), "Binomial");
         solo.sleep(1000);
-        solo.enterText( (EditText) solo.getView(R.id.description), "Coin Flip");
+        solo.enterText((EditText) solo.getView(R.id.description), "Coin Flip");
         solo.sleep(1000);
         solo.clickOnRadioButton(0);
         solo.sleep(1000);
@@ -163,9 +159,9 @@ public class UploadTrialTest {
             }
         });
 
-        solo.enterText( (EditText) solo.getView(R.id.newExperimentLocationOnExperimentNameEditText), "Binomial");
+        solo.enterText((EditText) solo.getView(R.id.newExperimentLocationOnExperimentNameEditText), "Binomial");
         solo.sleep(1000);
-        solo.enterText( (EditText) solo.getView(R.id.description), "Coin Flip");
+        solo.enterText((EditText) solo.getView(R.id.description), "Coin Flip");
         solo.sleep(1000);
         solo.clickOnRadioButton(0);
         solo.sleep(1000);

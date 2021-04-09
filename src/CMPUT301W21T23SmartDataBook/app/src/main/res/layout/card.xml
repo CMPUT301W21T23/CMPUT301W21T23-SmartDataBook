@@ -1,55 +1,53 @@
 <?xml version="1.0" encoding="utf-8"?>
 
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    xmlns:tools="http://schemas.android.com/tools"
-    android:orientation="vertical"
     android:background="#faf5ff"
     android:descendantFocusability="blocksDescendants"
+    android:orientation="vertical"
     android:paddingLeft="10dp">
 
     <TextView
-            android:focusableInTouchMode="false"
-            android:focusable="false"
+        android:id="@+id/experimentName"
+        android:layout_width="wrap_content"
 
-            android:id="@+id/experimentName"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="ExperimentName"
-            android:textSize="30sp"
-            android:maxLength="32"
-            android:layout_marginLeft="10dp"
-            android:paddingTop="10dp">
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="10dp"
+        android:focusable="false"
+        android:focusableInTouchMode="false"
+        android:maxLength="32"
+        android:paddingTop="10dp"
+        android:text="ExperimentName"
+        android:textSize="30sp">
 
 
     </TextView>
 
     <TextView
-            android:focusableInTouchMode="false"
-            android:focusable="false"
+        android:id="@+id/Experiment_descr"
+        android:layout_width="match_parent"
 
-            android:id="@+id/Experiment_descr"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginLeft="10dp"
-            android:maxLength="32"
-            android:text="Description"
-            android:paddingBottom="10dp"></TextView>
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="10dp"
+        android:focusable="false"
+        android:focusableInTouchMode="false"
+        android:maxLength="32"
+        android:paddingBottom="10dp"
+        android:text="Description"></TextView>
 
-<!--    android:clickable="true"-->
-<!--    android:onClick="onClick"-->
+    <!--    android:clickable="true"-->
+    <!--    android:onClick="onClick"-->
 
     <TextView
-        android:focusableInTouchMode="false"
-        android:focusable="false"
-
         android:id="@+id/Owner"
         android:layout_width="278dp"
+
         android:layout_height="wrap_content"
         android:layout_marginLeft="10dp"
         android:layout_marginTop="0dp"
+        android:focusable="false"
+        android:focusableInTouchMode="false"
         android:text="Owner Name"
         android:textColor="@color/purple_500"
         android:textSize="20sp">
@@ -57,64 +55,61 @@
     </TextView>
 
     <TextView
-        android:focusableInTouchMode="false"
-        android:focusable="false"
-
         android:id="@+id/dateCreated"
         android:layout_width="match_parent"
+
         android:layout_height="wrap_content"
-        android:text="dateCreated"
         android:layout_marginLeft="10dp"
-        >
-    </TextView>
+        android:focusable="false"
+        android:focusableInTouchMode="false"
+        android:text="dateCreated"></TextView>
 
 
     <TextView
-            android:focusableInTouchMode="false"
-            android:focusable="false"
+        android:id="@+id/Region"
+        android:layout_width="match_parent"
 
-            android:id="@+id/Region"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="Geolocation: Required"
-            android:layout_marginLeft="10dp"
-            android:visibility="visible"></TextView>
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="10dp"
+        android:focusable="false"
+        android:focusableInTouchMode="false"
+        android:text="Geolocation: Required"
+        android:visibility="visible"></TextView>
 
     <CheckBox
-        android:focusableInTouchMode="false"
-        android:focusable="false"
-
         android:id="@+id/fav"
         android:layout_width="wrap_content"
+
         android:layout_height="wrap_content"
         android:layout_marginLeft="340dp"
+        android:buttonTint="@color/theme_default"
         android:checked="false"
         android:clickable="true"
-        android:buttonTint="@color/theme_default"
-        >
+        android:focusable="false"
+        android:focusableInTouchMode="false">
 
     </CheckBox>
 
     <Button
-        android:focusableInTouchMode="false"
-        android:focusable="false"
-
         android:id="@+id/comment_btn"
         android:layout_width="204dp"
+
         android:layout_height="wrap_content"
         android:layout_marginLeft="10dp"
         android:layout_marginTop="-50dp"
+        android:focusable="false"
+        android:focusableInTouchMode="false"
         android:text="Comments" />
 
     <TextView
-        android:focusableInTouchMode="false"
-        android:focusable="false"
-
         android:id="@+id/follow"
         android:layout_width="wrap_content"
+
         android:layout_height="wrap_content"
         android:layout_marginLeft="1.5in"
         android:layout_marginTop="-36dp"
+        android:focusable="false"
+        android:focusableInTouchMode="false"
         android:text="Subscribe"
         android:textSize="20dp" />
 

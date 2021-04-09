@@ -1,11 +1,11 @@
 package com.example.cmput301w21t23_smartdatabook;
 
-import androidx.test.platform.app.InstrumentationRegistry;
-import androidx.test.rule.ActivityTestRule;
-
 import android.app.Activity;
 import android.view.View;
 import android.widget.CheckBox;
+
+import androidx.test.platform.app.InstrumentationRegistry;
+import androidx.test.rule.ActivityTestRule;
 
 import com.example.cmput301w21t23_smartdatabook.database.Database;
 import com.example.cmput301w21t23_smartdatabook.experiment.ExperimentDetails;
@@ -20,14 +20,10 @@ import org.junit.Rule;
 import org.junit.Test;
 
 import static junit.framework.TestCase.assertTrue;
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertFalse;
-import static org.junit.Assert.assertNotEquals;
-import static org.junit.Assert.assertNotNull;
-import static org.junit.Assert.assertNull;
 
 /**
- *  Instrumented test, which will execute on an Android device.
+ * Instrumented test, which will execute on an Android device.
+ *
  * @Author Afaq
  * @See https://developer.android.com/training/testing/ui-testing/espresso-testing#java
  */
@@ -54,10 +50,11 @@ public class HomePageTest {
 
     /**
      * Gets the Activity
+     *
      * @throws Exception
      */
     @Test
-    public void start() throws Exception{
+    public void start() throws Exception {
         Activity activity = rule.getActivity();
     }
 
@@ -69,7 +66,7 @@ public class HomePageTest {
     }
 
     @Test
-    public void checkAddExpBtn(){
+    public void checkAddExpBtn() {
         solo.assertCurrentActivity("Wrong Activity", MainActivity.class);
         solo.waitForFragmentById(R.layout.home_page, 5000);
         solo.clickOnView(addExpButton);
@@ -78,7 +75,7 @@ public class HomePageTest {
     }
 
     @Test
-    public void checkClickExperiment(){
+    public void checkClickExperiment() {
         solo.assertCurrentActivity("Wrong Activity", MainActivity.class);
         solo.sleep(1000);
         solo.clickInList(0);
@@ -88,7 +85,7 @@ public class HomePageTest {
     }
 
     @Test
-    public void checkExperimentDetailsBackBtn(){
+    public void checkExperimentDetailsBackBtn() {
         solo.assertCurrentActivity("Wrong Activity", MainActivity.class);
         solo.sleep(1000);
         solo.clickInList(0);
@@ -99,10 +96,10 @@ public class HomePageTest {
     }
 
     @Test
-    public void checkSearchBar(){
+    public void checkSearchBar() {
         solo.assertCurrentActivity("Wrong Activity", MainActivity.class);
         solo.clickOnView(searchBar);
-        solo.enterText(0,"Grain");
+        solo.enterText(0, "Grain");
         solo.sleep(6000);
         // TODO: check the output and click one
 
@@ -112,7 +109,7 @@ public class HomePageTest {
     public void checkClickSearchBarDropDown() {
         solo.assertCurrentActivity("Wrong Activity", MainActivity.class);
         solo.clickOnView(searchBar);
-        solo.enterText(0,"Grain");
+        solo.enterText(0, "Grain");
         solo.sleep(6000);
         // TODO: click an experiment and check the experiment details activity
         solo.assertCurrentActivity("Wrong Activity", ExperimentDetails.class);
