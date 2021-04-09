@@ -8,6 +8,14 @@ The Team Wiki is found [here](https://github.com/CMPUT301W21T23/CMPUT301W21T23-S
 
 SmartDataBook Usage Guide:
 
+Nvaigoation bars and tabs:
+  - Once users have launch the app, the home page there is a navigation bar, with 4 tabs below. They are Explore, Subscribed, Archived and Settings
+  - The top of home page displays the tab that the user is currently on. Which users can clearly know which main tab they are on.
+  - The Explore tab shows all of the public experiments
+  - The Subscribed tab shows all of the experiments that the user subscribed
+  - The Archived tab shows all of the user's own archived experiments
+  - The Settings tab allows user to signup a profile by inputting a username and an email
+
 Signing Up:
   - Upon installing and opening up the app, a unique user ID will be generated for each user
   - No username, contact, or password inputs are required, but username and contact info may be filled in later.
@@ -19,7 +27,7 @@ Editing Profile:
   - Select "Edit" and enter in the user's "Username" and "Contact" and press enter
   - User's inputs will now be seen publicly by other users
 
-Add An Experiment:
+To add An Experiment:
   - Select the "Explore" tab on the nagivation bar on the bottom left of the app interface
   - Click the Red, circle plus sign to add a new experiment
   - It will present you with a new screen, with the title "Add new experiment"
@@ -59,13 +67,13 @@ Select subscribed experiments:
   - Users can select their archived experiment, just like they do on the Explore tab, or Archived Tab
   - To remove an experiment from the Subscribed page, either uncheck the experient from the Explore page, or the Subscribed page
 
-Select archived experiments
+Select archived experiments:
   - On the middle right of the navigation bar on the bottom of the app, select the Archived tab
   - The Archived tab shows all of the user's archived experiment, which users can quikcly search their desired experiment
   - Users can select their archived experiment, just like they do on the Explore tab, or Subscribed Tab
   - To remove an experiment from the Archived tab, simply select the experiment, then click the "Un-Archive text" to un-archive an experiment"
   
-Upload trials on experiment
+Upload trials on experiment:
   - Select an experiment from either the Explore tab, Archived tab, or the Subscribed tab
   - Then click the "upload trial" button
   - Once the button is clicked, a list of trials on the experiment will be displayed which users can view the trial value, the user who upload the trials, and the date of the trial uploaded to the experiment
@@ -84,35 +92,29 @@ Generate QR or Barcodes:
   - Once the user clicks the "generate" button, a QR code consists of the trial value will be displayed
   - If the user prefers to register a barcode instead, clicked to the "register barcode" button, and the barcode will be registered
 
-Scan QR or Barcodes:
-  - Besides uploading trial value through the "upload trials" button, user can upload their trial values by generating QR codes or barcodes
-  - N/A for now
-
-Searching experiments
+Searching experiments:
   - To search an experiment, click on the the magnifying glass icon on the top right of the app on either Explore, Subscribed, or Archived tab
   - Afterwards, users are able to type in order to search for their experiment
   - If users decides to cancel searching, they can press the left arrow icon lcoated on the top left of the app, which will return the user back on the tab they were at before they decide to search.
   - The app searches experiment based on the keyword user types, with the experiments' name, experiment owners' username, experiments' date, description, and trial type.
   - A successful search will search the correct experiment, which allows users to find their desired experiment much faster.
   
-Adding comments
+Adding comments in an experiment:
   - In an experiment, click the "comments" button in the experiment
   - Then, a list of comments will appear, which users can see other comments, as well as their comment creator's username, date of created comment, and the comment ID
   - In the comment list page,  users can add comments, through the floating plus button, on the bottom right of the screen
   - Once the user has clicked the button, a dialog will prompt user for the comment text, which the user can either add or discard their comments
   - Then the user will return back to the comment list page, which newly added comments are updated
 
-Reply comments
+Reply a comments in an experiment:
   - In an experiment, click the "comments" button in the experiment. Aftwards, a list of commments will be displayed.
   - Users can click on a comment, which they will now see other comments that respond the the seclected comment.
   - To reply a comment, click on the floating plus buttom lcoated at the bottom left of the screen, then a dialog will display which prompts user to enter a new comment that replies to the clicked comment.
   - Once the user has clicked the button, a dialog will prompt user for the comment text, which the user can either add or discard their comments
   - Then the replied comments will be updated and displayed on the screen of selected comment.
 
-View stats and graphs
-  - In an experiment, click the "comments" button in the experiment
+To see an experiment's statistics and diagrams:
+  - Select an experiment, then click on the "View Stats" button
+  - Once the button is clicked, the experiment's statisics (mean, median, standard deviation, and quartiles) and diagrams(histograms and plots) are displayed
 
-MORE TO ADD...
-  - viewing graphs and stats
-  - QR codes (scan QR codes, generate QR code)
-  - more I haven't think yet
+
