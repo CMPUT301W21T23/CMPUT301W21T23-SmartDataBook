@@ -11,14 +11,13 @@ import android.widget.ArrayAdapter;
 import android.widget.ListView;
 
 import androidx.fragment.app.Fragment;
-import androidx.fragment.app.FragmentTransaction;
 
 import com.example.cmput301w21t23_smartdatabook.experiment.Experiment;
 import com.example.cmput301w21t23_smartdatabook.R;
 import com.example.cmput301w21t23_smartdatabook.database.Database;
 import com.example.cmput301w21t23_smartdatabook.database.GeneralDataCallBack;
 import com.example.cmput301w21t23_smartdatabook.experiment.ExperimentDetails;
-import com.example.cmput301w21t23_smartdatabook.home.CardList;
+import com.example.cmput301w21t23_smartdatabook.experiment.CardList;
 import com.example.cmput301w21t23_smartdatabook.mainController.MainActivity;
 import com.example.cmput301w21t23_smartdatabook.user.User;
 import com.google.firebase.firestore.FirebaseFirestore;
@@ -146,32 +145,13 @@ public class FavPage extends Fragment {
 						//experimentDataList with added items ONLY exist inside the scope of this getExpDataList function
 						favDataList = DataList;
 
-						//Create a new searchDataList depending on the query
-						if (currentQuery != null) {
-							for (Experiment experiment : favDataList) {
-								if (experiment.getExpName().contains(currentQuery) ||
-										UserName.get(experiment.getOwnerUserID()).getUserName().contains(currentQuery) ||
-										experiment.getDate().toString().contains(currentQuery) ||
-										experiment.getDescription().contains(currentQuery)) {
-
-									searchDataList.add(experiment);
-
-								}
-							}
-
-							favAdapter.clear();
-							favAdapter.addAll(searchDataList);
-
-						} else {
-							favAdapter.addAll(favDataList);
-						}
-
+						favAdapter.addAll(favDataList);
 						favAdapter.notifyDataSetChanged();
 
 						favList.setOnItemClickListener(new AdapterView.OnItemClickListener() {
 							@Override
 							public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-								Experiment exp = favDataList.get(position); // get the experiment from list
+								Experiment exp = (Experiment) parent.getAdapter().getItem(position); // get the experiment from list
 								Intent intent = new Intent(getActivity(), ExperimentDetails.class);
 								intent.putExtra("currentID", user.getUserUniqueID()); // pass position to ExperimentDetails class
 								intent.putExtra("experiment", (Parcelable) exp); // pass experiment object

@@ -4,6 +4,7 @@ import android.Manifest;
 import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.pm.PackageManager;
 import android.location.Location;
 import android.net.Uri;
 import android.os.Bundle;
@@ -19,6 +20,8 @@ import android.widget.TextView;
 import android.widget.Toast;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.app.ActivityCompat;
+
 import com.example.cmput301w21t23_smartdatabook.stats.StringDate;
 import com.example.cmput301w21t23_smartdatabook.experiment.Experiment;
 import com.example.cmput301w21t23_smartdatabook.R;
@@ -28,6 +31,7 @@ import com.example.cmput301w21t23_smartdatabook.geolocation.LocationWithPermissi
 import com.example.cmput301w21t23_smartdatabook.trials.Trial;
 import com.example.cmput301w21t23_smartdatabook.trials.UploadTrial;
 import com.example.cmput301w21t23_smartdatabook.user.User;
+import com.google.android.gms.location.LocationServices;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
@@ -121,11 +125,13 @@ public class ScannerActivity extends AppCompatActivity implements ZXingScannerVi
 		Intent intent = getIntent();
 		experiment = (Experiment) intent.getSerializableExtra("experiment");
 		String type = intent.getStringExtra("Flag");
-		new LocationWithPermission(ScannerActivity.this).getLatLng(new GeneralDataCallBack() {
-			@Override
-			public void onDataReturn(Object returnedObject) {
-				Location location = (Location) returnedObject;
-				Log.e("LOACTION", String.valueOf(location.getLatitude()));
+		if (ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) == PackageManager.PERMISSION_GRANTED) {
+			LocationServices.getFusedLocationProviderClient(this).getLastLocation().addOnSuccessListener(location -> {
+				if (location == null) {
+					new LocationWithPermission(this).requestLocationUpdate();
+					Toast.makeText(this, "Preparing location.. Please wait up to 10 seconds and try again.", Toast.LENGTH_LONG).show();
+					return;
+				}
 				LatLng latlng = new LatLng(location.getLatitude(), location.getLongitude());
 				if (type.equals("Scan")) {
 					if (rawResult.getBarcodeFormat().toString().contains("QR_CODE")) {
@@ -137,11 +143,9 @@ public class ScannerActivity extends AppCompatActivity implements ZXingScannerVi
 				} else {
 					registerBarcode(rawResult.toString(), experiment);
 				}
-				onBackPressed();
-			}
-		});
-
-
+//				onBackPressed();
+			});
+		}
 	}
 
 	@Override
@@ -226,6 +230,11 @@ public class ScannerActivity extends AppCompatActivity implements ZXingScannerVi
 											if (experiment.getTrialType().equals("Binomial")) {
 												data.put("Bool", switchTF.isChecked());
 												data.put("Value", Integer.parseInt(value.getText().toString()));
+												if (Integer.parseInt(value.getText().toString())>experiment.getMaxTrials()){
+													onBackPressed();
+													Toast.makeText(getBaseContext(), "Cannot use value greater than max #'s of trial", Toast.LENGTH_SHORT).show();
+													return;
+												}
 											} else if (experiment.getTrialType().equals(("Measurement"))) {
 												data.put("Value", Float.parseFloat(value.getText().toString()));
 											} else {
@@ -238,6 +247,7 @@ public class ScannerActivity extends AppCompatActivity implements ZXingScannerVi
 													.collection(user.getUserUniqueID())
 													.document(UUID.randomUUID().toString())
 													.set(data);
+											dialog.dismiss();
 											onBackPressed();
 										}
 									})
@@ -251,61 +261,70 @@ public class ScannerActivity extends AppCompatActivity implements ZXingScannerVi
 	// if a QR code is scanned this function is called
 	private void QRCodeScanned(String rawResult, LatLng latlng) {
 		String[] values = rawResult.split(",");
-		db
-				.collection("Experiments")
-				.document(experiment.getExpID())
-				.collection("Trials")
-				.get()
-				.addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
-					@Override
-					public void onComplete(@NonNull Task<QuerySnapshot> task) {
-						if (task.isSuccessful()){
-							int count = 0;
-							for (QueryDocumentSnapshot document : task.getResult()) {
-								count+=1;
-							}
-							if (count >= experiment.getMaxTrials()){
-								onBackPressed();
-//								Toast.makeText(UploadTrial.this, "You cannot add more trials than the maximum trials for this experiment at once", Toast.LENGTH_SHORT).show();
-							} else{
-								if (values[3].equals("Binomial")) {
-									//Need to add in given number of binomial trials
-									if (count+Integer.parseInt(String.valueOf((values[2])))> experiment.getMaxTrials()){
-										onBackPressed();
-									}
-									else{
-										for (int i = 1; i <= Integer.parseInt(values[2]); i++) {
-											Trial trial = new Trial(Boolean.parseBoolean(values[4]),
-													values[3],
-													Boolean.parseBoolean(values[5]),
-													values[1],
-													UUID.randomUUID().toString(),
-													stringDate.getCurrentDate(),
-													experiment.getRequireLocation() ? latlng : null);
-											database.addTrialToDB(db.collection("Experiments")
-													.document(values[0])
-													.collection("Trials")
-													.document(trial.getTrialID()), trial);
-										}
-									}
-								} else {
-									Trial trial = new Trial(Boolean.parseBoolean(values[4]),
-											values[3],
-											Float.parseFloat(values[2]),
-											values[1],
-											UUID.randomUUID().toString(),
-											stringDate.getCurrentDate(),
-											experiment.getRequireLocation() ? latlng : null);
-
-									database.addTrialToDB(db.collection("Experiments")
-											.document(values[0])
-											.collection("Trials")
-											.document(trial.getTrialID()), trial);
+		if(experiment.getExpID().equals(values[0])){
+			db
+					.collection("Experiments")
+					.document(experiment.getExpID())
+					.collection("Trials")
+					.get()
+					.addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
+						@Override
+						public void onComplete(@NonNull Task<QuerySnapshot> task) {
+							if (task.isSuccessful()){
+								int count = 0;
+								for (QueryDocumentSnapshot document : task.getResult()) {
+									count+=1;
 								}
+								if (count >= experiment.getMaxTrials()){
+									onBackPressed();
+									Toast.makeText(getBaseContext(), "You cannot add more trials than the maximum trials for this experiment at once", Toast.LENGTH_LONG).show();
+								} else{
+									if (values[3].equals("Binomial")) {
+										//Need to add in given number of binomial trials
+										if (count+Integer.parseInt(String.valueOf((values[2])))> experiment.getMaxTrials()){
+											onBackPressed();
+											Toast.makeText(getBaseContext(), "You cannot add more trials than the maximum trials for this experiment at once", Toast.LENGTH_LONG).show();
+										}
+										else{
+											for (int i = 1; i <= Integer.parseInt(values[2]); i++) {
+												Trial trial = new Trial(Boolean.parseBoolean(values[4]),
+														values[3],
+														Boolean.parseBoolean(values[5]),
+														values[1],
+														UUID.randomUUID().toString(),
+														stringDate.getCurrentDate(),
+														experiment.getRequireLocation() ? latlng : null);
+												database.addTrialToDB(db.collection("Experiments")
+														.document(values[0])
+														.collection("Trials")
+														.document(trial.getTrialID()), trial);
+											}
+										}
+									} else {
+										Trial trial = new Trial(Boolean.parseBoolean(values[4]),
+												values[3],
+												Float.parseFloat(values[2]),
+												values[1],
+												UUID.randomUUID().toString(),
+												stringDate.getCurrentDate(),
+												experiment.getRequireLocation() ? latlng : null);
+
+										database.addTrialToDB(db.collection("Experiments")
+												.document(values[0])
+												.collection("Trials")
+												.document(trial.getTrialID()), trial);
+									}
+								}
+								onBackPressed();
 							}
 						}
-					}
-				});
+					});
+		}
+		else{
+			onBackPressed();
+			Toast.makeText(getBaseContext(), "Invalid QR Code", Toast.LENGTH_SHORT).show();
+		}
+
 	}
 
 	// if barcode is scanned for the purpose of adding a trial to the experiment
@@ -318,8 +337,10 @@ public class ScannerActivity extends AppCompatActivity implements ZXingScannerVi
 					@Override
 					public void onComplete(@NonNull Task<QuerySnapshot> task) {
 						if (task.isSuccessful()) {
+							boolean found = false;
 							for (QueryDocumentSnapshot document : task.getResult()) {
 								if (rawResult.equals(document.get("RawResult"))) {
+									found = true;
 									db
 											.collection("Experiments")
 											.document(experiment.getExpID())
@@ -329,19 +350,25 @@ public class ScannerActivity extends AppCompatActivity implements ZXingScannerVi
 												@Override
 												public void onComplete(@NonNull Task<QuerySnapshot> task) {
 													if (task.isSuccessful()){
+														// count the current number of trials in the db
 														int count = 0;
 														for (QueryDocumentSnapshot document1 : task.getResult()) {
 															count+=1;
 														}
+
+														// if the # of trials has reached its limit don't do anything
 														if (count >= experiment.getMaxTrials()){
 															onBackPressed();
-														} else{
+															Toast.makeText(getBaseContext(), "Reached Max Trials", Toast.LENGTH_SHORT).show();
+														}
+														// else proceed to add the trial to the db
+														else{
 															if (experiment.getTrialType().equals("Binomial")){
-																if ((count + (int)document.get("Value"))>  experiment.getMaxTrials()){
+																if ((count + Integer.parseInt(String.valueOf(document.get("Value"))))>  experiment.getMaxTrials()){
 																	onBackPressed();
 																}
 																else {
-																	for (int i = 1; i <= Integer.parseInt((String) document.get("Value")); i++) {
+																	for (int i = 1; i <= Integer.parseInt(document.get("Value").toString()); i++) {
 																		Trial trial = new Trial(experiment.getRequireLocation(),
 																				experiment.getTrialType(),
 																				document.get("Bool"),
@@ -373,14 +400,25 @@ public class ScannerActivity extends AppCompatActivity implements ZXingScannerVi
 																		.document(trial.getTrialID()), trial);
 															}
 														}
+														onBackPressed();
 													}
 												}
 											});
 								}
 							}
+							if (!found){
+								onBackPressed();
+								Toast.makeText(getBaseContext(), "Invalid Barcode", Toast.LENGTH_SHORT).show();
+							}
+
+						}
+						else {
+							onBackPressed();
+							Toast.makeText(getBaseContext(), "Invalid Barcode", Toast.LENGTH_SHORT).show();
 						}
 					}
 				});
 	}
 }
+
 

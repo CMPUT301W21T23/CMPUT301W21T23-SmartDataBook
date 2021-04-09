@@ -71,7 +71,7 @@ public class ExperimentDetails extends AppCompatActivity {
 
         View userInfoView = LayoutInflater.from(ExperimentDetails.this).inflate(R.layout.view_profile, null);
 
-        AppCompatImageButton scan = findViewById(R.id.scanner);
+        AppCompatImageButton scan = findViewById(R.id.scannerimg);
         scan.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -222,19 +222,19 @@ public class ExperimentDetails extends AppCompatActivity {
                                 public void onClick(DialogInterface dialog, int which) {
                                     if (!experiment.getIsEnd()) {
                                         experiment.setEnd(true);
-                                        database.publicOrEnd(db.collection("Experiments"), "On", experiment, "isEnd");
+                                        database.publicOrEnd(db.collection("Experiments"), true, experiment, "isEnd");
                                         database.publicOrEnd((db.collection("Users")
                                                 .document(user.getUserUniqueID())
-                                                .collection("Favorites")), "On", experiment, "isEnd");
+                                                .collection("Favorites")), true, experiment, "isEnd");
                                         database.addExperimentToDB(experiment, db.collection("Archived"), experiment.getOwnerUserID());
                                         database.deleteFromDB(db.collection("Experiments").document(experiment.getExpID()));
 
                                     } else {
                                         experiment.setEnd(false);
-                                        database.publicOrEnd(db.collection("Experiments"), "Off", experiment, "isEnd");
+                                        database.publicOrEnd(db.collection("Experiments"), false, experiment, "isEnd");
                                         database.publicOrEnd((db.collection("Users")
                                                 .document(user.getUserUniqueID())
-                                                .collection("Favorites")), "Off", experiment, "isEnd");
+                                                .collection("Favorites")), false, experiment, "isEnd");
                                         database.addExperimentToDB(experiment, db.collection("Experiments"), experiment.getOwnerUserID());
                                         database.deleteFromDB(db.collection("Archived").document(experiment.getExpID()));
                                     }
@@ -262,12 +262,8 @@ public class ExperimentDetails extends AppCompatActivity {
         publish.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                String onOff;
-                if (publish.isChecked()) {
-                    onOff = "On";
-                } else {
-                    onOff = "Off";
-                }
+                boolean onOff;
+                onOff = publish.isChecked();
 
                 database.publicOrEnd(db.collection("Experiments"), onOff, experiment, "PublicStatus");
                 database.publicOrEnd((db.collection("Users")

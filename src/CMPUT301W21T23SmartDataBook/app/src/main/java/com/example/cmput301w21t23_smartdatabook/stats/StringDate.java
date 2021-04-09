@@ -25,8 +25,20 @@ public class StringDate {
      * @return formattedDate: a string that consists the formatted date
      */
     public String getCurrentDate(){
-        DateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSS'Z'", Locale.CANADA);
-        dateFormat.setTimeZone(TimeZone.getTimeZone("GMT"));
+        return makeFormattedDate("yyyy-MM-dd'T'HH:mm:ss.SSS'Z'");
+    }
+
+    public String getShortDate() {
+        return makeFormattedDate("yyyy-MM-dd");
+    }
+
+    public String getCustomDate(String pattern) {
+        return makeFormattedDate(pattern);
+    }
+
+    private String makeFormattedDate(String pattern) {
+        DateFormat dateFormat = new SimpleDateFormat(pattern, Locale.CANADA);
+        dateFormat.setTimeZone(TimeZone.getDefault());
         return dateFormat.format(new Date());
     }
 

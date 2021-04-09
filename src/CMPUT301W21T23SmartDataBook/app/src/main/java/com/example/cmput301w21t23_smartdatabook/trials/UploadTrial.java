@@ -1,8 +1,9 @@
 package com.example.cmput301w21t23_smartdatabook.trials;
 
+import android.Manifest;
 import android.content.DialogInterface;
 import android.content.Intent;
-import android.location.Location;
+import android.content.pm.PackageManager;
 import android.os.Bundle;
 import android.text.InputType;
 import android.view.View;
@@ -18,6 +19,8 @@ import androidx.annotation.NonNull;
 import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.app.ActivityCompat;
+
 import com.example.cmput301w21t23_smartdatabook.stats.StringDate;
 import com.example.cmput301w21t23_smartdatabook.database.Database;
 import com.example.cmput301w21t23_smartdatabook.experiment.Experiment;
@@ -25,6 +28,7 @@ import com.example.cmput301w21t23_smartdatabook.R;
 import com.example.cmput301w21t23_smartdatabook.database.GeneralDataCallBack;
 import com.example.cmput301w21t23_smartdatabook.geolocation.LocationWithPermission;
 import com.example.cmput301w21t23_smartdatabook.user.User;
+import com.google.android.gms.location.LocationServices;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
@@ -64,7 +68,7 @@ public class UploadTrial extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.upload_trial);
+        setContentView(R.layout.add_trial);
 
         setSupportActionBar(findViewById(R.id.app_toolbar));
         ActionBar toolbar = getSupportActionBar();
@@ -114,29 +118,29 @@ public class UploadTrial extends AppCompatActivity {
                 if (!experiment.getIsEnd()) {
                     expType = experiment.getTrialType();
                     db
-                            .collection("Experiments")
-                            .document(experiment.getExpID())
-                            .collection("Trials")
-                            .get()
-                            .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
-                                @Override
-                                public void onComplete(@NonNull Task<QuerySnapshot> task) {
-                                    if (task.isSuccessful()) {
-                                        int count = 0;
-                                        boolean found = false;
-                                        for (QueryDocumentSnapshot document : task.getResult()) {
-                                            count += 1;
-                                            if (count == experiment.getMaxTrials()) {
-                                                found = true;
-                                                Toast.makeText(UploadTrial.this, "This Experiment has reached the max number of trials", Toast.LENGTH_SHORT).show();
-                                            }
-                                        }
-                                        if (!found) {
-                                            addTrialDialogs(expType, experiment);
+                        .collection("Experiments")
+                        .document(experiment.getExpID())
+                        .collection("Trials")
+                        .get()
+                        .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
+                            @Override
+                            public void onComplete(@NonNull Task<QuerySnapshot> task) {
+                                if (task.isSuccessful()) {
+                                    int count = 0;
+                                    boolean found = false;
+                                    for (QueryDocumentSnapshot document : task.getResult()) {
+                                        count += 1;
+                                        if (count == experiment.getMaxTrials()) {
+                                            found = true;
+                                            Toast.makeText(UploadTrial.this, "This Experiment has reached the max number of trials", Toast.LENGTH_SHORT).show();
                                         }
                                     }
+                                    if (!found) {
+                                        addTrialDialogs(expType, experiment);
+                                    }
                                 }
-                            });
+                            }
+                        });
                 }
             }
         });
@@ -151,11 +155,10 @@ public class UploadTrial extends AppCompatActivity {
                         .collection("Trials")
                 , trialDataList, trialArrayAdapter);
 
-        // TODO: Users can delete the trials that they entered but owner can delete any trials
-        if (experiment.getOwnerUserID().equals(user.getUserUniqueID())) {
-            trialsList.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-                @Override
-                public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+        trialsList.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                if (experiment.getOwnerUserID().equals(user.getUserUniqueID())) {
                     AlertDialog.Builder builder = new AlertDialog.Builder(UploadTrial.this);
                     builder.setTitle("Delete Trial?");
                     builder.setNegativeButton("cancel", null)
@@ -171,20 +174,20 @@ public class UploadTrial extends AppCompatActivity {
                                     recreate();
                                 }
                             }).create().show();
+                } else {
+                    Toast.makeText(UploadTrial.this, "You don't have the privilege to delete trials", Toast.LENGTH_SHORT).show();
                 }
-            });
-        } else {
-            Toast.makeText(UploadTrial.this, "You don't have the privilege to delete trials", Toast.LENGTH_SHORT).show();
-        }
+            }
+        });
+
     }
 
     private void addTrialDialogs(String expType, Experiment experiment) {
-        new LocationWithPermission(UploadTrial.this).getLatLng(new GeneralDataCallBack() {
-            @Override
-            public void onDataReturn(Object returnedObject) {
-                Location location = (Location) returnedObject;
+        if (ActivityCompat.checkSelfPermission(UploadTrial.this, Manifest.permission.ACCESS_FINE_LOCATION) == PackageManager.PERMISSION_GRANTED) {
+            LocationServices.getFusedLocationProviderClient(UploadTrial.this).getLastLocation().addOnSuccessListener(location -> {
                 if (location == null) {
-                    Toast.makeText(UploadTrial.this, "Please open up the google map and obtain your location at least once.", Toast.LENGTH_LONG).show();
+                    new LocationWithPermission(UploadTrial.this).requestLocationUpdate();
+                    Toast.makeText(UploadTrial.this, "Preparing location.. Please wait up to 10 seconds and try again.", Toast.LENGTH_LONG).show();
                     return;
                 }
 
@@ -240,18 +243,16 @@ public class UploadTrial extends AppCompatActivity {
                                                                            true,
                                                                            experiment.getOwnerUserID(),
                                                                            UUID.randomUUID().toString(),
-                                                                           stringDate.getCurrentDate(),
+                                                                           stringDate.getShortDate(),
                                                                            experiment.getRequireLocation() ? latlng : null);
                                                                    collectionRefToDB(trial, experiment);
                                                                }
                                                            }
-//                                                           recreate();
                                                        }
                                                        recreate();
                                                    }
                                                 });
                                     }
-//                                    recreate();
                                     dialog.cancel();
                                 }
                             })
@@ -291,19 +292,16 @@ public class UploadTrial extends AppCompatActivity {
                                                                             false,
                                                                             experiment.getOwnerUserID(),
                                                                             UUID.randomUUID().toString(),
-                                                                            stringDate.getCurrentDate(),
+                                                                            stringDate.getShortDate(),
                                                                             experiment.getRequireLocation() ? latlng : null);
                                                                     collectionRefToDB(trial, experiment);
                                                                 }
                                                             }
-//                                                            recreate();
                                                         }
                                                         recreate();
                                                     }
                                                 });
                                     }
-
-//                                    recreate();
                                     dialog.cancel();
                                 }
                             })
@@ -334,7 +332,7 @@ public class UploadTrial extends AppCompatActivity {
                                                 Integer.parseInt(numCount.getText().toString()),
                                                 experiment.getOwnerUserID(),
                                                 UUID.randomUUID().toString(),
-                                                stringDate.getCurrentDate(),
+                                                stringDate.getShortDate(),
                                                 experiment.getRequireLocation() ? latlng : null);
                                         collectionRefToDB(trial, experiment);
                                         recreate();
@@ -365,7 +363,7 @@ public class UploadTrial extends AppCompatActivity {
                                                 Integer.parseInt(numNonNegCount.getText().toString()),
                                                 experiment.getOwnerUserID(),
                                                 UUID.randomUUID().toString(),
-                                                stringDate.getCurrentDate(),
+                                                stringDate.getShortDate(),
                                                 experiment.getRequireLocation() ? latlng : null);
                                         collectionRefToDB(trial, experiment);
                                     } else {
@@ -387,37 +385,39 @@ public class UploadTrial extends AppCompatActivity {
                     measurementInput.setInputType(InputType.TYPE_CLASS_NUMBER | InputType.TYPE_NUMBER_FLAG_DECIMAL | InputType.TYPE_NUMBER_FLAG_SIGNED);
                     builder.setView(measurementInput);
                     builder.setNegativeButton("Cancel", null)
-                            .setPositiveButton("Add Trials", new DialogInterface.OnClickListener() {
-                                @Override
-                                public void onClick(DialogInterface dialog, int which) {
-                                    // once click add trials, add the trial's outcome, location
-                                    // Q1: check editText value
-                                    // Q2: how to save information
-                                    // check input for
+                        .setPositiveButton("Add Trials", new DialogInterface.OnClickListener() {
+                            @Override
+                            public void onClick(DialogInterface dialog, int which) {
+                                // once click add trials, add the trial's outcome, location
+                                // Q1: check editText value
+                                // Q2: how to save information
+                                // check input for
 
-                                    if (measurementInput.getText().toString().length() == 0) {
-                                        Toast.makeText(UploadTrial.this, "Trial value field must not be empty", Toast.LENGTH_SHORT).show();
-                                        dialog.cancel();
-                                    } else {
-                                        // source: https://docs.oracle.com/javase/8/docs/api/java/math/BigDecimal.html
-                                        // I have use the idea of BigDecimal object to handle float returning not exactly the same valye
-                                        // by Alex Mak
-                                        BigDecimal roundedVal = new BigDecimal(measurementInput.getText().toString());
-                                        double finalVal = roundedVal.doubleValue();
-                                        Trial trial = new Trial(experiment.getRequireLocation(),
-                                                experiment.getTrialType(),
-                                                finalVal,
-                                                experiment.getOwnerUserID(),
-                                                UUID.randomUUID().toString(),
-                                                stringDate.getCurrentDate(),
-                                                experiment.getRequireLocation() ? latlng : null);
-                                        collectionRefToDB(trial, experiment);
-                                        recreate();
-                                    }
+                                if (measurementInput.getText().toString().length() == 0) {
+                                    Toast.makeText(UploadTrial.this, "Trial value field must not be empty", Toast.LENGTH_SHORT).show();
+                                    dialog.cancel();
+                                } else {
+                                    // source: https://docs.oracle.com/javase/8/docs/api/java/math/BigDecimal.html
+                                    // I have use the idea of BigDecimal object to handle float returning not exactly the same valye
+                                    // by Alex Mak
+                                    BigDecimal roundedVal = new BigDecimal(measurementInput.getText().toString());
+                                    double finalVal = roundedVal.doubleValue();
+                                    Trial trial = new Trial(experiment.getRequireLocation(),
+                                            experiment.getTrialType(),
+                                            finalVal,
+                                            experiment.getOwnerUserID(),
+                                            UUID.randomUUID().toString(),
+                                            stringDate.getShortDate(),
+                                            experiment.getRequireLocation() ? latlng : null);
+                                    collectionRefToDB(trial, experiment);
+                                    recreate();
                                 }
-                            }).create().show();
-            } }
-        });
+                            }
+                    }).create().show();
+                }
+            });
+        }
+
     }
 
     void collectionRefToDB(Trial trial, Experiment experiment){

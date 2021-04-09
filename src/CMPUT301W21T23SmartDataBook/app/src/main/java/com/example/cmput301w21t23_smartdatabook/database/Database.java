@@ -211,7 +211,7 @@ public class Database {
 						if (document.getData().get("UUID") != null && document.getData().get("UserName") != null) {
 
 							User user = new User(document.getData().get("UserName").toString(),
-									document.getData().get("Email").toString(),
+									document.getData().get("Contact").toString(),
 									document.getData().get("UUID").toString());
 
 							userNames.put(document.getData().get("UUID").toString(), user);
@@ -301,10 +301,10 @@ public class Database {
 						mAuth = FirebaseAuth.getInstance();
 
 						experimentDataList.clear();
-//                        ("Experiments".equals(collection.getPath())
+
 						if (task.isSuccessful()) {
 							for (QueryDocumentSnapshot document : task.getResult()) {
-								if ((collection.getPath().equals("Experiments")) && document.getData().get("ExpID") != null && ((Boolean) document.getData().get("PublicStatus")) ||
+								if ((collection.getPath().equals("Experiments")) && document.getData().get("ExpID") != null && ((Boolean) document.get("PublicStatus")) ||
 										(collection.getPath().equals(db.collection("Users").document(currentID).collection("Favorites").getPath())) ||
 										(collection.getPath().equals("Archived"))) {
 
@@ -391,12 +391,12 @@ public class Database {
 	 * Edit user profile by querying the database.
 	 *
 	 * @param usernameTextField contains the editText field to write username to
-	 * @param emailTextField    contains the editText field to write email to
+	 * @param contactTextField    contains the editText field to write email to
 	 * @param saveButtonView    contains the save button view
 	 * @param context           contains the given context from which this function is called from
 	 * @author Bosco Chan
 	 */
-	public void editUser(EditText usernameTextField, EditText emailTextField, View saveButtonView, Context context, String currentID, User user) {
+	public void editUser(EditText usernameTextField, EditText contactTextField, View saveButtonView, Context context, String currentID, User user) {
 
 		db = FirebaseFirestore.getInstance();
 
@@ -415,23 +415,29 @@ public class Database {
 							usernameTextField.setText(data.get("UserName").toString());
 						}
 
-						if (data.get("Email").toString().equals("")) {
-							emailTextField.setHint("Enter Email");
+						if (data.get("Contact").toString().equals("")) {
+							contactTextField.setHint("Enter Contact");
 						} else {
-							emailTextField.setText(data.get("Email").toString());
+							contactTextField.setText(data.get("Contact").toString());
 						}
 
 						saveButtonView.setOnClickListener(new View.OnClickListener() {
 							@Override
 							public void onClick(View v) {
 								String username = usernameTextField.getText().toString();
-								String email = emailTextField.getText().toString();
-								user.setUserName(username);
-								user.setUserContact(email);
+								String contact = contactTextField.getText().toString();
+								String message;
+								if (username.equals("")) {
+									message = "Username field should not be empty";
+								} else {
+									user.setUserName(username);
+									user.setUserContact(contact);
 
-								docRef.update("UserName", username);
-
-								docRef.update("Email", email);
+									docRef.update("UserName", username);
+									docRef.update("Contact", contact);
+									message = "Profile successfully saved";
+								}
+								Toast.makeText(context, message, Toast.LENGTH_SHORT).show();
 							}
 						});
 					}
@@ -484,7 +490,7 @@ public class Database {
 										assert document != null;
 										if (!document.exists()) {
 											data.put("UserName", "User - " + currentUser.getUid().substring(0, 4));
-											data.put("Email", "");
+											data.put("Contact", "");
 											data.put("UUID", currentUser.getUid());
 
 											allUsersCollection
@@ -509,7 +515,7 @@ public class Database {
 	 * @param experiment
 	 * @param status
 	 */
-	public void publicOrEnd(CollectionReference coll, String onOff, Experiment experiment, String status) {
+	public void publicOrEnd(CollectionReference coll, boolean onOff, Experiment experiment, String status) {
 		coll.document(experiment.getExpID()).update(status, onOff);
 	}
 

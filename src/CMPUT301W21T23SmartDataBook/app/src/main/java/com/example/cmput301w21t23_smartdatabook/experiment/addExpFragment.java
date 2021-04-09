@@ -1,7 +1,8 @@
-package com.example.cmput301w21t23_smartdatabook.home;
+package com.example.cmput301w21t23_smartdatabook.experiment;
 
+import android.Manifest;
 import android.content.Intent;
-import android.location.Location;
+import android.content.pm.PackageManager;
 import android.os.Bundle;
 import android.os.Parcelable;
 import android.view.LayoutInflater;
@@ -15,13 +16,13 @@ import android.widget.RadioGroup;
 import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.app.ActivityCompat;
 import androidx.fragment.app.Fragment;
 
-import com.example.cmput301w21t23_smartdatabook.experiment.Experiment;
 import com.example.cmput301w21t23_smartdatabook.R;
 import com.example.cmput301w21t23_smartdatabook.stats.StringDate;
-import com.example.cmput301w21t23_smartdatabook.database.GeneralDataCallBack;
 import com.example.cmput301w21t23_smartdatabook.geolocation.LocationWithPermission;
+import com.google.android.gms.location.LocationServices;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.android.material.switchmaterial.SwitchMaterial;
@@ -65,7 +66,7 @@ public class addExpFragment extends Fragment {
 	@Override
 	public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
 		// Inflate the layout for this fragment
-		View view = inflater.inflate(R.layout.new_experiment_location_on, container, false);
+		View view = inflater.inflate(R.layout.add_experiment, container, false);
 
 		activity = ((AppCompatActivity) getActivity());
 		activity.getSupportActionBar().setTitle("Add new experiment");
@@ -141,13 +142,11 @@ public class addExpFragment extends Fragment {
 
 //                    //Source: Shweta Chauhan; https://stackoverflow.com/users/6021469/shweta-chauhan
 //                    //Code: https://stackoverflow.com/questions/40085608/how-to-pass-data-from-one-fragment-to-previous-fragment
-
-				new LocationWithPermission(activity).getLatLng(new GeneralDataCallBack() {
-					@Override
-					public void onDataReturn(Object returnedObject) {
-						Location location = (Location) returnedObject;
+				if (ActivityCompat.checkSelfPermission(activity.getApplicationContext(), Manifest.permission.ACCESS_FINE_LOCATION) == PackageManager.PERMISSION_GRANTED) {
+					LocationServices.getFusedLocationProviderClient(getContext()).getLastLocation().addOnSuccessListener(location -> {
 						if (location == null) {
-							Toast.makeText(activity.getApplicationContext(), "Please open up the google map and obtain your location at least once.", Toast.LENGTH_LONG).show();
+							new LocationWithPermission(activity).requestLocationUpdate();
+							Toast.makeText(activity.getApplicationContext(), "Preparing location.. Please wait up to 10 seconds and try again.", Toast.LENGTH_LONG).show();
 							return;
 						}
 						LatLng latlng = new LatLng(location.getLatitude(), location.getLongitude());
@@ -170,9 +169,8 @@ public class addExpFragment extends Fragment {
 							addExpFragment.this.getTargetFragment().onActivityResult(getTargetRequestCode(), 1, intent);
 							activity.getSupportFragmentManager().popBackStack();
 						}
-					}
-				});
-
+					});
+				}
 			}
 		});
 

@@ -9,8 +9,11 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import com.example.cmput301w21t23_smartdatabook.R;
+import com.example.cmput301w21t23_smartdatabook.database.Database;
+import com.example.cmput301w21t23_smartdatabook.database.GeneralDataCallBack;
 import com.example.cmput301w21t23_smartdatabook.user.User;
 import java.util.ArrayList;
+import java.util.Hashtable;
 
 /**
  * Class: TrialList
@@ -21,7 +24,6 @@ import java.util.ArrayList;
 public class TrialList extends ArrayAdapter<Trial> {
     private final ArrayList<Trial> trials;
     private final Context context;
-    private User user = User.getUser();
 
     /**
      * TrialList's public constructor
@@ -54,6 +56,20 @@ public class TrialList extends ArrayAdapter<Trial> {
         else {
             trialValue.setText( trial.getValue().toString());
         }
+
+        TextView trialDate = convertView.findViewById(R.id.trial_date);
+        trialDate.setText(trial.getDate());
+
+        TextView trialAuthor = convertView.findViewById(R.id.trial_author);
+
+        new Database().fillUserName(new GeneralDataCallBack() {
+			@Override
+			public void onDataReturn(Object returnedObject) {
+				Hashtable<String, User> UserName = (Hashtable<String, User>) returnedObject;
+                trialAuthor.setText(UserName.get(trial.getUid()).getUserName());
+			}
+		});
+
         return convertView;
     }
 }

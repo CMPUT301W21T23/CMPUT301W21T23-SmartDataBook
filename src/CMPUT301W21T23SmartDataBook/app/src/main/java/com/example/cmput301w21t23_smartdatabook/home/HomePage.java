@@ -15,11 +15,13 @@ import android.widget.ListView;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentTransaction;
 
+import com.example.cmput301w21t23_smartdatabook.experiment.CardList;
 import com.example.cmput301w21t23_smartdatabook.experiment.Experiment;
 import com.example.cmput301w21t23_smartdatabook.R;
 import com.example.cmput301w21t23_smartdatabook.database.Database;
 import com.example.cmput301w21t23_smartdatabook.database.GeneralDataCallBack;
 import com.example.cmput301w21t23_smartdatabook.experiment.ExperimentDetails;
+import com.example.cmput301w21t23_smartdatabook.experiment.addExpFragment;
 import com.example.cmput301w21t23_smartdatabook.mainController.MainActivity;
 import com.example.cmput301w21t23_smartdatabook.user.User;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
@@ -70,7 +72,6 @@ public class HomePage extends Fragment {
 	 * This function updates the Home page, through fragment transaction
 	 *
 	 * @param query
-	 * @param currentFragment
 	 */
 	public void doUpdate(String query) {
 
@@ -113,7 +114,7 @@ public class HomePage extends Fragment {
 
 	/**
 	 * The onCreate function of the Home page
-	 * In this functuon, if there are arguments, it gets the user's information
+	 * In this function, if there are arguments, it gets the user's information
 	 *
 	 * @param savedInstanceState
 	 */
@@ -147,17 +148,17 @@ public class HomePage extends Fragment {
 		experimentAdapter = new CardList(getContext(), experimentDataList, new Hashtable<String, User>(), 1);
 
 		//Source: ColdFire; https://stackoverflow.com/users/886001/coldfire
-		//Code: https://stackoverflow.com/questions/7093483/why-listview-items-becomes-not-clickable-after-scroll/7104933
+		Code: https://stackoverflow.com/questions/7093483/why-listview-items-becomes-not-clickable-after-scroll/7104933
 		experimentList.setOnScrollListener(new AbsListView.OnScrollListener() {
 			public void onScrollStateChanged(AbsListView view, int scrollState) {
 				if (scrollState == AbsListView.OnScrollListener.SCROLL_STATE_IDLE) {
 					experimentList.invalidateViews();
+
 				}
 			}
 
 			@Override
-			public void onScroll(AbsListView arg0, int arg1, int arg2, int arg3) {
-			}
+			public void onScroll(AbsListView arg0, int arg1, int arg2, int arg3) { }
 		});
 
 		//Source: Erwin Kurniawan A; https://stackoverflow.com/users/7693494/erwin-kurniawan-a
@@ -182,33 +183,21 @@ public class HomePage extends Fragment {
 						//experimentDataList with added items ONLY exist inside the scope of this getExpDataList function
 						experimentDataList = DataList;
 
-						//Create a new searchDataList depending on the query
-						if (currentQuery != null) {
-							for (Experiment experiment : experimentDataList) {
-								if (experiment.getExpName().contains(currentQuery) ||
-										UserName.get(experiment.getOwnerUserID()).getUserName().contains(currentQuery) ||
-										experiment.getDate().toString().contains(currentQuery) ||
-										experiment.getDescription().contains(currentQuery)) {
 
-									searchDataList.add(experiment);
-
-								}
-							}
-							experimentAdapter.clear();
-							experimentAdapter.addAll(searchDataList);
-						} else {
-							experimentAdapter.addAll(experimentDataList);
-						}
+						experimentAdapter.addAll(experimentDataList);
 						experimentAdapter.notifyDataSetChanged();
+
 						experimentList.setOnItemClickListener(new AdapterView.OnItemClickListener() {
 							@Override
 							public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-								Experiment exp = experimentDataList.get(position); // get the experiment from list
+								Log.e("Exp pos", ""+position);
+								Experiment exp = (Experiment) parent.getAdapter().getItem(position); // get the experiment from list
 								Intent intent = new Intent(getActivity(), ExperimentDetails.class);
 								intent.putExtra("experiment", (Parcelable) exp); // pass experiment object
 								startActivity(intent);
 							}
 						});
+
 					}//getExpDataList
 				}, experimentAdapter, db.collection("Experiments"), user.getUserUniqueID(), UserName);//fillDataList
 			}

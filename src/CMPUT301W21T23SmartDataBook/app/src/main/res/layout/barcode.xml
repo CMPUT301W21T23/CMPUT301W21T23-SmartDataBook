@@ -28,7 +28,7 @@
         android:id="@+id/true_false"
         android:layout_width="68dp"
         android:layout_height="31dp"
-        android:text="TextView"
+        android:text="False"
         android:visibility="invisible"
         app:layout_constraintBottom_toBottomOf="@+id/switchTF"
         app:layout_constraintEnd_toEndOf="parent"

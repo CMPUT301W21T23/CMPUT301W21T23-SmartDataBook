@@ -1,10 +1,12 @@
-package com.example.cmput301w21t23_smartdatabook.home;
+package com.example.cmput301w21t23_smartdatabook.experiment;
 
+import android.annotation.SuppressLint;
 import android.app.AlertDialog;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Parcelable;
 import android.view.LayoutInflater;
+import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
@@ -106,14 +108,16 @@ public class CardList extends ArrayAdapter<Experiment> {
             inflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
             View v = inflater.inflate(R.layout.card, null);
 
+            v.setFocusable(false);
+
             TextView experimentName = v.findViewById(R.id.experimentName);
             TextView dateView = v.findViewById(R.id.dateCreated);
             TextView ownerName = v.findViewById(R.id.Owner);
             TextView experimentDescription = v.findViewById(R.id.Experiment_descr);
             TextView region = v.findViewById(R.id.Region);
 
-            if (experiment.getRequireLocation()){
-                region.setVisibility(View.VISIBLE);
+            if (!experiment.getRequireLocation()){
+                ((ViewGroup)region.getParent()).removeView(region);
             }
 
             experimentName.setText(experiment.getExpName());
