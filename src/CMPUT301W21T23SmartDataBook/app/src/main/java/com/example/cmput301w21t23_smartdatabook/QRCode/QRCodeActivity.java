@@ -25,17 +25,19 @@ import com.google.android.material.button.MaterialButton;
  * generate QR code activity
  * this will call the QR code based on input and show it to the user
  * its the user's responsibility to save the  QR code
+ *
  * @author Afaq Nabi, Bosco Chan
  * @see QRCode
  */
 public class QRCodeActivity extends AppCompatActivity {
-    User user = User.getUser();
-    QRCode QRcode = new QRCode();
     private static final int passID = 1;
     private static final int failID = 0;
+    User user = User.getUser();
+    QRCode QRcode = new QRCode();
 
     /**
      * onCreate method that sets up the screen of generating QR code
+     *
      * @param savedInstanceState
      */
     @Override
@@ -63,8 +65,6 @@ public class QRCodeActivity extends AppCompatActivity {
             }
         });
 
-
-
         EditText value = findViewById(R.id.passesEditTextQR);
 
         RadioGroup binoChoice = findViewById(R.id.binoRadioGroup);
@@ -76,12 +76,11 @@ public class QRCodeActivity extends AppCompatActivity {
 
         int inputType = InputType.TYPE_CLASS_NUMBER;
 
-        if (experiment.getTrialType().equals("Count")){
+        if (experiment.getTrialType().equals("Count")) {
             inputType += InputType.TYPE_NUMBER_FLAG_SIGNED;
-        } else if (experiment.getTrialType().equals("Measurement")){
+        } else if (experiment.getTrialType().equals("Measurement")) {
             inputType += InputType.TYPE_NUMBER_FLAG_DECIMAL;
-        }
-        else if (experiment.getTrialType().equals("Binomial")){
+        } else if (experiment.getTrialType().equals("Binomial")) {
             pass.setVisibility(View.VISIBLE);
             fail.setVisibility(View.VISIBLE);
         }
@@ -89,14 +88,14 @@ public class QRCodeActivity extends AppCompatActivity {
 
         CheckBox location = findViewById(R.id.TrialLocationCheckBox);
 
-        if(experiment.getRequireLocation()){
+        if (experiment.getRequireLocation()) {
             location.setChecked(true);
         }
 
         location.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Toast.makeText(getBaseContext(), "Location was turned "+experiment.getRequireLocation()+" for this experiment.", Toast.LENGTH_SHORT).show();
+                Toast.makeText(getBaseContext(), "Location was turned " + experiment.getRequireLocation() + " for this experiment.", Toast.LENGTH_SHORT).show();
             }
         });
 
@@ -105,24 +104,28 @@ public class QRCodeActivity extends AppCompatActivity {
         generate.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if (experiment.getTrialType().equals("Binomial")){
-                    if (Integer.parseInt(value.getText().toString()) > experiment.getMaxTrials()){
-                        Toast.makeText(getBaseContext(), "Cannot ad more than the max trials", Toast.LENGTH_SHORT).show();
-                    }
-                }
-                else{
-                    String QRCodeMessage;
-                    if (experiment.getTrialType().equals("Binomial")){
-                        QRCodeMessage = experiment.getExpID()+","+user.getUserUniqueID()+"," + value.getText().toString() +","+experiment.getTrialType()+","+experiment.getRequireLocation() + "," + findBinoType(binoChoice.getCheckedRadioButtonId());
+                if (value.getText().toString().equals("")) {
+                    value.setText("");
+                    Toast.makeText(getBaseContext(), "must Enter a value", Toast.LENGTH_SHORT).show();
+                } else {
+                    if (experiment.getTrialType().equals("Binomial")) {
+                        if (Integer.parseInt(value.getText().toString()) > experiment.getMaxTrials()) {
+                            Toast.makeText(getBaseContext(), "Cannot ad more than the max trials", Toast.LENGTH_SHORT).show();
+                        }
                     } else {
-                        QRCodeMessage = experiment.getExpID() + "," + user.getUserUniqueID() + "," + value.getText().toString() + "," + experiment.getTrialType() + "," + experiment.getRequireLocation();
-                    }
+                        String QRCodeMessage;
+                        if (experiment.getTrialType().equals("Binomial")) {
+                            QRCodeMessage = experiment.getExpID() + "," + user.getUserUniqueID() + "," + value.getText().toString() + "," + experiment.getTrialType() + "," + experiment.getRequireLocation() + "," + findBinoType(binoChoice.getCheckedRadioButtonId());
+                        } else {
+                            QRCodeMessage = experiment.getExpID() + "," + user.getUserUniqueID() + "," + value.getText().toString() + "," + experiment.getTrialType() + "," + experiment.getRequireLocation();
+                        }
 
-                    ImageView QRCode = findViewById(R.id.ReplaceImageQrCode);
-                    QRCode.setImageBitmap(QRcode.generate(QRCodeMessage));
+                        ImageView QRCode = findViewById(R.id.ReplaceImageQrCode);
+                        QRCode.setImageBitmap(QRcode.generate(QRCodeMessage));
+                    }
+                    value.setText("");
                 }
 
-                value.setText("");
             }
         });
 
@@ -131,6 +134,7 @@ public class QRCodeActivity extends AppCompatActivity {
     /**
      * This functions gets Binomial Type, because it has passes and failures
      * We use a switch case to get the binomial type
+     *
      * @param binoTypeID
      * @return boolean (either true, false, or null) based of the binomial type
      */
