@@ -79,7 +79,7 @@ public class RepliesActivity extends AppCompatActivity {
                 owner.setText(UserName.get(parentComment.getUserUniqueID()).getUserName());
 
                 replyTo = findViewById(R.id.reply_to);
-                replyTo.setText("Reply to " + parentComment.getCommentID().substring(0,6));
+                replyTo.setText("Reply to: " + parentComment.getCommentID().substring(0,6));
             }
         });
 

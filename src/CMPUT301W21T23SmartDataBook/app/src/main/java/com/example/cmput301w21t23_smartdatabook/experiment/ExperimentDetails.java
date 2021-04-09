@@ -67,7 +67,7 @@ public class ExperimentDetails extends AppCompatActivity {
         Intent intent = getIntent();
         Experiment experiment = (Experiment) intent.getSerializableExtra("experiment"); // get the experiment object
 
-        toolbar.setTitle(experiment.getExpName());
+        toolbar.setTitle("Experiment: " + experiment.getExpName());
 
         View userInfoView = LayoutInflater.from(ExperimentDetails.this).inflate(R.layout.view_profile, null);
 
@@ -118,7 +118,7 @@ public class ExperimentDetails extends AppCompatActivity {
         expDate.setText(""+ date.getDate(experiment.getDate()));
 
         TextView description = findViewById(R.id.ClickedExpDesc);
-        description.setText(experiment.getDescription());
+        description.setText("Description: " + experiment.getDescription());
 
         TextView minTrials = findViewById(R.id.MinTrials);
         minTrials.setText("Min Trials: " + Integer.toString(experiment.getMinTrials()));

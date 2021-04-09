@@ -53,7 +53,6 @@ public class HomePage extends Fragment {
 	private Database database;
 
 	private String currentQuery;
-	private ArrayList<Experiment> searchDataList;
 
 	FirebaseFirestore db = FirebaseFirestore.getInstance();
 
@@ -144,11 +143,10 @@ public class HomePage extends Fragment {
 		experimentList = view.findViewById(R.id.experiment_list);
 
 		experimentDataList = new ArrayList<>();
-		searchDataList = new ArrayList<>();
 		experimentAdapter = new CardList(getContext(), experimentDataList, new Hashtable<String, User>(), 1);
 
 		//Source: ColdFire; https://stackoverflow.com/users/886001/coldfire
-		Code: https://stackoverflow.com/questions/7093483/why-listview-items-becomes-not-clickable-after-scroll/7104933
+		//Code: https://stackoverflow.com/questions/7093483/why-listview-items-becomes-not-clickable-after-scroll/7104933
 		experimentList.setOnScrollListener(new AbsListView.OnScrollListener() {
 			public void onScrollStateChanged(AbsListView view, int scrollState) {
 				if (scrollState == AbsListView.OnScrollListener.SCROLL_STATE_IDLE) {
@@ -163,44 +161,37 @@ public class HomePage extends Fragment {
 
 		//Source: Erwin Kurniawan A; https://stackoverflow.com/users/7693494/erwin-kurniawan-a
 		//Code: https://stackoverflow.com/questions/61930061/how-to-return-a-value-from-oncompletelistener-while-creating-user-with-email-and
-		database.fillUserName(new GeneralDataCallBack() {
-			@Override
-			public void onDataReturn(Object returnedObject) {
-				Hashtable<String, User> UserName = (Hashtable<String, User>) returnedObject;
-				database.fillDataList(new GeneralDataCallBack() {
+		database.fillUserName(returnedObject -> {
+			Hashtable<String, User> UserName = (Hashtable<String, User>) returnedObject;
+			//getExpDataList
+			database.fillDataList(returnedObject1 -> {
+				ArrayList<Experiment> DataList = (ArrayList<Experiment>) returnedObject1;
+
+				experimentAdapter = new CardList(getContext(), experimentDataList, UserName, 1);
+
+				experimentList.setAdapter(experimentAdapter);
+
+				//Reset the experiment adapter for every onCreateView call
+				experimentAdapter.clear();
+
+				//experimentDataList with added items ONLY exist inside the scope of this getExpDataList function
+				experimentDataList = DataList;
+
+				experimentAdapter.addAll(experimentDataList);
+				experimentAdapter.notifyDataSetChanged();
+
+				experimentList.setOnItemClickListener(new AdapterView.OnItemClickListener() {
 					@Override
-					public void onDataReturn(Object returnedObject) {
-						ArrayList<Experiment> DataList = (ArrayList<Experiment>) returnedObject;
+					public void onItemClick(AdapterView<?> parent, View view1, int position, long id) {
+						Log.e("Exp pos", ""+position);
+						Experiment exp = (Experiment) parent.getAdapter().getItem(position); // get the experiment from list
+						Intent intent = new Intent(getActivity(), ExperimentDetails.class);
+						intent.putExtra("experiment", (Parcelable) exp); // pass experiment object
+						startActivity(intent);
+					}
+				});
 
-						experimentAdapter = new CardList(getContext(), experimentDataList, UserName, 1);
-
-						experimentList.setAdapter(experimentAdapter);
-
-						//Reset the experiment adapter for every onCreateView call
-						experimentAdapter.clear();
-						searchDataList.clear();
-
-						//experimentDataList with added items ONLY exist inside the scope of this getExpDataList function
-						experimentDataList = DataList;
-
-
-						experimentAdapter.addAll(experimentDataList);
-						experimentAdapter.notifyDataSetChanged();
-
-						experimentList.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-							@Override
-							public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-								Log.e("Exp pos", ""+position);
-								Experiment exp = (Experiment) parent.getAdapter().getItem(position); // get the experiment from list
-								Intent intent = new Intent(getActivity(), ExperimentDetails.class);
-								intent.putExtra("experiment", (Parcelable) exp); // pass experiment object
-								startActivity(intent);
-							}
-						});
-
-					}//getExpDataList
-				}, experimentAdapter, db.collection("Experiments"), user.getUserUniqueID(), UserName);//fillDataList
-			}
+			}, experimentAdapter, db.collection("Experiments"), user.getUserUniqueID(), UserName);//fillDataList
 		});
 
 		// The floating action button is used to add new experiments in the home page
