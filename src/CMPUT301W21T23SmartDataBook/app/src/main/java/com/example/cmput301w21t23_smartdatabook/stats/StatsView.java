@@ -38,7 +38,7 @@ import java.util.Locale;
 /**
  * this class will show the various stats required for the experiments and trials
  * @author Afaq, Bosco
- * @see Trial , Experiment
+ * @see Trial , Experiment, Database, Statisics Model
  */
 public class StatsView extends AppCompatActivity {
 
@@ -51,7 +51,7 @@ public class StatsView extends AppCompatActivity {
     /**
      * onCreate function for statsView
      * This function sets up the view of stats, and display it
-     * It also displays the statistics, such as mean, median, standard deviation
+     * It also displays the statistics, such as mean, median, standard deviation on the screen
      * @param savedInstanceState
      */
     @Override
@@ -89,7 +89,7 @@ public class StatsView extends AppCompatActivity {
         TextView SDView = findViewById(R.id.stdDeviationTextView);
 
         /**
-         * onDataReturn method, it:
+         * onDataReturn method, it deals with:
          * setting up the bar chart and histograms, including their elements like data, axis labels etc.
          */
         // The bottom part of the code has been reused from HomePage

@@ -55,9 +55,10 @@ public class addExpFragment extends Fragment {
 
 	/**
 	 * The onCreateView function of addExperimentFragment
-	 * This functions sets up the visual representation (NumberPicker, TextInputLayout, RadioGroup, Switch Material
+	 * This functions sets up the front end visual representation (NumberPicker, TextInputLayout, RadioGroup, Switch Material
 	 * This function also displays the errors the user potentially made when they add a new experiment.
-	 *
+	 * This function sets up the backend of adding experiment, like location, number of trials allowed etc
+	 * This function handles potential errors users might input, the error message will be printed in toast
 	 * @param inflater
 	 * @param container
 	 * @param savedInstanceState
@@ -66,6 +67,7 @@ public class addExpFragment extends Fragment {
 	@Override
 	public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
 		// Inflate the layout for this fragment
+		// set up front end, visual representation
 		View view = inflater.inflate(R.layout.add_experiment, container, false);
 
 		activity = ((AppCompatActivity) getActivity());
@@ -106,6 +108,7 @@ public class addExpFragment extends Fragment {
 //      TODO: grab the input in the text fields and add to the firebase
 //      TODO: also need to pass the user id to this class
 
+		// set up back end of adding experiment
 		LocationToggle.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
 			@Override
 			public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
@@ -150,7 +153,7 @@ public class addExpFragment extends Fragment {
 							return;
 						}
 						LatLng latlng = new LatLng(location.getLatitude(), location.getLongitude());
-
+						// handle user's error
 						if (expName == "" || expDescription == "") {
 							Toast.makeText(getContext(), "The name or description can't be empty.", Toast.LENGTH_SHORT).show();
 						} else if (minTrials.getValue() >= maxTrials.getValue()) {
@@ -178,6 +181,11 @@ public class addExpFragment extends Fragment {
 
 	}//onCreateView
 
+	/**
+	 * onDestroy method on addExpFragment:
+	 * This function is called right before addExpFragment is destroyed
+	 * The naviagtion bar reappear, and set it to home page
+	 */
 	@Override
 	public void onDestroy() {
 		super.onDestroy();

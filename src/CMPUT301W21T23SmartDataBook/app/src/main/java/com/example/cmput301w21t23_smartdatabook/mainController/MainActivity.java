@@ -157,7 +157,7 @@ public class MainActivity extends AppCompatActivity {
     } //onCreate
 
     /**
-     * The function runs on the destruction of the main activity, no longer can get insstance of the current user
+     * The function runs on the destruction of the main activity, no longer can get instance of the current user
      */
     @Override
     public void onDestroy() {

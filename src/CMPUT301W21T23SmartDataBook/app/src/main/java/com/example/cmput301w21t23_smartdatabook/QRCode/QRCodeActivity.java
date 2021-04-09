@@ -22,9 +22,9 @@ import com.example.cmput301w21t23_smartdatabook.user.User;
 import com.google.android.material.button.MaterialButton;
 
 /**
- * generate QR code activity
- * this will call the QR code based on input and show it to the user
- * its the user's responsibility to save the  QR code
+ * Generate QR code activity
+ * This will call the QR code based on input and show it to the user
+ * Its the user's responsibility to save the QR code
  * @author Afaq Nabi, Bosco Chan
  * @see QRCode
  */
@@ -62,8 +62,6 @@ public class QRCodeActivity extends AppCompatActivity {
                 startActivity(intent);
             }
         });
-
-
 
         EditText value = findViewById(R.id.passesEditTextQR);
 

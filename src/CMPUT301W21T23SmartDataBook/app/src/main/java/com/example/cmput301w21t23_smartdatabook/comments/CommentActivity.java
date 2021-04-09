@@ -46,7 +46,10 @@ public class CommentActivity extends AppCompatActivity {
 
     /**
      * onCreate method for comment, sets up most of the comment activity page
+     * handles with an alert dialog when user click the floating button of adding comments, once confirmed, data will be sent to the databse
+     * handles when user selects an comment to reply, which pass the intent to replies activity
      * @param savedInstanceState
+     * @see RepliesActivity, add_comment.xml
      */
     @Override
     protected void onCreate(Bundle savedInstanceState) {

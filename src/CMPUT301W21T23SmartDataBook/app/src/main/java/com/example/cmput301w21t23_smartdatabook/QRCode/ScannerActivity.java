@@ -55,6 +55,7 @@ import me.dm7.barcodescanner.zxing.ZXingScannerView;
  * once scanned the rawResult will be added to the database
  * references: https://www.youtube.com/watch?v=AiNi9K94W5c&ab_channel=MdJamal
  * @author Afaq
+ * @see Camera, Experiment, Databse
  */
 public class ScannerActivity extends AppCompatActivity implements ZXingScannerView.ResultHandler{
 	ZXingScannerView scannerView;
@@ -64,6 +65,12 @@ public class ScannerActivity extends AppCompatActivity implements ZXingScannerVi
 	Experiment experiment;
 	User user = User.getUser();
 
+	/**
+	 * onCreate method:
+	 * This method sets up the view, and starts camera to scan
+	 * This method handles the issue if the users deny their permission to user their camera on their phone
+	 * @param savedInstanceState
+	 */
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
@@ -119,6 +126,11 @@ public class ScannerActivity extends AppCompatActivity implements ZXingScannerVi
 				}).check();
 	}
 
+	/**
+	 * This method scans various results captured under the user's phone camera
+	 * This method uses and if-else statement to handle different types of inputs, like QR code and barcode
+	 * @param rawResult: a Result object
+	 */
 	@Override
 	public void handleResult(Result rawResult) {
 		Log.e("format", rawResult.getBarcodeFormat().toString());
@@ -166,8 +178,13 @@ public class ScannerActivity extends AppCompatActivity implements ZXingScannerVi
 		scannerView.stopCamera();
 	}
 
-	// if a barcode or anything other than a QR code is scanned for th epurpose of
-	// registering it to a trial for an experiment
+	/**
+	 * This method is called if a barcode or anything other than a QR code is scanned for the purpose of registering it to a trial for an experiment
+	 * This method handel different types of experiments, by using if-else if-else statment
+	 * Once the barcode is successfully registered, the data will be added and saved in the databse
+	 * @param rawResult: a String object showing the raw result
+	 * @param experiment: an Experiment object representing the experiment object itself
+	 */
 	private void registerBarcode(String rawResult, Experiment experiment){
 		View trialView = LayoutInflater.from(ScannerActivity.this).inflate(R.layout.barcode, null);
 		EditText value = trialView.findViewById(R.id.value);
@@ -327,7 +344,14 @@ public class ScannerActivity extends AppCompatActivity implements ZXingScannerVi
 
 	}
 
-	// if barcode is scanned for the purpose of adding a trial to the experiment
+	/**
+	 * This function is called if barcode is scanned for the purpose of adding a trial to the experiment
+	 * This function get the desired barcode from the database
+	 * Then this function uses if else statement to check whether the experiment't type, and attribute like whether the experiment's location is on or off
+	 * @param rawResult:
+	 * @param experiment
+	 * @param latlng
+	 */
 	private void BarcodeScanned(String rawResult, Experiment experiment, LatLng latlng) {
 		db.collection("Barcode")
 				.document(experiment.getExpID())

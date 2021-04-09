@@ -4,7 +4,7 @@ import java.util.ArrayList;
 import java.util.Date;
 
 /**
- * this class will calculate various values needed in the statistics view
+ * this class will calculate various values needed in the statistics view, such as mean, median, quartiles, and standard deviation
  * @author Afaq Nabi, Bosco Chan
  */
 public class StatisticsModel {
@@ -14,7 +14,11 @@ public class StatisticsModel {
     public StatisticsModel() {
     }
 
-    // Calculating mean: add each element, divided by the size
+    /**
+     * Calculating mean method: add each element, divided by the size
+     * @param statsDataList: an ArrayList object
+     * @return
+     */
     public Number calcMean(ArrayList<ArrayList> statsDataList){
         double sum = 0;
         for (int i = 0; i < statsDataList.size(); i++){
@@ -27,7 +31,11 @@ public class StatisticsModel {
         }
     }
 
-    // Calculating median: find the middle value of the statistic data in an sorted order
+    /**
+     * Calculating median: find the middle value of the statistic data in an sorted order
+     * @param statsDataList
+     * @return a Number object
+     */
     public Number calcMedian(ArrayList<ArrayList> statsDataList) {
         int middle = statsDataList.size()/2; // index
         if (statsDataList.size()%2 == 1) {
@@ -37,7 +45,10 @@ public class StatisticsModel {
         }
     }
 
-    // we use bubble sort as the sort to sort the statistics data, by value
+    /**
+     * we use bubble sort as the sort to sort the statistics data, by value
+     * @param statsDataList
+     */
     public void bubbleSortByValue(ArrayList<ArrayList> statsDataList){
         for (int i = 0; i < statsDataList.size(); i++) {
             for (int j = 0; j < statsDataList.size()-i-1; j++){
@@ -52,7 +63,10 @@ public class StatisticsModel {
         }
     }
 
-    // // we use bubble sort as the sort to sort the statistics data, by date
+    /**
+     * We use bubble sort as the sort to sort the statistics data, by date
+     * @param statsDataList
+     */
     public void bubbleSortByDate(ArrayList<ArrayList> statsDataList){
         for (int i = 0; i < statsDataList.size(); i++) {
             for (int j = 0; j < statsDataList.size()-i-1; j++){
@@ -67,6 +81,11 @@ public class StatisticsModel {
         }//for
     }//bubbleSortByDate
 
+    /**
+     * This function is used to calculate the quartiles
+     * @param val
+     * @return
+     */
     // we used the link below to understand how to find quartiles in a array list of doubles, on stack overflow, from vasilis vittis
     // site URL: https://stackoverflow.com/questions/42381759/finding-first-quartile-and-third-quartile-in-integer-array-using-java
     // user URL: https://stackoverflow.com/users/14060960/vasilis-vittis
@@ -88,6 +107,11 @@ public class StatisticsModel {
         return ans;
     }
 
+    /**
+     * we use the function below to calcualte the standard deviation
+     * @param numArray: an ArrayList object consist of double items
+     * @return
+     */
     // We have used the site below to understand how to calculate stand deviation
     // https://www.programiz.com/java-programming/examples/standard-deviation
     public static double calculateSD(ArrayList<Double> numArray) {

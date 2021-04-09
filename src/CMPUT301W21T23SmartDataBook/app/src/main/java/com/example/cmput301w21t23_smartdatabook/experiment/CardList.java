@@ -76,7 +76,7 @@ public class CardList extends ArrayAdapter<Experiment> {
     }
 
     /**
-     * This functions
+     * This function:
      * Initialize elements, like inflates the layout, sets attributes of the name, date, ownerName, experimentDescription and region in the list
      * Display the visual representation of each experiment card(textview, Button, checkbox etc)
      * Setting up onclick for clicking the experiment card, as well as buttons and checkbox on the experiment card
@@ -157,7 +157,7 @@ public class CardList extends ArrayAdapter<Experiment> {
                 }
             });
 
-            // gets the favourite experiments
+            // gets the favourite experiments, by using an if-else statement
             follow.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
                   @Override
                   public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {

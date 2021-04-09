@@ -50,6 +50,7 @@ public class ExperimentDetails extends AppCompatActivity {
 
     /**
      * onCreate method that sets up the experiment details page
+     * This function sets up the visual representation screen
      * @param savedInstanceState
      */
     @Override
@@ -83,6 +84,10 @@ public class ExperimentDetails extends AppCompatActivity {
         });
 
         database.fillUserName(new GeneralDataCallBack() {
+            /**
+             * This function handles data of experiment details return through a hashtable
+             * @param returnedObject
+             */
             @Override
             public void onDataReturn(Object returnedObject) {
                 Hashtable<String, User> UserName = (Hashtable<String, User>) returnedObject;
@@ -210,6 +215,7 @@ public class ExperimentDetails extends AppCompatActivity {
             arch.setVisibility(View.VISIBLE);
             endExp.setText(title);
 
+            // for the end experiment button, we use a dialog to verify user's decision to end experiment
             endExp.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {

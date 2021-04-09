@@ -37,7 +37,7 @@ public class QRCode {
 
 	/**
 	 * Generate function
-	 *
+	 * this function generates QR code thorugh bitMatrix and bitMap
 	 * @param content: a bitmap object showing the QR code?
 	 * @return
 	 */

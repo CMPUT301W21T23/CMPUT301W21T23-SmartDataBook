@@ -37,7 +37,7 @@ public class TrialList extends ArrayAdapter<Trial> {
     }
 
     /**
-     * This function sets up the view, and set trialValue
+     * This function sets up the visual representation of the trial list, and set trialValue
      * @param position
      * @param convertView
      * @param parent

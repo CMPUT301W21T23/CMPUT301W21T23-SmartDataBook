@@ -17,7 +17,9 @@ import com.google.firebase.firestore.FirebaseFirestore;
 
 /**
  * THe User Contact page where users can change and edit their information freely
+ * The class setups the settings page
  * @author Krutik, Natnail, Jayden Cho
+ * @see User, Database
  */
 
 // TODO: change name to User contact instead of settings
@@ -43,6 +45,11 @@ public class SettingsPage extends Fragment {
 		return fragment;
 	}
 
+	/**
+	 * onResume method
+	 * setup the screen while the user is on the settings page
+	 * The method shows the navigation bar
+	 */
 	@Override
     public void onResume() {
         super.onResume();

@@ -53,6 +53,11 @@ public class RepliesActivity extends AppCompatActivity {
 
     /**
      * onCreate method of Replies Activity, handles most of Replies activity's functions
+     * This function sets up the view and visual representation of the screen
+     * This function allows users to reply comment based on other's comments, by using a floating button
+     * Then, an alert dialog will appear to verify the user's decisions
+     * After the users verify their answers and reply an comment, the associated data is passed through databse
+     * when there are new replies, the commentList updates
      * @param savedInstanceState
      */
     @Override

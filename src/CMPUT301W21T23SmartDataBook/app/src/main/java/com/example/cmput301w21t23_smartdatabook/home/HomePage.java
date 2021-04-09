@@ -39,7 +39,7 @@ import java.util.Hashtable;
  * It allows user to add a new experiment by clicking a floating button
  *
  * @author Afaq Nabi, Bosco Chan, Jayden Cho
- * @see Fragment, Firebase
+ * @see Fragment, Firebase, Experiment
  */
 
 public class HomePage extends Fragment {
@@ -70,7 +70,7 @@ public class HomePage extends Fragment {
 
 	/**
 	 * This function updates the Home page, through fragment transaction
-	 *
+	 * It also uses hashtable to handle returning usernames from the newly added experiments
 	 * @param query
 	 */
 	public void doUpdate(String query) {
@@ -102,6 +102,8 @@ public class HomePage extends Fragment {
 
 	/**
 	 * The onResume function of the Home Page
+	 * This function updates the data changes(if there are)
+	 * This fucntion leep the bottom navigation bar
 	 */
 	@Override
 	public void onResume() {
@@ -130,7 +132,7 @@ public class HomePage extends Fragment {
 
 	/**
 	 * The onCreateView function of Home page, the part that most elements on the home page are setted here
-	 *
+	 * This function sets up visual representation of the home page
 	 * @param inflater
 	 * @param container
 	 * @param savedInstanceState

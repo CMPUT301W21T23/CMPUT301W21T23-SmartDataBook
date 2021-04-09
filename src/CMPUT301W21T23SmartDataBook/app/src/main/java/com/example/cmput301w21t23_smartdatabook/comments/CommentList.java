@@ -18,8 +18,9 @@ import java.util.ArrayList;
 
 /**
  * Class: commentList, that is list consists of comments
+ * This class handles all issues regards to the commentList
  * @author Bosco Chan
- * @see Comment
+ * @see Comment, comment_item.xml
  */
 public class CommentList extends ArrayAdapter<Comment> {
 
@@ -40,6 +41,7 @@ public class CommentList extends ArrayAdapter<Comment> {
     }
 
     /**
+     * This function sets up the comment list screen
      * @param position
      * @param convertView
      * @param parent

@@ -28,8 +28,9 @@ import java.util.Hashtable;
 /**
  * class: FavPage
  * This class consists the page of the user's favourite experiments
- *
+ * This class handles issues related to the favourite page
  * @author Afaq Nabi, Bosco Chan, Jayden Cho
+ * @see Experiment, Database, MainActivity
  */
 public class FavPage extends Fragment {
 
@@ -74,7 +75,7 @@ public class FavPage extends Fragment {
 
 	/**
 	 * The method updates the favourite page if there are any queries
-	 *
+	 * The method fills the username through a hashtable
 	 * @param query
 	 * @param currentFragment
 	 */
@@ -105,8 +106,7 @@ public class FavPage extends Fragment {
 	}
 
 	/**
-	 * this method create the view of the user's favourite experiments page
-	 *
+	 * This method sets up the view of the user's favourite experiments page
 	 * @param inflater
 	 * @param container
 	 * @param savedInstanceState
@@ -168,6 +168,7 @@ public class FavPage extends Fragment {
 
 	/**
 	 * onResume method of Favourite page
+	 * we keep the navigation bar below in case the user wants to change page
 	 */
 	@Override
 	public void onResume() {

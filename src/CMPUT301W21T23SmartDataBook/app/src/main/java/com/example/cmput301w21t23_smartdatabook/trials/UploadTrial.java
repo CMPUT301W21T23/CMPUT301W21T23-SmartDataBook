@@ -45,7 +45,7 @@ import java.util.UUID;
  * Class: UploadTrial activity
  * displays the upload trials page
  * @author Afaq Nabi, Krutik Soni, Jayden Cho, Bosco Chan
- * @see TrialList, Trial
+ * @see TrialList, Trial, Datanase,
  */
 public class UploadTrial extends AppCompatActivity {
     ListView trialsList;
@@ -108,7 +108,8 @@ public class UploadTrial extends AppCompatActivity {
         // add conditional to make sure archived experiments can't upload trials
 
         /**
-         * Methods to handle upload trials based on different types of trials in experiment by using dialog
+         * This part of the function handles when the user enters the upload trial button
+         * It also handles additonal errors, which the error message is diaplayed in toatst
          * @author Alex Mak
          */
         addTrials.setOnClickListener(new View.OnClickListener() {
@@ -155,6 +156,8 @@ public class UploadTrial extends AppCompatActivity {
                         .collection("Trials")
                 , trialDataList, trialArrayAdapter);
 
+
+         // users can delete trials when clicking on the trial item
         trialsList.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
@@ -182,6 +185,15 @@ public class UploadTrial extends AppCompatActivity {
 
     }
 
+    /**
+     * Methods to handle upload trials based on different types of trials in experiment by using alert dialog
+     * 4 cases total, to handle 4 types of experiment
+     * for each case, the function checks the user input types.
+     * If successful, a new trial object will be added to the database
+     * @param expType
+     * @param experiment
+     * @author Alex Mak
+     */
     private void addTrialDialogs(String expType, Experiment experiment) {
         if (ActivityCompat.checkSelfPermission(UploadTrial.this, Manifest.permission.ACCESS_FINE_LOCATION) == PackageManager.PERMISSION_GRANTED) {
             LocationServices.getFusedLocationProviderClient(UploadTrial.this).getLastLocation().addOnSuccessListener(location -> {
