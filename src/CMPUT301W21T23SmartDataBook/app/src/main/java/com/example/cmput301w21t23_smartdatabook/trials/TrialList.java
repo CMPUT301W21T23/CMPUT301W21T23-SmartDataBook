@@ -11,6 +11,7 @@ import androidx.annotation.Nullable;
 import com.example.cmput301w21t23_smartdatabook.R;
 import com.example.cmput301w21t23_smartdatabook.database.Database;
 import com.example.cmput301w21t23_smartdatabook.database.GeneralDataCallBack;
+import com.example.cmput301w21t23_smartdatabook.stats.StringDate;
 import com.example.cmput301w21t23_smartdatabook.user.User;
 import java.util.ArrayList;
 import java.util.Hashtable;
@@ -58,7 +59,7 @@ public class TrialList extends ArrayAdapter<Trial> {
         }
 
         TextView trialDate = convertView.findViewById(R.id.trial_date);
-        trialDate.setText(trial.getDate());
+        trialDate.setText(new StringDate().getShortDate(trial.getDate()));
 
         TextView trialAuthor = convertView.findViewById(R.id.trial_author);
 

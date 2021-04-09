@@ -144,12 +144,12 @@ public class addExpFragment extends Fragment {
 //                    //Code: https://stackoverflow.com/questions/40085608/how-to-pass-data-from-one-fragment-to-previous-fragment
 				if (ActivityCompat.checkSelfPermission(activity.getApplicationContext(), Manifest.permission.ACCESS_FINE_LOCATION) == PackageManager.PERMISSION_GRANTED) {
 					LocationServices.getFusedLocationProviderClient(getContext()).getLastLocation().addOnSuccessListener(location -> {
-						if (location == null) {
+						if (location == null && checkLocationOn) {
 							new LocationWithPermission(activity).requestLocationUpdate();
 							Toast.makeText(activity.getApplicationContext(), "Preparing location.. Please wait up to 10 seconds and try again.", Toast.LENGTH_LONG).show();
 							return;
 						}
-						LatLng latlng = new LatLng(location.getLatitude(), location.getLongitude());
+						LatLng latlng = checkLocationOn ? new LatLng(location.getLatitude(), location.getLongitude()) : null;
 
 						if (expName == "" || expDescription == "") {
 							Toast.makeText(getContext(), "The name or description can't be empty.", Toast.LENGTH_SHORT).show();
