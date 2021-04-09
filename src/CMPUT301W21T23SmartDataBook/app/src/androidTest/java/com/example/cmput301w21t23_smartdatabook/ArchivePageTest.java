@@ -7,17 +7,18 @@ import android.widget.NumberPicker;
 import androidx.test.platform.app.InstrumentationRegistry;
 import androidx.test.rule.ActivityTestRule;
 
+import com.example.cmput301w21t23_smartdatabook.experiment.ExperimentDetails;
 import com.example.cmput301w21t23_smartdatabook.mainController.MainActivity;
 import com.robotium.solo.Solo;
 
 import org.junit.After;
+import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Rule;
 import org.junit.Test;
 
-public class QRCodeActivityTest {
+public class ArchivePageTest {
     private Solo solo;
-    private View addExpButton;
 
     @Rule
     public ActivityTestRule<MainActivity> rule = new ActivityTestRule<MainActivity>(MainActivity.class, true, true);
@@ -25,7 +26,6 @@ public class QRCodeActivityTest {
     @Before
     public void setUp() {
         solo = new Solo(InstrumentationRegistry.getInstrumentation(), rule.getActivity());
-        addExpButton = rule.getActivity().findViewById(R.id.add_experiment_button);
     }
 
     //Finally, add tearDown() method using the @After tag to run after every test method.
@@ -36,16 +36,7 @@ public class QRCodeActivityTest {
     }
 
     @Test
-    public void testQRCodeGenerated(){
-        createExperiment();
-        solo.clickOnText("Binomial");
-        solo.clickOnText("Generate/Register Code");
-
-
-    }
-
-    //Create a working experiment
-    public void createExperiment() {
+    public void checkEndedExperiment(){
         solo.assertCurrentActivity("Wrong Class", MainActivity.class);
         solo.waitForFragmentById(R.layout.home_page, 1000);
         solo.clickOnScreen(974, 1750);
@@ -72,9 +63,30 @@ public class QRCodeActivityTest {
         solo.enterText( (EditText) solo.getView(R.id.newExperimentLocationOnExperimentNameEditText), "Binomial");
         solo.enterText( (EditText) solo.getView(R.id.newExperimentLocationOnExperimentDescriptionEditText), "Coin Flip");
         solo.clickOnRadioButton(0);
-        solo.clickOnView(rule.getActivity().findViewById(R.id.newExperimentLocationToggleSwitch));
         solo.clickOnButton("Create");
 
-    }
+        solo.clickOnText("Binomial");
+        solo.assertCurrentActivity("Wrong Class", ExperimentDetails.class);
+        solo.clickOnText("Archive");
+        solo.clickOnText("Archive Experiment");
+        solo.sleep(1000);
+        solo.goBack();
+        solo.assertCurrentActivity("Wrong Activity", MainActivity.class);
+        solo.clickOnScreen(681,1986);
+        Assert.assertTrue(solo.searchText("Binomial"));
+        solo.clickOnText("Binomial");
+        solo.sleep(1000);
+        solo.assertCurrentActivity("Wrong Class", ExperimentDetails.class);
+        solo.sleep(1000);
+        solo.clickOnText("Un-Archive");
+        solo.sleep(1000);
+        solo.clickOnText("Un-Archive Experiment");
+        solo.goBack();
+        solo.clickOnScreen(418, 1986);
+        solo.sleep(1000);
+        solo.clickOnScreen(681,1986);
+        solo.sleep(1000);
+        Assert.assertFalse(solo.searchText("Binomial"));
 
+    }
 }
