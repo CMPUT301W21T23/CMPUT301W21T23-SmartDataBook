@@ -207,8 +207,6 @@ public class Database {
             public void onComplete(@NonNull Task<QuerySnapshot> task) {
                 mAuth = FirebaseAuth.getInstance();
 
-                String path = db.collection("Users").getPath();
-
                 if (task.isSuccessful()) {
                     for (QueryDocumentSnapshot document : task.getResult()) {
                         if (document.getData().get("UUID") != null && document.getData().get("UserName") != null) {
