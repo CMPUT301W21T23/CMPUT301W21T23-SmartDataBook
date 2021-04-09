@@ -5,6 +5,7 @@ import android.os.Bundle;
 import android.os.Parcelable;
 import android.text.InputType;
 import android.text.TextUtils;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.CheckBox;
@@ -105,26 +106,28 @@ public class QRCodeActivity extends AppCompatActivity {
         generate.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-//                if (TextUtils.isEmpty(value.getText().toString())) {
-//                    value.setError("Please enter a value");
-//                } else {
-//                }
-                if (experiment.getTrialType().equals("Binomial")) {
-                    if (Integer.parseInt(value.getText().toString()) > experiment.getMaxTrials()) {
-                        Toast.makeText(getBaseContext(), "Cannot ad more than the max trials", Toast.LENGTH_SHORT).show();
+                if (TextUtils.isEmpty(value.getText().toString())) {
+                    value.setError("Please enter a value");
+                } else if ((binoChoice.getCheckedRadioButtonId() == -1) && experiment.getTrialType().equals("Binomial")){
+                    Toast.makeText(getBaseContext(), "Please select boolean value", Toast.LENGTH_SHORT).show();
+                }
+                else {
+                    if (experiment.getTrialType().equals("Binomial")) {
+                        if (Integer.parseInt(value.getText().toString()) > experiment.getMaxTrials()) {
+                            Toast.makeText(getBaseContext(), "Cannot ad more than the max trials", Toast.LENGTH_SHORT).show();
+                        }
                     }
-                } else {
                     String QRCodeMessage;
                     if (experiment.getTrialType().equals("Binomial")) {
                         QRCodeMessage = experiment.getExpID() + "," + user.getUserUniqueID() + "," + value.getText().toString() + "," + experiment.getTrialType() + "," + experiment.getRequireLocation() + "," + findBinoType(binoChoice.getCheckedRadioButtonId());
                     } else {
                         QRCodeMessage = experiment.getExpID() + "," + user.getUserUniqueID() + "," + value.getText().toString() + "," + experiment.getTrialType() + "," + experiment.getRequireLocation();
                     }
+                    Log.e("MESSAGE", ""+QRCodeMessage);
                     ImageView QRCode = findViewById(R.id.ReplaceImageQrCode);
                     QRCode.setImageBitmap(QRcode.generate(QRCodeMessage));
                 }
                 value.setText("");
-
             }
         });
 
