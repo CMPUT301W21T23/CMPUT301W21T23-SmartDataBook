@@ -3,22 +3,19 @@ package com.example.cmput301w21t23_smartdatabook;
 import androidx.test.platform.app.InstrumentationRegistry;
 import androidx.test.rule.ActivityTestRule;
 
-import android.util.Log;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.ListView;
 import android.widget.NumberPicker;
-import android.widget.RadioButton;
-import android.widget.TextView;
 
-import com.google.android.material.floatingactionbutton.FloatingActionButton;
-import com.google.android.material.textfield.TextInputLayout;
+import com.example.cmput301w21t23_smartdatabook.experiment.Experiment;
+import com.example.cmput301w21t23_smartdatabook.mainController.MainActivity;
 import com.robotium.solo.Solo;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Rule;
 import org.junit.Test;
-import org.junit.runner.RunWith;
+
 import static junit.framework.TestCase.assertTrue;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
@@ -28,7 +25,6 @@ import static org.junit.Assert.assertNull;
 public class AddExpFragIntentTest {
 
     private Solo solo;
-    private View addExpButton;
 
     @Rule
     public ActivityTestRule<MainActivity> rule = new ActivityTestRule<MainActivity>(MainActivity.class, true, true);
@@ -36,7 +32,6 @@ public class AddExpFragIntentTest {
     @Before
     public void setUp() {
         solo = new Solo(InstrumentationRegistry.getInstrumentation(), rule.getActivity());
-        addExpButton = rule.getActivity().findViewById(R.id.add_experiment_button);
     }
 
     //Finally, add tearDown() method using the @After tag to run after every test method.
@@ -53,7 +48,7 @@ public class AddExpFragIntentTest {
     public void checkInvalidText() {
         solo.assertCurrentActivity("Wrong Class", MainActivity.class);
         solo.waitForFragmentById(R.layout.home_page, 1000);
-        solo.clickOnView(addExpButton);
+        solo.clickOnScreen(974, 1750);
         solo.waitForFragmentById(R.layout.new_experiment_location_on, 1000);
         solo.clickOnButton("Create");
         solo.sleep(1000);
@@ -68,7 +63,7 @@ public class AddExpFragIntentTest {
     public void checkEqualMinMax() {
         solo.assertCurrentActivity("Wrong Class", MainActivity.class);
         solo.waitForFragmentById(R.layout.home_page, 1000);
-        solo.clickOnView(addExpButton);
+        solo.clickOnScreen(974, 1750);
         solo.waitForFragmentById(R.layout.new_experiment_location_on, 1000);
 
         //Source: Bouabane Mohamed Salah; https://stackoverflow.com/users/1600405/bouabane-mohamed-salah
@@ -104,7 +99,7 @@ public class AddExpFragIntentTest {
     public void checkValidCreation() {
         solo.assertCurrentActivity("Wrong Class", MainActivity.class);
         solo.waitForFragmentById(R.layout.home_page, 1000);
-        solo.clickOnView(addExpButton);
+        solo.clickOnScreen(974, 1750);
         solo.waitForFragmentById(R.layout.new_experiment_location_on, 1000);
 
         //Source: Bouabane Mohamed Salah; https://stackoverflow.com/users/1600405/bouabane-mohamed-salah

@@ -7,32 +7,59 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:orientation="vertical"
     android:background="#faf5ff"
-    android:descendantFocusability="blocksDescendants">
+    android:descendantFocusability="blocksDescendants"
+    android:paddingLeft="10dp">
 
     <TextView
-        android:id="@+id/experimentName"
-        android:layout_width="339dp"
-        android:layout_height="wrap_content"
-        android:padding="10dp"
-        android:text="ExperimentName"
-        android:textSize="30sp"
-        >
+            android:focusableInTouchMode="false"
+            android:focusable="false"
+
+            android:id="@+id/experimentName"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="ExperimentName"
+            android:textSize="30sp"
+            android:maxLength="32"
+            android:layout_marginLeft="10dp"
+            android:paddingTop="10dp">
+
+
     </TextView>
 
     <TextView
+            android:focusableInTouchMode="false"
+            android:focusable="false"
+
+            android:id="@+id/Experiment_descr"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="10dp"
+            android:maxLength="32"
+            android:text="Description"
+            android:paddingBottom="10dp"></TextView>
+
+<!--    android:clickable="true"-->
+<!--    android:onClick="onClick"-->
+
+    <TextView
+        android:focusableInTouchMode="false"
+        android:focusable="false"
+
         android:id="@+id/Owner"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
+        android:layout_width="278dp"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="10dp"
+        android:layout_marginTop="0dp"
         android:text="Owner Name"
         android:textColor="@color/purple_500"
-        android:textSize="20sp"
-        android:layout_marginTop="-15dp"
-        android:layout_marginLeft="10dp"
-        >
+        android:textSize="20sp">
 
     </TextView>
 
     <TextView
+        android:focusableInTouchMode="false"
+        android:focusable="false"
+
         android:id="@+id/dateCreated"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -43,40 +70,53 @@
 
 
     <TextView
-        android:id="@+id/Experiment_descr"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="Description"
-        android:layout_marginLeft="10dp">
-<!--        android:textIsSelectable="false"-->
+            android:focusableInTouchMode="false"
+            android:focusable="false"
 
-    </TextView>
+            android:id="@+id/Region"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Geolocation: Required"
+            android:layout_marginLeft="10dp"
+            android:visibility="visible"></TextView>
 
-    <TextView
-        android:id="@+id/Region"
-        android:layout_width="match_parent"
+    <CheckBox
+        android:focusableInTouchMode="false"
+        android:focusable="false"
+
+        android:id="@+id/fav"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Region"
-        android:layout_marginLeft="10dp"
+        android:layout_marginLeft="340dp"
+        android:checked="false"
+        android:clickable="true"
+        android:buttonTint="@color/theme_default"
         >
-    </TextView>
+
+    </CheckBox>
 
     <Button
-        android:id="@+id/comment_btn"
-        android:layout_width="279dp"
-        android:layout_height="wrap_content"
-        android:text="Comments"
-        android:layout_marginLeft="10dp"
-        />
+        android:focusableInTouchMode="false"
+        android:focusable="false"
 
-    <com.google.android.material.floatingactionbutton.FloatingActionButton
-        android:id="@+id/floatingActionButton2"
-        android:layout_width="match_parent"
+        android:id="@+id/comment_btn"
+        android:layout_width="204dp"
         android:layout_height="wrap_content"
-        android:layout_marginLeft="330dp"
-        android:layout_marginTop="-59dp"
-        android:backgroundTint="#faf5ff"
-        app:srcCompat="@drawable/ic_star_nav"
-        />
+        android:layout_marginLeft="10dp"
+        android:layout_marginTop="-50dp"
+        android:text="Comments" />
+
+    <TextView
+        android:focusableInTouchMode="false"
+        android:focusable="false"
+
+        android:id="@+id/follow"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="1.5in"
+        android:layout_marginTop="-36dp"
+        android:text="Subscribe"
+        android:textSize="20dp" />
+
 
 </LinearLayout>

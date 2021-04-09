@@ -1,7 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
@@ -16,7 +15,7 @@
             android:layout_width="200dp"
             android:layout_height="200dp"
             android:layout_centerHorizontal="true"
-            android:src="@drawable/ic_default_profile_pic" />
+            app:srcCompat="@drawable/ic_default_profile_pic" />
     </RelativeLayout>
 
     <LinearLayout
@@ -36,9 +35,12 @@
             app:boxStrokeColor="@color/theme_default">
 
             <com.google.android.material.textfield.TextInputEditText
-                android:id="@+id/usernameTextField"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content" />
+                    android:id="@+id/usernameTextField"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:singleLine="true"
+                    android:selectAllOnFocus="true"
+                    android:maxLength="36" />
 
         </com.google.android.material.textfield.TextInputLayout>
 
@@ -51,9 +53,12 @@
             app:boxStrokeColor="@color/theme_default">
 
             <com.google.android.material.textfield.TextInputEditText
-                android:id="@+id/emailTextField"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content" />
+                    android:id="@+id/emailTextField"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:singleLine="true"
+                    android:selectAllOnFocus="true"
+                    android:maxLength="48" />
 
         </com.google.android.material.textfield.TextInputLayout>
 

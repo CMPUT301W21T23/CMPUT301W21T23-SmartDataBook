@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+
+    <include
+        layout="@layout/app_toolbar"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content" />
+
+    <com.github.mikephil.charting.charts.HorizontalBarChart
+        android:id="@+id/barChart"
+        android:layout_width="match_parent"
+        android:layout_height="300dp" />
+
+    <com.github.mikephil.charting.charts.LineChart
+        android:id="@+id/plotChart"
+        android:layout_width="match_parent"
+        android:layout_height="300dp"
+        android:paddingTop="30dp"/>
+
+    <TextView
+        android:id="@+id/meanTextView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textColor="@color/theme_default"
+        android:text="Mean: "/>
+
+    <TextView
+        android:id="@+id/medianTextView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textColor="@color/theme_default"
+        android:text="Median: "/>
+
+    <TextView
+        android:id="@+id/stdDeviationTextView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textColor="@color/theme_default"
+        android:text="Standard Deviation: "/>
+
+    <TextView
+        android:id="@+id/quartile1TextView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:paddingRight="20dp"
+        android:text="Quartile 1"
+        android:textColor="@color/theme_default" />
+
+    <TextView
+        android:id="@+id/quartile2TextView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:paddingRight="20dp"
+        android:text="Quartile 2"
+        android:textColor="@color/theme_default" />
+
+    <TextView
+        android:id="@+id/quartile3TextView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Quartile 3"
+        android:textColor="@color/theme_default" />
+
+</LinearLayout>

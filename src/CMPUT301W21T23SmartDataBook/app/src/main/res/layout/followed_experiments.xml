@@ -4,27 +4,14 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".MainActivity"
+    tools:context=".mainController.MainActivity"
     android:orientation="vertical">
 
-    <RelativeLayout
-        android:layout_width="match_parent"
-        android:layout_height="60dp" />
-
     <ListView
-            android:id="@+id/followedExpListView"
-            android:layout_width="match_parent"
-            android:layout_height="614dp"
-        />
-
-    <LinearLayout
-        xmlns:android="http://schemas.android.com/apk/res/android"
-        xmlns:app="http://schemas.android.com/apk/res-auto"
+        android:id="@+id/followedExpListView"
         android:layout_width="match_parent"
-        android:layout_height="fill_parent"
-        android:gravity="bottom">
+        android:layout_height="wrap_content" />
 
-    </LinearLayout>
 
 
 </androidx.appcompat.widget.LinearLayoutCompat>
