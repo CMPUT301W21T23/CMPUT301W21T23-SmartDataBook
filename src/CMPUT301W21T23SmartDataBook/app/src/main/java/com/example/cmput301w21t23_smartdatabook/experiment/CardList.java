@@ -184,10 +184,10 @@ public class CardList extends ArrayAdapter<Experiment> {
             View userInfoView = LayoutInflater.from(getContext()).inflate(R.layout.view_profile, null);
 
             TextView username = userInfoView.findViewById(R.id.expOwner);
-            username.setText("Username: " + experiment.getOwnerUserName());
+            username.setText(UserName.get(experiment.getOwnerUserID()).getUserName());
 
             TextView email = userInfoView.findViewById(R.id.expContact);;
-            email.setText("Email: " + UserName.get(experiment.getOwnerUserID()).getUserContact() );
+            email.setText(UserName.get(experiment.getOwnerUserID()).getUserContact() );
 
             // when the user clicks the experiment's owner name
             ownerName.setOnClickListener(new View.OnClickListener() {

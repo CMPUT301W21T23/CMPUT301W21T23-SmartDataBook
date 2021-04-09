@@ -33,12 +33,14 @@
 
     <TextView
             android:text="TextView"
-            android:layout_width="wrap_content"
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:id="@+id/trial_author"
             app:layout_constraintStart_toStartOf="parent"
             android:layout_marginStart="19dp"
-            app:layout_constraintTop_toBottomOf="@+id/trial_value" />
+            app:layout_constraintTop_toBottomOf="@+id/trial_value"
+            app:layout_constraintEnd_toStartOf="@+id/trial_date"
+            android:layout_marginEnd="20dp" />
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>
