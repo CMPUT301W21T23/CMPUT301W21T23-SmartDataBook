@@ -35,7 +35,6 @@ public class FavPage extends Fragment {
 
     private static ArrayAdapter<Experiment> favAdapter;
     private static ArrayList<Experiment> favDataList;
-    private static ArrayList<Experiment> searchDataList;
     FirebaseFirestore db = FirebaseFirestore.getInstance();
     // initialize elements
     private ListView favList;
@@ -73,7 +72,6 @@ public class FavPage extends Fragment {
      * The method updates the favourite page if there are any queries
      *
      * @param query
-     * @param currentFragment
      */
     public void doUpdate(String query) {
 
@@ -118,7 +116,6 @@ public class FavPage extends Fragment {
 
         favList = view.findViewById(R.id.followedExpListView);
         favDataList = new ArrayList<>();
-        searchDataList = new ArrayList<>();
         database = new Database();
 
         favAdapter = new CardList(getContext(), favDataList, 1);
@@ -138,7 +135,6 @@ public class FavPage extends Fragment {
 
                         //Reset the experiment adapter for every onCreateView call
                         favAdapter.clear();
-                        searchDataList.clear();
 
                         //experimentDataList with added items ONLY exist inside the scope of this getExpDataList function
                         favDataList = DataList;
