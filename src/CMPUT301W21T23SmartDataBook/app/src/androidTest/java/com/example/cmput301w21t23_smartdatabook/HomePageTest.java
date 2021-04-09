@@ -73,8 +73,8 @@ public class HomePageTest {
         solo.assertCurrentActivity("Wrong Activity", MainActivity.class);
         solo.waitForFragmentById(R.layout.home_page, 5000);
         solo.clickOnView(addExpButton);
-        solo.waitForFragmentById(R.layout.new_experiment_location_on, 5000);
-        solo.getCurrentActivity().getFragmentManager().findFragmentById(R.layout.new_experiment_location_on);
+        solo.waitForFragmentById(R.layout.add_experiment, 5000);
+        solo.getCurrentActivity().getFragmentManager().findFragmentById(R.layout.add_experiment);
     }
 
     @Test

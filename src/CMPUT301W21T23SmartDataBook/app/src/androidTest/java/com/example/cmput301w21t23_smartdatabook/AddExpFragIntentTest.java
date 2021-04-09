@@ -49,7 +49,7 @@ public class AddExpFragIntentTest {
         solo.assertCurrentActivity("Wrong Class", MainActivity.class);
         solo.waitForFragmentById(R.layout.home_page, 1000);
         solo.clickOnScreen(974, 1750);
-        solo.waitForFragmentById(R.layout.new_experiment_location_on, 1000);
+        solo.waitForFragmentById(R.layout.add_experiment, 1000);
         solo.clickOnButton("Create");
         solo.sleep(1000);
 
@@ -64,43 +64,7 @@ public class AddExpFragIntentTest {
         solo.assertCurrentActivity("Wrong Class", MainActivity.class);
         solo.waitForFragmentById(R.layout.home_page, 1000);
         solo.clickOnScreen(974, 1750);
-        solo.waitForFragmentById(R.layout.new_experiment_location_on, 1000);
-
-        //Source: Bouabane Mohamed Salah; https://stackoverflow.com/users/1600405/bouabane-mohamed-salah
-        //Code: https://stackoverflow.com/questions/30456474/set-numberpicker-value-with-robotium
-        rule.getActivity().runOnUiThread(new Runnable() {
-            @Override
-            public void run() {
-                NumberPicker minPicker = rule.getActivity().findViewById(R.id.minTrialsNumberPicker);
-                minPicker.setValue(10);
-            }
-        });
-        rule.getActivity().runOnUiThread(new Runnable() {
-            @Override
-            public void run() {
-                NumberPicker maxPicker = rule.getActivity().findViewById(R.id.maxTrialsNumberPicker);
-                maxPicker.setValue(10);
-            }
-        });
-
-        solo.enterText( (EditText) solo.getView(R.id.newExperimentLocationOnExperimentNameEditText), "Name");
-        solo.enterText( (EditText) solo.getView(R.id.newExperimentLocationOnExperimentDescriptionEditText), "Description");
-        solo.clickOnRadioButton(0);
-        solo.clickOnButton("Create");
-
-        assertFalse(solo.waitForFragmentById(R.layout.home_page, 1000));
-
-    }//checkEqualMinMax
-
-    /**
-     * Test if a new experiment can be created
-     */
-    @Test
-    public void checkValidCreation() {
-        solo.assertCurrentActivity("Wrong Class", MainActivity.class);
-        solo.waitForFragmentById(R.layout.home_page, 1000);
-        solo.clickOnScreen(974, 1750);
-        solo.waitForFragmentById(R.layout.new_experiment_location_on, 1000);
+        solo.waitForFragmentById(R.layout.add_experiment, 1000);
 
         //Source: Bouabane Mohamed Salah; https://stackoverflow.com/users/1600405/bouabane-mohamed-salah
         //Code: https://stackoverflow.com/questions/30456474/set-numberpicker-value-with-robotium
@@ -120,11 +84,55 @@ public class AddExpFragIntentTest {
             }
         });
 
-        solo.enterText( (EditText) solo.getView(R.id.newExperimentLocationOnExperimentNameEditText), "Name");
+        solo.enterText( (EditText) solo.getView(R.id.newExperimentLocationOnExperimentNameEditText), "Binomial");
         solo.sleep(1000);
-        solo.enterText( (EditText) solo.getView(R.id.newExperimentLocationOnExperimentDescriptionEditText), "Description");
+        solo.enterText( (EditText) solo.getView(R.id.descriptionField), "Coin Flip");
         solo.sleep(1000);
-        solo.clickOnRadioButton(2);
+        solo.clickOnRadioButton(0);
+        solo.sleep(1000);
+        solo.clickOnView(rule.getActivity().findViewById(R.id.newExperimentLocationToggleSwitch));
+        solo.sleep(1000);
+        solo.clickOnButton("Create");
+        solo.sleep(1000);
+
+
+        assertFalse(solo.waitForFragmentById(R.layout.home_page, 1000));
+
+    }//checkEqualMinMax
+
+    /**
+     * Test if a new experiment can be created
+     */
+    @Test
+    public void checkValidCreation() {
+        solo.assertCurrentActivity("Wrong Class", MainActivity.class);
+        solo.waitForFragmentById(R.layout.home_page, 1000);
+        solo.clickOnScreen(974, 1750);
+        solo.waitForFragmentById(R.layout.add_experiment, 1000);
+
+        //Source: Bouabane Mohamed Salah; https://stackoverflow.com/users/1600405/bouabane-mohamed-salah
+        //Code: https://stackoverflow.com/questions/30456474/set-numberpicker-value-with-robotium
+        rule.getActivity().runOnUiThread(new Runnable() {
+            @Override
+            public void run() {
+                NumberPicker minPicker = rule.getActivity().findViewById(R.id.minTrialsNumberPicker);
+                minPicker.setValue(10);
+            }
+        });
+        solo.sleep(1000);
+        rule.getActivity().runOnUiThread(new Runnable() {
+            @Override
+            public void run() {
+                NumberPicker maxPicker = rule.getActivity().findViewById(R.id.maxTrialsNumberPicker);
+                maxPicker.setValue(30);
+            }
+        });
+
+        solo.enterText( (EditText) solo.getView(R.id.newExperimentLocationOnExperimentNameEditText), "Binomial");
+        solo.sleep(1000);
+        solo.enterText( (EditText) solo.getView(R.id.descriptionField), "Coin Flip");
+        solo.sleep(1000);
+        solo.clickOnRadioButton(0);
         solo.sleep(1000);
         solo.clickOnView(rule.getActivity().findViewById(R.id.newExperimentLocationToggleSwitch));
         solo.sleep(1000);

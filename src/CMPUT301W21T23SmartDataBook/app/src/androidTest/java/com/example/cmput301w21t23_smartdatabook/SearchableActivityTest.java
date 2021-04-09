@@ -85,7 +85,7 @@ public class SearchableActivityTest {
         solo.assertCurrentActivity("Wrong Class", MainActivity.class);
         solo.waitForFragmentById(R.layout.home_page, 1000);
         solo.clickOnScreen(974, 1750);
-        solo.waitForFragmentById(R.layout.new_experiment_location_on, 1000);
+        solo.waitForFragmentById(R.layout.add_experiment, 1000);
 
         //Source: Bouabane Mohamed Salah; https://stackoverflow.com/users/1600405/bouabane-mohamed-salah
         //Code: https://stackoverflow.com/questions/30456474/set-numberpicker-value-with-robotium
@@ -96,6 +96,7 @@ public class SearchableActivityTest {
                 minPicker.setValue(10);
             }
         });
+        solo.sleep(1000);
         rule.getActivity().runOnUiThread(new Runnable() {
             @Override
             public void run() {
@@ -104,11 +105,17 @@ public class SearchableActivityTest {
             }
         });
 
-        solo.enterText( (EditText) solo.getView(R.id.newExperimentLocationOnExperimentNameEditText), expName);
-        solo.enterText( (EditText) solo.getView(R.id.newExperimentLocationOnExperimentDescriptionEditText), expType);
-        solo.clickOnRadioButton(buttonIndex);
+        solo.enterText( (EditText) solo.getView(R.id.newExperimentLocationOnExperimentNameEditText), "Binomial");
+        solo.sleep(1000);
+        solo.enterText( (EditText) solo.getView(R.id.descriptionField), "Coin Flip");
+        solo.sleep(1000);
+        solo.clickOnRadioButton(0);
+        solo.sleep(1000);
         solo.clickOnView(rule.getActivity().findViewById(R.id.newExperimentLocationToggleSwitch));
+        solo.sleep(1000);
         solo.clickOnButton("Create");
+        solo.sleep(1000);
+
 
     }
 }
