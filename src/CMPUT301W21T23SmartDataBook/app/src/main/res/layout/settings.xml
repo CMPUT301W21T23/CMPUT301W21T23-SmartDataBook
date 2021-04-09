@@ -35,12 +35,12 @@
             app:boxStrokeColor="@color/theme_default">
 
             <com.google.android.material.textfield.TextInputEditText
-                    android:id="@+id/usernameTextField"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:singleLine="true"
-                    android:selectAllOnFocus="true"
-                    android:maxLength="36" />
+                android:id="@+id/usernameTextField"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:maxLength="36"
+                android:selectAllOnFocus="true"
+                android:singleLine="true" />
 
         </com.google.android.material.textfield.TextInputLayout>
 
@@ -53,12 +53,12 @@
             app:boxStrokeColor="@color/theme_default">
 
             <com.google.android.material.textfield.TextInputEditText
-                    android:id="@+id/emailTextField"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:singleLine="true"
-                    android:selectAllOnFocus="true"
-                    android:maxLength="48" />
+                android:id="@+id/emailTextField"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:maxLength="48"
+                android:selectAllOnFocus="true"
+                android:singleLine="true" />
 
         </com.google.android.material.textfield.TextInputLayout>
 

@@ -1,16 +1,13 @@
 package com.example.cmput301w21t23_smartdatabook;
 
 import android.view.View;
-import android.widget.Button;
 import android.widget.EditText;
-import android.widget.ListView;
 import android.widget.NumberPicker;
 import android.widget.TextView;
 
 import androidx.test.platform.app.InstrumentationRegistry;
 import androidx.test.rule.ActivityTestRule;
 
-import com.example.cmput301w21t23_smartdatabook.experiment.Experiment;
 import com.example.cmput301w21t23_smartdatabook.experiment.ExperimentDetails;
 import com.example.cmput301w21t23_smartdatabook.mainController.MainActivity;
 import com.example.cmput301w21t23_smartdatabook.trials.UploadTrial;
@@ -21,12 +18,6 @@ import org.junit.Before;
 import org.junit.Rule;
 import org.junit.Test;
 
-import java.io.File;
-
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertFalse;
-import static org.junit.Assert.assertNotNull;
-import static org.junit.Assert.assertNull;
 import static org.junit.Assert.assertTrue;
 
 
@@ -61,12 +52,12 @@ public class StatsViewTest {
         solo.assertCurrentActivity("Wrong Activity", ExperimentDetails.class);
         solo.clickOnButton("VIEW STATS");
 
-        assertTrue( Float.parseFloat( ((TextView)solo.getView(R.id.meanTextView)).getText().toString().replace("Mean (Pass %): ", "") ) > 0 );
-        assertTrue( Float.parseFloat( ((TextView)solo.getView(R.id.medianTextView)).getText().toString().replace("Median: ", "") ) > 0 );
-        assertTrue( Float.parseFloat( ((TextView)solo.getView(R.id.stdDeviationTextView)).getText().toString().replace("Std: ", "") ) > 0 );
+        assertTrue(Float.parseFloat(((TextView) solo.getView(R.id.meanTextView)).getText().toString().replace("Mean (Pass %): ", "")) > 0);
+        assertTrue(Float.parseFloat(((TextView) solo.getView(R.id.medianTextView)).getText().toString().replace("Median: ", "")) > 0);
+        assertTrue(Float.parseFloat(((TextView) solo.getView(R.id.stdDeviationTextView)).getText().toString().replace("Std: ", "")) > 0);
 
         //Binomial will give either a 0.0 or 1.0 for quartile value
-        assertTrue( Float.parseFloat( ((TextView)solo.getView(R.id.quartile1TextView)).getText().toString().replace("Quartile 1: ", "") ) >= 0 );
+        assertTrue(Float.parseFloat(((TextView) solo.getView(R.id.quartile1TextView)).getText().toString().replace("Quartile 1: ", "")) >= 0);
     }
 
     //Adds 8 test trials to the experiment
@@ -77,10 +68,10 @@ public class StatsViewTest {
         solo.clickOnButton("UPLOAD TRIALS");
         solo.assertCurrentActivity("Wrong Activity", UploadTrial.class);
         solo.clickOnButton("add new trials");
-        solo.enterText( (EditText) solo.getEditText("Enter positive number of passes/failures"), "5");
+        solo.enterText((EditText) solo.getEditText("Enter positive number of passes/failures"), "5");
         solo.clickOnText("Add passes");
         solo.clickOnButton("add new trials");
-        solo.enterText( (EditText) solo.getEditText("Enter positive number of passes/failures"), "3");
+        solo.enterText((EditText) solo.getEditText("Enter positive number of passes/failures"), "3");
         solo.clickOnText("Add failure");
     }
 
@@ -109,9 +100,9 @@ public class StatsViewTest {
             }
         });
 
-        solo.enterText( (EditText) solo.getView(R.id.newExperimentLocationOnExperimentNameEditText), "Binomial");
+        solo.enterText((EditText) solo.getView(R.id.newExperimentLocationOnExperimentNameEditText), "Binomial");
         solo.sleep(1000);
-        solo.enterText( (EditText) solo.getView(R.id.description), "Coin Flip");
+        solo.enterText((EditText) solo.getView(R.id.description), "Coin Flip");
         solo.sleep(1000);
         solo.clickOnRadioButton(0);
         solo.sleep(1000);

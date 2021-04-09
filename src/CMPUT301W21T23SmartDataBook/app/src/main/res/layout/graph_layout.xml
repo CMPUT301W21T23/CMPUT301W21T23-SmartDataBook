@@ -18,28 +18,28 @@
         android:id="@+id/plotChart"
         android:layout_width="match_parent"
         android:layout_height="300dp"
-        android:paddingTop="30dp"/>
+        android:paddingTop="30dp" />
 
     <TextView
         android:id="@+id/meanTextView"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:textColor="@color/theme_default"
-        android:text="Mean: "/>
+        android:text="Mean: "
+        android:textColor="@color/theme_default" />
 
     <TextView
         android:id="@+id/medianTextView"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:textColor="@color/theme_default"
-        android:text="Median: "/>
+        android:text="Median: "
+        android:textColor="@color/theme_default" />
 
     <TextView
         android:id="@+id/stdDeviationTextView"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:textColor="@color/theme_default"
-        android:text="Standard Deviation: "/>
+        android:text="Standard Deviation: "
+        android:textColor="@color/theme_default" />
 
     <TextView
         android:id="@+id/quartile1TextView"

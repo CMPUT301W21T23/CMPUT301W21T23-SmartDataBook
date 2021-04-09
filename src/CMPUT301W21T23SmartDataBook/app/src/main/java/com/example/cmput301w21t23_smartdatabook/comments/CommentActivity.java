@@ -13,11 +13,11 @@ import android.widget.ListView;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 
-import com.example.cmput301w21t23_smartdatabook.stats.StringDate;
+import com.example.cmput301w21t23_smartdatabook.R;
 import com.example.cmput301w21t23_smartdatabook.database.Database;
 import com.example.cmput301w21t23_smartdatabook.experiment.Experiment;
+import com.example.cmput301w21t23_smartdatabook.stats.StringDate;
 import com.example.cmput301w21t23_smartdatabook.user.User;
-import com.example.cmput301w21t23_smartdatabook.R;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.firebase.firestore.FirebaseFirestore;
 
@@ -27,6 +27,7 @@ import java.util.UUID;
 /**
  * Class: CommentActivity
  * shows the activity of the comments
+ *
  * @author Bosco Chan, Afaq Nabi
  * @see Comment
  */
@@ -35,17 +36,15 @@ public class CommentActivity extends AppCompatActivity {
     ListView commentList;
     ArrayAdapter<Comment> commentAdapter;
     ArrayList<Comment> commentDataList;
-
-    private Experiment experiment;
-
     FirebaseFirestore db;
     Database database = new Database();
     User user = User.getUser();
-
     StringDate stringDate = new StringDate();
+    private Experiment experiment;
 
     /**
      * onCreate method for comment, sets up most of the comment activity page
+     *
      * @param savedInstanceState
      */
     @Override
@@ -71,7 +70,6 @@ public class CommentActivity extends AppCompatActivity {
                 .document(experiment.getExpID())
                 .collection("Questions"), commentDataList, commentAdapter);
 
-        //    https://stackoverflow.com/questions/19826693/how-can-i-make-a-textview-automatically-scroll-as-i-add-more-lines-of-text
         EditText newComment = addCommentView.findViewById(R.id.newComment);
 
         FloatingActionButton addCommentButton;

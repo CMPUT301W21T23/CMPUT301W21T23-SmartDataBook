@@ -1,27 +1,22 @@
 package com.example.cmput301w21t23_smartdatabook;
 
-import androidx.appcompat.widget.SearchView;
-import androidx.test.platform.app.InstrumentationRegistry;
-import androidx.test.rule.ActivityTestRule;
-
-import android.view.View;
 import android.widget.EditText;
 import android.widget.ListView;
 import android.widget.NumberPicker;
 
-import com.example.cmput301w21t23_smartdatabook.experiment.Experiment;
+import androidx.appcompat.widget.SearchView;
+import androidx.test.platform.app.InstrumentationRegistry;
+import androidx.test.rule.ActivityTestRule;
+
 import com.example.cmput301w21t23_smartdatabook.mainController.MainActivity;
 import com.robotium.solo.Solo;
+
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Rule;
 import org.junit.Test;
 
 import static junit.framework.TestCase.assertTrue;
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertFalse;
-import static org.junit.Assert.assertNotNull;
-import static org.junit.Assert.assertNull;
 
 public class SearchableActivityTest {
 
@@ -67,14 +62,14 @@ public class SearchableActivityTest {
         solo.sleep(1000);
         solo.clickOnScreen(863, 124);
         //search by description
-        solo.enterText( (EditText) solo.getView(androidx.appcompat.R.id.search_src_text), "Broken Eggs in carton");
+        solo.enterText((EditText) solo.getView(androidx.appcompat.R.id.search_src_text), "Broken Eggs in carton");
         solo.clickOnScreen(628, 274);
         assertTrue(solo.searchText("Broken Eggs in carton"));
         solo.goBack();
 
         solo.clickOnScreen(863, 124);
         //Search by experiment name
-        solo.enterText( (EditText) solo.getView(androidx.appcompat.R.id.search_src_text), "Binomial");
+        solo.enterText((EditText) solo.getView(androidx.appcompat.R.id.search_src_text), "Binomial");
         solo.clickOnScreen(628, 274);
         assertTrue(solo.searchText("Binomial"));
         solo.sleep(2000);
@@ -105,9 +100,9 @@ public class SearchableActivityTest {
             }
         });
 
-        solo.enterText( (EditText) solo.getView(R.id.newExperimentLocationOnExperimentNameEditText), "Binomial");
+        solo.enterText((EditText) solo.getView(R.id.newExperimentLocationOnExperimentNameEditText), "Binomial");
         solo.sleep(1000);
-        solo.enterText( (EditText) solo.getView(R.id.description), "Coin Flip");
+        solo.enterText((EditText) solo.getView(R.id.description), "Coin Flip");
         solo.sleep(1000);
         solo.clickOnRadioButton(0);
         solo.sleep(1000);

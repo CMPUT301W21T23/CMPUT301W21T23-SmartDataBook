@@ -9,37 +9,39 @@ import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
+
 import androidx.fragment.app.Fragment;
-import com.example.cmput301w21t23_smartdatabook.experiment.Experiment;
+
 import com.example.cmput301w21t23_smartdatabook.R;
 import com.example.cmput301w21t23_smartdatabook.database.Database;
 import com.example.cmput301w21t23_smartdatabook.database.GeneralDataCallBack;
-import com.example.cmput301w21t23_smartdatabook.experiment.ExperimentDetails;
 import com.example.cmput301w21t23_smartdatabook.experiment.CardList;
+import com.example.cmput301w21t23_smartdatabook.experiment.Experiment;
+import com.example.cmput301w21t23_smartdatabook.experiment.ExperimentDetails;
 import com.example.cmput301w21t23_smartdatabook.mainController.MainActivity;
 import com.example.cmput301w21t23_smartdatabook.user.User;
 import com.google.firebase.firestore.FirebaseFirestore;
+
 import java.util.ArrayList;
 import java.util.Hashtable;
 
 /**
  * Archives activity page
  * shows a listview of the experiments that have been "ended"
+ *
  * @author Alex Mak, Bosco Chan, Afaq Nabi
  */
 
 public class ArchivePage extends Fragment {
-    private User user = User.getUser();
+    private static ArrayAdapter<Experiment> archiveExperimentAdapter;
+    FirebaseFirestore db = FirebaseFirestore.getInstance();
+    private final User user = User.getUser();
     private Database database;
     private String currentQuery;
-
     private ListView archiveExperimentList;
     private ArrayList<Experiment> archiveExperimentDataList;
     private ArrayList<Experiment> searchDataList;
     private MainActivity activity;
-    private static ArrayAdapter<Experiment> archiveExperimentAdapter;
-
-    FirebaseFirestore db = FirebaseFirestore.getInstance();
 
 
     public ArchivePage() {
@@ -55,6 +57,7 @@ public class ArchivePage extends Fragment {
 
     /**
      * This function updates the archive page, through fragment transaction, the code has been reused from homePage.java
+     *
      * @param query
      * @param currentFragment
      */
@@ -63,30 +66,32 @@ public class ArchivePage extends Fragment {
         currentQuery = query.toLowerCase();
 
         database.fillUserName(new GeneralDataCallBack() {
-			@Override
-			public void onDataReturn(Object returnedObject) {
-				Hashtable<String, User> UserName = (Hashtable<String, User>) returnedObject;
-				ArrayList<Experiment> temp = new ArrayList<>();
+            @Override
+            public void onDataReturn(Object returnedObject) {
+                Hashtable<String, User> UserName = (Hashtable<String, User>) returnedObject;
+                ArrayList<Experiment> temp = new ArrayList<>();
 
-				for (int i = 0; i < archiveExperimentDataList.size(); i++) {
-					Experiment experiment = archiveExperimentDataList.get(i);
-					if (experiment.getExpName().toLowerCase().contains(currentQuery) ||
-                        UserName.get(experiment.getOwnerUserID()).getUserName().toLowerCase().contains(currentQuery) ||
-                        experiment.getDate().toLowerCase().contains(currentQuery) ||
-                        experiment.getDescription().toLowerCase().contains(currentQuery) ||
-                        experiment.getTrialType().toLowerCase().contains(currentQuery)) temp.add(experiment);
-				}
+                for (int i = 0; i < archiveExperimentDataList.size(); i++) {
+                    Experiment experiment = archiveExperimentDataList.get(i);
+                    if (experiment.getExpName().toLowerCase().contains(currentQuery) ||
+                            UserName.get(experiment.getOwnerUserID()).getUserName().toLowerCase().contains(currentQuery) ||
+                            experiment.getDate().toLowerCase().contains(currentQuery) ||
+                            experiment.getDescription().toLowerCase().contains(currentQuery) ||
+                            experiment.getTrialType().toLowerCase().contains(currentQuery))
+                        temp.add(experiment);
+                }
 
-				archiveExperimentAdapter = new CardList(getContext(), temp, UserName, 1);
-				archiveExperimentList.setAdapter(archiveExperimentAdapter);
+                archiveExperimentAdapter = new CardList(getContext(), temp, UserName, 1);
+                archiveExperimentList.setAdapter(archiveExperimentAdapter);
 
-			}
-		});
+            }
+        });
 
     }
 
     /**
      * The onCreate function of Archive Page, the code has been reused from homePage.java
+     *
      * @param savedInstanceState
      */
     @Override
@@ -100,6 +105,7 @@ public class ArchivePage extends Fragment {
 
     /**
      * The onCreateView function of Archive Page, the code has been reused from homePage.java
+     *
      * @param inflater
      * @param container
      * @param savedInstanceState
@@ -111,7 +117,7 @@ public class ArchivePage extends Fragment {
         View view = inflater.inflate(R.layout.archive_page, container, false);
 
         // added stuff
-        archiveExperimentList=view.findViewById(R.id.archive_experiment_list);
+        archiveExperimentList = view.findViewById(R.id.archive_experiment_list);
         archiveExperimentDataList = new ArrayList<>();
         searchDataList = new ArrayList<>();
 

@@ -27,12 +27,11 @@ import static org.junit.Assert.assertTrue;
  * Test the UI of the favPage.java class. Assumes that an experiment object is already made
  */
 public class FavPageTest {
+    @Rule
+    public ActivityTestRule<MainActivity> rule = new ActivityTestRule<MainActivity>(MainActivity.class, true, true);
     private Solo solo;
     private View addExpButton;
     private View searchBar;
-
-    @Rule
-    public ActivityTestRule<MainActivity> rule = new ActivityTestRule<MainActivity>(MainActivity.class, true, true);
 
     @Before
     public void setUp() {
@@ -43,10 +42,11 @@ public class FavPageTest {
 
     /**
      * Gets the Activity
+     *
      * @throws Exception
      */
     @Test
-    public void start() throws Exception{
+    public void start() throws Exception {
         Activity activity = rule.getActivity();
     }
 
@@ -60,7 +60,7 @@ public class FavPageTest {
     // check if the item in fav fragment is clickable
     // Pre-Req: that there exists an experiment in the favorite fragment
     @Test
-    public void checkClickExperiment(){
+    public void checkClickExperiment() {
 
         solo.assertCurrentActivity("Wrong Activity", MainActivity.class);
         solo.sleep(1000);
@@ -73,20 +73,20 @@ public class FavPageTest {
 
     // check if searchbar is clickable
     @Test
-    public void checkSearchBar(){
+    public void checkSearchBar() {
         solo.assertCurrentActivity("Wrong Activity", MainActivity.class);
         solo.clickOnView(searchBar);
-        solo.enterText(0,"Grain");
+        solo.enterText(0, "Grain");
         solo.sleep(6000);
         // TODO: check the output and click one
     }
 
     // check if the result form search bar is clickable
     @Test
-    public void checkClickSearchBarDropDown(){
+    public void checkClickSearchBarDropDown() {
         solo.assertCurrentActivity("Wrong Activity", MainActivity.class);
         solo.clickOnView(searchBar);
-        solo.enterText(0,"Grain");
+        solo.enterText(0, "Grain");
         solo.sleep(6000);
         // TODO: click an experiment and check the experiment details activity
         solo.assertCurrentActivity("Wrong Activity", ExperimentDetails.class);
@@ -94,7 +94,7 @@ public class FavPageTest {
 
     // check if the back button on the android device works
     @Test
-    public void checkBackButton(){
+    public void checkBackButton() {
         solo.assertCurrentActivity("Wrong Activity", MainActivity.class);
         solo.sleep(1000);
         solo.clickOnScreen(444, 1925); //"Favorite" Menu Item
@@ -109,7 +109,7 @@ public class FavPageTest {
     // check if the fav page experiments displays the details fo the experiment properly
     // Pre-Req: that there exists an experiment in the favorite fragment
     @Test
-    public void checkDetails(){
+    public void checkDetails() {
         solo.sleep(3000);
         ListView experimentList = rule.getActivity().findViewById(R.id.experiment_list);
         Experiment experiment = (Experiment) experimentList.getItemAtPosition(0);
@@ -125,8 +125,8 @@ public class FavPageTest {
         TestCase.assertTrue(solo.searchText(experiment.getDate()));
         TestCase.assertTrue(solo.searchText(experiment.getDescription()));
         TestCase.assertTrue(solo.searchText(experiment.getOwnerUserID()));
-        TestCase.assertTrue(solo.searchText("Max Trials: " + String.valueOf(experiment.getMaxTrials())));
-        TestCase.assertTrue(solo.searchText("Min Trials: " + String.valueOf(experiment.getMinTrials())));
+        TestCase.assertTrue(solo.searchText("Max Trials: " + experiment.getMaxTrials()));
+        TestCase.assertTrue(solo.searchText("Min Trials: " + experiment.getMinTrials()));
         TestCase.assertTrue(solo.searchText(experiment.getTrialType()));
         assertEquals(solo.getView(R.id.Publish_text).getVisibility(), (View.INVISIBLE));
         assertEquals(solo.getView(R.id.endExp).getVisibility(), (View.INVISIBLE));
@@ -136,33 +136,33 @@ public class FavPageTest {
     // check if one can follow the experiemtn and if it shows up in the fav frgament
     // Pre-Req: that there exists an experiment in the homePage Fragment
     @Test
-    public void followExp(){
+    public void followExp() {
         solo.sleep(3000);
         ListView experimentList = rule.getActivity().findViewById(R.id.experiment_list);
         Experiment experiment = (Experiment) experimentList.getItemAtPosition(0);
         solo.assertCurrentActivity("Wrong Activity", MainActivity.class);
         solo.sleep(1000);
-        solo.clickOnScreen(929,621);
+        solo.clickOnScreen(929, 621);
         solo.sleep(2000);
         solo.clickOnScreen(444, 1925); //"Favorite" Menu Item
         solo.sleep(3000);
         solo.searchText(experiment.getExpName());
-        solo.clickOnScreen(1949,178);
+        solo.clickOnScreen(1949, 178);
         solo.sleep(2000);
-        solo.clickOnScreen(929,621);
+        solo.clickOnScreen(929, 621);
 
     }
 
     // check if one can follow and unfollow the experiemtn and if it shows up in the fav frgament and gets removed from the fav fragment upon unfollow
     // Pre-Req: that there exists an experiment in the homePage Fragment
     @Test
-    public void unfollowExp(){
+    public void unfollowExp() {
         solo.sleep(3000);
         ListView experimentList = rule.getActivity().findViewById(R.id.experiment_list);
         Experiment experiment = (Experiment) experimentList.getItemAtPosition(0);
         solo.assertCurrentActivity("Wrong Activity", MainActivity.class);
         solo.sleep(1000);
-        solo.clickOnScreen(929,621); // follow experiment
+        solo.clickOnScreen(929, 621); // follow experiment
         solo.sleep(2000);
         solo.clickOnScreen(444, 1925); //"Favorite" Menu Item
         solo.sleep(3000);
@@ -170,7 +170,7 @@ public class FavPageTest {
         solo.sleep(2000);
         solo.clickOnScreen(73, 1920); //"Home" Menu Item
         solo.sleep(2000);
-        solo.clickOnScreen(929,621); // unfollow experiment
+        solo.clickOnScreen(929, 621); // unfollow experiment
         solo.sleep(6000);
         solo.clickOnScreen(444, 1925); //"Favorite" Menu Item
         solo.sleep(6000);

@@ -19,15 +19,15 @@ import androidx.appcompat.widget.AppCompatImageButton;
 
 import com.example.cmput301w21t23_smartdatabook.QRCode.QRCodeActivity;
 import com.example.cmput301w21t23_smartdatabook.QRCode.ScannerActivity;
-import com.example.cmput301w21t23_smartdatabook.stats.StringDate;
+import com.example.cmput301w21t23_smartdatabook.R;
+import com.example.cmput301w21t23_smartdatabook.comments.CommentActivity;
+import com.example.cmput301w21t23_smartdatabook.database.Database;
 import com.example.cmput301w21t23_smartdatabook.database.GeneralDataCallBack;
 import com.example.cmput301w21t23_smartdatabook.geolocation.MapsActivity;
 import com.example.cmput301w21t23_smartdatabook.stats.StatsView;
-import com.example.cmput301w21t23_smartdatabook.user.User;
-import com.example.cmput301w21t23_smartdatabook.comments.CommentActivity;
-import com.example.cmput301w21t23_smartdatabook.database.Database;
-import com.example.cmput301w21t23_smartdatabook.R;
+import com.example.cmput301w21t23_smartdatabook.stats.StringDate;
 import com.example.cmput301w21t23_smartdatabook.trials.UploadTrial;
+import com.example.cmput301w21t23_smartdatabook.user.User;
 import com.google.firebase.firestore.FirebaseFirestore;
 
 import java.util.Hashtable;
@@ -39,6 +39,7 @@ import java.util.Hashtable;
  * An experiment's name and description
  * Radio button to choose which type of the trial the experiment has (binomial/ measurement/count/ non-negtaive count trials)
  * switch button that turns on/ off an experiment's trial location.
+ *
  * @author Afaq Nabi, Bosco Chan, Jayden Cho
  * @version 1
  * @see Experiment
@@ -50,6 +51,7 @@ public class ExperimentDetails extends AppCompatActivity {
 
     /**
      * onCreate method that sets up the experiment details page
+     *
      * @param savedInstanceState
      */
     @Override
@@ -72,15 +74,21 @@ public class ExperimentDetails extends AppCompatActivity {
         View userInfoView = LayoutInflater.from(ExperimentDetails.this).inflate(R.layout.view_profile, null);
 
         AppCompatImageButton scan = findViewById(R.id.scannerimg);
-        scan.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent intent = new Intent(ExperimentDetails.this, ScannerActivity.class);
-                intent.putExtra("experiment", (Parcelable) experiment);
-                intent.putExtra("Flag", "Scan");
-                startActivity(intent);
-            }
-        });
+        TextView scanTV = findViewById(R.id.scanner_tv);
+        if (experiment.getIsEnd()) {
+            scan.setVisibility(View.INVISIBLE);
+            scanTV.setVisibility(View.INVISIBLE);
+        } else {
+            scan.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    Intent intent = new Intent(ExperimentDetails.this, ScannerActivity.class);
+                    intent.putExtra("experiment", (Parcelable) experiment);
+                    intent.putExtra("Flag", "Scan");
+                    startActivity(intent);
+                }
+            });
+        }
 
         database.fillUserName(new GeneralDataCallBack() {
             @Override
@@ -91,11 +99,11 @@ public class ExperimentDetails extends AppCompatActivity {
                 TextView username = userInfoView.findViewById(R.id.expOwner);
                 username.setText("Username: " + UserName.get(experiment.getOwnerUserID()).getUserName());
 
-                TextView email = userInfoView.findViewById(R.id.expContact);;
+                TextView email = userInfoView.findViewById(R.id.expContact);
                 email.setText("Email: " + UserName.get(experiment.getOwnerUserID()).getUserContact());
 
                 TextView Owner = findViewById(R.id.owner);
-                Owner.setText( UserName.get(experiment.getOwnerUserID()).getUserName() );
+                Owner.setText(UserName.get(experiment.getOwnerUserID()).getUserName());
                 Owner.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
@@ -115,16 +123,16 @@ public class ExperimentDetails extends AppCompatActivity {
 
 
         TextView expDate = findViewById(R.id.ClickedExpdate);
-        expDate.setText(""+ date.getDate(experiment.getDate()));
+        expDate.setText("" + date.getDate(experiment.getDate()));
 
         TextView description = findViewById(R.id.ClickedExpDesc);
         description.setText("Description: " + experiment.getDescription());
 
         TextView minTrials = findViewById(R.id.MinTrials);
-        minTrials.setText("Min Trials: " + Integer.toString(experiment.getMinTrials()));
+        minTrials.setText("Min Trials: " + experiment.getMinTrials());
 
         TextView maxTrials = findViewById(R.id.MaxTrials);
-        maxTrials.setText("Max Trials: " + Integer.toString(experiment.getMaxTrials()));
+        maxTrials.setText("Max Trials: " + experiment.getMaxTrials());
 
         TextView type = findViewById(R.id.ExpType);
         type.setText(experiment.getTrialType());
@@ -145,6 +153,7 @@ public class ExperimentDetails extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 // create new intent with this
+                // Source:  krupal-shah; https://stackoverflow.com/users/3830694/krupal-shah
                 // https://stackoverflow.com/questions/30965292/cannot-resolve-constructor-android-intent
                 Intent trialIntent;
                 trialIntent = new Intent(ExperimentDetails.this, UploadTrial.class);
@@ -156,11 +165,10 @@ public class ExperimentDetails extends AppCompatActivity {
 
         TextView showMap = findViewById(R.id.ShowMap);
         AppCompatImageButton map = findViewById(R.id.mapButton);
-        if (!experiment.getRequireLocation()){
+        if (!experiment.getRequireLocation()) {
             showMap.setVisibility(View.INVISIBLE);
             map.setVisibility(View.INVISIBLE);
-        }
-        else{
+        } else {
             showMap.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
@@ -200,7 +208,7 @@ public class ExperimentDetails extends AppCompatActivity {
         AppCompatImageButton arch = findViewById(R.id.endExpImageView);
         String title;
 
-        if (user.getUserUniqueID().equals(experiment.getOwnerUserID())){
+        if (user.getUserUniqueID().equals(experiment.getOwnerUserID())) {
             if (!experiment.getIsEnd()) {
                 title = "Archive";
             } else {
@@ -213,7 +221,7 @@ public class ExperimentDetails extends AppCompatActivity {
             endExp.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    AlertDialog.Builder builder= new AlertDialog.Builder(ExperimentDetails.this);
+                    AlertDialog.Builder builder = new AlertDialog.Builder(ExperimentDetails.this);
                     builder.setTitle(title);
                     builder.setMessage("Do you wish to " + title + " this experiment ?");
                     builder.setNegativeButton("Cancel", null)

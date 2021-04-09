@@ -36,7 +36,7 @@ public class QRCodeActivityTest {
     }
 
     @Test
-    public void testQRCodeGenerated(){
+    public void testQRCodeGenerated() {
         createExperiment();
         solo.clickOnText("Binomial");
         solo.clickOnText("Generate/Register Code");
@@ -69,9 +69,9 @@ public class QRCodeActivityTest {
             }
         });
 
-        solo.enterText( (EditText) solo.getView(R.id.newExperimentLocationOnExperimentNameEditText), "Binomial");
+        solo.enterText((EditText) solo.getView(R.id.newExperimentLocationOnExperimentNameEditText), "Binomial");
         solo.sleep(1000);
-        solo.enterText( (EditText) solo.getView(R.id.description), "Coin Flip");
+        solo.enterText((EditText) solo.getView(R.id.description), "Coin Flip");
         solo.sleep(1000);
         solo.clickOnRadioButton(0);
         solo.sleep(1000);

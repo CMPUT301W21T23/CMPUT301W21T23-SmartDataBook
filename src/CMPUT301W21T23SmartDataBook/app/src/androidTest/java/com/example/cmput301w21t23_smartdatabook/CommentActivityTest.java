@@ -1,20 +1,16 @@
 package com.example.cmput301w21t23_smartdatabook;
+
 import android.view.View;
-import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ListView;
 import android.widget.NumberPicker;
-import android.widget.TextView;
 
 import androidx.test.platform.app.InstrumentationRegistry;
 import androidx.test.rule.ActivityTestRule;
 
 import com.example.cmput301w21t23_smartdatabook.comments.Comment;
 import com.example.cmput301w21t23_smartdatabook.comments.CommentActivity;
-import com.example.cmput301w21t23_smartdatabook.experiment.Experiment;
-import com.example.cmput301w21t23_smartdatabook.experiment.ExperimentDetails;
 import com.example.cmput301w21t23_smartdatabook.mainController.MainActivity;
-import com.example.cmput301w21t23_smartdatabook.trials.UploadTrial;
 import com.robotium.solo.Solo;
 
 import org.junit.After;
@@ -22,19 +18,16 @@ import org.junit.Before;
 import org.junit.Rule;
 import org.junit.Test;
 
-import java.io.File;
-
 import static org.junit.Assert.assertEquals;
 
 
 public class CommentActivityTest {
 
+    @Rule
+    public ActivityTestRule<MainActivity> rule = new ActivityTestRule<MainActivity>(MainActivity.class, true, true);
     private Solo solo;
     private View addExpButton;
     private View addCommentButton;
-
-    @Rule
-    public ActivityTestRule<MainActivity> rule = new ActivityTestRule<MainActivity>(MainActivity.class, true, true);
 
     @Before
     public void setUp() {

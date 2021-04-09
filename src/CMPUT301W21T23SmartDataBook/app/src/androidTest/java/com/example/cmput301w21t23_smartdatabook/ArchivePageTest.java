@@ -1,6 +1,7 @@
 package com.example.cmput301w21t23_smartdatabook;
 
 import android.view.View;
+import android.widget.Button;
 import android.widget.EditText;
 import android.widget.NumberPicker;
 
@@ -19,10 +20,9 @@ import org.junit.Rule;
 import org.junit.Test;
 
 public class ArchivePageTest {
-    private Solo solo;
-
     @Rule
     public ActivityTestRule<MainActivity> rule = new ActivityTestRule<MainActivity>(MainActivity.class, true, true);
+    private Solo solo;
 
     @Before
     public void setUp() {
@@ -37,7 +37,7 @@ public class ArchivePageTest {
     }
 
     @Test
-    public void checkEndedExperiment(){
+    public void checkEndedExperiment() {
         // create experiment
         solo.assertCurrentActivity("Wrong Class", MainActivity.class);
         solo.waitForFragmentById(R.layout.home_page, 3000);
@@ -62,9 +62,9 @@ public class ArchivePageTest {
             }
         });
 
-        solo.enterText( (EditText) solo.getView(R.id.newExperimentLocationOnExperimentNameEditText), "Binomial");
+        solo.enterText((EditText) solo.getView(R.id.newExperimentLocationOnExperimentNameEditText), "Binomial");
         solo.sleep(1000);
-        solo.enterText( (EditText) solo.getView(R.id.description), "Coin Flip");
+        solo.enterText((EditText) solo.getView(R.id.description), "Coin Flip");
         solo.sleep(1000);
         solo.clickOnRadioButton(0);
         solo.sleep(1000);
@@ -82,7 +82,7 @@ public class ArchivePageTest {
         solo.goBack();
         solo.assertCurrentActivity("Wrong Activity", MainActivity.class);
 
-        solo.clickOnScreen(681,1986); // click on archive page
+        solo.clickOnScreen(681, 1986); // click on archive page
 
         // assert that experiment exists in the archive page
         Assert.assertTrue(solo.searchText("Binomial"));
@@ -95,7 +95,7 @@ public class ArchivePageTest {
         solo.sleep(2000);
 
         // check that one cannot add more trials to this experiment
-        solo.clickOnScreen(681,1986); // click on archive page
+        solo.clickOnScreen(681, 1986); // click on archive page
         solo.clickOnText("Binomial");
         solo.sleep(1000);
         solo.assertCurrentActivity("Wrong Class", ExperimentDetails.class);
@@ -104,7 +104,8 @@ public class ArchivePageTest {
         solo.sleep(2000);
         solo.assertCurrentActivity("Wrong Class", UploadTrial.class);
         solo.sleep(2000);
-        Assert.assertFalse(solo.searchText("add new trials"));
+        Button add = (Button) solo.getView(R.id.add_trial_button);
+        Assert.assertEquals(add.getVisibility(), View.INVISIBLE);
         solo.sleep(2000);
 
         // check that one can un-archive experiment
@@ -121,7 +122,7 @@ public class ArchivePageTest {
         solo.sleep(1000);
 
         // check that the experiment is gone from the archive page
-        solo.clickOnScreen(681,1986); // click on archive page
+        solo.clickOnScreen(681, 1986); // click on archive page
         solo.sleep(1000);
         Assert.assertFalse(solo.searchText("Binomial"));
 

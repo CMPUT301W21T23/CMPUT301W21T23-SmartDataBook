@@ -1,10 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.appcompat.widget.LinearLayoutCompat
-    xmlns:android="http://schemas.android.com/apk/res/android"
-    android:orientation="horizontal"
+<androidx.appcompat.widget.LinearLayoutCompat xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    >
+    android:orientation="horizontal">
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -15,19 +13,20 @@
             android:id="@+id/userQuestionTextView"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="User"
             android:layout_marginLeft="10dp"
-            android:textSize="20sp" >
+            android:text="User"
+            android:textSize="20sp">
 
         </TextView>
+
         <TextView
             android:id="@+id/userQuestionCommentTextView"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="User Comment"
-            android:layout_marginTop="5dp"
             android:layout_marginLeft="10dp"
-            android:textSize="20sp" >
+            android:layout_marginTop="5dp"
+            android:text="User Comment"
+            android:textSize="20sp">
 
         </TextView>
     </LinearLayout>

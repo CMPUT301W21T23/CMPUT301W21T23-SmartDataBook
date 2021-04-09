@@ -1,12 +1,9 @@
 package com.example.cmput301w21t23_smartdatabook.mainController;
 
-import android.Manifest;
 import android.app.SearchManager;
 import android.content.Context;
 import android.content.Intent;
-import android.content.pm.PackageManager;
 import android.os.Bundle;
-import android.os.Looper;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -17,7 +14,6 @@ import androidx.annotation.NonNull;
 import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.SearchView;
-import androidx.core.app.ActivityCompat;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentTransaction;
 
@@ -25,17 +21,14 @@ import com.example.cmput301w21t23_smartdatabook.R;
 import com.example.cmput301w21t23_smartdatabook.archives.ArchivePage;
 import com.example.cmput301w21t23_smartdatabook.database.Database;
 import com.example.cmput301w21t23_smartdatabook.database.GeneralDataCallBack;
+import com.example.cmput301w21t23_smartdatabook.experiment.addExpFragment;
 import com.example.cmput301w21t23_smartdatabook.fav.FavPage;
 import com.example.cmput301w21t23_smartdatabook.geolocation.LocationWithPermission;
 import com.example.cmput301w21t23_smartdatabook.geolocation.MapsActivity;
-import com.example.cmput301w21t23_smartdatabook.experiment.addExpFragment;
 import com.example.cmput301w21t23_smartdatabook.home.HomePage;
 import com.example.cmput301w21t23_smartdatabook.settings.SettingsPage;
 import com.example.cmput301w21t23_smartdatabook.user.User;
-import com.google.android.gms.auth.api.signin.GoogleSignInOptions;
 import com.google.android.gms.common.api.GoogleApiClient;
-import com.google.android.gms.location.LocationCallback;
-import com.google.android.gms.location.LocationRequest;
 import com.google.android.gms.location.LocationServices;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.firebase.auth.FirebaseAuth;
@@ -47,7 +40,8 @@ import com.google.firebase.auth.FirebaseAuth;
  * the bottom tab should get covered if a new acitivity is opened
  *
  * @Author Afaq, Jayden, Natnail Ghebresilasie
- * @Refrences https://androidwave.com/bottom-navigation-bar-android-example/
+ * @Refrences Source: Morris, https://androidwave.com/
+ * https://androidwave.com/bottom-navigation-bar-android-example/
  */
 
 public class MainActivity extends AppCompatActivity {

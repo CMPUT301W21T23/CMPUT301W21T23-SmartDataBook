@@ -1,25 +1,16 @@
 package com.example.cmput301w21t23_smartdatabook;
 
-import android.widget.EditText;
-import android.widget.NumberPicker;
-
-import com.example.cmput301w21t23_smartdatabook.mainController.MainActivity;
 import android.view.View;
-import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ListView;
 import android.widget.NumberPicker;
-import android.widget.TextView;
 
 import androidx.test.platform.app.InstrumentationRegistry;
 import androidx.test.rule.ActivityTestRule;
 
 import com.example.cmput301w21t23_smartdatabook.comments.Comment;
 import com.example.cmput301w21t23_smartdatabook.comments.CommentActivity;
-import com.example.cmput301w21t23_smartdatabook.experiment.Experiment;
-import com.example.cmput301w21t23_smartdatabook.experiment.ExperimentDetails;
 import com.example.cmput301w21t23_smartdatabook.mainController.MainActivity;
-import com.example.cmput301w21t23_smartdatabook.trials.UploadTrial;
 import com.robotium.solo.Solo;
 
 import org.junit.After;
@@ -27,13 +18,7 @@ import org.junit.Before;
 import org.junit.Rule;
 import org.junit.Test;
 
-import java.io.File;
-
 import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertFalse;
-import static org.junit.Assert.assertNotNull;
-import static org.junit.Assert.assertNull;
-import static org.junit.Assert.assertTrue;
 
 public class RepliesActivityTest {
 
@@ -64,8 +49,8 @@ public class RepliesActivityTest {
         createExperiment();
         addComment();
         solo.clickInList(0);
-        solo.clickOnScreen(948,1909);
-        solo.enterText( solo.getEditText("Comment Text"), "World!");
+        solo.clickOnScreen(948, 1909);
+        solo.enterText(solo.getEditText("Comment Text"), "World!");
         solo.clickOnText("Add Comment");
         solo.sleep(2000);
 
@@ -80,7 +65,7 @@ public class RepliesActivityTest {
         solo.clickOnText("Comments");
         solo.assertCurrentActivity("Wrong Activity", CommentActivity.class);
         solo.clickOnScreen(980, 1930);
-        solo.enterText( solo.getEditText("Comment Text"), "Hello!");
+        solo.enterText(solo.getEditText("Comment Text"), "Hello!");
         solo.clickOnText("Add Comment");
         solo.sleep(2000);
 
@@ -114,9 +99,9 @@ public class RepliesActivityTest {
             }
         });
 
-        solo.enterText( (EditText) solo.getView(R.id.newExperimentLocationOnExperimentNameEditText), "Binomial");
+        solo.enterText((EditText) solo.getView(R.id.newExperimentLocationOnExperimentNameEditText), "Binomial");
         solo.sleep(1000);
-        solo.enterText( (EditText) solo.getView(R.id.description), "Coin Flip");
+        solo.enterText((EditText) solo.getView(R.id.description), "Coin Flip");
         solo.sleep(1000);
         solo.clickOnRadioButton(0);
         solo.sleep(1000);

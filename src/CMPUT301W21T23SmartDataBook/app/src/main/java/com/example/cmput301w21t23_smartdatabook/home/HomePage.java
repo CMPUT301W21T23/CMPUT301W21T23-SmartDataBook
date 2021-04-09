@@ -15,11 +15,11 @@ import android.widget.ListView;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentTransaction;
 
-import com.example.cmput301w21t23_smartdatabook.experiment.CardList;
-import com.example.cmput301w21t23_smartdatabook.experiment.Experiment;
 import com.example.cmput301w21t23_smartdatabook.R;
 import com.example.cmput301w21t23_smartdatabook.database.Database;
 import com.example.cmput301w21t23_smartdatabook.database.GeneralDataCallBack;
+import com.example.cmput301w21t23_smartdatabook.experiment.CardList;
+import com.example.cmput301w21t23_smartdatabook.experiment.Experiment;
 import com.example.cmput301w21t23_smartdatabook.experiment.ExperimentDetails;
 import com.example.cmput301w21t23_smartdatabook.experiment.addExpFragment;
 import com.example.cmput301w21t23_smartdatabook.mainController.MainActivity;
@@ -44,212 +44,220 @@ import java.util.Hashtable;
 
 public class HomePage extends Fragment {
 
-	private ListView experimentList;
-	private ArrayList<Experiment> experimentDataList;
-	private static ArrayAdapter<Experiment> experimentAdapter;
-	private MainActivity activity;
+    private static ArrayAdapter<Experiment> experimentAdapter;
+    FirebaseFirestore db = FirebaseFirestore.getInstance();
+    private ListView experimentList;
+    private ArrayList<Experiment> experimentDataList;
+    private MainActivity activity;
+    private User user;
+    private Database database;
+    private String currentQuery;
+    private ArrayList<Experiment> searchDataList;
 
-	private User user;
-	private Database database;
+    public HomePage() {
+    }
 
-	private String currentQuery;
+    public static HomePage newInstance(String user) {
+        HomePage fragment = new HomePage();
+        Bundle args = new Bundle();
+        args.putString("", user);
+        fragment.setArguments(args);
+        return fragment;
+    }
 
-	FirebaseFirestore db = FirebaseFirestore.getInstance();
+    /**
+     * This function updates the Home page, through fragment transaction
+     *
+     * @param query
+     */
+    public void doUpdate(String query) {
 
-	public HomePage() {
-	}
+        currentQuery = query.toLowerCase();
 
-	public static HomePage newInstance(String user) {
-		HomePage fragment = new HomePage();
-		Bundle args = new Bundle();
-		args.putString("", user);
-		fragment.setArguments(args);
-		return fragment;
-	}
+        database.fillUserName(new GeneralDataCallBack() {
+            @Override
+            public void onDataReturn(Object returnedObject) {
+                Hashtable<String, User> UserName = (Hashtable<String, User>) returnedObject;
+                ArrayList<Experiment> temp = new ArrayList<>();
 
-	/**
-	 * This function updates the Home page, through fragment transaction
-	 *
-	 * @param query
-	 */
-	public void doUpdate(String query) {
+                for (int i = 0; i < experimentDataList.size(); i++) {
+                    Experiment experiment = experimentDataList.get(i);
+                    if (experiment.getExpName().toLowerCase().contains(currentQuery) ||
+                            UserName.get(experiment.getOwnerUserID()).getUserName().toLowerCase().contains(currentQuery) ||
+                            experiment.getDate().toLowerCase().contains(currentQuery) ||
+                            experiment.getDescription().toLowerCase().contains(currentQuery) ||
+                            experiment.getTrialType().toLowerCase().contains(currentQuery))
+                        temp.add(experiment);
+                }
 
-		currentQuery = query.toLowerCase();
+                experimentAdapter = new CardList(getContext(), temp, UserName, 1);
+                experimentList.setAdapter(experimentAdapter);
 
-		database.fillUserName(new GeneralDataCallBack() {
-			@Override
-			public void onDataReturn(Object returnedObject) {
-				Hashtable<String, User> UserName = (Hashtable<String, User>) returnedObject;
-				ArrayList<Experiment> temp = new ArrayList<>();
+            }
+        });
 
-				for (int i = 0; i < experimentDataList.size(); i++) {
-					Experiment experiment = experimentDataList.get(i);
-					if (experiment.getExpName().toLowerCase().contains(currentQuery) ||
-						UserName.get(experiment.getOwnerUserID()).getUserName().toLowerCase().contains(currentQuery) ||
-						experiment.getDate().toLowerCase().contains(currentQuery) ||
-						experiment.getDescription().toLowerCase().contains(currentQuery) ||
-						experiment.getTrialType().toLowerCase().contains(currentQuery)) temp.add(experiment);
-				}
+    }
 
-				experimentAdapter = new CardList(getContext(), temp, UserName, 1);
-				experimentList.setAdapter(experimentAdapter);
+    /**
+     * The onResume function of the Home Page
+     */
+    @Override
+    public void onResume() {
+        super.onResume();
+        experimentAdapter.notifyDataSetChanged();
+        activity.getSupportActionBar().setTitle("Home");
+        activity.onAttachFragment(this);
+        activity.setBottomNavigationItem(R.id.home_nav);
+    }
 
-			}
-		});
+    /**
+     * The onCreate function of the Home page
+     * In this function, if there are arguments, it gets the user's information
+     *
+     * @param savedInstanceState
+     */
+    @Override
+    public void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        if (getArguments() != null) {
+            user = User.getUser();
+        }
+        activity = (MainActivity) getActivity();
+        database = new Database();
+    }
 
-	}
+    /**
+     * The onCreateView function of Home page, the part that most elements on the home page are setted here
+     *
+     * @param inflater
+     * @param container
+     * @param savedInstanceState
+     * @return
+     */
+    @Override
+    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
+        // Inflate the layout for this fragment
+        View view = inflater.inflate(R.layout.home_page, container, false);
 
-	/**
-	 * The onResume function of the Home Page
-	 */
-	@Override
-	public void onResume() {
-		super.onResume();
-		experimentAdapter.notifyDataSetChanged();
-		activity.getSupportActionBar().setTitle("Home");
-		activity.onAttachFragment(this);
-		activity.setBottomNavigationItem(R.id.home_nav);
-	}
+        experimentList = view.findViewById(R.id.experiment_list);
 
-	/**
-	 * The onCreate function of the Home page
-	 * In this function, if there are arguments, it gets the user's information
-	 *
-	 * @param savedInstanceState
-	 */
-	@Override
-	public void onCreate(Bundle savedInstanceState) {
-		super.onCreate(savedInstanceState);
-		if (getArguments() != null) {
-			user = User.getUser();
-		}
-		activity = (MainActivity) getActivity();
-		database = new Database();
-	}
+        experimentDataList = new ArrayList<>();
+        searchDataList = new ArrayList<>();
+        experimentAdapter = new CardList(getContext(), experimentDataList, new Hashtable<String, User>(), 1);
 
-	/**
-	 * The onCreateView function of Home page, the part that most elements on the home page are setted here
-	 *
-	 * @param inflater
-	 * @param container
-	 * @param savedInstanceState
-	 * @return
-	 */
-	@Override
-	public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-		// Inflate the layout for this fragment
-		View view = inflater.inflate(R.layout.home_page, container, false);
+        //Source: ColdFire; https://stackoverflow.com/users/886001/coldfire
+//		Code: https://stackoverflow.com/questions/7093483/why-listview-items-becomes-not-clickable-after-scroll/7104933
+        experimentList.setOnScrollListener(new AbsListView.OnScrollListener() {
+            public void onScrollStateChanged(AbsListView view, int scrollState) {
+                if (scrollState == AbsListView.OnScrollListener.SCROLL_STATE_IDLE) {
+                    experimentList.invalidateViews();
 
-		experimentList = view.findViewById(R.id.experiment_list);
+                }
+            }
 
-		experimentDataList = new ArrayList<>();
-		experimentAdapter = new CardList(getContext(), experimentDataList, new Hashtable<String, User>(), 1);
+            @Override
+            public void onScroll(AbsListView arg0, int arg1, int arg2, int arg3) {
+            }
+        });
 
-		//Source: ColdFire; https://stackoverflow.com/users/886001/coldfire
-		//Code: https://stackoverflow.com/questions/7093483/why-listview-items-becomes-not-clickable-after-scroll/7104933
-		experimentList.setOnScrollListener(new AbsListView.OnScrollListener() {
-			public void onScrollStateChanged(AbsListView view, int scrollState) {
-				if (scrollState == AbsListView.OnScrollListener.SCROLL_STATE_IDLE) {
-					experimentList.invalidateViews();
+        //Source: Erwin Kurniawan A; https://stackoverflow.com/users/7693494/erwin-kurniawan-a
+        //Code: https://stackoverflow.com/questions/61930061/how-to-return-a-value-from-oncompletelistener-while-creating-user-with-email-and
+        database.fillUserName(new GeneralDataCallBack() {
+            @Override
+            public void onDataReturn(Object returnedObject) {
+                Hashtable<String, User> UserName = (Hashtable<String, User>) returnedObject;
+                database.fillDataList(new GeneralDataCallBack() {
+                    @Override
+                    public void onDataReturn(Object returnedObject) {
+                        ArrayList<Experiment> DataList = (ArrayList<Experiment>) returnedObject;
 
-				}
-			}
+                        experimentAdapter = new CardList(getContext(), experimentDataList, UserName, 1);
 
-			@Override
-			public void onScroll(AbsListView arg0, int arg1, int arg2, int arg3) { }
-		});
+                        experimentList.setAdapter(experimentAdapter);
 
-		//Source: Erwin Kurniawan A; https://stackoverflow.com/users/7693494/erwin-kurniawan-a
-		//Code: https://stackoverflow.com/questions/61930061/how-to-return-a-value-from-oncompletelistener-while-creating-user-with-email-and
-		database.fillUserName(returnedObject -> {
-			Hashtable<String, User> UserName = (Hashtable<String, User>) returnedObject;
-			//getExpDataList
-			database.fillDataList(returnedObject1 -> {
-				ArrayList<Experiment> DataList = (ArrayList<Experiment>) returnedObject1;
+                        //Reset the experiment adapter for every onCreateView call
+                        experimentAdapter.clear();
+                        searchDataList.clear();
 
-				experimentAdapter = new CardList(getContext(), experimentDataList, UserName, 1);
+                        //experimentDataList with added items ONLY exist inside the scope of this getExpDataList function
+                        experimentDataList = DataList;
 
-				experimentList.setAdapter(experimentAdapter);
 
-				//Reset the experiment adapter for every onCreateView call
-				experimentAdapter.clear();
+                        experimentAdapter.addAll(experimentDataList);
+                        experimentAdapter.notifyDataSetChanged();
 
-				//experimentDataList with added items ONLY exist inside the scope of this getExpDataList function
-				experimentDataList = DataList;
+                        experimentList.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+                            @Override
+                            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                                Log.e("Exp pos", "" + position);
+                                Experiment exp = (Experiment) parent.getAdapter().getItem(position); // get the experiment from list
+                                Intent intent = new Intent(getActivity(), ExperimentDetails.class);
+                                intent.putExtra("experiment", (Parcelable) exp); // pass experiment object
+                                startActivity(intent);
+                            }
+                        });
 
-				experimentAdapter.addAll(experimentDataList);
-				experimentAdapter.notifyDataSetChanged();
+                    }//getExpDataList
+                }, experimentAdapter, db.collection("Experiments"), user.getUserUniqueID(), UserName);//fillDataList
+            }
+        });
 
-				experimentList.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-					@Override
-					public void onItemClick(AdapterView<?> parent, View view1, int position, long id) {
-						Log.e("Exp pos", ""+position);
-						Experiment exp = (Experiment) parent.getAdapter().getItem(position); // get the experiment from list
-						Intent intent = new Intent(getActivity(), ExperimentDetails.class);
-						intent.putExtra("experiment", (Parcelable) exp); // pass experiment object
-						startActivity(intent);
-					}
-				});
+        // The floating action button is used to add new experiments in the home page
+        final FloatingActionButton addExperimentButton = view.findViewById(R.id.add_experiment_button);
+        addExperimentButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
 
-			}, experimentAdapter, db.collection("Experiments"), user.getUserUniqueID(), UserName);//fillDataList
-		});
+                Bundle args = new Bundle();
+                args.putString("UUID", user.getUserUniqueID());
 
-		// The floating action button is used to add new experiments in the home page
-		final FloatingActionButton addExperimentButton = view.findViewById(R.id.add_experiment_button);
-		addExperimentButton.setOnClickListener(new View.OnClickListener() {
-			@Override
-			public void onClick(View view) {
+                //Source: Shweta Chauhan; https://stackoverflow.com/users/6021469/shweta-chauhan
+                //Code: https://stackoverflow.com/questions/40085608/how-to-pass-data-from-one-fragment-to-previous-fragment
+                addExpFragment addExpFrag = new addExpFragment();
 
-				Bundle args = new Bundle();
-				args.putString("UUID", user.getUserUniqueID());
+                addExpFrag.setArguments(args);
 
-				//Source: Shweta Chauhan; https://stackoverflow.com/users/6021469/shweta-chauhan
-				//Code: https://stackoverflow.com/questions/40085608/how-to-pass-data-from-one-fragment-to-previous-fragment
-				addExpFragment addExpFrag = new addExpFragment();
+                addExpFrag.setTargetFragment(HomePage.this, 0);
+                FragmentTransaction ft = getActivity().getSupportFragmentManager().beginTransaction();
+                ft.replace(R.id.container, addExpFrag, "addExpFragment");
+                ft.addToBackStack("addExpFragment");
+                ft.commit();
+            }
+        });
 
-				addExpFrag.setArguments(args);
+        return view;
 
-				addExpFrag.setTargetFragment(HomePage.this, 0);
-				FragmentTransaction ft = getActivity().getSupportFragmentManager().beginTransaction();
-				ft.replace(R.id.container, addExpFrag, "addExpFragment");
-				ft.addToBackStack("addExpFragment");
-				ft.commit();
-			}
-		});
+    }//onCreateView
 
-		return view;
+    //Source: Shweta Chauhan; https://stackoverflow.com/users/6021469/shweta-chauhan
+    //Code: https://stackoverflow.com/questions/40085608/how-to-pass-data-from-one-fragment-to-previous-fragment
 
-	}//onCreateView
+    /**
+     * Custom on activity result function that gets an experiment object from the second fragment
+     * that had been started from this fragment (homePage.java).
+     *
+     * @param requestCode Determines which object is wanted from a fragment
+     * @param resultCode  Determines what the result is when taken
+     * @param data        The intent that holds the serialized object
+     * @author Bosco Chan
+     */
+    public void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
 
-	//Source: Shweta Chauhan; https://stackoverflow.com/users/6021469/shweta-chauhan
-	//Code: https://stackoverflow.com/questions/40085608/how-to-pass-data-from-one-fragment-to-previous-fragment
+        int addExpFragmentResultCode = 1;
+        int addExpFragmentRequestCode = 0;
 
-	/**
-	 * Custom on activity result function that gets an experiment object from the second fragment
-	 * that had been started from this fragment (homePage.java).
-	 *
-	 * @param requestCode Determines which object is wanted from a fragment
-	 * @param resultCode  Determines what the result is when taken
-	 * @param data        The intent that holds the serialized object
-	 * @author Bosco Chan
-	 */
-	public void onActivityResult(int requestCode, int resultCode, Intent data) {
-		super.onActivityResult(requestCode, resultCode, data);
+        if (resultCode == addExpFragmentResultCode) {
+            if (requestCode == addExpFragmentRequestCode) {
+                Experiment newExperiment = (Experiment) data.getSerializableExtra("newExp");
+                experimentAdapter.add(newExperiment);
+                CollectionReference experimentsCollection = db.collection("Experiments");
+                database.addExperimentToDB(newExperiment, experimentsCollection, user.getUserUniqueID());
+                experimentAdapter.notifyDataSetChanged();
+            }
+        }
 
-		int addExpFragmentResultCode = 1;
-		int addExpFragmentRequestCode = 0;
-
-		if (resultCode == addExpFragmentResultCode) {
-			if (requestCode == addExpFragmentRequestCode) {
-				Experiment newExperiment = (Experiment) data.getSerializableExtra("newExp");
-				experimentAdapter.add(newExperiment);
-				CollectionReference experimentsCollection = db.collection("Experiments");
-				database.addExperimentToDB(newExperiment, experimentsCollection, user.getUserUniqueID());
-				experimentAdapter.notifyDataSetChanged();
-			}
-		}
-
-	}//onActivityResult
+    }//onActivityResult
 
 
 }//homePage

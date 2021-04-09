@@ -12,7 +12,6 @@ import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ListView;
-import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
@@ -21,12 +20,11 @@ import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.app.ActivityCompat;
 
-import com.example.cmput301w21t23_smartdatabook.stats.StringDate;
+import com.example.cmput301w21t23_smartdatabook.R;
 import com.example.cmput301w21t23_smartdatabook.database.Database;
 import com.example.cmput301w21t23_smartdatabook.experiment.Experiment;
-import com.example.cmput301w21t23_smartdatabook.R;
-import com.example.cmput301w21t23_smartdatabook.database.GeneralDataCallBack;
 import com.example.cmput301w21t23_smartdatabook.geolocation.LocationWithPermission;
+import com.example.cmput301w21t23_smartdatabook.stats.StringDate;
 import com.example.cmput301w21t23_smartdatabook.user.User;
 import com.google.android.gms.location.LocationServices;
 import com.google.android.gms.maps.model.LatLng;
@@ -38,12 +36,12 @@ import com.google.firebase.firestore.QuerySnapshot;
 
 import java.math.BigDecimal;
 import java.util.ArrayList;
-import java.util.Hashtable;
 import java.util.UUID;
 
 /**
  * Class: UploadTrial activity
  * displays the upload trials page
+ *
  * @author Afaq Nabi, Krutik Soni, Jayden Cho, Bosco Chan
  * @see TrialList, Trial
  */
@@ -63,6 +61,7 @@ public class UploadTrial extends AppCompatActivity {
 
     /**
      * This function sets up the uploadTrial view
+     *
      * @param savedInstanceState
      */
     @Override
@@ -84,10 +83,9 @@ public class UploadTrial extends AppCompatActivity {
 
         // Set Headers
         Button addTrials = findViewById(R.id.add_trial_button);
-        if (experiment.getIsEnd()){
+        if (experiment.getIsEnd()) {
             addTrials.setVisibility(View.INVISIBLE);
-        }
-        else{
+        } else {
             addTrials.setVisibility(View.VISIBLE);
             /**
              * Methods to handle upload trials based on different types of trials in experiment by using dialog
@@ -96,7 +94,6 @@ public class UploadTrial extends AppCompatActivity {
             addTrials.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-
                     if (!experiment.getIsEnd()) {
                         expType = experiment.getTrialType();
                         db
@@ -201,10 +198,10 @@ public class UploadTrial extends AppCompatActivity {
                             .setNeutralButton("Add passes", new DialogInterface.OnClickListener() {
                                 @Override
                                 public void onClick(DialogInterface dialog, int which) {
-                                    if (numBinomial.getText().toString().length() == 0){
+                                    if (numBinomial.getText().toString().length() == 0) {
                                         Toast.makeText(UploadTrial.this, "Trial value field must not be empty", Toast.LENGTH_SHORT).show();
                                         dialog.cancel();
-                                    }else if (Integer.parseInt(numBinomial.getText().toString()) > experiment.getMaxTrials()){
+                                    } else if (Integer.parseInt(numBinomial.getText().toString()) > experiment.getMaxTrials()) {
                                         Toast.makeText(UploadTrial.this, "You cannot add more trials than the maximum trials for this experiment at once", Toast.LENGTH_SHORT).show();
                                     } else {
                                         db
@@ -213,31 +210,31 @@ public class UploadTrial extends AppCompatActivity {
                                                 .collection("Trials")
                                                 .get()
                                                 .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
-                                                   @Override
-                                                   public void onComplete(@NonNull Task<QuerySnapshot> task) {
-                                                       if (task.isSuccessful()) {
-                                                           int count = 0;
-                                                           for (QueryDocumentSnapshot document : task.getResult()) {
-                                                               count+=1;
-                                                           }
+                                                    @Override
+                                                    public void onComplete(@NonNull Task<QuerySnapshot> task) {
+                                                        if (task.isSuccessful()) {
+                                                            int count = 0;
+                                                            for (QueryDocumentSnapshot document : task.getResult()) {
+                                                                count += 1;
+                                                            }
 
-                                                           if (count+Integer.parseInt(numBinomial.getText().toString()) > experiment.getMaxTrials()){
-                                                               Toast.makeText(UploadTrial.this, "You cannot add more trials than the maximum trials for this experiment at once", Toast.LENGTH_SHORT).show();
-                                                           } else{
-                                                               for (int i = 0; i < Integer.parseInt(numBinomial.getText().toString()); i++) {
-                                                                   Trial trial = new Trial(experiment.getRequireLocation(),
-                                                                           experiment.getTrialType(),
-                                                                           true,
-                                                                           user.getUserUniqueID(),
-                                                                           UUID.randomUUID().toString(),
-                                                                           stringDate.getCurrentDate(),
-                                                                           experiment.getRequireLocation() ? latlng : null);
-                                                                   collectionRefToDB(trial, experiment);
-                                                               }
-                                                           }
-                                                       }
-                                                       recreate();
-                                                   }
+                                                            if (count + Integer.parseInt(numBinomial.getText().toString()) > experiment.getMaxTrials()) {
+                                                                Toast.makeText(UploadTrial.this, "You cannot add more trials than the maximum trials for this experiment at once", Toast.LENGTH_SHORT).show();
+                                                            } else {
+                                                                for (int i = 0; i < Integer.parseInt(numBinomial.getText().toString()); i++) {
+                                                                    Trial trial = new Trial(experiment.getRequireLocation(),
+                                                                            experiment.getTrialType(),
+                                                                            true,
+                                                                            user.getUserUniqueID(),
+                                                                            UUID.randomUUID().toString(),
+                                                                            stringDate.getCurrentDate(),
+                                                                            experiment.getRequireLocation() ? latlng : null);
+                                                                    collectionRefToDB(trial, experiment);
+                                                                }
+                                                            }
+                                                        }
+                                                        recreate();
+                                                    }
                                                 });
                                     }
                                     dialog.cancel();
@@ -250,11 +247,10 @@ public class UploadTrial extends AppCompatActivity {
                                         Toast.makeText(UploadTrial.this, "Trial value field must not be empty", Toast.LENGTH_SHORT).show();
                                         dialog.cancel();
 
-                                    } else if (Integer.parseInt(numBinomial.getText().toString()) > experiment.getMaxTrials()){
+                                    } else if (Integer.parseInt(numBinomial.getText().toString()) > experiment.getMaxTrials()) {
                                         Toast.makeText(UploadTrial.this, "You cannot add more trials than the maximum trials for this experiment at once", Toast.LENGTH_SHORT).show();
                                         return;
-                                    }
-                                    else{
+                                    } else {
                                         db
                                                 .collection("Experiments")
                                                 .document(experiment.getExpID())
@@ -266,13 +262,12 @@ public class UploadTrial extends AppCompatActivity {
                                                         if (task.isSuccessful()) {
                                                             int count = 0;
                                                             for (QueryDocumentSnapshot document : task.getResult()) {
-                                                                count+=1;
+                                                                count += 1;
                                                             }
 
-                                                            if ( count+Integer.parseInt(numBinomial.getText().toString()) > experiment.getMaxTrials() ){
+                                                            if (count + Integer.parseInt(numBinomial.getText().toString()) > experiment.getMaxTrials()) {
                                                                 Toast.makeText(UploadTrial.this, "You cannot add more trials than the maximum trials for this experiment at once", Toast.LENGTH_SHORT).show();
-                                                            }
-                                                            else{
+                                                            } else {
                                                                 for (int i = 0; i < Integer.parseInt(numBinomial.getText().toString()); i++) {
                                                                     Trial trial = new Trial(experiment.getRequireLocation(),
                                                                             experiment.getTrialType(),
@@ -372,42 +367,41 @@ public class UploadTrial extends AppCompatActivity {
                     measurementInput.setInputType(InputType.TYPE_CLASS_NUMBER | InputType.TYPE_NUMBER_FLAG_DECIMAL | InputType.TYPE_NUMBER_FLAG_SIGNED);
                     builder.setView(measurementInput);
                     builder.setNegativeButton("Cancel", null)
-                        .setPositiveButton("Add Trials", new DialogInterface.OnClickListener() {
-                            @Override
-                            public void onClick(DialogInterface dialog, int which) {
-                                // once click add trials, add the trial's outcome, location
-                                // Q1: check editText value
-                                // Q2: how to save information
-                                // check input for
+                            .setPositiveButton("Add Trials", new DialogInterface.OnClickListener() {
+                                @Override
+                                public void onClick(DialogInterface dialog, int which) {
+                                    // once click add trials, add the trial's outcome, location
+                                    // Q1: check editText value
+                                    // Q2: how to save information
+                                    // check input for
 
-                                if (measurementInput.getText().toString().length() == 0) {
-                                    Toast.makeText(UploadTrial.this, "Trial value field must not be empty", Toast.LENGTH_SHORT).show();
-                                    dialog.cancel();
-                                } else {
-                                    // source: https://docs.oracle.com/javase/8/docs/api/java/math/BigDecimal.html
-                                    // I have use the idea of BigDecimal object to handle float returning not exactly the same valye
-                                    // by Alex Mak
-                                    BigDecimal roundedVal = new BigDecimal(measurementInput.getText().toString());
-                                    double finalVal = roundedVal.doubleValue();
-                                    Trial trial = new Trial(experiment.getRequireLocation(),
-                                            experiment.getTrialType(),
-                                            finalVal,
-                                            user.getUserUniqueID(),
-                                            UUID.randomUUID().toString(),
-                                            stringDate.getCurrentDate(),
-                                            experiment.getRequireLocation() ? latlng : null);
-                                    collectionRefToDB(trial, experiment);
-                                    recreate();
+                                    if (measurementInput.getText().toString().length() == 0) {
+                                        Toast.makeText(UploadTrial.this, "Trial value field must not be empty", Toast.LENGTH_SHORT).show();
+                                        dialog.cancel();
+                                    } else {
+                                        // source: https://docs.oracle.com/javase/8/docs/api/java/math/BigDecimal.html
+                                        // I have use the idea of BigDecimal object to handle float returning not exactly the same valye
+                                        // by Alex Mak
+                                        BigDecimal roundedVal = new BigDecimal(measurementInput.getText().toString());
+                                        double finalVal = roundedVal.doubleValue();
+                                        Trial trial = new Trial(experiment.getRequireLocation(),
+                                                experiment.getTrialType(),
+                                                finalVal,
+                                                user.getUserUniqueID(),
+                                                UUID.randomUUID().toString(),
+                                                stringDate.getCurrentDate(),
+                                                experiment.getRequireLocation() ? latlng : null);
+                                        collectionRefToDB(trial, experiment);
+                                        recreate();
+                                    }
                                 }
-                            }
-                    }).create().show();
+                            }).create().show();
                 }
             });
         }
-
     }
 
-    void collectionRefToDB(Trial trial, Experiment experiment){
+    void collectionRefToDB(Trial trial, Experiment experiment) {
         database.addTrialToDB(db
                 .collection("Experiments")
                 .document(experiment.getExpID())
