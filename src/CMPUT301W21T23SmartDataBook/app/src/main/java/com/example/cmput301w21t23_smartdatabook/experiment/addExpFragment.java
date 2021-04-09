@@ -182,7 +182,6 @@ public class addExpFragment extends Fragment {
     public void onDestroy() {
         super.onDestroy();
         activity.getSupportActionBar().setTitle("Home");
-//        getActivity().getSupportFragmentManager().popBackStack();
         BottomNavigationView bottomNavigation = activity.findViewById(R.id.bottom_navigation);
         bottomNavigation.setVisibility(View.VISIBLE);
     }
