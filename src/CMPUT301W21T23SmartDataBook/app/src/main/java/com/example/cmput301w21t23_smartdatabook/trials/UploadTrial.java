@@ -241,9 +241,9 @@ public class UploadTrial extends AppCompatActivity {
                                                                    Trial trial = new Trial(experiment.getRequireLocation(),
                                                                            experiment.getTrialType(),
                                                                            true,
-                                                                           experiment.getOwnerUserID(),
+                                                                           user.getUserUniqueID(),
                                                                            UUID.randomUUID().toString(),
-                                                                           stringDate.getShortDate(),
+                                                                           stringDate.getCurrentDate(),
                                                                            experiment.getRequireLocation() ? latlng : null);
                                                                    collectionRefToDB(trial, experiment);
                                                                }
@@ -290,9 +290,9 @@ public class UploadTrial extends AppCompatActivity {
                                                                     Trial trial = new Trial(experiment.getRequireLocation(),
                                                                             experiment.getTrialType(),
                                                                             false,
-                                                                            experiment.getOwnerUserID(),
+                                                                            user.getUserUniqueID(),
                                                                             UUID.randomUUID().toString(),
-                                                                            stringDate.getShortDate(),
+                                                                            stringDate.getCurrentDate(),
                                                                             experiment.getRequireLocation() ? latlng : null);
                                                                     collectionRefToDB(trial, experiment);
                                                                 }
@@ -330,9 +330,9 @@ public class UploadTrial extends AppCompatActivity {
                                         Trial trial = new Trial(experiment.getRequireLocation(),
                                                 experiment.getTrialType(),
                                                 Integer.parseInt(numCount.getText().toString()),
-                                                experiment.getOwnerUserID(),
+                                                user.getUserUniqueID(),
                                                 UUID.randomUUID().toString(),
-                                                stringDate.getShortDate(),
+                                                stringDate.getCurrentDate(),
                                                 experiment.getRequireLocation() ? latlng : null);
                                         collectionRefToDB(trial, experiment);
                                         recreate();
@@ -361,9 +361,9 @@ public class UploadTrial extends AppCompatActivity {
                                         Trial trial = new Trial(experiment.getRequireLocation(),
                                                 experiment.getTrialType(),
                                                 Integer.parseInt(numNonNegCount.getText().toString()),
-                                                experiment.getOwnerUserID(),
+                                                user.getUserUniqueID(),
                                                 UUID.randomUUID().toString(),
-                                                stringDate.getShortDate(),
+                                                stringDate.getCurrentDate(),
                                                 experiment.getRequireLocation() ? latlng : null);
                                         collectionRefToDB(trial, experiment);
                                     } else {
@@ -405,9 +405,9 @@ public class UploadTrial extends AppCompatActivity {
                                     Trial trial = new Trial(experiment.getRequireLocation(),
                                             experiment.getTrialType(),
                                             finalVal,
-                                            experiment.getOwnerUserID(),
+                                            user.getUserUniqueID(),
                                             UUID.randomUUID().toString(),
-                                            stringDate.getShortDate(),
+                                            stringDate.getCurrentDate(),
                                             experiment.getRequireLocation() ? latlng : null);
                                     collectionRefToDB(trial, experiment);
                                     recreate();
