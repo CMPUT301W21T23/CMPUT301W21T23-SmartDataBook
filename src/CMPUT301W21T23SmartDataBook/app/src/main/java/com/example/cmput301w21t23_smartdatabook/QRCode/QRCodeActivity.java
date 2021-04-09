@@ -105,21 +105,19 @@ public class QRCodeActivity extends AppCompatActivity {
         generate.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
-                String QRCodeMessage;
-
-                if (experiment.getTrialType().equals("Binomial")){
-
-                    QRCodeMessage = experiment.getExpID()+","+user.getUserUniqueID()+"," + value.getText().toString() +","+experiment.getTrialType()+","+experiment.getRequireLocation() + "," + findBinoType(binoChoice.getCheckedRadioButtonId());
-
+                if (Integer.parseInt(value.getText().toString()) > experiment.getMaxTrials()){
+                    Toast.makeText(getBaseContext(), "Cannot ad more than the max trials", Toast.LENGTH_SHORT).show();
                 } else {
+                    String QRCodeMessage;
+                    if (experiment.getTrialType().equals("Binomial")){
+                        QRCodeMessage = experiment.getExpID()+","+user.getUserUniqueID()+"," + value.getText().toString() +","+experiment.getTrialType()+","+experiment.getRequireLocation() + "," + findBinoType(binoChoice.getCheckedRadioButtonId());
+                    } else {
+                        QRCodeMessage = experiment.getExpID() + "," + user.getUserUniqueID() + "," + value.getText().toString() + "," + experiment.getTrialType() + "," + experiment.getRequireLocation();
+                    }
 
-                    QRCodeMessage = experiment.getExpID() + "," + user.getUserUniqueID() + "," + value.getText().toString() + "," + experiment.getTrialType() + "," + experiment.getRequireLocation();
-
+                    ImageView QRCode = findViewById(R.id.ReplaceImageQrCode);
+                    QRCode.setImageBitmap(QRcode.generate(QRCodeMessage));
                 }
-
-                ImageView QRCode = findViewById(R.id.ReplaceImageQrCode);
-                QRCode.setImageBitmap(QRcode.generate(QRCodeMessage));
                 value.setText("");
             }
         });

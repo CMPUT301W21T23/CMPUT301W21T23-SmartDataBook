@@ -48,10 +48,10 @@ public class UploadTrialTest {
         solo.clickOnButton("UPLOAD TRIALS");
         solo.assertCurrentActivity("Wrong Class", UploadTrial.class);
         solo.clickOnButton("ADD NEW TRIALS");
-        
-
-
-
+        solo.enterText(0, "2");
+        solo.clickOnButton("ADD TRIALS");
+        solo.assertCurrentActivity("Wrong Class", UploadTrial.class);
+        solo.clickInList(0);
 
     }
 

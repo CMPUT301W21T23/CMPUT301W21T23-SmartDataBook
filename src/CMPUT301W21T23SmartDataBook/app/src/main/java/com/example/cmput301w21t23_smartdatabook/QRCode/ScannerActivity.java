@@ -143,7 +143,7 @@ public class ScannerActivity extends AppCompatActivity implements ZXingScannerVi
 				} else {
 					registerBarcode(rawResult.toString(), experiment);
 				}
-				onBackPressed();
+//				onBackPressed();
 			});
 		}
 	}
@@ -230,6 +230,11 @@ public class ScannerActivity extends AppCompatActivity implements ZXingScannerVi
 											if (experiment.getTrialType().equals("Binomial")) {
 												data.put("Bool", switchTF.isChecked());
 												data.put("Value", Integer.parseInt(value.getText().toString()));
+												if (Integer.parseInt(value.getText().toString())>experiment.getMaxTrials()){
+													onBackPressed();
+													Toast.makeText(getBaseContext(), "Cannot use value greater than max #'s of trial", Toast.LENGTH_SHORT).show();
+													return;
+												}
 											} else if (experiment.getTrialType().equals(("Measurement"))) {
 												data.put("Value", Float.parseFloat(value.getText().toString()));
 											} else {
@@ -242,6 +247,7 @@ public class ScannerActivity extends AppCompatActivity implements ZXingScannerVi
 													.collection(user.getUserUniqueID())
 													.document(UUID.randomUUID().toString())
 													.set(data);
+											dialog.dismiss();
 											onBackPressed();
 										}
 									})
@@ -255,61 +261,70 @@ public class ScannerActivity extends AppCompatActivity implements ZXingScannerVi
 	// if a QR code is scanned this function is called
 	private void QRCodeScanned(String rawResult, LatLng latlng) {
 		String[] values = rawResult.split(",");
-		db
-				.collection("Experiments")
-				.document(experiment.getExpID())
-				.collection("Trials")
-				.get()
-				.addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
-					@Override
-					public void onComplete(@NonNull Task<QuerySnapshot> task) {
-						if (task.isSuccessful()){
-							int count = 0;
-							for (QueryDocumentSnapshot document : task.getResult()) {
-								count+=1;
-							}
-							if (count >= experiment.getMaxTrials()){
-								onBackPressed();
-//								Toast.makeText(UploadTrial.this, "You cannot add more trials than the maximum trials for this experiment at once", Toast.LENGTH_SHORT).show();
-							} else{
-								if (values[3].equals("Binomial")) {
-									//Need to add in given number of binomial trials
-									if (count+Integer.parseInt(String.valueOf((values[2])))> experiment.getMaxTrials()){
-										onBackPressed();
-									}
-									else{
-										for (int i = 1; i <= Integer.parseInt(values[2]); i++) {
-											Trial trial = new Trial(Boolean.parseBoolean(values[4]),
-													values[3],
-													Boolean.parseBoolean(values[5]),
-													values[1],
-													UUID.randomUUID().toString(),
-													stringDate.getCurrentDate(),
-													experiment.getRequireLocation() ? latlng : null);
-											database.addTrialToDB(db.collection("Experiments")
-													.document(values[0])
-													.collection("Trials")
-													.document(trial.getTrialID()), trial);
-										}
-									}
-								} else {
-									Trial trial = new Trial(Boolean.parseBoolean(values[4]),
-											values[3],
-											Float.parseFloat(values[2]),
-											values[1],
-											UUID.randomUUID().toString(),
-											stringDate.getCurrentDate(),
-											experiment.getRequireLocation() ? latlng : null);
-
-									database.addTrialToDB(db.collection("Experiments")
-											.document(values[0])
-											.collection("Trials")
-											.document(trial.getTrialID()), trial);
+		if(experiment.getExpID().equals(values[0])){
+			db
+					.collection("Experiments")
+					.document(experiment.getExpID())
+					.collection("Trials")
+					.get()
+					.addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
+						@Override
+						public void onComplete(@NonNull Task<QuerySnapshot> task) {
+							if (task.isSuccessful()){
+								int count = 0;
+								for (QueryDocumentSnapshot document : task.getResult()) {
+									count+=1;
 								}
+								if (count >= experiment.getMaxTrials()){
+									onBackPressed();
+									Toast.makeText(getBaseContext(), "You cannot add more trials than the maximum trials for this experiment at once", Toast.LENGTH_LONG).show();
+								} else{
+									if (values[3].equals("Binomial")) {
+										//Need to add in given number of binomial trials
+										if (count+Integer.parseInt(String.valueOf((values[2])))> experiment.getMaxTrials()){
+											onBackPressed();
+											Toast.makeText(getBaseContext(), "You cannot add more trials than the maximum trials for this experiment at once", Toast.LENGTH_LONG).show();
+										}
+										else{
+											for (int i = 1; i <= Integer.parseInt(values[2]); i++) {
+												Trial trial = new Trial(Boolean.parseBoolean(values[4]),
+														values[3],
+														Boolean.parseBoolean(values[5]),
+														values[1],
+														UUID.randomUUID().toString(),
+														stringDate.getCurrentDate(),
+														experiment.getRequireLocation() ? latlng : null);
+												database.addTrialToDB(db.collection("Experiments")
+														.document(values[0])
+														.collection("Trials")
+														.document(trial.getTrialID()), trial);
+											}
+										}
+									} else {
+										Trial trial = new Trial(Boolean.parseBoolean(values[4]),
+												values[3],
+												Float.parseFloat(values[2]),
+												values[1],
+												UUID.randomUUID().toString(),
+												stringDate.getCurrentDate(),
+												experiment.getRequireLocation() ? latlng : null);
+
+										database.addTrialToDB(db.collection("Experiments")
+												.document(values[0])
+												.collection("Trials")
+												.document(trial.getTrialID()), trial);
+									}
+								}
+								onBackPressed();
 							}
 						}
-					}
-				});
+					});
+		}
+		else{
+			onBackPressed();
+			Toast.makeText(getBaseContext(), "Invalid QR Code", Toast.LENGTH_SHORT).show();
+		}
+
 	}
 
 	// if barcode is scanned for the purpose of adding a trial to the experiment
@@ -333,19 +348,25 @@ public class ScannerActivity extends AppCompatActivity implements ZXingScannerVi
 												@Override
 												public void onComplete(@NonNull Task<QuerySnapshot> task) {
 													if (task.isSuccessful()){
+														// count the current number of trials in the db
 														int count = 0;
 														for (QueryDocumentSnapshot document1 : task.getResult()) {
 															count+=1;
 														}
+
+														// if the # of trials has reached its limit don't do anything
 														if (count >= experiment.getMaxTrials()){
 															onBackPressed();
-														} else{
+															Toast.makeText(getBaseContext(), "Reached Max Trials", Toast.LENGTH_SHORT).show();
+														}
+														// else proceed to add the trial to the db
+														else{
 															if (experiment.getTrialType().equals("Binomial")){
-																if ((count + (int)document.get("Value"))>  experiment.getMaxTrials()){
+																if ((count + Integer.parseInt(String.valueOf(document.get("Value"))))>  experiment.getMaxTrials()){
 																	onBackPressed();
 																}
 																else {
-																	for (int i = 1; i <= Integer.parseInt((String) document.get("Value")); i++) {
+																	for (int i = 1; i <= Integer.parseInt(document.get("Value").toString()); i++) {
 																		Trial trial = new Trial(experiment.getRequireLocation(),
 																				experiment.getTrialType(),
 																				document.get("Bool"),
@@ -377,14 +398,27 @@ public class ScannerActivity extends AppCompatActivity implements ZXingScannerVi
 																		.document(trial.getTrialID()), trial);
 															}
 														}
+														onBackPressed();
 													}
 												}
 											});
 								}
 							}
 						}
+						else {
+							onBackPressed();
+							Toast.makeText(getBaseContext(), "Invalid Barcode", Toast.LENGTH_SHORT).show();
+						}
 					}
 				});
 	}
 }
+
+//```
+//		- invalid inputs for qr and barcode
+//		- invalid inputs for generating qr code
+//		- scanning qr code or barcode past the max trials
+//		- scanning qr code or barcode without location
+//		- register the same barcode for same experiment
+//		```
 

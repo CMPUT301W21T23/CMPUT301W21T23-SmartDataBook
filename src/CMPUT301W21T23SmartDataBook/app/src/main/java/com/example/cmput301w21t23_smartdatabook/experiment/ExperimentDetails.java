@@ -71,16 +71,16 @@ public class ExperimentDetails extends AppCompatActivity {
 
         View userInfoView = LayoutInflater.from(ExperimentDetails.this).inflate(R.layout.view_profile, null);
 
-//        AppCompatImageButton scan = findViewById(R.id.scanner);
-//        scan.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View v) {
-//                Intent intent = new Intent(ExperimentDetails.this, ScannerActivity.class);
-//                intent.putExtra("experiment", (Parcelable) experiment);
-//                intent.putExtra("Flag", "Scan");
-//                startActivity(intent);
-//            }
-//        });
+        AppCompatImageButton scan = findViewById(R.id.scannerimg);
+        scan.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(ExperimentDetails.this, ScannerActivity.class);
+                intent.putExtra("experiment", (Parcelable) experiment);
+                intent.putExtra("Flag", "Scan");
+                startActivity(intent);
+            }
+        });
 
         database.fillUserName(new GeneralDataCallBack() {
             @Override
