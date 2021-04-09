@@ -92,10 +92,6 @@ Generate QR or Barcodes:
   - Once the user clicks the "generate" button, a QR code consists of the trial value will be displayed
   - If the user prefers to register a barcode instead, clicked to the "register barcode" button, and the barcode will be registered
 
-Scan QR or Barcodes:
-  - Besides uploading trial value through the "upload trials" button, user can upload their trial values by generating QR codes or barcodes
-  - N/A for now
-
 Searching experiments
   - To search an experiment, click on the the magnifying glass icon on the top right of the app on either Explore, Subscribed, or Archived tab
   - Afterwards, users are able to type in order to search for their experiment
@@ -122,6 +118,3 @@ To see an experiment's statistics and diagrams
   - Once the button is clicked, the experiment's statisics (mean, median, standard deviation, and quartiles) and diagrams(histograms and plots) are displayed
 
 
-MORE TO ADD...
-  - QR codes (scan QR codes, generate QR code)
-  - more I haven't think yet
