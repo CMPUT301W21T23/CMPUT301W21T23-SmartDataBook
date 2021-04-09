@@ -59,7 +59,7 @@ public class TrialList extends ArrayAdapter<Trial> {
         if (trial.getExpType().equals("Binomial")) {
             Boolean val = (Boolean) trial.getValue();
             trialValue.setText(val.toString());
-        } else if (trial.getExpType().equals("Measurement")) {
+        } else {
             trialValue.setText(trial.getValue().toString());
         }
 
