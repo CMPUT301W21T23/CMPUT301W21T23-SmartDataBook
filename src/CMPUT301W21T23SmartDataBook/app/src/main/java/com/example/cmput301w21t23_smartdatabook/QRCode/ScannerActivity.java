@@ -233,6 +233,7 @@ public class ScannerActivity extends AppCompatActivity implements ZXingScannerVi
 												if (Integer.parseInt(value.getText().toString())>experiment.getMaxTrials()){
 													onBackPressed();
 													Toast.makeText(getBaseContext(), "Cannot use value greater than max #'s of trial", Toast.LENGTH_SHORT).show();
+													return;
 												}
 											} else if (experiment.getTrialType().equals(("Measurement"))) {
 												data.put("Value", Float.parseFloat(value.getText().toString()));
@@ -248,7 +249,6 @@ public class ScannerActivity extends AppCompatActivity implements ZXingScannerVi
 													.set(data);
 											dialog.dismiss();
 											onBackPressed();
-
 										}
 									})
 									.create()
@@ -405,11 +405,20 @@ public class ScannerActivity extends AppCompatActivity implements ZXingScannerVi
 								}
 							}
 						}
-						Log.e("REACHED", "REACHED");
-						onBackPressed();
-						Toast.makeText(getBaseContext(), "Invalid Barcode", Toast.LENGTH_SHORT).show();
+						else {
+							onBackPressed();
+							Toast.makeText(getBaseContext(), "Invalid Barcode", Toast.LENGTH_SHORT).show();
+						}
 					}
 				});
 	}
 }
+
+//```
+//		- invalid inputs for qr and barcode
+//		- invalid inputs for generating qr code
+//		- scanning qr code or barcode past the max trials
+//		- scanning qr code or barcode without location
+//		- register the same barcode for same experiment
+//		```
 
