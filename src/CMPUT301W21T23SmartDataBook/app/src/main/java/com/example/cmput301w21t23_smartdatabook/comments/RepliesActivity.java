@@ -14,6 +14,7 @@ import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.example.cmput301w21t23_smartdatabook.database.Database;
+import com.example.cmput301w21t23_smartdatabook.database.GeneralDataCallBack;
 import com.example.cmput301w21t23_smartdatabook.stats.StringDate;
 import com.example.cmput301w21t23_smartdatabook.R;
 import com.example.cmput301w21t23_smartdatabook.user.User;
@@ -21,6 +22,7 @@ import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.firebase.firestore.FirebaseFirestore;
 
 import java.util.ArrayList;
+import java.util.Hashtable;
 import java.util.UUID;
 
 /**
@@ -45,6 +47,7 @@ public class RepliesActivity extends AppCompatActivity {
     TextView dateView;
     TextView commentID;
     TextView commentText;
+    TextView replyTo;
 
     private User user = User.getUser();
 
@@ -69,7 +72,16 @@ public class RepliesActivity extends AppCompatActivity {
         parentComment = (Comment) intent.getSerializableExtra("Comment");
 
         owner = findViewById(R.id.comment_owner_username);
-        owner.setText(parentComment.getUserUniqueID());
+        database.fillUserName(new GeneralDataCallBack() {
+            @Override
+            public void onDataReturn(Object returnedObject) {
+                Hashtable<String, User> UserName = (Hashtable<String, User>) returnedObject;
+                owner.setText(UserName.get(parentComment.getUserUniqueID()).getUserName());
+
+                replyTo = findViewById(R.id.reply_to);
+                replyTo.setText("Reply to " + parentComment.getCommentID().substring(0,6));
+            }
+        });
 
         dateView = findViewById(R.id.commentDate);
         dateView.setText(""+curStringDate.getDate(parentComment.getDate()));

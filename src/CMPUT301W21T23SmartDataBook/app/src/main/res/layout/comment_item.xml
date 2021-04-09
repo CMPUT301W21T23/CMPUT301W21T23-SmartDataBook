@@ -1,70 +1,75 @@
 <?xml version="1.0" encoding="utf-8"?>
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
-    android:layout_width="match_parent"
-    android:layout_height="wrap_content"
-    android:orientation="vertical"
-    android:paddingBottom="8dp">
-
-    <TextView
-        android:id="@+id/commentID"
-        android:layout_width="wrap_content"
-        android:layout_height="30dp"
-        android:layout_alignParentStart="true"
-        android:layout_alignParentTop="true"
-        android:layout_alignParentEnd="true"
-        android:layout_marginStart="60dp"
-        android:text="comment ID"
-        android:textColor="#c4c3c0"
-        android:textSize="11dp"
-        app:layout_constraintBottom_toBottomOf="@+id/commentDate"
-        app:layout_constraintStart_toEndOf="@+id/commentDate"
-        app:layout_constraintTop_toTopOf="@+id/commentDate"
-        app:layout_constraintVertical_bias="0.0" />
-
-    <TextView
-        android:id="@+id/commentDate"
-        android:layout_width="78dp"
-        android:layout_height="30dp"
-        android:layout_alignParentStart="true"
-        android:layout_alignParentTop="true"
-        android:text="stringDate"
-        android:textColor="@color/black"
-        android:textSize="11dp"
-        app:layout_constraintBottom_toBottomOf="@+id/comment_user_username"
-        app:layout_constraintStart_toEndOf="@+id/comment_user_username"
-        app:layout_constraintTop_toTopOf="@+id/comment_user_username"
-        app:layout_constraintVertical_bias="0.0" />
-
-    <TextView
-        android:id="@+id/commentText"
-        android:layout_width="350dp"
+        xmlns:app="http://schemas.android.com/apk/res-auto"
+        xmlns:tools="http://schemas.android.com/tools"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_alignParentTop="true"
-        android:layout_alignParentEnd="true"
-        android:layout_centerHorizontal="true"
-        android:layout_marginStart="16dp"
-        android:layout_marginTop="12dp"
-        android:text="comment text ..."
-        android:textColor="@color/black"
-        android:textSize="16dp"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        android:orientation="vertical"
+        android:paddingBottom="8dp">
 
     <TextView
-        android:id="@+id/comment_user_username"
-        android:layout_width="114dp"
-        android:layout_height="30dp"
-        android:layout_alignParentStart="true"
-        android:layout_alignParentTop="true"
-        android:layout_marginStart="52dp"
-        android:layout_marginTop="12dp"
-        android:text="user"
-        android:textColor="@color/theme_default"
-        android:textSize="11dp"
-        android:textStyle="bold"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/commentText" />
+            android:id="@+id/commentID"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentStart="true"
+            android:layout_alignParentTop="true"
+            android:layout_alignParentEnd="true"
+            android:text="comment ID"
+            android:textColor="#c4c3c0"
+            android:textSize="11dp"
+            app:layout_constraintBottom_toBottomOf="@+id/commentDate"
+            app:layout_constraintTop_toTopOf="@+id/commentDate"
+            app:layout_constraintVertical_bias="0.0"
+            android:layout_marginEnd="24dp"
+            app:layout_constraintEnd_toEndOf="parent" />
+
+    <TextView
+            android:id="@+id/commentDate"
+            android:layout_width="90dp"
+            android:layout_height="wrap_content"
+            android:layout_alignParentStart="true"
+            android:layout_alignParentTop="true"
+            android:text="stringDate"
+            android:textColor="@color/black"
+            android:textSize="11dp"
+            app:layout_constraintBottom_toBottomOf="@+id/comment_user_username"
+            app:layout_constraintTop_toTopOf="@+id/comment_user_username"
+            app:layout_constraintVertical_bias="0.0"
+            app:layout_constraintEnd_toStartOf="@+id/commentID"
+            android:layout_marginEnd="16dp"
+            android:background="#faf5ff" />
+
+    <TextView
+            android:id="@+id/commentText"
+            android:layout_width="350dp"
+            android:layout_height="wrap_content"
+            android:layout_alignParentTop="true"
+            android:layout_alignParentEnd="true"
+            android:layout_centerHorizontal="true"
+            android:layout_marginStart="16dp"
+            android:layout_marginTop="12dp"
+            android:text="comment text ..."
+            android:textColor="@color/black"
+            android:textSize="16dp"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
+            android:id="@+id/comment_user_username"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_alignParentStart="true"
+            android:layout_alignParentTop="true"
+            android:layout_marginStart="16dp"
+            android:layout_marginTop="12dp"
+            android:text="user"
+            android:textColor="@color/theme_default"
+            android:textSize="11dp"
+            android:textStyle="bold"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/commentText"
+            app:layout_constraintStart_toEndOf="@+id/commentDate"
+            app:layout_constraintEnd_toStartOf="@+id/commentDate"
+            android:layout_marginEnd="16dp" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

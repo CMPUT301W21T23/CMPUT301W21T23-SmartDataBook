@@ -10,11 +10,14 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 
+import com.example.cmput301w21t23_smartdatabook.database.Database;
+import com.example.cmput301w21t23_smartdatabook.database.GeneralDataCallBack;
 import com.example.cmput301w21t23_smartdatabook.stats.StringDate;
 import com.example.cmput301w21t23_smartdatabook.R;
 import com.example.cmput301w21t23_smartdatabook.user.User;
 
 import java.util.ArrayList;
+import java.util.Hashtable;
 
 /**
  * Class: commentList, that is list consists of comments
@@ -59,7 +62,14 @@ public class CommentList extends ArrayAdapter<Comment> {
         Comment comment = comments.get(position);
 
         TextView owner = view.findViewById(R.id.comment_user_username);
-        owner.setText(user.getUserName());
+
+        new Database().fillUserName(new GeneralDataCallBack() {
+            @Override
+            public void onDataReturn(Object returnedObject) {
+                Hashtable<String, User> UserName = (Hashtable<String, User>) returnedObject;
+                owner.setText(UserName.get(comment.getUserUniqueID()).getUserName());
+            }
+        });
 
         TextView commentText = view.findViewById(R.id.commentText);
         commentText.setText(comment.getText());

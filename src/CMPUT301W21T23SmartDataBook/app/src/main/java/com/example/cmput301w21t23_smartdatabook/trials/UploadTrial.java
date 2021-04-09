@@ -75,34 +75,14 @@ public class UploadTrial extends AppCompatActivity {
 
         assert toolbar != null;
 
-        toolbar.setTitle("Upload Trials");
-
         // get intent and experiment
         Intent intent = getIntent();
         Experiment experiment = (Experiment) intent.getSerializableExtra("experiment"); // get the experiment object
 
-        TextView name = findViewById(R.id.actual_experiment_name);
-        name.setText(experiment.getExpName());
+        toolbar.setTitle("Trials for " + experiment.getExpName());
 
-        database.fillUserName(new GeneralDataCallBack() {
-            @Override
-            public void onDataReturn(Object returnedObject) {
-                Hashtable<String, User> UserName = (Hashtable<String, User>) returnedObject;
-                TextView userName = findViewById(R.id.actual_user_name);
-                userName.setText( UserName.get(experiment.getOwnerUserID()).getUserName() );
-            }
-        });
 
         // Set Headers
-        TextView nameHeader = findViewById(R.id.experiment_name);
-        nameHeader.setText("Experiment Name: ");
-
-        TextView userNameHeader = findViewById(R.id.username);
-        userNameHeader.setText("UserName");
-
-        TextView trialsHeader = findViewById(R.id.user_trial);
-        trialsHeader.setText("YOUR TRIALS");
-
         Button addTrials = findViewById(R.id.add_trial_button);
         if (experiment.getIsEnd()){
             addTrials.setVisibility(View.INVISIBLE);
