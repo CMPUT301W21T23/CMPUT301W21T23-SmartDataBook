@@ -100,11 +100,15 @@
             app:boxStrokeColor="@color/theme_default">
 
             <com.google.android.material.textfield.TextInputEditText
-                android:id="@+id/newExperimentLocationOnExperimentDescriptionEditText"
-                android:layout_width="match_parent"
-                android:layout_height="113dp"
-                android:maxLines="2"
-                android:scrollbars="vertical" />
+                    android:layout_width="match_parent"
+                    android:layout_height="113dp"
+                    android:maxLines="4"
+                    android:scrollbars="vertical"
+                    android:inputType="textMultiLine"
+                    android:ems="10"
+                    android:singleLine="false"
+                    android:gravity="start"
+                    android:maxLength="96" />
 
         </com.google.android.material.textfield.TextInputLayout>
 

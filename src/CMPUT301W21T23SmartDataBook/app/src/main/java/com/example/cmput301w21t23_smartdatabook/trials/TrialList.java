@@ -11,8 +11,6 @@ import androidx.annotation.Nullable;
 import com.example.cmput301w21t23_smartdatabook.R;
 import com.example.cmput301w21t23_smartdatabook.database.Database;
 import com.example.cmput301w21t23_smartdatabook.database.GeneralDataCallBack;
-import com.example.cmput301w21t23_smartdatabook.experiment.Experiment;
-import com.example.cmput301w21t23_smartdatabook.home.CardList;
 import com.example.cmput301w21t23_smartdatabook.user.User;
 import java.util.ArrayList;
 import java.util.Hashtable;

@@ -1,4 +1,4 @@
-package com.example.cmput301w21t23_smartdatabook.home;
+package com.example.cmput301w21t23_smartdatabook.experiment;
 
 import android.annotation.SuppressLint;
 import android.app.AlertDialog;
@@ -116,8 +116,8 @@ public class CardList extends ArrayAdapter<Experiment> {
             TextView experimentDescription = v.findViewById(R.id.Experiment_descr);
             TextView region = v.findViewById(R.id.Region);
 
-            if (experiment.getRequireLocation()){
-                region.setVisibility(View.VISIBLE);
+            if (!experiment.getRequireLocation()){
+                ((ViewGroup)region.getParent()).removeView(region);
             }
 
             experimentName.setText(experiment.getExpName());

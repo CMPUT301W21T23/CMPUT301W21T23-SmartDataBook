@@ -11,30 +11,32 @@
     android:paddingLeft="10dp">
 
     <TextView
-        android:focusableInTouchMode="false"
-        android:focusable="false"
+            android:focusableInTouchMode="false"
+            android:focusable="false"
 
-        android:id="@+id/experimentName"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:padding="10dp"
-        android:text="ExperimentName"
-        android:textSize="30sp"
-        android:maxLength="32">
+            android:id="@+id/experimentName"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="ExperimentName"
+            android:textSize="30sp"
+            android:maxLength="32"
+            android:layout_marginLeft="10dp"
+            android:paddingTop="10dp">
 
 
     </TextView>
 
     <TextView
-        android:focusableInTouchMode="false"
-        android:focusable="false"
+            android:focusableInTouchMode="false"
+            android:focusable="false"
 
-        android:id="@+id/Experiment_descr"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginLeft="10dp"
-        android:maxLength="32"
-        android:text="Description"></TextView>
+            android:id="@+id/Experiment_descr"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="10dp"
+            android:maxLength="32"
+            android:text="Description"
+            android:paddingBottom="10dp"></TextView>
 
 <!--    android:clickable="true"-->
 <!--    android:onClick="onClick"-->
@@ -68,17 +70,15 @@
 
 
     <TextView
-        android:focusableInTouchMode="false"
-        android:focusable="false"
+            android:focusableInTouchMode="false"
+            android:focusable="false"
 
-        android:id="@+id/Region"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="Geolocation: Required"
-        android:layout_marginLeft="10dp"
-        android:visibility="invisible"
-        >
-    </TextView>
+            android:id="@+id/Region"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Geolocation: Required"
+            android:layout_marginLeft="10dp"
+            android:visibility="visible"></TextView>
 
     <CheckBox
         android:focusableInTouchMode="false"
