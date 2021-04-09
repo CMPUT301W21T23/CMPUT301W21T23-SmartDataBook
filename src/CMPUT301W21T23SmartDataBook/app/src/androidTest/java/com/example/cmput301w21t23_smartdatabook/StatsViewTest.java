@@ -120,8 +120,6 @@ public class StatsViewTest {
         solo.clickOnButton("Create");
         solo.sleep(1000);
 
-        ListView experimentList = rule.getActivity().findViewById(R.id.experiment_list);
-        Experiment experiment = (Experiment) experimentList.getItemAtPosition(0);
     }
 
 }

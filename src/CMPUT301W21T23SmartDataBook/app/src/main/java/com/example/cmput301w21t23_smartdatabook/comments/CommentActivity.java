@@ -73,7 +73,6 @@ public class CommentActivity extends AppCompatActivity {
 
         //    https://stackoverflow.com/questions/19826693/how-can-i-make-a-textview-automatically-scroll-as-i-add-more-lines-of-text
         EditText newComment = addCommentView.findViewById(R.id.newComment);
-//        newComment.setMovementMethod(new ScrollingMovementMethod());
 
         FloatingActionButton addCommentButton;
         addCommentButton = findViewById(R.id.add_comment_button);

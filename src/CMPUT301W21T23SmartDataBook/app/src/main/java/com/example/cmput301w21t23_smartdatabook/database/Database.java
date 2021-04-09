@@ -2,6 +2,7 @@
 package com.example.cmput301w21t23_smartdatabook.database;
 
 import android.content.Context;
+import android.util.Log;
 import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.CheckBox;
@@ -502,6 +503,7 @@ public class Database {
 							});
 						} else {
 							// If sign in fails, display a message to the user.
+							Log.e("Error: ", "Not signed in");
 						}//if
 					}
 				});
