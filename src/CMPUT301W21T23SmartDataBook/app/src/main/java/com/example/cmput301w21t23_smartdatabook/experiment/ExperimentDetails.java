@@ -247,6 +247,8 @@ public class ExperimentDetails extends AppCompatActivity {
                                         database.deleteFromDB(db.collection("Archived").document(experiment.getExpID()));
                                     }
 
+                                    onBackPressed();
+
                                     Toast.makeText(getBaseContext(), "Experiment has been " + title, Toast.LENGTH_SHORT).show();
 
                                 }//onClick
