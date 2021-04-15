@@ -167,7 +167,7 @@ public class FavPage extends Fragment {
     public void onResume() {
         super.onResume();
         favAdapter.notifyDataSetChanged();
-        activity.getSupportActionBar().setTitle("Favorites");
+        activity.getSupportActionBar().setTitle("Subscribed");
         activity.onAttachFragment(this);
         activity.setBottomNavigationItem(R.id.fav_nav);
     }
