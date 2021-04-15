@@ -103,6 +103,7 @@ public class MainActivity extends AppCompatActivity {
             android.os.Process.killProcess(android.os.Process.myPid());
         } else {
             getSupportFragmentManager().popBackStack();
+            refreshFragment();
         }
 
     }
@@ -183,6 +184,20 @@ public class MainActivity extends AppCompatActivity {
         }
 
         return true;
+    }
+
+    private void refreshFragment() {
+        final FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
+        Fragment currentFragment = getSupportFragmentManager().findFragmentById(R.id.container);
+        transaction.detach(currentFragment);
+        transaction.attach(currentFragment);
+        transaction.commit();
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        if (getSupportFragmentManager().getBackStackEntryCount() > 0 ) refreshFragment();
     }
 
     /**
