@@ -159,8 +159,6 @@ public class ArchivePage extends Fragment {
         });
 
         return view;
-
-
     }
 
     /**
