@@ -117,7 +117,8 @@ public class CardList extends ArrayAdapter<Experiment> {
             experimentName.setText(experiment.getExpName());
             dateView.setText("" + date.getDate(experiment.getDate()));
             ownerName.setText(experiment.getOwnerUserName());
-            experimentDescription.setText(experiment.getDescription());
+            String description = experiment.getDescription().length() < 32 ? experiment.getDescription() : (experiment.getDescription().substring(0, 29) + " ...");
+            experimentDescription.setText(description);
 
             // when the user click the comment button
             Button comment = v.findViewById(R.id.comment_btn);

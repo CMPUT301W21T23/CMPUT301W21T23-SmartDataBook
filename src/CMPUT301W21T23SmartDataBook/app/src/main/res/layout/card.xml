@@ -25,16 +25,15 @@
     </TextView>
 
     <TextView
-        android:id="@+id/Experiment_descr"
-        android:layout_width="match_parent"
+            android:id="@+id/Experiment_descr"
+            android:layout_width="match_parent"
 
-        android:layout_height="wrap_content"
-        android:layout_marginLeft="10dp"
-        android:focusable="false"
-        android:focusableInTouchMode="false"
-        android:maxLength="32"
-        android:paddingBottom="10dp"
-        android:text="Description"></TextView>
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="10dp"
+            android:focusable="false"
+            android:focusableInTouchMode="false"
+            android:paddingBottom="10dp"
+            android:text="Description"></TextView>
 
     <!--    android:clickable="true"-->
     <!--    android:onClick="onClick"-->
