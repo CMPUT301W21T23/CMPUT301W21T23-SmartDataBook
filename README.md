@@ -8,7 +8,7 @@ The Team Wiki is found [here](https://github.com/CMPUT301W21T23/CMPUT301W21T23-S
 
 SmartDataBook Usage Guide:
 
-Nvaigoation bars and tabs:
+Navigoation bars and tabs:
   - Once users have launch the app, the home page there is a navigation bar, with 4 tabs below. They are Explore, Subscribed, Archived and Settings
   - The top of home page displays the tab that the user is currently on. Which users can clearly know which main tab they are on.
   - The Explore tab shows all of the public experiments
